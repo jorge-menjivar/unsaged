@@ -95,6 +95,8 @@ Notes:
 
 When deploying the application, the following environment variables can be set:
 
+### Chat-related Variables
+
 | Environment Variable              | Default value                                       | Description                                                       |
 | --------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------- |
 | OPENAI_API_KEY                    |                                                     | The default API key used for authentication with OpenAI           |
@@ -107,4 +109,43 @@ When deploying the application, the following environment variables can be set:
 | NEXT_PUBLIC_DEFAULT_TEMPERATURE   | 1                                                   | The default temperature to use on new conversations               |
 | GOOGLE_API_KEY                    |                                                     | See [Custom Search JSON API documentation][GCSE]                  |
 | GOOGLE_CSE_ID                     |                                                     | See [Custom Search JSON API documentation][GCSE]                  |
-| NEXT_PUBLIC_AUTH_ENABLED          | `false`                                             | Enable SSO authentication. set 'true' or 'false'                  |
+
+### Authentication Variables
+
+| Environment Variable        | Default value           | Description                                                                                                              |
+| --------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| NEXT_PUBLIC_AUTH_ENABLED    | `false`                 | Enable SSO authentication. set 'true' or 'false'                                                                         |
+| NEXTAUTH_EMAIL_PATTERN      |                         | The email regex pattern granted access to chatbot-ui. For example `.+@mydomain.com`                                      |
+| NEXTAUTH_SECRET             |                         | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_secret)                   |
+| NEXTAUTH_URL                | `http://localhost:3000` | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_url)                      |
+| NEXTAUTH_URL_INTERNAL       |                         | (Optional) NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_url_internal). |
+| \<PROVIDER\>\_CLIENT_ID     |                         | Provider OAuth Client ID                                                                                                 |
+| \<PROVIDER\>\_CLIENT_SECRET |                         | Provider OAuth Client Secret                                                                                             |
+| \<PROVIDER\>\_ISSUER        |                         | Provider Issuer URL                                                                                                      |
+
+Where \<PROVIDER\> is one of the following:
+
+- APPLE
+- AUTH0
+- COGNITO
+- DISCORD
+- FACEBOOK
+- GITHUB
+- GITLAB
+- GOOGLE
+- OKTA
+- REDDIT
+- SALESFORCE
+- SLACK
+- SPOTIFY
+- TWITCH
+- TWITTER
+
+For example, to enable Google and Github authentication, you would add the following to your `.env.local` file:
+
+```sh
+GITHUB_CLIENT_ID=xxxxxxxxxxxxx
+GITHUB_CLIENT_SECRET=xxxxxxxxxxxxx
+GOOGLE_CLIENT_ID=xxxxxxxxxxxxx
+GOOGLE_CLIENT_SECRET=xxxxxxxxxxxx
+```
