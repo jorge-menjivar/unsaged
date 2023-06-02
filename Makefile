@@ -1,14 +1,18 @@
-include .env
-
 .PHONY: all
 
 build:
-	docker build -t chatbot-ui .
+	docker build -t chatbot-ui:latest .
 
 run:
-	export $(cat .env | xargs)
 	docker stop chatbot-ui || true && docker rm chatbot-ui || true
-	docker run --name chatbot-ui --rm -e OPENAI_API_KEY=${OPENAI_API_KEY} -p 3000:3000 chatbot-ui
+	docker run --name chatbot-ui --rm --env-file=.env.local -p 3000:3000 chatbot-ui
+
+dev:
+	docker build -f Dockerfile.dev -t chatbot-ui:dev .
+	docker run --rm -v "`pwd`:/app" -p 3000:3000 --name chatbot-ui-dev chatbot-ui:dev sh -c "npm i && npm run dev"
+
+shell:
+	docker exec -it chatbot-ui-dev /bin/ash
 
 logs:
 	docker logs -f chatbot-ui

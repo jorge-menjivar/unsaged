@@ -1,0 +1,7 @@
+# ---- Base Node ----
+FROM node:19-alpine AS base
+RUN apk update && apk upgrade && apk add python3 build-base curl
+WORKDIR /app
+
+# Expose the port the app will run on
+EXPOSE 3000
