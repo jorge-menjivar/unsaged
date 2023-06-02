@@ -81,7 +81,7 @@ make push
 
 ## Development
 
-### Step 1. Setup
+### Setup
 
 Clone the repo:
 
@@ -95,7 +95,7 @@ Prepare your configuration file _(see Configuration below)_:
 cp .env.local.example .env.local
 ```
 
-### Step 2. Run
+### Run
 
 Run the development server:
 
@@ -103,7 +103,7 @@ Run the development server:
 make dev
 ```
 
-### Step 3. (optional) Add extensions
+### (optional) Add extensions
 
 Open a new terminal window, then launch a shell to the dev container:
 
