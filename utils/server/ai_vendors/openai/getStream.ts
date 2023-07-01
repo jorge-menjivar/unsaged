@@ -19,7 +19,7 @@ export async function streamOpenAI(
   model: AiModel,
   systemPrompt: string,
   temperature: number,
-  apiKey: string,
+  apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
 ) {

@@ -13,7 +13,7 @@ export async function streamAnthropic(
   model: AiModel,
   systemPrompt: string,
   temperature: number,
-  apiKey: string,
+  apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
 ) {

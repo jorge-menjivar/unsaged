@@ -8,7 +8,7 @@ export async function getStream(
   model: AiModel,
   systemPrompt: string,
   temperature: number,
-  apiKey: string,
+  apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
 ) {

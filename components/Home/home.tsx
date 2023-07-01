@@ -346,16 +346,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
     dispatch({ field: 'conversations', value: updatedConversations });
 
     saveSelectedConversation(user, newConversation);
-  }, [
-    database,
-    defaultModelId,
-    dispatch,
-    savedSettings,
-    settings,
-    systemPrompts,
-    t,
-    user,
-  ]);
+  }, [database, defaultModelId, dispatch, t, user]);
 
   useEffect(() => {
     if (conversations.length === 0 && fetchComplete) {

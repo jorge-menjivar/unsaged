@@ -41,10 +41,6 @@ export const ConversationsSettings = () => {
         icon={<IconFileExport size={18} />}
         onClick={() => handleExportData(database)}
       />
-
-      {!serverSideApiKeyIsSet ? (
-        <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
-      ) : null}
     </div>
   );
 };
