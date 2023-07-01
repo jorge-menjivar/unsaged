@@ -6,6 +6,8 @@ unSAGED is an advanced chat kit for interacting with AI models. It is built with
   <img src="https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2" alt="Discord Banner"/>
 </a>
 
+[!screenshot](./screenshots/main.png)
+
 ### Step 1. Clone Repo
 
 ```sh
