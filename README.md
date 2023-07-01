@@ -1,12 +1,18 @@
-# unSAGED
 
-unSAGED is an advanced chat kit for interacting with AI models. It is built with Next.js and Supabase.
-
+<p align="center">
+    <img src="./public/icon-256.svg" alt="logo" width="200px">
+</p>
 <a href="https://discord.gg/rMH2acSEzq">
   <img src="https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2" alt="Discord Banner"/>
 </a>
 
+
 ![screenshot](./public/screenshots/main.png)
+
+# unSAGED
+
+unSAGED is an advanced chat kit for interacting with AI models. It is built with Next.js and Supabase.
+
 
 ### Step 1. Clone Repo
 
