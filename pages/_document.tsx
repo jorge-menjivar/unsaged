@@ -15,7 +15,7 @@ export default function Document(props: Props) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="unSAGED"></meta>
       </Head>
-      <body>
+      <body className="overflow-hidden overscroll-none h-full w-full">
         <Main />
         <NextScript />
       </body>

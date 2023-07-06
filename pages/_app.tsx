@@ -16,7 +16,7 @@ function App({ Component, pageProps }: AppProps<{ session: Session }>) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <div className={inter.className}>
+      <div className={`h-full w-full ${inter.className}`}>
         <Toaster />
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />

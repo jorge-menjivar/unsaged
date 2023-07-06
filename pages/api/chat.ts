@@ -25,9 +25,6 @@ const handler = async (req: Request): Promise<Response> => {
     });
   }
 
-  console.log(`Token count: ${count}`);
-  console.log('getting stream');
-
   const { error: streamError, stream } = await getStream(
     model,
     systemPrompt.content,

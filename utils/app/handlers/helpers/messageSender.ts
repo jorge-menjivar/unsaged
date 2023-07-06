@@ -15,11 +15,6 @@ export async function messageSender(
 ) {
   let customPrompt = selectedConversation.systemPrompt;
 
-  console.log('selectedConversation', selectedConversation);
-
-  console.log('customPrompt', customPrompt);
-  console.log('builtInSystemPrompts', builtInSystemPrompts);
-
   if (!selectedConversation.systemPrompt) {
     customPrompt = builtInSystemPrompts.filter(
       (prompt) =>

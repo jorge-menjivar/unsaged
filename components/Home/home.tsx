@@ -459,6 +459,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
   useEffect(() => {
     if (window.innerWidth < 640) {
       dispatch({ field: 'showPrimaryMenu', value: false });
+      dispatch({ field: 'showSecondaryMenu', value: false });
     }
   }, [dispatch, selectedConversation, display]);
 
@@ -626,16 +627,16 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
       </Head>
       {selectedConversation && (
         <main
-          className={`relative flex-col text-sm overflow-y-hidden
+          className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
           text-black dark:text-white ${lightMode} m-0 p-0 overflow-hidden`}
         >
-          <div className="fixed top-0 z-50 w-full sm:hidden">
+          <div className="absolute top-0 z-50 w-full sm:hidden">
             <Navbar
               selectedConversation={selectedConversation}
               onNewConversation={handleNewConversation}
             />
           </div>
-          <div className="flex h-screen w-screen pt-[50px] sm:pt-0">
+          <div className="flex flex-shrink w-full h-full max-h-full pt-[50px] sm:pt-0 overflow-hidden overscroll-none">
             <PrimaryMenu />
             <ChatZone />
             <SecondaryMenu />

@@ -21,7 +21,6 @@ export const sendChatRequest = async (
     temperature: conversation.temperature,
   };
 
-  console.log('chatBody', chatBody);
   let body = JSON.stringify(chatBody);
   const controller = new AbortController();
   const response = await fetch('api/chat', {
