@@ -39,6 +39,13 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 30000,
     vendor: 'OpenAI',
   },
+  'gpt-35-turbo': {
+    id: String(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID),
+    maxLength: 12000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'OpenAI',
+  },
   'claude-v1': {
     id: 'claude-v1',
     maxLength: 24000,
