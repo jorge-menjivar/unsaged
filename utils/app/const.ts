@@ -13,6 +13,9 @@ export const OPENAI_API_URL =
 
 export const OPENAI_API_KEY = dockerEnvVarFix(process.env.OPENAI_API_KEY) || '';
 
+export const AZURE_DEPLOYMENT_ID =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID) || '';
+
 export const DEFAULT_TEMPERATURE = parseFloat(
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE) || '0.7',
 );
