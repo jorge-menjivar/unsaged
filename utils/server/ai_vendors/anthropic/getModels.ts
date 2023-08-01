@@ -1,3 +1,5 @@
+import { ANTHROPIC_API_KEY } from '@/utils/app/const';
+
 import { AiModel, PossibleAiModels } from '@/types/ai-models';
 
 export const config = {
@@ -6,7 +8,11 @@ export const config = {
 
 export async function getAvailableAnthropicModels(key?: string) {
   if (!key) {
-    return { data: [] };
+    key = ANTHROPIC_API_KEY;
+
+    if (!key) {
+      return { data: [] };
+    }
   }
   const models: AiModel[] = [
     PossibleAiModels['claude-v1'],
