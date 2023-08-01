@@ -1,4 +1,5 @@
 import { getAvailableAnthropicModels } from '@/utils/server/ai_vendors/anthropic/getModels';
+import { getAvailablePalm2Models } from '@/utils/server/ai_vendors/google/getModels';
 import { getAvailableOpenAIModels } from '@/utils/server/ai_vendors/openai/getModels';
 
 import { AiModel } from '@/types/ai-models';
@@ -9,9 +10,10 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   try {
-    const { openai_key, anthropic_key } = (await req.json()) as {
+    const { openai_key, anthropic_key, palm_key } = (await req.json()) as {
       openai_key: string;
       anthropic_key: string;
+      palm_key: string;
     };
 
     const models: AiModel[] = [];
@@ -27,6 +29,9 @@ const handler = async (req: Request): Promise<Response> => {
       anthropic_key,
     );
     models.push(...(anthropicModels as AiModel[]));
+
+    const { data: palm2Models } = await getAvailablePalm2Models(palm_key);
+    models.push(...(palm2Models as AiModel[]));
 
     return new Response(JSON.stringify(models), { status: 200 });
   } catch (error) {

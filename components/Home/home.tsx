@@ -18,6 +18,7 @@ import {
 import {
   DEFAULT_ANTHROPIC_SYSTEM_PROMPT,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
+  DEFAULT_PALM_SYSTEM_PROMPT,
   DEFAULT_TEMPERATURE,
 } from '@/utils/app/const';
 import { getSettings } from '@/utils/app/settings/getSettings';
@@ -135,15 +136,30 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
         'api_key',
       );
 
-      dispatch({ field: 'apiKey', value: openAiApiKey || anthropicApiKey });
+      const palmApiKey = getSavedSettingValue(
+        savedSettings,
+        'google',
+        'api_key',
+      );
 
-      if (!openAiApiKey && !anthropicApiKey && !serverSideApiKeyIsSet)
+      dispatch({
+        field: 'apiKey',
+        value: openAiApiKey || anthropicApiKey || palmApiKey,
+      });
+
+      if (
+        !openAiApiKey &&
+        !anthropicApiKey &&
+        !palmApiKey &&
+        !serverSideApiKeyIsSet
+      )
         return null;
 
       return getModels(
         {
           openai_key: openAiApiKey,
           anthropic_key: anthropicApiKey,
+          palm_key: palmApiKey,
         },
         signal,
       );
@@ -355,7 +371,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
   }, [conversations, fetchComplete, autogenerateConversation]);
 
   const generateBuiltInSystemPrompts = useCallback(() => {
-    const vendors: AiModel['vendor'][] = ['Anthropic', 'OpenAI'];
+    const vendors: AiModel['vendor'][] = ['Anthropic', 'OpenAI', 'Google'];
 
     const newSystemPrompts: SystemPrompt[] = [];
     for (const vendor of vendors) {
@@ -380,6 +396,16 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
           folderId: null,
           models: models.filter((m) => m.vendor === 'OpenAI').map((m) => m.id),
         };
+        newSystemPrompts.push(systemPrompt);
+      } else if (vendor === 'Google') {
+        systemPrompt = {
+          id: systemPromptId,
+          name: `${vendor} Built-In`,
+          content: DEFAULT_PALM_SYSTEM_PROMPT,
+          folderId: null,
+          models: models.filter((m) => m.vendor === 'Google').map((m) => m.id),
+        };
+
         newSystemPrompts.push(systemPrompt);
       }
     }

@@ -2,6 +2,7 @@ import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
 import { streamAnthropic } from './anthropic/getStream';
+import { streamPaLM2 } from './google/getStream';
 import { streamOpenAI } from './openai/getStream';
 
 export async function getStream(
@@ -23,6 +24,15 @@ export async function getStream(
     );
   } else if (model.vendor === 'Anthropic') {
     return streamAnthropic(
+      model,
+      systemPrompt,
+      temperature,
+      apiKey,
+      messages,
+      tokenCount,
+    );
+  } else if (model.vendor === 'Google') {
+    return streamPaLM2(
       model,
       systemPrompt,
       temperature,

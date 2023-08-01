@@ -164,4 +164,70 @@ export const SystemSettings: SettingsSection[] = [
       // },
     ],
   },
+  {
+    id: 'google',
+    name: 'Google',
+    settings: [
+      {
+        id: 'api_key',
+        name: 'API Key',
+        description: 'The API key to use for PaLM 2 models.',
+        type: 'string',
+        storage: 'local',
+      },
+      // {
+      //   id: 'claude-v1_default_system_prompt',
+      //   name: 'Claude V1 Default System Prompt',
+      //   description: 'The default system prompt to use for Claude V1.',
+      //   type: 'choice',
+      //   choices: [
+      //     {
+      //       name: 'Default',
+      //       value: 'default',
+      //     },
+      //   ],
+      //   storage: 'local',
+      // },
+      // {
+      //   id: 'claude-v1-100k_default_system_prompt',
+      //   name: 'Claude V1 100k Default System Prompt',
+      //   description: 'The default system prompt to use for Claude V1 100k.',
+      //   type: 'choice',
+      //   choices: [
+      //     {
+      //       name: 'Default',
+      //       value: 'default',
+      //     },
+      //   ],
+      //   storage: 'local',
+      // },
+      // {
+      //   id: 'claude-instant-v1_default_system_prompt',
+      //   name: 'Claude Instant V1 Default System Prompt',
+      //   description: 'The default system prompt to use for Claude Instant V1.',
+      //   type: 'choice',
+      //   choices: [
+      //     {
+      //       name: 'Default',
+      //       value: 'default',
+      //     },
+      //   ],
+      //   storage: 'local',
+      // },
+      // {
+      //   id: 'claude-instant-v1-100k_default_system_prompt',
+      //   name: 'Claude Instant V1 100k Default System Prompt',
+      //   description:
+      //     'The default system prompt to use for Claude Instant V1 100k.',
+      //   type: 'choice',
+      //   choices: [
+      //     {
+      //       name: 'Default',
+      //       value: 'default',
+      //     },
+      //   ],
+      //   storage: 'local',
+      // },
+    ],
+  },
 ];

@@ -1,4 +1,3 @@
-
 <p align="center">
     <img src="./public/icon-256.svg" alt="logo" width="200px">
 </p>
@@ -6,13 +5,26 @@
   <img src="https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2" alt="Discord Banner"/>
 </a>
 
-
 ![screenshot](./public/screenshots/main.png)
 
 # unSAGED
 
 unSAGED is an advanced chat kit for interacting with AI models. It is built with Next.js and Supabase.
 
+## Supported Models
+
+- [OpenAI](https://openai.com/)
+  - GPT-3.5-Turbo
+  - GPT 4
+- [Anthropic](https://www.anthropic.com/)
+  - Claude V1
+  - Claude V1 - 100k
+  - Claude Instant V1
+  - Claude Instant V1 - 100k
+- [PaLM 2](https://developers.generativeai.google/products/palm)
+  - Chat Bison (Bard)
+
+## Installation
 
 ### Step 1. Clone Repo
 
@@ -76,14 +88,14 @@ docker build -t unsaged . --rm
 docker run --env-file=.env.local -p 3000:3000 --name unsaged unsaged
 ```
 
-### (Optional) Step 8. Provide OpenAI API Key
+### (Optional) Step 8. Provide API Keys in .env.local
 
 To give everyone using your instance of unSAGED access to any API key, create a `.env.local` file and set the appropriate environment variables:
 
 ```sh
 OPENAI_API_KEY=YOUR_OPENAI_KEY
 ANTHROPIC_API_KEY=YOUR_ANTHROPIC_KEY
-
+PALM_API_KEY=YOUR_PALM_KEY
 ```
 
 Notes:
@@ -99,32 +111,34 @@ When deploying the application, the following environment variables can be set:
 
 ### Env Variables
 
-| Required  | Environment Variable                        | Default value                                       | Description                                                                                                   |
-| --------- | ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| No        | OPENAI_API_KEY                              |                                                     | The default API key used for authenticating with OpenAI                                                       |
-| No        | OPENAI_API_URL                              | `https://api.openai.com/v1`                         | The base url, for Azure use `https://<endpoint>.openai.azure.com`                                             |
-| No        | OPENAI_API_TYPE                             | `openai`                                            | The API type, options are `openai` or `azure`                                                                 |
-| No        | OPENAI_API_VERSION                          | `2023-03-15-preview`                                | Only applicable for Azure OpenAI                                                                              |
-| No        | OPENAI_ORGANIZATION                         |                                                     | Your OpenAI organization ID                                                                                   |
-| No        | AZURE_DEPLOYMENT_ID                         |                                                     | Only applicable for Azure OpenAI                                                                              |
-| No        | ANTHROPIC_API_URL                           | `https://api.anthropic.com/v1`                      | The base url for the Anthropic API                                                                            |
-| No        | ANTHROPIC_API_KEY                           |                                                     | The default API key used for authenticating with Anthropic                                                    |
-| No        | NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT    |                                                     | The default system prompt to use on new conversations for OpenAI models.                                      |
-| No        | NEXT_PUBLIC_DEFAULT_ANTHROPIC_SYSTEM_PROMPT |                                                     | The default system prompt to use on new conversations for Anthropic models.                                   |
-| No        | DEFAULT_MODEL                               | `gpt-3.5-turbo` _(OpenAI)_ `gpt-35-turbo` _(Azure)_ | The default model to use on new conversations                                                                 |
-| No        | NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT           | [see here](./utils/app/const.ts)                    | The default system prompt to use on new conversations                                                         |
-| No        | NEXT_PUBLIC_DEFAULT_TEMPERATURE             | 1                                                   | The default temperature to use on new conversations                                                           |
-| Yes       | NEXT_PUBLIC_SUPABASE_URL                    |                                                     | The project URL.                                                                                              |
-| Yes       | NEXT_PUBLIC_SUPABASE_ANON_KEY               |                                                     | The supabase project anon key.                                                                                |
-| Yes       | SUPABASE_SERVICE_ROLE_KEY                   |                                                     | The supabase project service role key.                                                                        |
-| Yes       | SUPABASE_JWT_SECRET                         |                                                     | **Warning!** Generating a new JWT Secret will invalidate all tokens above.                                    |
-| No        | NEXTAUTH_EMAIL_PATTERN                      |                                                     | The email regex pattern granted access to unSAGED. For example `.+@mydomain.com`                              |
-| Yes       | NEXTAUTH_SECRET                             |                                                     | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_secret)        |
-| In prod.  | NEXTAUTH_URL                                | `http://localhost:3000`                             | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_url)           |
-| In docker | NEXTAUTH_URL_INTERNAL                       |                                                     | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_url_internal). |
-| Yes       | \<PROVIDER\>\_CLIENT_ID                     |                                                     | Provider OAuth Client ID                                                                                      |
-| Yes       | \<PROVIDER\>\_CLIENT_SECRET                 |                                                     | Provider OAuth Client Secret                                                                                  |
-| Maybe     | \<PROVIDER\>\_ISSUER                        |                                                     | Provider Issuer URL (Only some providers need this)                                                           |
+| Required  | Environment Variable                        | Default value                                       | Description                                                                                                              |
+| --------- | ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| No        | OPENAI_API_KEY                              |                                                     | The default API key used for authenticating with OpenAI                                                                  |
+| No        | OPENAI_API_URL                              | `https://api.openai.com/v1`                         | The base url, for Azure use `https://<endpoint>.openai.azure.com`                                                        |
+| No        | OPENAI_API_TYPE                             | `openai`                                            | The API type, options are `openai` or `azure`                                                                            |
+| No        | OPENAI_API_VERSION                          | `2023-03-15-preview`                                | Only applicable for Azure OpenAI                                                                                         |
+| No        | OPENAI_ORGANIZATION                         |                                                     | Your OpenAI organization ID                                                                                              |
+| No        | AZURE_DEPLOYMENT_ID                         |                                                     | Only applicable for Azure OpenAI                                                                                         |
+| No        | ANTHROPIC_API_URL                           | `https://api.anthropic.com/v1`                      | The base url for the Anthropic API                                                                                       |
+| No        | ANTHROPIC_API_KEY                           |                                                     | The default API key used for authenticating with Anthropic                                                               |
+| No        | PALM_API_URL                                | `https://generativelanguage.googleapis.com/v1beta2` | The base url for the PALM 2 API from Google                                                                              |
+| No        | PALM_API_KEY                                |                                                     | The default API key used for authenticating with PaLM 2. [Get Key](https://developers.generativeai.google/products/palm) |
+| No        | NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT    |                                                     | The default system prompt to use on new conversations for OpenAI models.                                                 |
+| No        | NEXT_PUBLIC_DEFAULT_ANTHROPIC_SYSTEM_PROMPT |                                                     | The default system prompt to use on new conversations for Anthropic models.                                              |
+| No        | DEFAULT_MODEL                               | `gpt-3.5-turbo` _(OpenAI)_ `gpt-35-turbo` _(Azure)_ | The default model to use on new conversations                                                                            |
+| No        | NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT           | [see here](./utils/app/const.ts)                    | The default system prompt to use on new conversations                                                                    |
+| No        | NEXT_PUBLIC_DEFAULT_TEMPERATURE             | 1                                                   | The default temperature to use on new conversations                                                                      |
+| Yes       | NEXT_PUBLIC_SUPABASE_URL                    |                                                     | The project URL.                                                                                                         |
+| Yes       | NEXT_PUBLIC_SUPABASE_ANON_KEY               |                                                     | The supabase project anon key.                                                                                           |
+| Yes       | SUPABASE_SERVICE_ROLE_KEY                   |                                                     | The supabase project service role key.                                                                                   |
+| Yes       | SUPABASE_JWT_SECRET                         |                                                     | **Warning!** Generating a new JWT Secret will invalidate all tokens above.                                               |
+| No        | NEXTAUTH_EMAIL_PATTERN                      |                                                     | The email regex pattern granted access to unSAGED. For example `.+@mydomain.com`                                         |
+| Yes       | NEXTAUTH_SECRET                             |                                                     | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_secret)                   |
+| In prod.  | NEXTAUTH_URL                                | `http://localhost:3000`                             | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_url)                      |
+| In docker | NEXTAUTH_URL_INTERNAL                       |                                                     | NextAuth Settings. See [Documentation](https://next-auth.js.org/configuration/options#nextauth_url_internal).            |
+| Yes       | \<PROVIDER\>\_CLIENT_ID                     |                                                     | Provider OAuth Client ID                                                                                                 |
+| Yes       | \<PROVIDER\>\_CLIENT_SECRET                 |                                                     | Provider OAuth Client Secret                                                                                             |
+| Maybe     | \<PROVIDER\>\_ISSUER                        |                                                     | Provider Issuer URL (Only some providers need this)                                                                      |
 
 Where \<PROVIDER\> is one of the following:
 

@@ -5,26 +5,11 @@ import { useFetch } from '@/hooks/useFetch';
 export interface GetModelsRequestProps {
   openai_key: string;
   anthropic_key: string;
+  palm_key: string;
 }
 
 const useApiService = () => {
   const fetchService = useFetch();
-
-  // const getModels = useCallback(
-  // 	(
-  // 		params: GetManagementRoutineInstanceDetailedParams,
-  // 		signal?: AbortSignal
-  // 	) => {
-  // 		return fetchService.get<GetManagementRoutineInstanceDetailed>(
-  // 			`/v1/ManagementRoutines/${params.managementRoutineId}/instances/${params.instanceId
-  // 			}?sensorGroupIds=${params.sensorGroupId ?? ''}`,
-  // 			{
-  // 				signal,
-  // 			}
-  // 		);
-  // 	},
-  // 	[fetchService]
-  // );
 
   const getModels = useCallback(
     (params: GetModelsRequestProps, signal?: AbortSignal) => {
@@ -32,6 +17,7 @@ const useApiService = () => {
         body: {
           openai_key: params.openai_key,
           anthropic_key: params.anthropic_key,
+          palm_key: params.palm_key,
         },
         headers: {
           'Content-Type': 'application/json',

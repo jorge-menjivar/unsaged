@@ -2,6 +2,7 @@ import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
 import { countTokensAnthropic } from './anthropic/getTokenCount';
+import { countTokensGoogle } from './google/getTokenCount';
 import { countTokensOpenAI } from './openai/getTokenCount';
 
 export async function getTokenCount(
@@ -13,6 +14,8 @@ export async function getTokenCount(
     return countTokensOpenAI(model, systemPrompt, messages);
   } else if (model.vendor === 'Anthropic') {
     return countTokensAnthropic(model, systemPrompt, messages);
+  } else if (model.vendor === 'Google') {
+    return countTokensGoogle(model, systemPrompt, messages);
   }
   return { error: 'Unknown vendor' };
 }
