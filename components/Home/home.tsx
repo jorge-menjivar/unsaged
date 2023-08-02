@@ -485,6 +485,7 @@ const Home = () => {
       });
     }
   }, [savedSettings, settings, dispatch]);
+
   if (user && database && conversations.length > 0) {
     return (
       <HomeContext.Provider
@@ -499,7 +500,7 @@ const Home = () => {
         }}
       >
         {selectedConversation && (
-          <main
+          <div
             className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
           text-black dark:text-white ${lightMode} m-0 p-0 overflow-hidden`}
           >
@@ -514,7 +515,7 @@ const Home = () => {
               <ChatZone />
               <SecondaryMenu />
             </div>
-          </main>
+          </div>
         )}
       </HomeContext.Provider>
     );
@@ -530,20 +531,28 @@ const Home = () => {
     }
 
     return (
-      <div className="flex flex-col items-center justify-center h-screen w-screen bg-[#ffffff]">
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex flex-row items-center justify-center">
-            <Image
-              className="animate-bounce"
-              width={256}
-              height={256}
-              src="/icon-256.svg"
-              alt="unSAGED Logo"
-              priority
-            />
-          </div>
-          <div className="flex flex-row items-center justify-center">
-            <h2 className="text-xl font-bold text-primary-500">{text}</h2>
+      <div
+        className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
+          ${lightMode || 'dark'} m-0 p-0 overflow-hidden`}
+      >
+        <div
+          className="flex flex-col items-center justify-center h-screen w-screen bg-[#ffffff]
+        dark:bg-[#1f2428] dark:text-[#f0f0f0]"
+        >
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-row items-center justify-center">
+              <Image
+                className="animate-bounce"
+                width={256}
+                height={256}
+                src="/icon-256.svg"
+                alt="unSAGED Logo"
+                priority
+              />
+            </div>
+            <div className="flex flex-row items-center justify-center">
+              <h2 className="text-xl font-bold text-primary-500">{text}</h2>
+            </div>
           </div>
         </div>
       </div>

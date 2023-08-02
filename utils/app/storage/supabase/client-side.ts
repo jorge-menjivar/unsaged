@@ -84,6 +84,9 @@ export class ClientDatabase implements Database {
               Authorization: `Bearer ${customAccessToken}`,
             },
           },
+          auth: {
+            persistSession: false,
+          },
         },
       );
     }
