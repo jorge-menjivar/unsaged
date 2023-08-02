@@ -4,7 +4,15 @@
 
 [![Join our Discord](https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2)](https://discord.gg/rMH2acSEzq)
 
-![Main Screenshot](./public/screenshots/main.png)
+![Screenshot-1](./public/screenshots/screenshot-1.png)
+
+![Screenshot-2](./public/screenshots/screenshot-2.png)
+
+![Screenshot-3](./public/screenshots/screenshot-3.png)
+
+![Screenshot-4](./public/screenshots/screenshot-4.png)
+
+![Screenshot-5](./public/screenshots/screenshot-5.png)
 
 # 🎉 Welcome to unSAGED
 
