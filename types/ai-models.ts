@@ -46,30 +46,16 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 3000,
     vendor: 'OpenAI',
   },
-  'claude-v1': {
-    id: 'claude-v1',
-    maxLength: 24000,
-    tokenLimit: 9000,
-    requestLimit: 7000,
-    vendor: 'Anthropic',
-  },
-  'claude-v1-100k': {
-    id: 'claude-v1-100k',
-    maxLength: 300000,
+  'claude-instant-1': {
+    id: 'claude-instant-1',
+    maxLength: 400000,
     tokenLimit: 100000,
     requestLimit: 98000,
     vendor: 'Anthropic',
   },
-  'claude-instant-v1': {
-    id: 'claude-instant-v1',
-    maxLength: 24000,
-    tokenLimit: 9000,
-    requestLimit: 7000,
-    vendor: 'Anthropic',
-  },
-  'claude-instant-v1-100k': {
-    id: 'claude-instant-v1-100k',
-    maxLength: 300000,
+  'claude-2': {
+    id: 'claude-2',
+    maxLength: 400000,
     tokenLimit: 100000,
     requestLimit: 98000,
     vendor: 'Anthropic',

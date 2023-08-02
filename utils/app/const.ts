@@ -40,6 +40,9 @@ export const ANTHROPIC_API_URL =
 export const ANTHROPIC_API_KEY =
   dockerEnvVarFix(process.env.ANTHROPIC_API_KEY) || '';
 
+export const ANTHROPIC_API_VERSION =
+  dockerEnvVarFix(process.env.ANTHROPIC_API_VERSION) || '2023-06-01';
+
 export const PALM_API_URL =
   dockerEnvVarFix(process.env.PALM_API_URL) ||
   'https://generativelanguage.googleapis.com/v1beta2';

@@ -1,4 +1,8 @@
-import { ANTHROPIC_API_KEY, ANTHROPIC_API_URL } from '@/utils/app/const';
+import {
+  ANTHROPIC_API_KEY,
+  ANTHROPIC_API_URL,
+  ANTHROPIC_API_VERSION,
+} from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
@@ -44,6 +48,7 @@ export async function streamAnthropic(
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
+      'anthropic-version': ANTHROPIC_API_VERSION,
       'x-api-key': apiKey,
     },
     method: 'POST',
@@ -73,26 +78,20 @@ export async function streamAnthropic(
     }
   }
 
-  let sentText = '';
-
   const stream = new ReadableStream({
     async start(controller) {
       const onParse = (event: ParsedEvent | ReconnectInterval) => {
         if (event.type === 'event') {
-          const data = event.data;
-          if (data === '[DONE]') {
-            controller.close();
-            return;
-          }
+          const raw_data = event.data;
 
           try {
-            const json = JSON.parse(data);
-            const textReceived: string = json.completion;
-
-            const textToSend = textReceived.substring(sentText.length);
-            sentText = textReceived;
-
-            const queue = encoder.encode(textToSend);
+            const data = JSON.parse(raw_data);
+            if (data.stop_reason != null) {
+              controller.close();
+              return;
+            }
+            const text = data.completion;
+            const queue = encoder.encode(text);
             controller.enqueue(queue);
           } catch (e) {
             controller.error(e);

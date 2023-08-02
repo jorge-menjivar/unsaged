@@ -29,6 +29,19 @@ export const supaGetConversations = async (
           supaConversation.system_prompt_id,
         );
       }
+
+      if (
+        supaConversation.model_id === 'claude-instant-v1' ||
+        supaConversation.model_id === 'claude-instant-v1-100k'
+      ) {
+        supaConversation.model_id = 'claude-instant-1';
+      } else if (
+        supaConversation.model_id === 'claude-v1' ||
+        supaConversation.model_id === 'claude-v1-100k'
+      ) {
+        supaConversation.model_id = 'claude-2';
+      }
+
       const conversation: Conversation = {
         id: supaConversation.id,
         name: supaConversation.name,

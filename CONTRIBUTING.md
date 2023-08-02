@@ -1,45 +1,34 @@
-# Contributing Guidelines
+# 📝 Contributing Guidelines
 
-**Welcome to unSAGED!**
+**Welcome to unSAGED!** 🎉
 
-We appreciate your interest in contributing to our project.
+We're thrilled that you're considering contributing to our project. Your support is essential in maintaining and enhancing the quality of unSAGED.
 
-Before you get started, please read our guidelines for contributing.
+Before you start, we highly recommend that you read through our contributing guidelines. This will ensure a smooth and effective collaboration. 📚
 
-## Types of Contributions
+## 🚀 Ways to Contribute
 
-We welcome the following types of contributions:
+We appreciate all types of contributions. Here are some ways you can contribute:
 
-- Bug fixes
-- New features
-- Documentation improvements
-- Code optimizations
-- Translations
-- Tests
+- 🐛 **Bug Fixes**: Found a bug? Don't hesitate to fix it and submit a pull request.
+- ✨ **Feature Additions**: Got a feature in mind? Implement it and submit a pull request. We're excited to see your ideas come to life!
+- 📚 **Documentation**: If you can enhance our documentation to make it clearer and more informative, we welcome your contributions.
+- 🏎 **Code Optimization**: If you can make our code more efficient, we'd love to hear from you!
+- 🌐 **Translations**: Help us make our project accessible to more users by providing translations.
+- 🧪 **Testing**: Help us improve the robustness of our code by enhancing our test coverage.
 
-## Getting Started
+## 🏁 Getting Started
 
-To get started, fork the project on GitHub and clone it locally on your machine. Then, create a new branch to work on your changes.
+Here's a step-by-step guide to help you start with your contribution:
 
-```
-git clone https://github.com/jorge-menjivar/unSAGED.git
-cd unSAGED
-git checkout -b my-branch-name
+1. Fork the project on GitHub: This creates your own copy of our project where you can make your changes.
+2. Clone your forked repository to your local machine: This allows you to work on the changes locally.
+3. Create a new branch from the main branch: This ensures that your changes are isolated and can be reviewed independently.
+4. Make your changes on the new branch: This is your moment to bring your contribution to life!
+5. Ensure that your changes adhere to our code style guidelines and pass our automated tests: This helps maintain the quality and consistency of our codebase.
+6. Commit your changes and push them to your forked repository: This saves your changes and prepares them for submission.
+7. Submit a pull request to the main branch of the main repository: This is the final step where you submit your contribution for review.
 
-```
+## 📧 Contact
 
-Before submitting your pull request, please make sure your changes pass our automated tests and adhere to our code style guidelines.
-
-## Pull Request Process
-
-1. Fork the project on GitHub.
-2. Clone your forked repository locally on your machine.
-3. Create a new branch from the main branch.
-4. Make your changes on the new branch.
-5. Ensure that your changes adhere to our code style guidelines and pass our automated tests.
-6. Commit your changes and push them to your forked repository.
-7. Submit a pull request to the main branch of the main repository.
-
-## Contact
-
-If you have any questions or need help getting started, feel free to reach out to me on [Twitter](https://twitter.com/jorgemenjivarr).
+If you have any questions or need help getting started, don't hesitate to reach out to me via [e-mail](mailto:jorge@useatlas.ai).

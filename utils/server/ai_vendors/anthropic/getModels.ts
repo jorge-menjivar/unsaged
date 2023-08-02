@@ -15,10 +15,8 @@ export async function getAvailableAnthropicModels(key?: string) {
     }
   }
   const models: AiModel[] = [
-    PossibleAiModels['claude-v1'],
-    PossibleAiModels['claude-v1-100k'],
-    PossibleAiModels['claude-instant-v1'],
-    PossibleAiModels['claude-instant-v1-100k'],
+    PossibleAiModels['claude-instant-1'],
+    PossibleAiModels['claude-2'],
   ];
 
   return { data: models };
