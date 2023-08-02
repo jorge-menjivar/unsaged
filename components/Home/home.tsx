@@ -1,15 +1,9 @@
 import { useCallback, useEffect } from 'react';
-import { useQuery } from 'react-query';
 
-import { GetServerSideProps } from 'next';
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
+import Image from 'next/image';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
-
-import useErrorService from '@/services/errorService';
-import useApiService from '@/services/useApiService';
 
 import {
   cleanConversationHistory,
@@ -17,10 +11,15 @@ import {
 } from '@/utils/app/clean';
 import {
   DEFAULT_ANTHROPIC_SYSTEM_PROMPT,
+  DEFAULT_MODEL,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
   DEFAULT_PALM_SYSTEM_PROMPT,
   DEFAULT_TEMPERATURE,
 } from '@/utils/app/const';
+import { useAuth } from '@/utils/app/retrieval/auth';
+import { useConversations } from '@/utils/app/retrieval/conversations';
+import { useDatabase } from '@/utils/app/retrieval/database';
+import { useModels } from '@/utils/app/retrieval/models';
 import { getSettings } from '@/utils/app/settings/getSettings';
 import { setSettingChoices } from '@/utils/app/settings/settingChoices';
 import {
@@ -65,31 +64,21 @@ import { AiModel, PossibleAiModels } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface } from '@/types/folder';
-import { Namespace } from '@/types/learning';
 import { Prompt } from '@/types/prompt';
 import { SettingChoice } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { ChatZone } from '@/components/ChatZone/ChatZone';
-import { Navbar } from '@/components/Mobile/Navbar';
-import { PrimaryMenu } from '@/components/PrimaryMenu/PrimaryMenu';
-import { SecondaryMenu } from '@/components/SecondaryMenu/SecondaryMenu';
+import { ChatZone } from './components/ChatZone/ChatZone';
+import { Navbar } from './components/Mobile/Navbar';
+import { PrimaryMenu } from '@/components/Home/components/PrimaryMenu/PrimaryMenu';
+import { SecondaryMenu } from '@/components/Home/components/SecondaryMenu/SecondaryMenu';
 
 import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
 
-interface Props {
-  serverSideApiKeyIsSet: boolean;
-  defaultModelId: string;
-}
-
-const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
-  const { t } = useTranslation('chat');
-  const { getModels } = useApiService();
-  const { getModelsError } = useErrorService();
-
+const Home = () => {
   const contextValue = useCreateReducer<HomeInitialState>({
     initialState,
   });
@@ -107,7 +96,6 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
       user,
       savedSettings,
       settings,
-      fetchComplete,
       models,
       builtInSystemPrompts,
       settingsLoaded,
@@ -115,69 +103,20 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
     dispatch,
   } = contextValue;
 
-  const { data, error, refetch } = useQuery(
-    [
-      'GetModels',
-      settingsLoaded,
-      savedSettings,
-      serverSideApiKeyIsSet,
-      dispatch,
-    ],
-    ({ signal }) => {
-      const openAiApiKey = getSavedSettingValue(
-        savedSettings,
-        'openai',
-        'api_key',
-      );
+  // AUTH ---------------------------------------------------------
+  useAuth(dispatch, user);
 
-      const anthropicApiKey = getSavedSettingValue(
-        savedSettings,
-        'anthropic',
-        'api_key',
-      );
+  // DATABASE ---------------------------------------------------------
+  useDatabase(dispatch, database);
 
-      const palmApiKey = getSavedSettingValue(
-        savedSettings,
-        'google',
-        'api_key',
-      );
+  // MODELS ----------------------------------------------
+  useModels(dispatch, savedSettings, models);
 
-      dispatch({
-        field: 'apiKey',
-        value: openAiApiKey || anthropicApiKey || palmApiKey,
-      });
-
-      if (
-        !openAiApiKey &&
-        !anthropicApiKey &&
-        !palmApiKey &&
-        !serverSideApiKeyIsSet
-      )
-        return null;
-
-      return getModels(
-        {
-          openai_key: openAiApiKey,
-          anthropic_key: anthropicApiKey,
-          palm_key: palmApiKey,
-        },
-        signal,
-      );
-    },
-    { enabled: true, refetchOnMount: false },
-  );
-
-  useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
-  }, [data, dispatch]);
-
-  useEffect(() => {
-    dispatch({ field: 'modelError', value: getModelsError(error) });
-  }, [dispatch, error, getModelsError]);
-
-  // FETCH MODELS ----------------------------------------------
+  // CONVERSATIONS ---------------------------------------------------------
+  useConversations(dispatch, database, user, conversations);
 
   const handleSelectConversation = (conversation: Conversation) => {
+    if (!database || !user) return;
     dispatch({
       field: 'selectedConversation',
       value: conversation,
@@ -197,6 +136,8 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
     name: string,
     type: FolderInterface['type'],
   ) => {
+    if (!database || !user) return;
+
     const updatedFolders = storageCreateFolder(
       database,
       user,
@@ -209,6 +150,8 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
   };
 
   const handleDeleteFolder = async (folderId: string) => {
+    if (!database || !user) return;
+
     const updatedFolders = folders.filter((f) => f.id !== folderId);
     dispatch({ field: 'folders', value: updatedFolders });
 
@@ -244,6 +187,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
   };
 
   const handleUpdateFolder = async (folderId: string, name: string) => {
+    if (!database || !user) return;
     const updatedFolders = storageUpdateFolder(
       database,
       user,
@@ -259,6 +203,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
 
   const autoUpdateConversations = useCallback(
     async (oldConversations: Conversation[]) => {
+      if (!database || !user) return;
       for (const conversation of oldConversations) {
         if (conversation.systemPrompt) {
           const systemPrompt = systemPrompts.find(
@@ -287,10 +232,11 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
   }, [autoUpdateConversations, conversations, systemPrompts]);
 
   const handleNewConversation = async () => {
+    if (!database || !user) return;
     if (savedSettings && settings) {
       const lastConversation = conversations[conversations.length - 1];
 
-      const model = lastConversation?.model || PossibleAiModels[defaultModelId];
+      const model = lastConversation?.model || PossibleAiModels[DEFAULT_MODEL];
       // const sectionId = model.vendor.toLowerCase();
       // const settingId = `${model.id}_default_system_prompt`;
       // const systemPromptId = getSavedSettingValue(
@@ -304,7 +250,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
 
       const newConversation: Conversation = {
         id: uuidv4(),
-        name: `${t('New Conversation')}`,
+        name: 'New Conversation',
         messages: [],
         model: model,
         systemPrompt: null,
@@ -327,48 +273,6 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
       dispatch({ field: 'loading', value: false });
     }
   };
-
-  const autogenerateConversation = useCallback(async () => {
-    const model = PossibleAiModels[defaultModelId];
-    // const sectionId = model.vendor.toLowerCase();
-    // const settingId = `${model.id}_default_system_prompt`;
-    // const systemPromptId = getSavedSettingValue(
-    //   savedSettings,
-    //   sectionId,
-    //   settingId,
-    //   settings,
-    // );
-
-    // const systemPrompt = systemPrompts.find((p) => p.id === systemPromptId);
-
-    const newConversation: Conversation = {
-      id: uuidv4(),
-      name: `${t('New Conversation')}`,
-      messages: [],
-      model: model,
-      systemPrompt: null,
-      temperature: DEFAULT_TEMPERATURE,
-      folderId: null,
-      timestamp: getTimestampWithTimezoneOffset(),
-    };
-
-    const updatedConversations = storageCreateConversation(
-      database,
-      user,
-      newConversation,
-      [],
-    );
-    dispatch({ field: 'selectedConversation', value: newConversation });
-    dispatch({ field: 'conversations', value: updatedConversations });
-
-    saveSelectedConversation(user, newConversation);
-  }, [database, defaultModelId, dispatch, t, user]);
-
-  useEffect(() => {
-    if (conversations.length === 0 && fetchComplete) {
-      autogenerateConversation();
-    }
-  }, [conversations, fetchComplete, autogenerateConversation]);
 
   const generateBuiltInSystemPrompts = useCallback(() => {
     const vendors: AiModel['vendor'][] = ['Anthropic', 'OpenAI', 'Google'];
@@ -423,6 +327,8 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
     conversation: Conversation,
     data: KeyValuePair,
   ) => {
+    if (!database || !user) return;
+
     const updatedConversation = {
       ...conversation,
       [data.key]: data.value,
@@ -489,23 +395,10 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
     }
   }, [dispatch, selectedConversation, display]);
 
-  useEffect(() => {
-    defaultModelId &&
-      dispatch({ field: 'defaultModelId', value: defaultModelId });
-    database && dispatch({ field: 'database', value: database });
-    serverSideApiKeyIsSet &&
-      dispatch({
-        field: 'serverSideApiKeyIsSet',
-        value: serverSideApiKeyIsSet,
-      });
-  }, [defaultModelId, database, serverSideApiKeyIsSet, dispatch]);
-
   // ON LOAD --------------------------------------------
 
   useEffect(() => {
-    if (serverSideApiKeyIsSet) {
-      dispatch({ field: 'apiKey', value: true });
-    }
+    if (!database || !user) return;
 
     if (window.innerWidth < 640) {
       dispatch({ field: 'showPrimaryMenu', value: false });
@@ -532,49 +425,13 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
         dispatch({ field: 'prompts', value: prompts });
       }
     });
-
-    storageGetConversations(database, user)
-      .then((conversationHistory) => {
-        if (conversationHistory) {
-          const parsedConversationHistory: Conversation[] = conversationHistory;
-          const cleanedConversations = cleanConversationHistory(
-            parsedConversationHistory,
-          );
-
-          const selectedConversation = getSelectedConversation(user);
-
-          if (selectedConversation) {
-            const parsedSelectedConversation: Conversation =
-              JSON.parse(selectedConversation);
-            const cleanedSelectedConversation = cleanSelectedConversation(
-              parsedSelectedConversation,
-            );
-
-            dispatch({
-              field: 'selectedConversation',
-              value: cleanedSelectedConversation,
-            });
-          } else if (cleanedConversations.length > 0) {
-            dispatch({
-              field: 'selectedConversation',
-              value: cleanedConversations[0],
-            });
-          }
-
-          dispatch({
-            field: 'conversations',
-            value: cleanedConversations,
-          });
-        }
-      })
-      .then(() => {
-        dispatch({ field: 'fetchComplete', value: true });
-      });
-  }, [user, defaultModelId, database, dispatch, serverSideApiKeyIsSet]);
+  }, [user, database, dispatch]);
 
   // SETTINGS --------------------------------------------
 
   useEffect(() => {
+    if (!database || !user) return;
+
     const settings = getSettings();
     dispatch({ field: 'settings', value: settings });
 
@@ -596,6 +453,8 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
   }, [dispatch, database, user]);
 
   useEffect(() => {
+    if (!database || !user) return;
+
     if (!settingsLoaded) {
       const newSavedSettings = getSavedSettings(user);
 
@@ -609,7 +468,7 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
         value: true,
       });
     }
-  }, [dispatch, savedSettings, user, settingsLoaded]);
+  }, [dispatch, savedSettings, user, settingsLoaded, database]);
 
   useEffect(() => {
     if (savedSettings && settings) {
@@ -626,50 +485,69 @@ const Home = ({ serverSideApiKeyIsSet, defaultModelId }: Props) => {
       });
     }
   }, [savedSettings, settings, dispatch]);
-
-  return (
-    <HomeContext.Provider
-      value={{
-        ...contextValue,
-        handleNewConversation,
-        handleCreateFolder,
-        handleDeleteFolder,
-        handleUpdateFolder,
-        handleSelectConversation,
-        handleUpdateConversation,
-      }}
-    >
-      <Head>
-        <title>unSAGED</title>
-        <meta
-          name="description"
-          content="The singular space for Generative AI"
-        />
-        <meta
-          name="viewport"
-          content="height=device-height, width=device-width, initial-scale=1, user-scalable=no"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      {selectedConversation && (
-        <main
-          className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
+  if (user && database && conversations.length > 0) {
+    return (
+      <HomeContext.Provider
+        value={{
+          ...contextValue,
+          handleNewConversation,
+          handleCreateFolder,
+          handleDeleteFolder,
+          handleUpdateFolder,
+          handleSelectConversation,
+          handleUpdateConversation,
+        }}
+      >
+        {selectedConversation && (
+          <main
+            className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
           text-black dark:text-white ${lightMode} m-0 p-0 overflow-hidden`}
-        >
-          <div className="absolute top-0 z-50 w-full sm:hidden">
-            <Navbar
-              selectedConversation={selectedConversation}
-              onNewConversation={handleNewConversation}
+          >
+            <div className="absolute top-0 z-50 w-full sm:hidden">
+              <Navbar
+                selectedConversation={selectedConversation}
+                onNewConversation={handleNewConversation}
+              />
+            </div>
+            <div className="flex flex-shrink w-full h-full max-h-full pt-[50px] sm:pt-0 overflow-hidden overscroll-none">
+              <PrimaryMenu />
+              <ChatZone />
+              <SecondaryMenu />
+            </div>
+          </main>
+        )}
+      </HomeContext.Provider>
+    );
+  } else {
+    let text = '';
+
+    if (!user) {
+      text = 'Initializing Auth System...';
+    } else if (!database) {
+      text = 'Initializing Database...';
+    } else if (conversations.length === 0) {
+      text = 'Loading Conversations...';
+    }
+
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-screen bg-[#ffffff]">
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-row items-center justify-center">
+            <Image
+              className="animate-bounce"
+              width={256}
+              height={256}
+              src="/icon-256.svg"
+              alt="unSAGED Logo"
+              priority
             />
           </div>
-          <div className="flex flex-shrink w-full h-full max-h-full pt-[50px] sm:pt-0 overflow-hidden overscroll-none">
-            <PrimaryMenu />
-            <ChatZone />
-            <SecondaryMenu />
+          <div className="flex flex-row items-center justify-center">
+            <h2 className="text-xl font-bold text-primary-500">{text}</h2>
           </div>
-        </main>
-      )}
-    </HomeContext.Provider>
-  );
+        </div>
+      </div>
+    );
+  }
 };
 export default Home;

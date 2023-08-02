@@ -1,7 +1,7 @@
 import { dockerEnvVarFix } from './docker/envFix';
 
 export const DEFAULT_MODEL =
-  dockerEnvVarFix(process.env.DEFAULT_MODEL) || 'gpt-3.5-turbo';
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_MODEL) || 'gpt-3.5-turbo';
 
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||

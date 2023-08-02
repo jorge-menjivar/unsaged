@@ -1,6 +1,3 @@
-import { getUser } from '@/utils/app/auth/helpers';
-import { getDatabase } from '@/utils/app/extensions/database';
-
 import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
@@ -12,8 +9,7 @@ import { SavedSetting, SettingsSection } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
 
 export interface HomeInitialState {
-  apiKey: boolean;
-  database: Database;
+  database: Database | null;
   loading: boolean;
   lightMode: 'light' | 'dark';
   messageIsStreaming: boolean;
@@ -34,7 +30,7 @@ export interface HomeInitialState {
   serverSideApiKeyIsSet: boolean;
   systemPrompts: SystemPrompt[];
   builtInSystemPrompts: SystemPrompt[];
-  user: User;
+  user: User | null;
   display: 'chat' | 'settings';
   savedSettings: SavedSetting[];
   settings: SettingsSection[];
@@ -43,8 +39,7 @@ export interface HomeInitialState {
 }
 
 export const initialState: HomeInitialState = {
-  apiKey: true,
-  database: await getDatabase(),
+  database: null,
   loading: false,
   lightMode: 'dark',
   messageIsStreaming: false,
@@ -65,7 +60,7 @@ export const initialState: HomeInitialState = {
   serverSideApiKeyIsSet: false,
   systemPrompts: [],
   builtInSystemPrompts: [],
-  user: await getUser(),
+  user: null,
   display: 'chat',
   savedSettings: [],
   settings: [],
