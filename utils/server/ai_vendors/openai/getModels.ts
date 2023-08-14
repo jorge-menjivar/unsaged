@@ -1,4 +1,5 @@
 import {
+  OPENAI_API_KEY,
   OPENAI_API_TYPE,
   OPENAI_API_URL,
   OPENAI_API_VERSION,
@@ -16,15 +17,14 @@ export async function getAvailableOpenAIModels(key?: string) {
   if (OPENAI_API_TYPE === 'azure') {
     url = `${OPENAI_API_URL}/openai/deployments?api-version=${OPENAI_API_VERSION}`;
   }
-
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
       ...(OPENAI_API_TYPE === 'openai' && {
-        Authorization: `Bearer ${key ? key : process.env.OPENAI_API_KEY}`,
+        Authorization: `Bearer ${key ? key : OPENAI_API_KEY}`,
       }),
       ...(OPENAI_API_TYPE === 'azure' && {
-        'api-key': `${key ? key : process.env.OPENAI_API_KEY}`,
+        'api-key': `${key ? key : OPENAI_API_KEY}`,
       }),
       ...(OPENAI_API_TYPE === 'openai' &&
         OPENAI_ORGANIZATION && {

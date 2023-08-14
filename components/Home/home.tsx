@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import Image from 'next/image';
@@ -10,12 +10,14 @@ import {
   cleanSelectedConversation,
 } from '@/utils/app/clean';
 import {
+  DEBUG_MODE,
   DEFAULT_ANTHROPIC_SYSTEM_PROMPT,
   DEFAULT_MODEL,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
   DEFAULT_PALM_SYSTEM_PROMPT,
   DEFAULT_TEMPERATURE,
 } from '@/utils/app/const';
+import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { useAuth } from '@/utils/app/retrieval/auth';
 import { useConversations } from '@/utils/app/retrieval/conversations';
 import { useDatabase } from '@/utils/app/retrieval/database';
@@ -79,6 +81,8 @@ import { HomeInitialState, initialState } from './home.state';
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = () => {
+  const [debugLogPrinted, setDebugLogPrinted] = useState(false);
+
   const contextValue = useCreateReducer<HomeInitialState>({
     initialState,
   });
@@ -102,6 +106,16 @@ const Home = () => {
     },
     dispatch,
   } = contextValue;
+
+  useEffect(() => {
+    if (DEBUG_MODE) {
+      if (!debugLogPrinted) {
+        console.log('----------CLIENT-SIDE ENVIRONMENT VARIABLES----------');
+        printEnvVariables();
+        setDebugLogPrinted(true);
+      }
+    }
+  }, [debugLogPrinted]);
 
   // AUTH ---------------------------------------------------------
   useAuth(dispatch, user);

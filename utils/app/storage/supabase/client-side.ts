@@ -1,8 +1,3 @@
-import {
-  NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  NEXT_PUBLIC_SUPABASE_URL,
-} from './utils/constants';
-
 import { SupaDatabase } from './types/supabase';
 import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
@@ -11,6 +6,7 @@ import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
 import { SystemPrompt } from '@/types/system-prompt';
 
+import { OPENAI_API_KEY, SUPABASE_ANON_KEY, SUPABASE_URL } from '../../const';
 import {
   supaCreateConversation,
   supaDeleteConversation,
@@ -76,8 +72,8 @@ export class ClientDatabase implements Database {
   }): Promise<void> {
     if (!this.supabase) {
       this.supabase = createClient<SupaDatabase>(
-        NEXT_PUBLIC_SUPABASE_URL,
-        NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
         {
           global: {
             headers: {

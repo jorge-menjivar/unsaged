@@ -1,11 +1,11 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 
+import { getProviders } from '@/utils/app/auth/providers';
 import {
-  NEXT_PUBLIC_SUPABASE_URL,
   SUPABASE_JWT_SECRET,
   SUPABASE_SERVICE_ROLE_KEY,
-} from '@/utils/app/auth/constants';
-import { getProviders } from '@/utils/app/auth/providers';
+  SUPABASE_URL,
+} from '@/utils/app/const';
 
 import { SupabaseAdapter } from '@next-auth/supabase-adapter';
 import jwt from 'jsonwebtoken';
@@ -17,7 +17,7 @@ const authOptions: NextAuthOptions = {
   // Supabase adapter is only enabled if JWT secret is specified
   adapter: SUPABASE_JWT_SECRET
     ? SupabaseAdapter({
-        url: NEXT_PUBLIC_SUPABASE_URL,
+        url: SUPABASE_URL,
         secret: SUPABASE_SERVICE_ROLE_KEY,
       })
     : undefined,

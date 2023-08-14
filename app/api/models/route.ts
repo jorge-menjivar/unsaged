@@ -1,3 +1,5 @@
+import { DEBUG_MODE } from '@/utils/app/const';
+import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { getAvailableAnthropicModels } from '@/utils/server/ai_vendors/anthropic/getModels';
 import { getAvailablePalm2Models } from '@/utils/server/ai_vendors/google/getModels';
 import { getAvailableOpenAIModels } from '@/utils/server/ai_vendors/openai/getModels';
@@ -8,6 +10,11 @@ export const runtime = 'edge';
 
 const handler = async (req: Request): Promise<Response> => {
   try {
+    if (DEBUG_MODE) {
+      console.log('----------SERVER-SIDE ENVIRONMENT VARIABLES----------');
+      printEnvVariables();
+    }
+
     const { openai_key, anthropic_key, palm_key } = (await req.json()) as {
       openai_key: string;
       anthropic_key: string;

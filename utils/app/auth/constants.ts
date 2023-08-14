@@ -1,15 +1,5 @@
 import { dockerEnvVarFix } from '../docker/envFix';
 
-export const NEXT_PUBLIC_SUPABASE_URL =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_URL) || '';
-
-export const SUPABASE_SERVICE_ROLE_KEY =
-  dockerEnvVarFix(process.env.SUPABASE_SERVICE_ROLE_KEY) || '';
-
-export const SUPABASE_JWT_SECRET =
-  dockerEnvVarFix(process.env.SUPABASE_JWT_SECRET) || '';
-
-// -------------------------------PROVIDERS-----------------------------
 export const APPLE_CLIENT_ID =
   dockerEnvVarFix(process.env.APPLE_CLIENT_ID) || '';
 
