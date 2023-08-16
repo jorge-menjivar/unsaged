@@ -32,6 +32,8 @@ export const ConversationsSettings = () => {
         <ClearConversations onClearConversations={handleClearConversations} />
       ) : null}
 
+      <Import onImport={handleImportConversations} />
+
       <SidebarButton
         text={t('Export data')}
         icon={<IconFileExport size={18} />}

@@ -37,7 +37,8 @@ export const supaUpdatePrompts = async (
   const updates = updatedPrompts.map((prompt) =>
     supabase
       .from('prompts')
-      .update({
+      .upsert({
+        id: prompt.id,
         content: prompt.content,
         description: prompt.description,
         folder_id: prompt.folderId,

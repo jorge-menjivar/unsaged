@@ -29,7 +29,8 @@ export const supaUpdateFolders = async (
   const updates = folders.map((folder) =>
     supabase
       .from('folders')
-      .update({
+      .upsert({
+        id: folder.id,
         name: folder.name,
         folder_type: folder.type,
       })

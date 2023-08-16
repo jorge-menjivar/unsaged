@@ -2,77 +2,52 @@ import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 import {
-  ExportFormatV1,
-  ExportFormatV2,
-  ExportFormatV3,
-  ExportFormatV4,
   LatestExportFormat,
   SupportedExportFormats,
+  UnsagedExportFormatV1,
 } from '@/types/export';
 import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
 
-import { cleanConversationHistory } from './clean';
+import {
+  cleanConversationHistory,
+  cleanFolders,
+  cleanMessageTemplates,
+} from './clean';
 import {
   storageGetConversations,
   storageUpdateConversations,
 } from './storage/conversations';
 import { storageGetFolders, storageUpdateFolders } from './storage/folders';
-import { storageUpdateMessages } from './storage/messages';
+import {
+  storageCreateMessages,
+  storageUpdateMessages,
+} from './storage/messages';
 import { storageGetPrompts, storageUpdatePrompts } from './storage/prompts';
 import { saveSelectedConversation } from './storage/selectedConversation';
 import { deleteSelectedConversation } from './storage/selectedConversation';
 
-export function isExportFormatV1(obj: any): obj is ExportFormatV1 {
+export function isExportFormatV1(obj: any): obj is UnsagedExportFormatV1 {
   return Array.isArray(obj);
 }
 
-export function isExportFormatV2(obj: any): obj is ExportFormatV2 {
-  return !('version' in obj) && 'folders' in obj && 'history' in obj;
-}
+export const isLatestExportFormat = isExportFormatV1;
 
-export function isExportFormatV3(obj: any): obj is ExportFormatV3 {
-  return obj.version === 3;
-}
-
-export function isExportFormatV4(obj: any): obj is ExportFormatV4 {
-  return obj.version === 4;
-}
-
-export const isLatestExportFormat = isExportFormatV4;
-
-export function cleanData(data: SupportedExportFormats): LatestExportFormat {
+export function cleanData(data: any): LatestExportFormat {
   if (isExportFormatV1(data)) {
-    return {
-      version: 4,
-      history: cleanConversationHistory(data),
-      folders: [],
-      prompts: [],
-    };
-  }
-
-  if (isExportFormatV2(data)) {
-    return {
-      version: 4,
-      history: cleanConversationHistory(data.history || []),
-      folders: (data.folders || []).map((chatFolder) => ({
-        id: chatFolder.id.toString(),
-        name: chatFolder.name,
-        type: 'chat',
-      })),
-      prompts: [],
-    };
-  }
-
-  if (isExportFormatV3(data)) {
-    return { ...data, version: 4, prompts: [] };
-  }
-
-  if (isExportFormatV4(data)) {
     return data;
   }
-
-  throw new Error('Unsupported data format');
+  {
+    // Attempt to convert to unSAGED format
+    return {
+      app: 'unSAGED',
+      version: 1,
+      conversations: cleanConversationHistory(data.history),
+      folders: cleanFolders(data.folders),
+      message_templates: cleanMessageTemplates(data.prompts),
+      system_prompts: [],
+    };
+  }
 }
 
 function currentDate() {
@@ -83,15 +58,18 @@ function currentDate() {
 }
 
 export const exportData = async (database: Database, user: User) => {
+  // TODO: This function is not ready yet
   let history = await storageGetConversations(database, user);
   let folders = await storageGetFolders(database, user);
   let prompts = await storageGetPrompts(database, user);
 
   const data = {
-    version: 4,
-    history: history || [],
+    app: 'unSAGED',
+    version: 1,
+    conversations: history || [],
     folders: folders || [],
-    prompts: prompts || [],
+    message_templates: prompts || [],
+    system_prompts: [],
   } as LatestExportFormat;
 
   const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -113,7 +91,15 @@ export const importData = async (
   user: User,
   data: SupportedExportFormats,
 ): Promise<LatestExportFormat> => {
-  const { history, folders, prompts } = cleanData(data);
+  const { conversations, folders, system_prompts, message_templates } =
+    cleanData(data);
+
+  console.log('cleaned data', {
+    conversations,
+    folders,
+    system_prompts,
+    message_templates,
+  });
 
   // Updating folders
   const oldFolders = await storageGetFolders(database, user);
@@ -126,43 +112,59 @@ export const importData = async (
 
   // Updating conversations
   const oldConversations = await storageGetConversations(database, user);
-  const newHistory: Conversation[] = [...oldConversations, ...history].filter(
+  const newConversations: Conversation[] = [
+    ...oldConversations,
+    ...conversations,
+  ].filter(
     (conversation, index, self) =>
       index === self.findIndex((c) => c.id === conversation.id),
   );
 
-  await storageUpdateConversations(database, user, newHistory);
+  console.log('newHistory', newConversations);
 
-  for (const conversation of history) {
+  await storageUpdateConversations(database, user, newConversations);
+
+  // Updating messages
+  for (const conversation of conversations) {
     if (conversation.messages.length > 0) {
       storageUpdateMessages(
         database,
         user,
         conversation,
         conversation.messages,
-        newHistory,
+        newConversations,
       );
     }
   }
-  if (newHistory.length > 0) {
-    saveSelectedConversation(user, newHistory[newHistory.length - 1]);
+  if (newConversations.length > 0) {
+    saveSelectedConversation(
+      user,
+      newConversations[newConversations.length - 1],
+    );
   } else {
     deleteSelectedConversation(user);
   }
 
   // Updating prompts
   const oldPrompts = await storageGetPrompts(database, user);
-  const newPrompts: Prompt[] = [...oldPrompts, ...prompts].filter(
+  const newMessageTemplates: Prompt[] = [
+    ...oldPrompts,
+    ...message_templates,
+  ].filter(
     (prompt, index, self) =>
       index === self.findIndex((p) => p.id === prompt.id),
   );
 
-  storageUpdatePrompts(database, user, prompts);
+  console.log('newPrompts', newMessageTemplates);
+
+  storageUpdatePrompts(database, user, newMessageTemplates);
 
   return {
-    version: 4,
-    history: newHistory,
+    app: 'unSAGED',
+    version: 1,
+    conversations: newConversations,
     folders: newFolders,
-    prompts: newPrompts,
+    message_templates: newMessageTemplates,
+    system_prompts: system_prompts,
   };
 };
