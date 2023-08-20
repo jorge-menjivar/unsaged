@@ -72,20 +72,20 @@ export const Conversations = () => {
 
   const handleImportConversations = async (data: SupportedExportFormats) => {
     if (!database || !user) return;
-    const { history, folders, prompts }: LatestExportFormat = await importData(
-      database,
-      user,
-      data,
-    );
-    homeDispatch({ field: 'conversations', value: history });
+    const {
+      conversations,
+      folders,
+      system_prompts,
+      message_templates,
+    }: LatestExportFormat = await importData(database, user, data);
+    homeDispatch({ field: 'conversations', value: conversations });
     homeDispatch({
       field: 'selectedConversation',
-      value: history[history.length - 1],
+      value: conversations[conversations.length - 1],
     });
     homeDispatch({ field: 'folders', value: folders });
-    homeDispatch({ field: 'prompts', value: prompts });
-
-    window.location.reload();
+    homeDispatch({ field: 'prompts', value: message_templates });
+    homeDispatch({ field: 'systemPrompts', value: system_prompts });
   };
 
   const handleClearConversations = async () => {

@@ -8,7 +8,11 @@ import {
   isLatestExportFormat,
 } from '@/utils/app/importExport';
 
-import { ExportFormatV1, ExportFormatV2, ExportFormatV4 } from '@/types/export';
+import {
+  ChatbotUIFormatV4,
+  ExportFormatV1,
+  ExportFormatV2,
+} from '@/types/export';
 import { OpenAIModelID, OpenAIModels } from '@/types/openai';
 
 import { describe, expect, it } from 'vitest';
@@ -215,7 +219,7 @@ describe('cleanData Functions', () => {
             folderId: null,
           },
         ],
-      } as ExportFormatV4;
+      } as ChatbotUIFormatV4;
 
       const obj = cleanData(data);
       expect(isLatestExportFormat(obj)).toBe(true);

@@ -1,9 +1,14 @@
 import { format } from 'date-fns';
 
 // Function to get timestamp with Timezone Offset
-export function getTimestampWithTimezoneOffset(): string {
+export function getTimestampWithTimezoneOffset(secondsOffset?: number): string {
   // Get current date
   const currentDate = new Date();
+
+  // If secondsOffset is provided, add it to the current date
+  if (secondsOffset) {
+    currentDate.setSeconds(currentDate.getSeconds() + secondsOffset);
+  }
 
   // Get timezone offset in minutes
   const timezoneOffset = currentDate.getTimezoneOffset();
