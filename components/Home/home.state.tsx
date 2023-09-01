@@ -1,3 +1,5 @@
+import { DEFAULT_MODEL } from '@/utils/app/const';
+
 import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
@@ -56,7 +58,7 @@ export const initialState: HomeInitialState = {
   currentFolder: undefined,
   messageError: false,
   searchTerm: '',
-  defaultModelId: undefined,
+  defaultModelId: DEFAULT_MODEL,
   serverSideApiKeyIsSet: false,
   systemPrompts: [],
   builtInSystemPrompts: [],

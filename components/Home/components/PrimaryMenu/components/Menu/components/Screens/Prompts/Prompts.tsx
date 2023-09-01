@@ -32,7 +32,7 @@ const Prompts = () => {
   });
 
   const {
-    state: { prompts, defaultModelId, database, user },
+    state: { prompts, database, user },
     dispatch: homeDispatch,
     handleCreateFolder,
   } = useContext(HomeContext);
@@ -43,25 +43,23 @@ const Prompts = () => {
   } = promptBarContextValue;
 
   const handleCreatePrompt = () => {
-    if (defaultModelId) {
-      const newPrompt: Prompt = {
-        id: uuidv4(),
-        name: `Template ${prompts.length + 1}`,
-        description: '',
-        content: '',
-        models: [],
-        folderId: null,
-      };
+    const newPrompt: Prompt = {
+      id: uuidv4(),
+      name: `Template ${prompts.length + 1}`,
+      description: '',
+      content: '',
+      models: [],
+      folderId: null,
+    };
 
-      const updatedPrompts = storageCreatePrompt(
-        database!,
-        user!,
-        newPrompt,
-        prompts,
-      );
+    const updatedPrompts = storageCreatePrompt(
+      database!,
+      user!,
+      newPrompt,
+      prompts,
+    );
 
-      homeDispatch({ field: 'prompts', value: updatedPrompts });
-    }
+    homeDispatch({ field: 'prompts', value: updatedPrompts });
   };
 
   const handleDeletePrompt = (prompt: Prompt) => {
