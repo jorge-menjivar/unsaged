@@ -133,7 +133,7 @@ When deploying the application, the following environment variables can be set:
 
 | Required  | Environment Variable                        | Default value                                       | Description                                                                                                                          |
 | --------- | ------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| No        | NEXT_PUBLIC_DEBUG_MODE                      | `false`                                             | Enables debug mode, which prints env variables to the terminal and console. Useful when debugging docker.                                |
+| No        | NEXT_PUBLIC_DEBUG_MODE                      | `false`                                             | Enables debug mode, which prints env variables to the terminal and console. Useful when debugging docker.                            |
 | No        | OPENAI_API_KEY                              |                                                     | The default API key used for authenticating with OpenAI. [Get Key](https://platform.openai.com/account/api-keys)                     |
 | No        | OPENAI_API_URL                              | `https://api.openai.com/v1`                         | The base url, for Azure use `https://<endpoint>.openai.azure.com`                                                                    |
 | No        | OPENAI_API_TYPE                             | `openai`                                            | The API type, options are `openai` or `azure`                                                                                        |
@@ -160,6 +160,8 @@ When deploying the application, the following environment variables can be set:
 | Yes       | \<PROVIDER\>\_CLIENT_ID                     |                                                     | Provider OAuth Client ID                                                                                                             |
 | Yes       | \<PROVIDER\>\_CLIENT_SECRET                 |                                                     | Provider OAuth Client Secret                                                                                                         |
 | Maybe     | \<PROVIDER\>\_ISSUER                        |                                                     | Provider Issuer URL (Only some providers need this)                                                                                  |
+| Maybe     | EMAIL_SERVER                                | `smtp://username:password@smtp.example.com:587`     | Email Provider Mail Server                                                                                                           |
+| Maybe     | EMAIL_FROM                                  | `noreply@example.com`                               | Email Provider From address Server                                                                                                   |
 
 Where \<PROVIDER\> is one of the following:
 
