@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'unSAGED',
+  title: 'AI Chatbot',
   description:
     'Open source chat kit engineered for seamless interaction with AI models',
   viewport:
