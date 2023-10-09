@@ -26,6 +26,10 @@ export const DISCORD_CLIENT_ID =
 export const DISCORD_CLIENT_SECRET =
   dockerEnvVarFix(process.env.DISCORD_CLIENT_SECRET) || '';
 
+export const EMAIL_FROM = dockerEnvVarFix(process.env.EMAIL_FROM) || '';
+
+export const EMAIL_SERVER = dockerEnvVarFix(process.env.EMAIL_SERVER) || '';
+
 export const FACEBOOK_CLIENT_ID =
   dockerEnvVarFix(process.env.FACEBOOK_CLIENT_ID) || '';
 

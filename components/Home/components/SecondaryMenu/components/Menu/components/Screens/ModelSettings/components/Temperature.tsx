@@ -28,8 +28,8 @@ export const TemperatureSlider = () => {
         {selectedConversation?.temperature.toFixed(1)}
       </span>
       <input
-        className="w-full h-1 bg-gradient-to-r from-fuchsia-600 via-violet-900 to-indigo-500
-        dark:from-fuchsia-500 dark:via-violet-600 dark:to-indigo-400
+        className="w-full h-1 bg-gradient-to-r from-neutral-900 to-neutral-500
+        dark:from-neutral-800 dark:to-neutral-300
         bg-175% animate-bg-pan-fast rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
         type="range"
         min={0}

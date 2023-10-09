@@ -82,6 +82,7 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
       {/* Settings buttons align to bottom */}
       <div className="flex flex-col items-center space-y-6">
+        {/*
         <ActivityBarButton>
           <a href="https://github.com/jorge-menjivar/unSAGED" target="_blank">
             <IconBrandGithub size={28} />
@@ -92,6 +93,7 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
             <IconBrandDiscord size={28} />
           </a>
         </ActivityBarButton>
+        */}
         <ActivityBarButton handleClick={handleSignOut}>
           <IconLogout size={28} />
         </ActivityBarButton>

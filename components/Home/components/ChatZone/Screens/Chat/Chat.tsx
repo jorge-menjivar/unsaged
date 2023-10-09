@@ -204,7 +204,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         {models.length === 0 ? (
           <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[600px]">
             <div className="text-center text-4xl font-bold text-black dark:text-white">
-              Welcome to unSAGED
+              Welcome to AI ChatBot
             </div>
           </div>
         ) : modelError ? (
@@ -224,7 +224,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                   <div className="animate-zoom-pulse-slow">
                     <div className="flex flex-row self-center items-center align-middle justify-center">
                       <div
-                        className="h-[64px] z-10 flex flex-row self-center items-start align-middle justify-center
+                        className="h-[72px] z-10 flex flex-row self-center items-start align-middle justify-center
                           w-fit bg-[#e7eaf5] dark:bg-[#1b1f23] rounded-2xl px-2 py-1 shadow-xl"
                       >
                         <Image
@@ -235,11 +235,13 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         />
                         <div
                           className="flex flex-row self-center items-end align-middle justify-center text-transparent 
-                          bg-gradient-to-r from-fuchsia-700 via-violet-900 to-indigo-500
-                          dark:from-fuchsia-500 dark:via-violet-600 dark:to-indigo-400
-                          bg-clip-text bg-175% animate-bg-pan-fast rotate-0"
+                          bg-gradient-to-r from-neutral-900 to-neutral-500
+                          dark:from-neutral-200 to-neutral-100
+                          bg-clip-text bg-175% animate-bg-pan-fast rotate-0 px-2"
                         >
-                          <div className="text-5xl font-semibold">unSAGED</div>
+                          <div className="text-5xl font-semibold">
+                            JDE Partners
+                          </div>
                         </div>
                       </div>
                     </div>

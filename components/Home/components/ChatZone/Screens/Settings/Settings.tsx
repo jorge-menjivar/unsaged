@@ -100,6 +100,15 @@ export const Settings = () => {
                       section={section}
                     />
                   ))}
+                <h5 className="text-lg text-center text-black dark:text-white">
+                  Forked from Jorge Menjivar's unSAGED <br></br>
+                  <a
+                    href="https://github.com/jorge-menjivar/unSAGED"
+                    className="text-base hover:text-neutral-400"
+                  >
+                    https://github.com/jorge-menjivar/unSAGED
+                  </a>
+                </h5>
               </div>
             </div>
           </div>
