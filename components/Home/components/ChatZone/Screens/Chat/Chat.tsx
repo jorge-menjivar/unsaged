@@ -235,8 +235,8 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                         />
                         <div
                           className="flex flex-row self-center items-end align-middle justify-center text-transparent 
-                          bg-gradient-to-r from-fuchsia-700 via-violet-900 to-indigo-500
-                          dark:from-fuchsia-500 dark:via-violet-600 dark:to-indigo-400
+                          bg-gradient-to-r from-black to-white
+                          dark:from-white dark:to-black
                           bg-clip-text bg-175% animate-bg-pan-fast rotate-0 px-2"
                         >
                           <div className="text-5xl font-semibold">
