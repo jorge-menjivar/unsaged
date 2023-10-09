@@ -8,6 +8,8 @@ import {
   COGNITO_CLIENT_SECRET,
   DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,
+  EMAIL_FROM,
+  EMAIL_SERVER,
   FACEBOOK_CLIENT_ID,
   FACEBOOK_CLIENT_SECRET,
   GITHUB_CLIENT_ID,
@@ -88,6 +90,16 @@ export async function getProviders() {
         clientSecret: DISCORD_CLIENT_SECRET!,
         authorization: authorization,
         allowDangerousEmailAccountLinking: true,
+      }),
+    );
+  }
+  if (EMAIL_FROM) {
+    const provider = await import('next-auth/providers/email');
+    const EmailProvider = provider.default;
+    providers.push(
+      EmailProvider({
+        server: EMAIL_SERVER,
+        from: EMAIL_FROM,
       }),
     );
   }
