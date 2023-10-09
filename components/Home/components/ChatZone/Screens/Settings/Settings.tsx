@@ -101,7 +101,7 @@ export const Settings = () => {
                     />
                   ))}
                 <h5 className="text-lg text-center text-black dark:text-white">
-                  Forked from Jorge Menjivar's unSAGED <br></br>
+                  Forked from Jorge Menjivar&apos;s unSAGED <br></br>
                   <a
                     href="https://github.com/jorge-menjivar/unSAGED"
                     className="text-base hover:text-neutral-400"
