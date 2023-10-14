@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Analytics />
-      <body className="h-screen w-screen overflow-hidden overscroll-none">
+      <body className="absolute inset-0 overflow-hidden overscroll-none">
         {children}
       </body>
     </html>
