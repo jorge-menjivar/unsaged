@@ -14,8 +14,8 @@ export const PrimaryButton = ({ onClick, children, disabled }: Props) => (
     py-3 sm:py-2 w-full flex flex-shrink cursor-pointer select-none items-center justify-center gap-1
     text-white
     rounded-md border border-theme-border-light dark:border-theme-border-dark
-    bg-gradient-to-r from-neutral-900 to-neutral-500
-    dark:from-neutral-900 dark:to-neutral-500
+    bg-gradient-to-r from-fuchsia-600 via-violet-900 to-indigo-500
+    dark:from-fuchsia-500 dark:via-violet-600 dark:to-indigo-400
     bg-175% animate-bg-pan-slow appearance-none dark:bg-gray-700 hover:opacity-90
     "
     onClick={onClick}
