@@ -44,16 +44,29 @@ export const useConversations = (
               const selectedConversation = getSelectedConversation(user);
 
               if (selectedConversation) {
-                const parsedSelectedConversation: Conversation =
-                  JSON.parse(selectedConversation);
-                const cleanedSelectedConversation = cleanSelectedConversation(
-                  parsedSelectedConversation,
-                );
+                try {
+                  const parsedSelectedConversation: Conversation =
+                    JSON.parse(selectedConversation);
+                  const cleanedSelectedConversation = cleanSelectedConversation(
+                    parsedSelectedConversation,
+                  );
 
-                homeDispatch({
-                  field: 'selectedConversation',
-                  value: cleanedSelectedConversation,
-                });
+                  homeDispatch({
+                    field: 'selectedConversation',
+                    value: cleanedSelectedConversation,
+                  });
+                } catch (e) {
+                  console.error(
+                    'Unable to parse selected conversation. Resetting to las conversation.\n',
+                    e,
+                  );
+                  if (cleanedConversations.length > 0) {
+                    homeDispatch({
+                      field: 'selectedConversation',
+                      value: cleanedConversations[0],
+                    });
+                  }
+                }
               } else if (cleanedConversations.length > 0) {
                 homeDispatch({
                   field: 'selectedConversation',
