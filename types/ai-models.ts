@@ -1,3 +1,5 @@
+import { AZURE_DEPLOYMENT_ID } from '@/utils/app/const';
+
 export interface AiModel {
   id: string;
   maxLength: number; // maximum length of a message
@@ -40,7 +42,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     vendor: 'OpenAI',
   },
   'gpt-35-turbo': {
-    id: String(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID),
+    id: AZURE_DEPLOYMENT_ID,
     maxLength: 12000,
     tokenLimit: 4000,
     requestLimit: 3000,

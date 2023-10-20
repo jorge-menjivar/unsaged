@@ -18,6 +18,9 @@ export const DEFAULT_PALM_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT) ||
   "You are Bard, a large language model trained by Google. Follow the user's instructions carefully. Respond using markdown. Always specify the programming language you are using when making a markdown code block.";
 
+export const AZURE_DEPLOYMENT_ID =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID) || '';
+
 export const DEFAULT_TEMPERATURE = parseFloat(
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE) || '0.7',
 );
