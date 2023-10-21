@@ -35,12 +35,20 @@ export const regenerateMessageHandler = async ({
     dispatch({ field: 'loading', value: true });
     dispatch({ field: 'messageIsStreaming', value: true });
 
-    const deleteCount = 1;
+    let deleteCount = 1;
 
     const selectedConversationMessages = messages.filter(
       (message) => message.conversationId === selectedConversation.id,
     );
 
+    if (
+      selectedConversationMessages[selectedConversationMessages.length - 1]
+        .role === 'user'
+    ) {
+      // User was not able to send the last message. User is trying to regenerate the last message.
+      // We do not need to delete the last message.
+      deleteCount = 0;
+    }
     const conversationLength = selectedConversationMessages.length;
     const messagesToBeDeleted: string[] = [];
 

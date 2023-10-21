@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import Image from 'next/image';
 
@@ -350,6 +351,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           </>
         )}
       </div>
+      <Toaster />
     </ChatContext.Provider>
   );
 });

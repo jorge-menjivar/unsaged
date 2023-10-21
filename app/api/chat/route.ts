@@ -33,10 +33,17 @@ const handler = async (req: Request): Promise<Response> => {
   );
 
   if (streamError) {
-    console.error(streamError);
+    let message = streamError;
+
+    if (message.message) {
+      message = message.message;
+    }
+
+    console.error(message);
+
     return new Response('Error', {
       status: 500,
-      statusText: streamError,
+      statusText: message,
     });
   }
 
