@@ -1,20 +1,16 @@
 import { User } from '@/types/auth';
-import { Conversation } from '@/types/chat';
 
-export const getSelectedConversation = (user: User) => {
-  const itemName = `selectedConversation-${user.email}`;
+export const getSelectedConversationId = (user: User) => {
+  const itemName = `selectedConversationId-${user.email}`;
   return localStorage.getItem(itemName);
 };
 
-export const saveSelectedConversation = (
-  user: User,
-  conversation: Conversation,
-) => {
-  const itemName = `selectedConversation-${user.email}`;
-  localStorage.setItem(itemName, JSON.stringify(conversation));
+export const saveSelectedConversationId = (user: User, id: string) => {
+  const itemName = `selectedConversationId-${user.email}`;
+  localStorage.setItem(itemName, id);
 };
 
-export const deleteSelectedConversation = (user: User) => {
-  const itemName = `selectedConversation-${user.email}`;
+export const deleteSelectedConversationId = (user: User) => {
+  const itemName = `selectedConversationId-${user.email}`;
   localStorage.removeItem(itemName);
 };

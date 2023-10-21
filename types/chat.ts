@@ -3,8 +3,9 @@ import { SystemPrompt } from './system-prompt';
 
 export interface Message {
   id: string;
-  role: 'assistant' | 'user';
+  role: 'assistant' | 'user' | 'system';
   content: string;
+  conversationId: string;
   timestamp: string;
 }
 
@@ -19,7 +20,6 @@ export interface ChatBody {
 export interface Conversation {
   id: string;
   name: string;
-  messages: Message[];
   model: AiModel;
   systemPrompt: SystemPrompt | null;
   temperature: number;

@@ -1,10 +1,11 @@
-import { ChatBody, Conversation } from '@/types/chat';
+import { ChatBody, Conversation, Message } from '@/types/chat';
 import { SavedSetting } from '@/types/settings';
 
 import { getSavedSettingValue } from './storage/local/settings';
 
 export const sendChatRequest = async (
   conversation: Conversation,
+  messages: Message[],
   savedSetting: SavedSetting[],
 ) => {
   const apiKey: string | undefined = getSavedSettingValue(
@@ -15,7 +16,7 @@ export const sendChatRequest = async (
 
   const chatBody: ChatBody = {
     model: conversation.model,
-    messages: conversation.messages,
+    messages: messages,
     apiKey: apiKey,
     systemPrompt: conversation.systemPrompt!,
     temperature: conversation.temperature,

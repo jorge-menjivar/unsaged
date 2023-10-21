@@ -1,7 +1,5 @@
 import {
   IconArrowDown,
-  IconBolt,
-  IconBrandGoogle,
   IconPlayerStop,
   IconRepeat,
   IconSend,
@@ -18,21 +16,20 @@ import {
 
 import { useTranslation } from 'next-i18next';
 
-import { getTimestampWithTimezoneOffset } from '@/utils/app/time/time';
-
 import { Conversation, Message } from '@/types/chat';
 import { Prompt } from '@/types/prompt';
 
 import HomeContext from '@/components/Home/home.context';
 
+import ChatContext from './Chat.context';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
 
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
-  onSend: (conversation: Conversation | undefined, message: Message) => void;
-  onRegenerate: (conversation: Conversation | undefined) => void;
+  onSend: (message: Message) => void;
+  onRegenerate: () => void;
   onScrollDownClick: () => void;
   stopConversationRef: MutableRefObject<boolean>;
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
@@ -51,9 +48,11 @@ export const ChatInput = ({
 
   const {
     state: { selectedConversation, messageIsStreaming, prompts },
-
-    dispatch: homeDispatch,
   } = useContext(HomeContext);
+
+  const {
+    state: { selectedConversationMessages },
+  } = useContext(ChatContext);
 
   const [content, setContent] = useState<string>();
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -88,6 +87,8 @@ export const ChatInput = ({
   };
 
   const handleSend = () => {
+    if (!selectedConversation) return;
+
     if (messageIsStreaming) {
       return;
     }
@@ -98,11 +99,12 @@ export const ChatInput = ({
     }
 
     const messageId = uuidv4();
-    onSend(selectedConversation, {
+    onSend({
       id: messageId,
       role: 'user',
       content: content.trim(),
-      timestamp: getTimestampWithTimezoneOffset(),
+      conversationId: selectedConversation.id,
+      timestamp: new Date().toISOString(),
     });
     setContent('');
 
@@ -112,7 +114,8 @@ export const ChatInput = ({
   };
 
   const handleRegenerate = () => {
-    onRegenerate(selectedConversation);
+    if (!selectedConversation) return;
+    onRegenerate();
   };
 
   const handleStopConversation = () => {
@@ -287,7 +290,7 @@ export const ChatInput = ({
 
           {!messageIsStreaming &&
             selectedConversation &&
-            selectedConversation.messages.length > 0 && (
+            selectedConversationMessages.length > 0 && (
               <button
                 className="relative top-0 left-0 right-0 mx-auto mb-3 flex w-fit 
               items-center gap-3 rounded border border-neutral-200 bg-theme-light

@@ -1,84 +1,56 @@
 import { User } from '@/types/auth';
-import { Conversation, Message } from '@/types/chat';
+import { Message } from '@/types/chat';
 import { Database } from '@/types/database';
 
 export const storageCreateMessage = (
   database: Database,
   user: User,
-  selectedConversation: Conversation,
   newMessage: Message,
-  allConversations: Conversation[],
+  allMessages: Message[],
 ) => {
-  const messages = selectedConversation.messages;
-  const updatedMessages = [...messages, newMessage];
-  const updatedConversation: Conversation = {
-    ...selectedConversation,
-    messages: updatedMessages,
-  };
-  const updatedConversations = allConversations.map((c) => {
-    if (c.id === updatedConversation.id) {
-      return updatedConversation;
-    }
+  const updatedMessages = [...allMessages, newMessage];
 
-    return c;
+  database.createMessage(user, newMessage).then((success) => {
+    if (!success) {
+      console.error('Failed to create message');
+    }
   });
 
-  database
-    .createMessage(user, selectedConversation.id, newMessage)
-    .then((success) => {
-      if (!success) {
-        console.error('Failed to create message');
-      }
-    });
-
-  return { single: updatedConversation, all: updatedConversations };
+  return updatedMessages;
 };
 
 export const storageUpdateMessage = (
   database: Database,
   user: User,
-  selectedConversation: Conversation,
   updatedMessage: Message,
-  allConversations: Conversation[],
+  allMessages: Message[],
 ) => {
-  const messages = selectedConversation.messages;
-  const updatedMessages = messages.map((m) =>
+  const updatedMessages = allMessages.map((m) =>
     m.id === updatedMessage.id ? updatedMessage : m,
   );
-  const updatedConversation: Conversation = {
-    ...selectedConversation,
-    messages: updatedMessages,
-  };
-  const updatedConversations = allConversations.map((c) => {
-    if (c.id === updatedConversation.id) {
-      return updatedConversation;
-    }
 
-    return c;
+  database.updateMessage(user, updatedMessage).then((success) => {
+    if (!success) {
+      console.error('Failed to update message');
+    }
   });
 
-  database
-    .updateMessage(user, selectedConversation.id, updatedMessage)
-    .then((success) => {
-      if (!success) {
-        console.error('Failed to update message');
-      }
-    });
-
-  return { single: updatedConversation, all: updatedConversations };
+  return updatedMessages;
 };
 
 export const storageDeleteMessage = (
   database: Database,
   user: User,
-  selectedConversation: Conversation,
   messageId: string,
+  allMessages: Message[],
 ) => {
-  database
-    .deleteMessage(user, selectedConversation.id, messageId)
-    .then((success) => {
-      if (!success) {
-        console.error('Failed to delete message');
-      }
-    });
+  const updatedMessages = allMessages.filter((m) => m.id !== messageId);
+
+  database.deleteMessage(user, messageId).then((success) => {
+    if (!success) {
+      console.error('Failed to delete message');
+    }
+  });
+
+  return updatedMessages;
 };

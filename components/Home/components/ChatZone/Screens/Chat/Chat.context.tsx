@@ -9,6 +9,6 @@ export interface ChatContextProps {
   dispatch: Dispatch<ActionType<ChatInitialState>>;
 }
 
-const PrimaryMenuContext = createContext<ChatContextProps>(undefined!);
+const ChatContext = createContext<ChatContextProps>(undefined!);
 
-export default PrimaryMenuContext;
+export default ChatContext;

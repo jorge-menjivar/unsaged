@@ -19,6 +19,8 @@ import HomeContext from '@/components/Home/home.context';
 import { CodeBlock } from '@/components/Markdown/CodeBlock';
 import { MemoizedReactMarkdown } from '@/components/Markdown/MemoizedReactMarkdown';
 
+import ChatContext from './Chat.context';
+
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -35,14 +37,18 @@ export const ChatMessage: FC<Props> = memo(
 
     const {
       state: {
-        selectedConversation,
+        database,
         conversations,
         messageIsStreaming,
-        database,
+        selectedConversation,
         user,
       },
       dispatch: homeDispatch,
     } = useContext(HomeContext);
+
+    const {
+      state: { selectedConversationMessages },
+    } = useContext(ChatContext);
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -79,36 +85,32 @@ export const ChatMessage: FC<Props> = memo(
     const handleDeleteMessage = () => {
       if (!selectedConversation) return;
 
-      const { messages } = selectedConversation;
-      const findIndex = messages.findIndex((elm) => elm === message);
+      const findIndex = selectedConversationMessages.findIndex(
+        (elm) => elm === message,
+      );
 
       let messagesToBeDeleted = [];
       if (findIndex < 0) return;
 
       if (
-        findIndex < messages.length - 1 &&
-        messages[findIndex + 1].role === 'assistant'
+        findIndex < selectedConversationMessages.length - 1 &&
+        selectedConversationMessages[findIndex + 1].role === 'assistant'
       ) {
         messagesToBeDeleted.push(
-          messages[findIndex].id,
-          messages[findIndex + 1].id,
+          selectedConversationMessages[findIndex].id,
+          selectedConversationMessages[findIndex + 1].id,
         );
-        messages.splice(findIndex, 2);
       } else {
-        messagesToBeDeleted.push(messages[findIndex].id);
-        messages.splice(findIndex, 1);
+        messagesToBeDeleted.push(selectedConversationMessages[findIndex].id);
       }
 
-      const { single, all } = storageDeleteMessages(
+      const updatedMessages = storageDeleteMessages(
         database!,
         user!,
         messagesToBeDeleted,
-        selectedConversation,
-        messages,
-        conversations,
+        selectedConversationMessages,
       );
-      homeDispatch({ field: 'selectedConversation', value: single });
-      homeDispatch({ field: 'conversations', value: all });
+      homeDispatch({ field: 'messages', value: updatedMessages });
     };
 
     const handlePressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -309,7 +311,7 @@ export const ChatMessage: FC<Props> = memo(
                   {`${message.content}${
                     messageIsStreaming &&
                     messageIndex ==
-                      (selectedConversation?.messages.length ?? 0) - 1
+                      (selectedConversationMessages.length ?? 0) - 1
                       ? '`▍`'
                       : ''
                   }`}

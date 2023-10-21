@@ -11,61 +11,63 @@ import { SavedSetting, SettingsSection } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
 
 export interface HomeInitialState {
+  builtInSystemPrompts: SystemPrompt[];
+  conversations: Conversation[];
+  currentFolder: FolderInterface | undefined;
+  currentMessage: Message | undefined;
   database: Database | null;
-  loading: boolean;
+  defaultModelId: string | undefined;
+  display: 'chat' | 'settings';
+  fetchComplete: boolean;
+  folders: FolderInterface[];
   lightMode: 'light' | 'dark';
+  loading: boolean;
+  messageError: boolean;
   messageIsStreaming: boolean;
+  messages: Message[];
   modelError: ErrorMessage | null;
   models: AiModel[];
-  folders: FolderInterface[];
-  conversations: Conversation[];
-  selectedConversation: Conversation | undefined;
-  currentMessage: Message | undefined;
   prompts: Prompt[];
-  temperature: number;
+  savedSettings: SavedSetting[];
+  searchTerm: string;
+  selectedConversation: Conversation | null;
+  serverSideApiKeyIsSet: boolean;
+  settings: SettingsSection[];
+  settingsLoaded: boolean;
   showPrimaryMenu: boolean;
   showSecondaryMenu: boolean;
-  currentFolder: FolderInterface | undefined;
-  messageError: boolean;
-  searchTerm: string;
-  defaultModelId: string | undefined;
-  serverSideApiKeyIsSet: boolean;
   systemPrompts: SystemPrompt[];
-  builtInSystemPrompts: SystemPrompt[];
+  temperature: number;
   user: User | null;
-  display: 'chat' | 'settings';
-  savedSettings: SavedSetting[];
-  settings: SettingsSection[];
-  fetchComplete: boolean;
-  settingsLoaded: boolean;
 }
 
 export const initialState: HomeInitialState = {
+  builtInSystemPrompts: [],
+  conversations: [],
+  currentFolder: undefined,
+  currentMessage: undefined,
   database: null,
-  loading: false,
+  defaultModelId: DEFAULT_MODEL,
+  display: 'chat',
+  fetchComplete: false,
+  folders: [],
   lightMode: 'dark',
+  loading: false,
+  messageError: false,
   messageIsStreaming: false,
+  messages: [],
   modelError: null,
   models: [],
-  folders: [],
-  conversations: [],
-  selectedConversation: undefined,
-  currentMessage: undefined,
   prompts: [],
-  temperature: 1,
+  savedSettings: [],
+  searchTerm: '',
+  selectedConversation: null,
+  serverSideApiKeyIsSet: false,
+  settings: [],
+  settingsLoaded: false,
   showPrimaryMenu: true,
   showSecondaryMenu: true,
-  currentFolder: undefined,
-  messageError: false,
-  searchTerm: '',
-  defaultModelId: DEFAULT_MODEL,
-  serverSideApiKeyIsSet: false,
   systemPrompts: [],
-  builtInSystemPrompts: [],
+  temperature: 1,
   user: null,
-  display: 'chat',
-  savedSettings: [],
-  settings: [],
-  fetchComplete: false,
-  settingsLoaded: false,
 };

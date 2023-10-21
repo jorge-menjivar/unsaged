@@ -5,22 +5,40 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 export const supaGetMessages = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
+  conversationId?: string,
 ) => {
-  const { data: supaMessages, error } = await supabase
-    .from('messages')
-    .select('*')
-    .eq('conversation_id', conversationId)
-    .order('timestamp', { ascending: true });
+  let supaMessages = [];
 
-  if (error) {
-    return [];
+  if (conversationId) {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('conversation_id', conversationId)
+      .order('timestamp', { ascending: true });
+
+    if (error) {
+      return [];
+    }
+
+    supaMessages = data;
+  } else {
+    const { data, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('timestamp', { ascending: true });
+
+    if (error) {
+      return [];
+    }
+
+    supaMessages = data;
   }
 
   const messages = supaMessages.map((supaMessage) => {
     const message: Message = {
       id: supaMessage.id,
       content: supaMessage.content,
+      conversationId: supaMessage.conversation_id,
       role: supaMessage.role as Message['role'],
       timestamp: supaMessage.timestamp,
     };
@@ -32,7 +50,6 @@ export const supaGetMessages = async (
 };
 export const supaCreateMessages = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
   newMessages: Message[],
 ) => {
   const supaMessages: SupaDatabase['public']['Tables']['messages']['Insert'][] =
@@ -40,7 +57,7 @@ export const supaCreateMessages = async (
       id: message.id,
       content: message.content,
       role: message.role,
-      conversation_id: conversationId,
+      conversation_id: message.conversationId,
       timestamp: message.timestamp,
     }));
 
@@ -55,7 +72,6 @@ export const supaCreateMessages = async (
 
 export const supaUpdateMessages = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
   updatedMessages: Message[],
 ) => {
   const updates = updatedMessages.map((message) =>
@@ -64,11 +80,10 @@ export const supaUpdateMessages = async (
       .upsert({
         content: message.content,
         role: message.role,
-        conversation_id: conversationId,
+        conversation_id: message.conversationId,
         timestamp: message.timestamp,
       })
-      .eq('id', message.id)
-      .eq('conversation_id', conversationId),
+      .eq('id', message.id),
   );
 
   const results = await Promise.all(updates);
@@ -79,15 +94,10 @@ export const supaUpdateMessages = async (
 
 export const supaDeleteMessages = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
   messageIds: string[],
 ) => {
   const deletes = messageIds.map((messageId) =>
-    supabase
-      .from('messages')
-      .delete()
-      .eq('id', messageId)
-      .eq('conversation_id', conversationId),
+    supabase.from('messages').delete().eq('id', messageId),
   );
 
   const results = await Promise.all(deletes);

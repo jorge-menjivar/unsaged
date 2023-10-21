@@ -5,9 +5,9 @@ import {
   IconSettings,
 } from '@tabler/icons-react';
 import { signOut } from 'next-auth/react';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
-import { deleteSelectedConversation } from '@/utils/app/storage/selectedConversation';
+import { deleteSelectedConversationId } from '@/utils/app/storage/selectedConversation';
 
 import { ActivityBarButton } from './components/ActivityBarButton';
 import { ActivityBarTab } from './components/ActivityBarTab';
@@ -39,7 +39,7 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleSignOut = () => {
     if (database!.name !== 'local') {
-      deleteSelectedConversation(user!);
+      deleteSelectedConversationId(user!);
     }
 
     signOut();

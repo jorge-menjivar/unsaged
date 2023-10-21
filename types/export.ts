@@ -10,6 +10,7 @@ export interface UnsagedExportFormatV1 {
   app: 'unSAGED';
   version: 1;
   conversations: Conversation[];
+  messages: Message[];
   folders: FolderInterface[];
   message_templates: Prompt[];
   system_prompts: SystemPrompt[];

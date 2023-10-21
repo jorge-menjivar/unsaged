@@ -1,3 +1,9 @@
-export interface ChatInitialState {}
+import { Conversation, Message } from '@/types/chat';
 
-export const initialState: ChatInitialState = {};
+export interface ChatInitialState {
+  selectedConversationMessages: Message[];
+}
+
+export const initialState: ChatInitialState = {
+  selectedConversationMessages: [],
+};

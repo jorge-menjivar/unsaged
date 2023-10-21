@@ -51,44 +51,20 @@ export interface Database {
   deleteFolders(user: User, folderIds: string[]): Promise<boolean>;
 
   // ------------------------------Message------------------------------
-  createMessage(
-    user: User,
-    conversationId: string,
-    newMessage: Message,
-  ): Promise<boolean>;
+  createMessage(user: User, newMessage: Message): Promise<boolean>;
 
-  updateMessage(
-    user: User,
-    conversationId: string,
-    updatedMessage: Message,
-  ): Promise<boolean>;
+  updateMessage(user: User, updatedMessage: Message): Promise<boolean>;
 
-  deleteMessage(
-    user: User,
-    conversationId: string,
-    messageId: string,
-  ): Promise<boolean>;
+  deleteMessage(user: User, messageId: string): Promise<boolean>;
 
   // ------------------------------Messages------------------------------
-  getMessages(user: User, conversationId: string): Promise<Message[]>;
+  getMessages(user: User, conversationId?: string): Promise<Message[]>;
 
-  createMessages(
-    user: User,
-    conversationId: string,
-    newMessages: Message[],
-  ): Promise<boolean>;
+  createMessages(user: User, newMessages: Message[]): Promise<boolean>;
 
-  updateMessages(
-    user: User,
-    conversationId: string,
-    updatedMessages: Message[],
-  ): Promise<boolean>;
+  updateMessages(user: User, updatedMessages: Message[]): Promise<boolean>;
 
-  deleteMessages(
-    user: User,
-    conversationId: string,
-    messageIds: string[],
-  ): Promise<boolean>;
+  deleteMessages(user: User, messageIds: string[]): Promise<boolean>;
 
   // ------------------------------Prompt------------------------------
   createPrompt(user: User, newPrompt: Prompt): Promise<boolean>;

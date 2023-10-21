@@ -163,69 +163,36 @@ export class ClientDatabase implements Database {
   }
 
   // -----------------------------------Message-----------------------------------
-  async createMessage(
-    user: User,
-    conversationId: string,
-    newMessage: Message,
-  ): Promise<boolean> {
-    return await supaCreateMessage(this.supabase!, conversationId, newMessage);
+  async createMessage(user: User, newMessage: Message): Promise<boolean> {
+    return await supaCreateMessage(this.supabase!, newMessage);
   }
 
-  async updateMessage(
-    user: User,
-    conversationId: string,
-    updatedMessage: Message,
-  ): Promise<boolean> {
-    return await supaUpdateMessage(
-      this.supabase!,
-      conversationId,
-      updatedMessage,
-    );
+  async updateMessage(user: User, updatedMessage: Message): Promise<boolean> {
+    return await supaUpdateMessage(this.supabase!, updatedMessage);
   }
 
-  async deleteMessage(
-    user: User,
-    conversationId: string,
-    messageId: string,
-  ): Promise<boolean> {
-    return await supaDeleteMessage(this.supabase!, conversationId, messageId);
+  async deleteMessage(user: User, messageId: string): Promise<boolean> {
+    return await supaDeleteMessage(this.supabase!, messageId);
   }
 
   // -----------------------------------Messages-----------------------------------
-  async getMessages(user: User, conversationId: string): Promise<Message[]> {
+  async getMessages(user: User, conversationId?: string): Promise<Message[]> {
     return await supaGetMessages(this.supabase!, conversationId);
   }
 
-  async createMessages(
-    user: User,
-    conversationId: string,
-    newMessages: Message[],
-  ): Promise<boolean> {
-    return await supaCreateMessages(
-      this.supabase!,
-      conversationId,
-      newMessages,
-    );
+  async createMessages(user: User, newMessages: Message[]): Promise<boolean> {
+    return await supaCreateMessages(this.supabase!, newMessages);
   }
 
   async updateMessages(
     user: User,
-    conversationId: string,
     updatedMessages: Message[],
   ): Promise<boolean> {
-    return await supaUpdateMessages(
-      this.supabase!,
-      conversationId,
-      updatedMessages,
-    );
+    return await supaUpdateMessages(this.supabase!, updatedMessages);
   }
 
-  async deleteMessages(
-    user: User,
-    conversationId: string,
-    messageIds: string[],
-  ): Promise<boolean> {
-    return await supaDeleteMessages(this.supabase!, conversationId, messageIds);
+  async deleteMessages(user: User, messageIds: string[]): Promise<boolean> {
+    return await supaDeleteMessages(this.supabase!, messageIds);
   }
 
   // -----------------------------------Prompt-----------------------------------

@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import { Dispatch, MutableRefObject } from 'react';
 
 import { storageCreateMessage } from '@/utils/app/storage/message';
 
@@ -6,67 +6,88 @@ import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 import { SavedSetting } from '@/types/settings';
+import { SystemPrompt } from '@/types/system-prompt';
 
 import { storageUpdateConversation } from '../storage/conversation';
 import { messageReceiver } from './helpers/messageReceiver';
 import { messageSender } from './helpers/messageSender';
 
-export const sendHandlerFunction = async (
-  user: User,
-  message: Message,
-  stopConversationRef: MutableRefObject<boolean>,
-  builtInSystemPrompts: any[],
-  selectedConversation: Conversation | undefined,
-  conversations: Conversation[],
-  database: Database,
-  savedSettings: SavedSetting[],
-  homeDispatch: React.Dispatch<any>,
-) => {
+export interface SendHandlerFunctionProps {
+  dispatch: Dispatch<any>;
+  database: Database;
+  user: User;
+  builtInSystemPrompts: SystemPrompt[];
+  newMessage: Message;
+  messages: Message[];
+  selectedConversation: Conversation;
+  stopConversationRef: MutableRefObject<boolean>;
+  conversations: Conversation[];
+  savedSettings: SavedSetting[];
+}
+
+export const sendHandlerFunction = async ({
+  user,
+  newMessage,
+  messages,
+  stopConversationRef,
+  builtInSystemPrompts,
+  selectedConversation,
+  conversations,
+  database,
+  savedSettings,
+  dispatch,
+}: SendHandlerFunctionProps) => {
   if (selectedConversation) {
-    homeDispatch({ field: 'messageIsStreaming', value: true });
-    homeDispatch({ field: 'loading', value: true });
+    dispatch({ field: 'messageIsStreaming', value: true });
+    dispatch({ field: 'loading', value: true });
 
     // Saving the user message
-    let { single: updatedConversation, all: updatedConversations } =
-      storageCreateMessage(
+    const updatedMessages = storageCreateMessage(
+      database,
+      user,
+      newMessage,
+      messages,
+    );
+
+    dispatch({
+      field: 'messages',
+      value: updatedMessages,
+    });
+
+    const selectedConversationMessages = updatedMessages.filter(
+      (message) => message.conversationId === selectedConversation.id,
+    );
+    let updatedConversation = selectedConversation;
+    let updatedConversations = conversations;
+
+    // Updating the conversation name
+    if (selectedConversationMessages.length === 1) {
+      const { content } = newMessage;
+      const newName =
+        content.length > 30 ? content.substring(0, 30) + '...' : content;
+
+      updatedConversation = {
+        ...selectedConversation,
+        name: newName,
+      };
+      // Saving the conversation name
+      updatedConversations = storageUpdateConversation(
         database,
         user,
-        selectedConversation,
-        message,
+        updatedConversation,
         conversations,
       );
 
-    homeDispatch({
-      field: 'selectedConversation',
-      value: updatedConversation,
-    });
-
-    // Updating the conversation name
-    if (updatedConversation.messages.length === 1) {
-      const { content } = message;
-      const customName =
-        content.length > 30 ? content.substring(0, 30) + '...' : content;
-      updatedConversation = {
-        ...updatedConversation,
-        name: customName,
-      };
-
-      // Saving the conversation name
-      storageUpdateConversation(
-        database,
-        user,
-        { ...selectedConversation, name: updatedConversation.name },
-        updatedConversations,
-      );
+      dispatch({ field: 'conversations', value: updatedConversations });
     }
 
     {
       const { data, controller } = await messageSender(
         builtInSystemPrompts,
         updatedConversation,
-        selectedConversation,
+        selectedConversationMessages,
         savedSettings,
-        homeDispatch,
+        dispatch,
       );
 
       // Failed to send message
@@ -80,9 +101,9 @@ export const sendHandlerFunction = async (
         data,
         controller,
         updatedConversation,
-        updatedConversations,
+        updatedMessages,
         stopConversationRef,
-        homeDispatch,
+        dispatch,
       );
     }
   }

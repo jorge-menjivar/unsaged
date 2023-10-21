@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 
-import { Conversation } from '@/types/chat';
+import { Conversation, Message } from '@/types/chat';
 import { SavedSetting } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
 
@@ -8,10 +8,10 @@ import { sendChatRequest } from '../../chat';
 
 export async function messageSender(
   builtInSystemPrompts: SystemPrompt[],
-  updatedConversation: Conversation,
   selectedConversation: Conversation,
+  messages: Message[],
   savedSettings: SavedSetting[],
-  homeDispatch: React.Dispatch<any>,
+  dispatch: React.Dispatch<any>,
 ) {
   let customPrompt = selectedConversation.systemPrompt;
 
@@ -23,28 +23,29 @@ export async function messageSender(
   }
 
   const promptInjectedConversation = {
-    ...updatedConversation,
+    ...selectedConversation,
     systemPrompt: customPrompt,
   };
 
   const { response, controller } = await sendChatRequest(
     promptInjectedConversation,
+    messages,
     savedSettings,
   );
 
   if (!response.ok) {
-    homeDispatch({ field: 'loading', value: false });
-    homeDispatch({ field: 'messageIsStreaming', value: false });
+    dispatch({ field: 'loading', value: false });
+    dispatch({ field: 'messageIsStreaming', value: false });
     toast.error(response.statusText);
     return { data: null, controller: null };
   }
   const data = response.body;
   if (!data) {
-    homeDispatch({ field: 'loading', value: false });
-    homeDispatch({ field: 'messageIsStreaming', value: false });
+    dispatch({ field: 'loading', value: false });
+    dispatch({ field: 'messageIsStreaming', value: false });
     return { data: null, controller: null };
   }
 
-  homeDispatch({ field: 'loading', value: false });
+  dispatch({ field: 'loading', value: false });
   return { data, controller };
 }

@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react';
+import { Dispatch, MutableRefObject } from 'react';
 
 import { storageUpdateMessage } from '@/utils/app/storage/message';
 
@@ -14,90 +14,105 @@ import { storageDeleteMessages } from '../storage/messages';
 import { messageReceiver } from './helpers/messageReceiver';
 import { messageSender } from './helpers/messageSender';
 
-export const editMessageHandler = async (
-  user: User,
-  message: Message,
-  index: number,
-  stopConversationRef: MutableRefObject<boolean>,
-  builtInSystemPrompts: SystemPrompt[],
-  selectedConversation: Conversation | undefined,
-  conversations: Conversation[],
-  database: Database,
-  savedSettings: SavedSetting[],
-  homeDispatch: React.Dispatch<any>,
-) => {
+export interface EditMessageHandlerFunctionProps {
+  builtInSystemPrompts: SystemPrompt[];
+  database: Database;
+  dispatch: Dispatch<any>;
+  updatedMessage: Message;
+  messages: Message[];
+  index: number;
+  savedSettings: SavedSetting[];
+  stopConversationRef: MutableRefObject<boolean>;
+  selectedConversation: Conversation;
+  conversations: Conversation[];
+  user: User;
+}
+
+export const editMessageHandler = async ({
+  user,
+  updatedMessage,
+  index,
+  stopConversationRef,
+  builtInSystemPrompts,
+  selectedConversation,
+  messages,
+  conversations,
+  database,
+  savedSettings,
+  dispatch,
+}: EditMessageHandlerFunctionProps) => {
   if (selectedConversation) {
-    homeDispatch({ field: 'loading', value: true });
-    homeDispatch({ field: 'messageIsStreaming', value: true });
+    dispatch({ field: 'loading', value: true });
+    dispatch({ field: 'messageIsStreaming', value: true });
 
-    const deleteCount = selectedConversation?.messages.length - index - 1;
-    let updatedConversation: Conversation;
+    const selectedConversationMessages = messages.filter(
+      (message) => message.conversationId === selectedConversation.id,
+    );
 
+    const deleteCount = selectedConversationMessages.length - index - 1;
+
+    let updatedMessages = messages;
     if (deleteCount) {
-      const conversationLength = selectedConversation.messages.length;
+      const conversationLength = selectedConversationMessages.length;
       const messagesToBeDeleted: string[] = [];
 
       for (let i = 1; i <= deleteCount; i++) {
         const currentMessage =
-          selectedConversation.messages[conversationLength - i];
+          selectedConversationMessages[conversationLength - i];
         messagesToBeDeleted.push(currentMessage.id);
       }
-      const deleteUpdate = storageDeleteMessages(
+      updatedMessages = storageDeleteMessages(
         database,
         user,
         messagesToBeDeleted,
-        selectedConversation,
-        selectedConversation.messages,
-        conversations,
+        messages,
       );
-
-      updatedConversation = deleteUpdate.single;
-    } else {
-      updatedConversation = selectedConversation;
     }
 
-    // Update the user message
-    const update1 = storageUpdateMessage(
+    // Add the user message
+    updatedMessages = storageUpdateMessage(
       database,
       user,
-      updatedConversation,
-      message,
-      conversations,
+      updatedMessage,
+      updatedMessages,
     );
 
-    updatedConversation = update1.single;
-    const updatedConversations = update1.all;
+    dispatch({ field: 'messages', value: messages });
 
-    homeDispatch({
-      field: 'selectedConversation',
-      value: update1.single,
-    });
+    const updatedConversationMessages = updatedMessages.filter(
+      (message) => message.conversationId === selectedConversation.id,
+    );
 
+    let updatedConversation = selectedConversation;
+    let updatedConversations = conversations;
     // Updating the conversation name
-    if (updatedConversation.messages.length === 1) {
-      const { content } = message;
+    if (updatedConversationMessages.length === 1) {
+      const { content } = updatedMessage;
       const customName =
         content.length > 30 ? content.substring(0, 30) + '...' : content;
+
       updatedConversation = {
         ...updatedConversation,
         name: customName,
       };
 
       // Saving the conversation name
-      storageUpdateConversation(
+      updatedConversations = storageUpdateConversation(
         database,
         user,
-        { ...selectedConversation, name: updatedConversation.name },
-        updatedConversations,
+        updatedConversation,
+        conversations,
       );
+
+      dispatch({ field: 'conversations', value: updatedConversations });
     }
 
     const { data, controller } = await messageSender(
       builtInSystemPrompts,
       updatedConversation,
-      selectedConversation,
+      updatedConversationMessages,
       savedSettings,
-      homeDispatch,
+      dispatch,
     );
 
     // Failed to send message
@@ -111,9 +126,9 @@ export const editMessageHandler = async (
       data,
       controller,
       updatedConversation,
-      updatedConversations,
+      updatedMessages,
       stopConversationRef,
-      homeDispatch,
+      dispatch,
     );
   }
 };

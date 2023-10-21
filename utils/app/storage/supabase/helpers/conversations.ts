@@ -3,7 +3,6 @@ import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { supaGetMessages } from './messages';
 import { supaGetSystemPrompt } from './systemPrompt';
 
 import { SupabaseClient } from '@supabase/supabase-js';
@@ -20,8 +19,6 @@ export const supaGetConversations = async (
   } else {
     const conversations: Conversation[] = [];
     for (const supaConversation of supaConversations) {
-      const messages = await supaGetMessages(supabase, supaConversation.id);
-
       let systemPrompt: SystemPrompt | null = null;
       if (supaConversation.system_prompt_id) {
         systemPrompt = await supaGetSystemPrompt(
@@ -49,7 +46,6 @@ export const supaGetConversations = async (
         systemPrompt: systemPrompt,
         temperature: supaConversation.temperature,
         folderId: supaConversation.folder_id,
-        messages: messages,
         timestamp: supaConversation.timestamp,
       };
 

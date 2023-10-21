@@ -1,25 +1,27 @@
-import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
-import { useCallback, useContext, useEffect } from 'react';
+import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
+import { useContext, useEffect } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import { DEFAULT_TEMPERATURE } from '@/utils/app/const';
-import { exportData, importData } from '@/utils/app/importExport';
-import { storageDeleteConversation } from '@/utils/app/storage/conversation';
+import { DEFAULT_MODEL, DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import { importData } from '@/utils/app/import-export/import';
+import {
+  storageCreateConversation,
+  storageDeleteConversation,
+} from '@/utils/app/storage/conversation';
 import { storageDeleteConversations } from '@/utils/app/storage/conversations';
 import {
   storageDeleteFolders,
   storageUpdateFolders,
 } from '@/utils/app/storage/folders';
-import { localSaveAPIKey } from '@/utils/app/storage/local/apiKey';
-import { localSaveShowPrimaryMenu } from '@/utils/app/storage/local/uiState';
 import {
-  deleteSelectedConversation,
-  saveSelectedConversation,
+  deleteSelectedConversationId,
+  saveSelectedConversationId,
 } from '@/utils/app/storage/selectedConversation';
 
+import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 import { LatestExportFormat, SupportedExportFormats } from '@/types/export';
@@ -47,14 +49,7 @@ export const Conversations = () => {
   );
 
   const {
-    state: {
-      conversations,
-      showPrimaryMenu,
-      defaultModelId,
-      database,
-      folders,
-      user,
-    },
+    state: { conversations, messages, database, folders, user },
     dispatch: homeDispatch,
     handleCreateFolder,
     handleNewConversation,
@@ -67,13 +62,14 @@ export const Conversations = () => {
   } = conversationsContextValue;
 
   const handleExportData = (database: Database) => {
-    exportData(database, user!);
+    // exportData(database, user!);
   };
 
   const handleImportConversations = async (data: SupportedExportFormats) => {
     if (!database || !user) return;
     const {
       conversations,
+      messages,
       folders,
       system_prompts,
       message_templates,
@@ -83,6 +79,7 @@ export const Conversations = () => {
       field: 'selectedConversation',
       value: conversations[conversations.length - 1],
     });
+    homeDispatch({ field: 'messages', value: messages });
     homeDispatch({ field: 'folders', value: folders });
     homeDispatch({ field: 'prompts', value: message_templates });
     homeDispatch({ field: 'systemPrompts', value: system_prompts });
@@ -101,17 +98,46 @@ export const Conversations = () => {
 
     await storageDeleteConversations(database, user);
     storageDeleteFolders(database, user, deletedFolderIds);
-    deleteSelectedConversation(user);
+    deleteSelectedConversationId(user);
 
     const updatedFolders = folders.filter((f) => f.type !== 'chat');
 
     homeDispatch({ field: 'folders', value: updatedFolders });
     storageUpdateFolders(database, user, updatedFolders);
+
+    const newConversation: Conversation = {
+      id: uuidv4(),
+      name: 'New Conversation',
+      model: PossibleAiModels[DEFAULT_MODEL],
+      systemPrompt: null,
+      temperature: DEFAULT_TEMPERATURE,
+      folderId: null,
+      timestamp: new Date().toISOString(),
+    };
+
+    const updatedConversations = storageCreateConversation(
+      database,
+      user,
+      newConversation,
+      [],
+    );
+
+    homeDispatch({
+      field: 'selectedConversation',
+      value: updatedConversations[updatedConversations.length - 1],
+    });
+
+    saveSelectedConversationId(
+      user,
+      updatedConversations[updatedConversations.length - 1].id,
+    );
+
+    homeDispatch({ field: 'conversations', value: updatedConversations });
   };
 
   const handleDeleteConversation = (conversation: Conversation) => {
     if (!database || !user) return;
-    const updatedConversations = storageDeleteConversation(
+    let updatedConversations = storageDeleteConversation(
       database,
       user,
       conversation.id,
@@ -127,13 +153,46 @@ export const Conversations = () => {
         value: updatedConversations[updatedConversations.length - 1],
       });
 
-      saveSelectedConversation(
+      saveSelectedConversationId(
         user,
-        updatedConversations[updatedConversations.length - 1],
+        updatedConversations[updatedConversations.length - 1].id,
       );
     } else {
-      deleteSelectedConversation(user);
+      const newConversation: Conversation = {
+        id: uuidv4(),
+        name: 'New Conversation',
+        model: PossibleAiModels[DEFAULT_MODEL],
+        systemPrompt: null,
+        temperature: DEFAULT_TEMPERATURE,
+        folderId: null,
+        timestamp: new Date().toISOString(),
+      };
+
+      updatedConversations = storageCreateConversation(
+        database,
+        user,
+        newConversation,
+        [],
+      );
+
+      homeDispatch({
+        field: 'selectedConversation',
+        value: updatedConversations[updatedConversations.length - 1],
+      });
+
+      saveSelectedConversationId(
+        user,
+        updatedConversations[updatedConversations.length - 1].id,
+      );
+
+      homeDispatch({ field: 'conversations', value: updatedConversations });
     }
+
+    const updatedMessages = messages.filter(
+      (message) => message.conversationId !== conversation.id,
+    );
+
+    homeDispatch({ field: 'messages', value: updatedMessages });
   };
 
   const handleDrop = (e: any) => {
@@ -150,10 +209,14 @@ export const Conversations = () => {
       chatDispatch({
         field: 'filteredConversations',
         value: conversations.filter((conversation) => {
+          const conversationMessages = messages.filter(
+            (message) => message.conversationId === conversation.id,
+          );
+
           const searchable =
             conversation.name.toLocaleLowerCase() +
             ' ' +
-            conversation.messages.map((message) => message.content).join(' ');
+            conversationMessages.map((message) => message.content).join(' ');
           return searchable.toLowerCase().includes(searchTerm.toLowerCase());
         }),
       });
@@ -163,7 +226,7 @@ export const Conversations = () => {
         value: conversations,
       });
     }
-  }, [searchTerm, conversations, chatDispatch]);
+  }, [searchTerm, conversations, chatDispatch, messages]);
 
   const doSearch = (term: string) =>
     chatDispatch({ field: 'searchTerm', value: term });

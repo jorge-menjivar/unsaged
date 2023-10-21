@@ -5,14 +5,13 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 export const supaCreateMessage = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
   newMessage: Message,
 ) => {
   const supaMessage: SupaDatabase['public']['Tables']['messages']['Insert'] = {
     id: newMessage.id,
     content: newMessage.content,
     role: newMessage.role,
-    conversation_id: conversationId,
+    conversation_id: newMessage.conversationId,
     timestamp: newMessage.timestamp,
   };
 
@@ -26,7 +25,6 @@ export const supaCreateMessage = async (
 };
 export const supaUpdateMessage = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
   updatedMessage: Message,
 ) => {
   const { error } = await supabase
@@ -35,8 +33,7 @@ export const supaUpdateMessage = async (
       content: updatedMessage.content,
       role: updatedMessage.role,
     })
-    .eq('id', updatedMessage.id)
-    .eq('conversation_id', conversationId);
+    .eq('id', updatedMessage.id);
 
   if (error) {
     console.error(error);
@@ -47,14 +44,12 @@ export const supaUpdateMessage = async (
 
 export const supaDeleteMessage = async (
   supabase: SupabaseClient<SupaDatabase>,
-  conversationId: string,
   messageId: string,
 ) => {
   const { error } = await supabase
     .from('messages')
     .delete()
-    .eq('id', messageId)
-    .eq('conversation_id', conversationId);
+    .eq('id', messageId);
 
   if (error) {
     console.error(error);

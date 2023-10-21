@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import Head from 'next/head';
 import Image from 'next/image';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import {
-  cleanConversationHistory,
-  cleanSelectedConversation,
-} from '@/utils/app/clean';
 import {
   DEBUG_MODE,
   DEFAULT_ANTHROPIC_SYSTEM_PROMPT,
@@ -21,6 +16,7 @@ import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { useAuth } from '@/utils/app/retrieval/auth';
 import { useConversations } from '@/utils/app/retrieval/conversations';
 import { useDatabase } from '@/utils/app/retrieval/database';
+import { useMessages } from '@/utils/app/retrieval/messages';
 import { useModels } from '@/utils/app/retrieval/models';
 import { getSettings } from '@/utils/app/settings/getSettings';
 import { setSettingChoices } from '@/utils/app/settings/settingChoices';
@@ -28,10 +24,7 @@ import {
   storageCreateConversation,
   storageUpdateConversation,
 } from '@/utils/app/storage/conversation';
-import {
-  storageGetConversations,
-  storageUpdateConversations,
-} from '@/utils/app/storage/conversations';
+import { storageUpdateConversations } from '@/utils/app/storage/conversations';
 import {
   storageCreateFolder,
   storageDeleteFolder,
@@ -47,20 +40,13 @@ import {
   localGetShowPrimaryMenu,
   localGetShowSecondaryMenu,
 } from '@/utils/app/storage/local/uiState';
-import {
-  storageDeleteMessages,
-  storageUpdateMessages,
-} from '@/utils/app/storage/messages';
+import { storageDeleteMessages } from '@/utils/app/storage/messages';
 import {
   storageGetPrompts,
   storageUpdatePrompts,
 } from '@/utils/app/storage/prompts';
-import {
-  getSelectedConversation,
-  saveSelectedConversation,
-} from '@/utils/app/storage/selectedConversation';
+import { saveSelectedConversationId } from '@/utils/app/storage/selectedConversation';
 import { storageGetSystemPrompts } from '@/utils/app/storage/systemPrompts';
-import { getTimestampWithTimezoneOffset } from '@/utils/app/time/time';
 
 import { AiModel, PossibleAiModels } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
@@ -89,20 +75,20 @@ const Home = () => {
 
   const {
     state: {
+      builtInSystemPrompts,
       database,
       display,
       lightMode,
       folders,
       conversations,
-      selectedConversation,
+      models,
       prompts,
+      savedSettings,
+      selectedConversation,
+      settings,
+      settingsLoaded,
       systemPrompts,
       user,
-      savedSettings,
-      settings,
-      models,
-      builtInSystemPrompts,
-      settingsLoaded,
     },
     dispatch,
   } = contextValue;
@@ -117,17 +103,27 @@ const Home = () => {
     }
   }, [debugLogPrinted]);
 
-  // AUTH ---------------------------------------------------------
+  // AUTH --------------------------------------------------------------------
   useAuth(dispatch, user);
 
-  // DATABASE ---------------------------------------------------------
+  // DATABASE ----------------------------------------------------------------
   useDatabase(dispatch, database);
 
-  // MODELS ----------------------------------------------
+  // MODELS ------------------------------------------------------------------
   useModels(dispatch, savedSettings, models);
 
-  // CONVERSATIONS ---------------------------------------------------------
+  // CONVERSATIONS -----------------------------------------------------------
   useConversations(dispatch, database, user, conversations);
+
+  // MESSAGES ----------------------------------------------------------------
+  useMessages(dispatch, database, user);
+
+  useEffect(() => {
+    const _selectedConversation = conversations.find(
+      (c) => c.id === selectedConversation?.id,
+    );
+    dispatch({ field: 'selectedConversation', value: _selectedConversation });
+  }, [conversations, dispatch, selectedConversation?.id]);
 
   const handleSelectConversation = (conversation: Conversation) => {
     if (!database || !user) return;
@@ -141,7 +137,7 @@ const Home = () => {
       value: 'chat',
     });
 
-    saveSelectedConversation(user, conversation);
+    saveSelectedConversationId(user, conversation.id);
   };
 
   // FOLDER OPERATIONS  --------------------------------------------
@@ -215,35 +211,35 @@ const Home = () => {
 
   // CONVERSATION OPERATIONS  --------------------------------------------
 
-  const autoUpdateConversations = useCallback(
-    async (oldConversations: Conversation[]) => {
-      if (!database || !user) return;
-      for (const conversation of oldConversations) {
-        if (conversation.systemPrompt) {
-          const systemPrompt = systemPrompts.find(
-            (p) => p.id === conversation.systemPrompt?.id,
-          );
+  // const autoUpdateConversations = useCallback(
+  //   async (oldConversations: Conversation[]) => {
+  //     if (!database || !user) return;
+  //     for (const conversation of oldConversations) {
+  //       if (conversation.systemPrompt) {
+  //         const systemPrompt = systemPrompts.find(
+  //           (p) => p.id === conversation.systemPrompt?.id,
+  //         );
 
-          if (systemPrompt) {
-            conversation.systemPrompt = systemPrompt;
-          } else {
-            conversation.systemPrompt = null;
-          }
-        }
-      }
+  //         if (systemPrompt) {
+  //           conversation.systemPrompt = systemPrompt;
+  //         } else {
+  //           conversation.systemPrompt = null;
+  //         }
+  //       }
+  //     }
 
-      storageUpdateConversations(database, user, oldConversations);
+  //     storageUpdateConversations(database, user, oldConversations);
 
-      dispatch({ field: 'conversations', value: oldConversations });
-    },
-    [database, user, systemPrompts, dispatch],
-  );
+  //     dispatch({ field: 'conversations', value: oldConversations });
+  //   },
+  //   [database, user, systemPrompts, dispatch],
+  // );
 
-  useEffect(() => {
-    if (conversations.length > 0) {
-      autoUpdateConversations(conversations);
-    }
-  }, [autoUpdateConversations, conversations, systemPrompts]);
+  // useEffect(() => {
+  //   if (conversations.length > 0) {
+  //     autoUpdateConversations(conversations);
+  //   }
+  // }, [autoUpdateConversations, conversations, systemPrompts]);
 
   const handleNewConversation = async () => {
     if (!database || !user) return;
@@ -251,26 +247,15 @@ const Home = () => {
       const lastConversation = conversations[conversations.length - 1];
 
       const model = lastConversation?.model || PossibleAiModels[DEFAULT_MODEL];
-      // const sectionId = model.vendor.toLowerCase();
-      // const settingId = `${model.id}_default_system_prompt`;
-      // const systemPromptId = getSavedSettingValue(
-      //   savedSettings,
-      //   sectionId,
-      //   settingId,
-      //   settings,
-      // );
-
-      // const systemPrompt = systemPrompts.find((p) => p.id === systemPromptId);
 
       const newConversation: Conversation = {
         id: uuidv4(),
         name: 'New Conversation',
-        messages: [],
         model: model,
         systemPrompt: null,
         temperature: DEFAULT_TEMPERATURE,
         folderId: null,
-        timestamp: getTimestampWithTimezoneOffset(),
+        timestamp: new Date().toISOString(),
       };
 
       const updatedConversations = storageCreateConversation(
@@ -282,7 +267,7 @@ const Home = () => {
       dispatch({ field: 'selectedConversation', value: newConversation });
       dispatch({ field: 'conversations', value: updatedConversations });
 
-      saveSelectedConversation(user, newConversation);
+      saveSelectedConversationId(user, newConversation.id);
 
       dispatch({ field: 'loading', value: false });
     }
@@ -343,61 +328,19 @@ const Home = () => {
   ) => {
     if (!database || !user) return;
 
-    const updatedConversation = {
+    const updatedConversation: Conversation = {
       ...conversation,
       [data.key]: data.value,
     };
 
-    let update: {
-      single: Conversation;
-      all: Conversation[];
-    };
+    const updatedConversations = storageUpdateConversation(
+      database,
+      user,
+      updatedConversation,
+      conversations,
+    );
 
-    if (data.key === 'messages') {
-      const messages = conversation.messages;
-      const updatedMessageList = data.value as Message[];
-
-      const deletedMessages = messages.filter(
-        (m) => !updatedMessageList.includes(m),
-      );
-
-      const updatedMessages = messages.filter((m) =>
-        updatedMessageList.includes(m),
-      );
-
-      const deletedMessageIds = deletedMessages.map((m) => m.id);
-
-      const cleaned = storageDeleteMessages(
-        database,
-        user,
-        deletedMessageIds,
-        conversation,
-        messages,
-        conversations,
-      );
-
-      const cleanConversation = cleaned.single;
-      const cleanConversations = cleaned.all;
-
-      update = storageUpdateMessages(
-        database,
-        user,
-        cleanConversation,
-        updatedMessages,
-        cleanConversations,
-      );
-    } else {
-      update = storageUpdateConversation(
-        database,
-        user,
-        updatedConversation,
-        conversations,
-      );
-    }
-
-    dispatch({ field: 'selectedConversation', value: update.single });
-    dispatch({ field: 'conversations', value: update.all });
-    saveSelectedConversation(user, update.single);
+    dispatch({ field: 'conversations', value: updatedConversations });
   };
 
   // EFFECTS  --------------------------------------------
@@ -407,7 +350,7 @@ const Home = () => {
       dispatch({ field: 'showPrimaryMenu', value: false });
       dispatch({ field: 'showSecondaryMenu', value: false });
     }
-  }, [dispatch, selectedConversation, display]);
+  }, [dispatch, display]);
 
   // ON LOAD --------------------------------------------
 

@@ -1,5 +1,5 @@
 import { SupaDatabase } from '../types/supabase';
-import { Conversation, Message } from '@/types/chat';
+import { Conversation } from '@/types/chat';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 

@@ -2,7 +2,7 @@ import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 
-import { saveSelectedConversation } from './selectedConversation';
+import { saveSelectedConversationId } from './selectedConversation';
 
 export const storageCreateConversation = (
   database: Database,
@@ -35,7 +35,7 @@ export const storageUpdateConversation = (
     return c;
   });
 
-  saveSelectedConversation(user, updatedConversation);
+  saveSelectedConversationId(user, updatedConversation.id);
 
   database.updateConversation(user, updatedConversation).then((success) => {
     if (!success) {
@@ -43,10 +43,7 @@ export const storageUpdateConversation = (
     }
   });
 
-  return {
-    single: updatedConversation,
-    all: updatedConversations,
-  };
+  return updatedConversations;
 };
 
 export const storageDeleteConversation = (

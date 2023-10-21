@@ -5,8 +5,6 @@ import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 
 import { storageCreateMessage } from '../../storage/message';
-import { saveSelectedConversation } from '../../storage/selectedConversation';
-import { getTimestampWithTimezoneOffset } from '../../time/time';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,9 +14,9 @@ export async function messageReceiver(
   data: ReadableStream,
   controller: AbortController,
   conversation: Conversation,
-  conversations: Conversation[],
+  messages: Message[],
   stopConversationRef: MutableRefObject<boolean>,
-  homeDispatch: React.Dispatch<any>,
+  dispatch: React.Dispatch<any>,
 ) {
   const reader = data.getReader();
   const decoder = new TextDecoder();
@@ -30,10 +28,13 @@ export async function messageReceiver(
     id: assistantMessageId,
     role: 'assistant',
     content: '',
-    timestamp: getTimestampWithTimezoneOffset(),
+    timestamp: new Date().toISOString(),
+    conversationId: conversation.id,
   };
-  conversation.messages.push(responseMessage);
-  const length = conversation.messages.length;
+
+  const updatedMessages = [...messages, responseMessage];
+  dispatch({ field: 'messages', value: updatedMessages });
+  const length = updatedMessages.length;
   while (!done) {
     if (stopConversationRef.current === true) {
       controller.abort();
@@ -46,35 +47,28 @@ export async function messageReceiver(
 
     text += chunkValue;
 
-    conversation.messages[length - 1].content = text;
+    updatedMessages[length - 1].content = text;
 
-    homeDispatch({
-      field: 'selectedConversation',
-      value: conversation,
-    });
+    dispatch({ field: 'messages', value: updatedMessages });
   }
 
-  conversation.messages.pop();
+  updatedMessages.pop();
 
   responseMessage.content = text;
 
-  homeDispatch({ field: 'loading', value: false });
-  homeDispatch({ field: 'messageIsStreaming', value: false });
+  dispatch({ field: 'loading', value: false });
+  dispatch({ field: 'messageIsStreaming', value: false });
 
   // Saving the response message
-  const { single, all } = storageCreateMessage(
+  const finalUpdatedMessages = storageCreateMessage(
     database,
     user,
-    conversation,
     responseMessage,
-    conversations,
+    messages,
   );
 
-  homeDispatch({
-    field: 'selectedConversation',
-    value: single,
+  dispatch({
+    field: 'messages',
+    value: finalUpdatedMessages,
   });
-
-  homeDispatch({ field: 'conversations', value: all });
-  saveSelectedConversation(user, single);
 }

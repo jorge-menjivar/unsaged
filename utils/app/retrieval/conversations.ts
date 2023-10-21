@@ -14,10 +14,9 @@ import { DEFAULT_MODEL, DEFAULT_TEMPERATURE } from '../const';
 import { storageCreateConversation } from '../storage/conversation';
 import { storageGetConversations } from '../storage/conversations';
 import {
-  getSelectedConversation,
-  saveSelectedConversation,
+  getSelectedConversationId,
+  saveSelectedConversationId,
 } from '../storage/selectedConversation';
-import { getTimestampWithTimezoneOffset } from '../time/time';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -32,57 +31,35 @@ export const useConversations = (
   const fetchModels = useCallback(async () => {
     if (!conversationsLoaded) {
       if (database && user) {
-        storageGetConversations(database, user)
-          .then((conversationHistory) => {
-            if (conversationHistory) {
-              const parsedConversationHistory: Conversation[] =
-                conversationHistory;
-              const cleanedConversations = cleanConversationHistory(
-                parsedConversationHistory,
-              );
+        const _conversations = await storageGetConversations(database, user);
 
-              const selectedConversation = getSelectedConversation(user);
+        if (_conversations) {
+          const cleanedConversations = cleanConversationHistory(_conversations);
 
-              if (selectedConversation) {
-                try {
-                  const parsedSelectedConversation: Conversation =
-                    JSON.parse(selectedConversation);
-                  const cleanedSelectedConversation = cleanSelectedConversation(
-                    parsedSelectedConversation,
-                  );
+          const selectedConversationId = getSelectedConversationId(user);
 
-                  homeDispatch({
-                    field: 'selectedConversation',
-                    value: cleanedSelectedConversation,
-                  });
-                } catch (e) {
-                  console.error(
-                    'Unable to parse selected conversation. Resetting to las conversation.\n',
-                    e,
-                  );
-                  if (cleanedConversations.length > 0) {
-                    homeDispatch({
-                      field: 'selectedConversation',
-                      value: cleanedConversations[0],
-                    });
-                  }
-                }
-              } else if (cleanedConversations.length > 0) {
-                homeDispatch({
-                  field: 'selectedConversation',
-                  value: cleanedConversations[0],
-                });
-              }
+          const selectedConversation = cleanedConversations.find(
+            (c) => c.id === selectedConversationId,
+          );
 
-              homeDispatch({
-                field: 'conversations',
-                value: cleanedConversations,
-              });
-            }
-          })
-          .then(() => {
-            setConversationsLoaded(true);
+          if (selectedConversation) {
+            homeDispatch({
+              field: 'selectedConversation',
+              value: selectedConversation,
+            });
+          } else if (cleanedConversations.length > 0) {
+            homeDispatch({
+              field: 'selectedConversation',
+              value: cleanedConversations[0],
+            });
+          }
+
+          homeDispatch({
+            field: 'conversations',
+            value: cleanedConversations,
           });
+        }
+        setConversationsLoaded(true);
       }
     }
   }, [conversationsLoaded, database, homeDispatch, user]);
@@ -95,26 +72,15 @@ export const useConversations = (
     if (!database || !user) return;
 
     const model = PossibleAiModels[DEFAULT_MODEL];
-    // const sectionId = model.vendor.toLowerCase();
-    // const settingId = `${model.id}_default_system_prompt`;
-    // const systemPromptId = getSavedSettingValue(
-    //   savedSettings,
-    //   sectionId,
-    //   settingId,
-    //   settings,
-    // );
-
-    // const systemPrompt = systemPrompts.find((p) => p.id === systemPromptId);
 
     const newConversation: Conversation = {
       id: uuidv4(),
       name: 'New Conversation',
-      messages: [],
       model: model,
       systemPrompt: null,
       temperature: DEFAULT_TEMPERATURE,
       folderId: null,
-      timestamp: getTimestampWithTimezoneOffset(),
+      timestamp: new Date().toISOString(),
     };
 
     const updatedConversations = storageCreateConversation(
@@ -123,10 +89,13 @@ export const useConversations = (
       newConversation,
       [],
     );
-    homeDispatch({ field: 'selectedConversation', value: newConversation });
+    homeDispatch({
+      field: 'selectedConversation',
+      value: newConversation,
+    });
     homeDispatch({ field: 'conversations', value: updatedConversations });
 
-    saveSelectedConversation(user, newConversation);
+    saveSelectedConversationId(user, newConversation.id);
   }, [database, homeDispatch, user]);
 
   useEffect(() => {

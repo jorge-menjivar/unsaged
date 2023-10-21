@@ -1,8 +1,7 @@
-import { MutableRefObject } from 'react';
+import { Dispatch, MutableRefObject } from 'react';
 
-import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
-import { Conversation } from '@/types/chat';
+import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 import { SavedSetting } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
@@ -11,52 +10,68 @@ import { storageDeleteMessages } from '../storage/messages';
 import { messageReceiver } from './helpers/messageReceiver';
 import { messageSender } from './helpers/messageSender';
 
-export const regenerateMessageHandler = async (
-  user: User,
-  stopConversationRef: MutableRefObject<boolean>,
-  builtInSystemPrompts: SystemPrompt[],
-  selectedConversation: Conversation | undefined,
-  conversations: Conversation[],
-  database: Database,
-  savedSettings: SavedSetting[],
-  homeDispatch: React.Dispatch<any>,
-) => {
+export interface RegenerateMessageHandlerFunctionProps {
+  builtInSystemPrompts: SystemPrompt[];
+  database: Database;
+  dispatch: Dispatch<any>;
+  user: User;
+  messages: Message[];
+  savedSettings: SavedSetting[];
+  stopConversationRef: MutableRefObject<boolean>;
+  selectedConversation: Conversation;
+  conversations: Conversation[];
+}
+export const regenerateMessageHandler = async ({
+  dispatch,
+  user,
+  messages,
+  stopConversationRef,
+  builtInSystemPrompts,
+  selectedConversation,
+  database,
+  savedSettings,
+}: RegenerateMessageHandlerFunctionProps) => {
   if (selectedConversation) {
-    homeDispatch({ field: 'loading', value: true });
-    homeDispatch({ field: 'messageIsStreaming', value: true });
+    dispatch({ field: 'loading', value: true });
+    dispatch({ field: 'messageIsStreaming', value: true });
 
     const deleteCount = 1;
 
-    const conversationLength = selectedConversation.messages.length;
+    const selectedConversationMessages = messages.filter(
+      (message) => message.conversationId === selectedConversation.id,
+    );
+
+    const conversationLength = selectedConversationMessages.length;
     const messagesToBeDeleted: string[] = [];
 
     for (let i = 0; i < deleteCount; i++) {
       const currentMessage =
-        selectedConversation.messages[conversationLength - 1 - i];
+        selectedConversationMessages[conversationLength - 1 - i];
       messagesToBeDeleted.push(currentMessage.id);
     }
 
-    let { single: updatedConversation, all: updatedConversations } =
-      storageDeleteMessages(
-        database,
-        user,
-        messagesToBeDeleted,
-        selectedConversation,
-        selectedConversation.messages,
-        conversations,
-      );
+    const updatedMessages = storageDeleteMessages(
+      database,
+      user,
+      messagesToBeDeleted,
+      messages,
+    );
 
-    homeDispatch({
-      field: 'selectedConversation',
-      value: updatedConversation,
+    dispatch({
+      field: 'messages',
+      value: updatedMessages,
     });
+
+    const updatedConversationMessages = updatedMessages.filter(
+      (message) => message.conversationId === selectedConversation.id,
+    );
 
     const { data, controller } = await messageSender(
       builtInSystemPrompts,
-      updatedConversation,
       selectedConversation,
+      updatedConversationMessages,
       savedSettings,
-      homeDispatch,
+      dispatch,
     );
 
     // Failed to send message
@@ -69,10 +84,10 @@ export const regenerateMessageHandler = async (
       database,
       data,
       controller,
-      updatedConversation,
-      updatedConversations,
+      selectedConversation,
+      updatedMessages,
       stopConversationRef,
-      homeDispatch,
+      dispatch,
     );
   }
 };
