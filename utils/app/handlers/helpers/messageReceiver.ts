@@ -52,6 +52,8 @@ export async function messageReceiver(
     dispatch({ field: 'messages', value: updatedMessages });
   }
 
+  stopConversationRef.current = false;
+
   updatedMessages.pop();
 
   responseMessage.content = text;

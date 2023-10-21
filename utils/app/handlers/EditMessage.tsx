@@ -2,7 +2,6 @@ import { Dispatch, MutableRefObject } from 'react';
 
 import { storageUpdateMessage } from '@/utils/app/storage/message';
 
-import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';

@@ -120,9 +120,6 @@ export const ChatInput = ({
 
   const handleStopConversation = () => {
     stopConversationRef.current = true;
-    setTimeout(() => {
-      stopConversationRef.current = false;
-    }, 1000);
   };
 
   const isMobile = () => {

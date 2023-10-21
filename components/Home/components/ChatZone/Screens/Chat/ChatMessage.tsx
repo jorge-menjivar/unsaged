@@ -28,7 +28,7 @@ import remarkMath from 'remark-math';
 export interface Props {
   message: Message;
   messageIndex: number;
-  onEdit?: (conversation: Conversation, editedMessage: Message) => void;
+  onEdit?: (editedMessage: Message) => void;
 }
 
 export const ChatMessage: FC<Props> = memo(
@@ -76,7 +76,7 @@ export const ChatMessage: FC<Props> = memo(
     const handleEditMessage = () => {
       if (message.content != messageContent) {
         if (selectedConversation && onEdit) {
-          onEdit(selectedConversation, { ...message, content: messageContent });
+          onEdit({ ...message, content: messageContent });
         }
       }
       setIsEditing(false);

@@ -8,7 +8,6 @@ import {
   useState,
 } from 'react';
 
-import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
@@ -49,6 +48,12 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
+
+  const liveMessages = useRef<Message[]>([]);
+
+  useEffect(() => {
+    liveMessages.current = messages;
+  }, [messages]);
 
   const chatContextValue = useCreateReducer<ChatInitialState>({
     initialState,
@@ -270,7 +275,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                       key={index}
                       message={message}
                       messageIndex={index}
-                      onEdit={(conversation, editedMessage) => {
+                      onEdit={(editedMessage) => {
                         if (!selectedConversation) return;
 
                         setCurrentMessage(editedMessage);
@@ -285,7 +290,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                           database: database!,
                           savedSettings,
                           dispatch: homeDispatch,
-                          messages,
+                          messages: liveMessages.current,
                           selectedConversation,
                         });
                       }}
@@ -318,7 +323,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                   database: database!,
                   savedSettings,
                   dispatch: homeDispatch,
-                  messages,
+                  messages: liveMessages.current,
                   selectedConversation,
                 });
               }}
@@ -335,7 +340,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                     database: database!,
                     savedSettings,
                     dispatch: homeDispatch,
-                    messages,
+                    messages: liveMessages.current,
                     selectedConversation,
                   });
                 }
