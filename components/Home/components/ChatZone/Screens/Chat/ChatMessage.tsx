@@ -9,11 +9,10 @@ import {
 import { FC, memo, useContext, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
 
 import { storageDeleteMessages } from '@/utils/app/storage/messages';
 
-import { Conversation, Message } from '@/types/chat';
+import { Message } from '@/types/chat';
 
 import HomeContext from '@/components/Home/home.context';
 import { CodeBlock } from '@/components/Markdown/CodeBlock';
@@ -38,7 +37,7 @@ export const ChatMessage: FC<Props> = memo(
     const {
       state: {
         database,
-        conversations,
+        messages,
         messageIsStreaming,
         selectedConversation,
         user,
@@ -108,7 +107,7 @@ export const ChatMessage: FC<Props> = memo(
         database!,
         user!,
         messagesToBeDeleted,
-        selectedConversationMessages,
+        messages,
       );
       homeDispatch({ field: 'messages', value: updatedMessages });
     };
