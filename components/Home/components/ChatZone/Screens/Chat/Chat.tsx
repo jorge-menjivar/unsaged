@@ -65,7 +65,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     dispatch: chatDispatch,
   } = chatContextValue;
 
-  const [currentMessage, setCurrentMessage] = useState<Message>();
+  const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
   const [showScrollDownButton, setShowScrollDownButton] =
     useState<boolean>(false);
@@ -180,10 +180,19 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
   useEffect(() => {
     throttledScrollDown();
-    selectedConversation &&
-      setCurrentMessage(
-        selectedConversationMessages[selectedConversationMessages.length - 2],
+    if (selectedConversation) {
+      // Finding the last message the user sent, which is the current message.
+      const lastMessageIndex = selectedConversationMessages.findIndex(
+        (message) => message.role === 'user',
       );
+
+      if (lastMessageIndex !== -1) {
+        const lastMessage = selectedConversationMessages[lastMessageIndex];
+        setCurrentMessage(lastMessage);
+      } else {
+        setCurrentMessage(null);
+      }
+    }
   }, [selectedConversation, selectedConversationMessages, throttledScrollDown]);
 
   useEffect(() => {
