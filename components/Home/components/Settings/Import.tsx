@@ -1,18 +1,29 @@
 import { IconFileImport } from '@tabler/icons-react';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
 import { SupportedExportFormats } from '@/types/export';
+import { SystemPrompt } from '@/types/system-prompt';
 
 import { SidebarButton } from '@/components/Common/Sidebar/SidebarButton';
 
+import HomeContext from '../../home.context';
+
 interface Props {
-  onImport: (data: SupportedExportFormats) => void;
+  onImport: (
+    data: SupportedExportFormats,
+    systemPrompts: SystemPrompt[],
+  ) => void;
 }
 
 export const Import: FC<Props> = ({ onImport }) => {
   const { t } = useTranslation('sidebar');
+
+  const {
+    state: { systemPrompts },
+  } = useContext(HomeContext);
+
   return (
     <>
       <input
@@ -28,7 +39,7 @@ export const Import: FC<Props> = ({ onImport }) => {
           const reader = new FileReader();
           reader.onload = (e) => {
             let json = JSON.parse(e.target?.result as string);
-            onImport(json);
+            onImport(json, systemPrompts);
           };
           reader.readAsText(file);
         }}

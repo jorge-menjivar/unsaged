@@ -5,6 +5,7 @@ import { ActionType } from '@/hooks/useCreateReducer';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 import { SupportedExportFormats } from '@/types/export';
+import { SystemPrompt } from '@/types/system-prompt';
 
 import { ConversationsInitialState } from './Conversations.state';
 
@@ -14,7 +15,10 @@ export interface ConversationsContextProps {
   handleDeleteConversation: (conversation: Conversation) => void;
   handleClearConversations: () => void;
   handleExportData: (database: Database) => void;
-  handleImportConversations: (data: SupportedExportFormats) => void;
+  handleImportConversations: (
+    data: SupportedExportFormats,
+    systemPrompts: SystemPrompt[],
+  ) => void;
 }
 
 const ConversationsContext = createContext<ConversationsContextProps>(

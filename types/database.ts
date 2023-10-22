@@ -24,7 +24,10 @@ export interface Database {
   deleteConversation(user: User, conversationId: string): Promise<boolean>;
 
   // ------------------------------Conversations------------------------------
-  getConversations(user: User): Promise<Conversation[]>;
+  getConversations(
+    user: User,
+    systemPrompts: SystemPrompt[],
+  ): Promise<Conversation[]>;
 
   updateConversations(
     user: User,

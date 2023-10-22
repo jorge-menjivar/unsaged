@@ -3,12 +3,11 @@ import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { supaGetSystemPrompt } from './systemPrompt';
-
 import { SupabaseClient } from '@supabase/supabase-js';
 
 export const supaGetConversations = async (
   supabase: SupabaseClient<SupaDatabase>,
+  systemPrompts: SystemPrompt[],
 ) => {
   const { data: supaConversations, error } = await supabase
     .from('conversations')
@@ -21,10 +20,10 @@ export const supaGetConversations = async (
     for (const supaConversation of supaConversations) {
       let systemPrompt: SystemPrompt | null = null;
       if (supaConversation.system_prompt_id) {
-        systemPrompt = await supaGetSystemPrompt(
-          supabase,
-          supaConversation.system_prompt_id,
-        );
+        systemPrompt =
+          systemPrompts.find(
+            (p) => p.id === supaConversation.system_prompt_id,
+          ) || null;
       }
 
       if (

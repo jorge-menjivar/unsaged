@@ -8,6 +8,7 @@ import {
 } from '@/types/export';
 import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
+import { SystemPrompt } from '@/types/system-prompt';
 
 import { cleanFolders, cleanMessageTemplates } from '../clean';
 import {
@@ -63,9 +64,17 @@ function currentDate() {
   return `${month}-${day}`;
 }
 
-export const exportData = async (database: Database, user: User) => {
+export const exportData = async (
+  database: Database,
+  user: User,
+  systemPrompts: SystemPrompt[],
+) => {
   // TODO: This function is not ready yet
-  let conversations = await storageGetConversations(database, user);
+  let conversations = await storageGetConversations(
+    database,
+    user,
+    systemPrompts,
+  );
   let messages = await storageGetMessages(database, user);
   let folders = await storageGetFolders(database, user);
   let prompts = await storageGetTemplates(database, user);
@@ -98,6 +107,7 @@ export const importData = async (
   database: Database,
   user: User,
   data: SupportedExportFormats,
+  systemPrompts: SystemPrompt[],
 ): Promise<LatestExportFormat> => {
   const {
     conversations: importedConversations,
@@ -119,7 +129,11 @@ export const importData = async (
   await storageUpdateFolders(database, user, updatedFolders);
 
   // Updating conversations
-  const conversations = await storageGetConversations(database, user);
+  const conversations = await storageGetConversations(
+    database,
+    user,
+    systemPrompts,
+  );
   const updatedConversations: Conversation[] = [
     ...conversations,
     ...importedConversations,

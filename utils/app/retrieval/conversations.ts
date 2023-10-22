@@ -6,6 +6,7 @@ import { PossibleAiModels } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
+import { SystemPrompt } from '@/types/system-prompt';
 
 import { HomeInitialState } from '@/components/Home/home.state';
 
@@ -25,13 +26,18 @@ export const useConversations = (
   database: Database | null,
   user: User | null,
   conversations: Conversation[],
+  systemPrompts: SystemPrompt[],
 ) => {
   const [conversationsLoaded, setConversationsLoaded] = useState(false);
 
   const fetchModels = useCallback(async () => {
     if (!conversationsLoaded) {
       if (database && user) {
-        const _conversations = await storageGetConversations(database, user);
+        const _conversations = await storageGetConversations(
+          database,
+          user,
+          systemPrompts,
+        );
 
         if (_conversations) {
           const cleanedConversations = cleanConversationHistory(_conversations);
@@ -62,7 +68,7 @@ export const useConversations = (
         setConversationsLoaded(true);
       }
     }
-  }, [conversationsLoaded, database, homeDispatch, user]);
+  }, [conversationsLoaded, database, homeDispatch, systemPrompts, user]);
 
   useEffect(() => {
     fetchModels();

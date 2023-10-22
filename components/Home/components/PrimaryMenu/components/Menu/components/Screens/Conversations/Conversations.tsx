@@ -25,6 +25,7 @@ import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 import { LatestExportFormat, SupportedExportFormats } from '@/types/export';
+import { SystemPrompt } from '@/types/system-prompt';
 
 import { ConversationList } from './components/ConversationList';
 import { ConversationsSettings } from './components/ConversationsSettings';
@@ -65,7 +66,10 @@ export const Conversations = () => {
     // exportData(database, user!);
   };
 
-  const handleImportConversations = async (data: SupportedExportFormats) => {
+  const handleImportConversations = async (
+    data: SupportedExportFormats,
+    systemPrompts: SystemPrompt[],
+  ) => {
     if (!database || !user) return;
     const {
       conversations,
@@ -73,7 +77,12 @@ export const Conversations = () => {
       folders,
       system_prompts,
       message_templates,
-    }: LatestExportFormat = await importData(database, user, data);
+    }: LatestExportFormat = await importData(
+      database,
+      user,
+      data,
+      systemPrompts,
+    );
     homeDispatch({ field: 'conversations', value: conversations });
     homeDispatch({
       field: 'selectedConversation',

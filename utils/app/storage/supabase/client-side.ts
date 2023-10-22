@@ -114,8 +114,11 @@ export class ClientDatabase implements Database {
   }
 
   // -----------------------------------Conversations-----------------------------------
-  async getConversations(user: User): Promise<Conversation[]> {
-    return await supaGetConversations(this.supabase!);
+  async getConversations(
+    user: User,
+    systemPrompts: SystemPrompt[],
+  ): Promise<Conversation[]> {
+    return await supaGetConversations(this.supabase!, systemPrompts);
   }
 
   async updateConversations(
