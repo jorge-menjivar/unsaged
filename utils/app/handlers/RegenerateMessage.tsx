@@ -32,6 +32,8 @@ export const regenerateMessageHandler = async ({
   savedSettings,
 }: RegenerateMessageHandlerFunctionProps) => {
   if (selectedConversation) {
+    console.log('regenerateMessageHandler');
+
     dispatch({ field: 'loading', value: true });
     dispatch({ field: 'messageIsStreaming', value: true });
 

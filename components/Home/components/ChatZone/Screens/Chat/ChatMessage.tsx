@@ -91,14 +91,18 @@ export const ChatMessage: FC<Props> = memo(
       let messagesToBeDeleted = [];
       if (findIndex < 0) return;
 
-      if (
-        findIndex < selectedConversationMessages.length - 1 &&
-        selectedConversationMessages[findIndex + 1].role === 'assistant'
-      ) {
-        messagesToBeDeleted.push(
-          selectedConversationMessages[findIndex].id,
-          selectedConversationMessages[findIndex + 1].id,
-        );
+      if (findIndex < selectedConversationMessages.length - 1) {
+        messagesToBeDeleted.push(selectedConversationMessages[findIndex].id);
+        for (
+          let i = findIndex + 1;
+          i < selectedConversationMessages.length;
+          i++
+        ) {
+          if (selectedConversationMessages[i].role === 'user') {
+            break;
+          }
+          messagesToBeDeleted.push(selectedConversationMessages[i].id);
+        }
       } else {
         messagesToBeDeleted.push(selectedConversationMessages[findIndex].id);
       }
