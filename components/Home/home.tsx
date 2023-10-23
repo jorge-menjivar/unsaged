@@ -8,6 +8,7 @@ import {
   DEBUG_MODE,
   DEFAULT_ANTHROPIC_SYSTEM_PROMPT,
   DEFAULT_MODEL,
+  DEFAULT_OLLAMA_SYSTEM_PROMPT,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
   DEFAULT_PALM_SYSTEM_PROMPT,
   DEFAULT_TEMPERATURE,
@@ -274,7 +275,12 @@ const Home = () => {
   };
 
   const generateBuiltInSystemPrompts = useCallback(() => {
-    const vendors: AiModel['vendor'][] = ['Anthropic', 'OpenAI', 'Google'];
+    const vendors: AiModel['vendor'][] = [
+      'Anthropic',
+      'OpenAI',
+      'Google',
+      'Ollama',
+    ];
 
     const newSystemPrompts: SystemPrompt[] = [];
     for (const vendor of vendors) {
@@ -307,6 +313,15 @@ const Home = () => {
           content: DEFAULT_PALM_SYSTEM_PROMPT,
           folderId: null,
           models: models.filter((m) => m.vendor === 'Google').map((m) => m.id),
+        };
+        newSystemPrompts.push(systemPrompt);
+      } else if (vendor === 'Ollama') {
+        systemPrompt = {
+          id: systemPromptId,
+          name: `${vendor} Built-In`,
+          content: DEFAULT_OLLAMA_SYSTEM_PROMPT,
+          folderId: null,
+          models: models.filter((m) => m.vendor === 'Ollama').map((m) => m.id),
         };
 
         newSystemPrompts.push(systemPrompt);

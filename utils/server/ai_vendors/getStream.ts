@@ -3,6 +3,7 @@ import { Message } from '@/types/chat';
 
 import { streamAnthropic } from './anthropic/getStream';
 import { streamPaLM2 } from './google/getStream';
+import { streamOllama } from './ollama/getStream';
 import { streamOpenAI } from './openai/getStream';
 
 export async function getStream(
@@ -40,6 +41,8 @@ export async function getStream(
       messages,
       tokenCount,
     );
+  } else if (model.vendor === 'Ollama') {
+    return streamOllama(model, systemPrompt, temperature, messages);
   }
   return { error: 'Unknown vendor' };
 }

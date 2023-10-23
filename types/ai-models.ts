@@ -5,7 +5,7 @@ export interface AiModel {
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
-  vendor: 'OpenAI' | 'Anthropic' | 'Google';
+  vendor: 'OpenAI' | 'Anthropic' | 'Google' | 'Ollama';
 }
 
 export interface PossibleAiModelsInterface {
@@ -75,5 +75,33 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Google',
+  },
+  'llama2:latest': {
+    id: 'llama2:latest',
+    maxLength: 12000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2:13b': {
+    id: 'llama2:13b',
+    maxLength: 12000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2_13B_2080:latest': {
+    id: 'llama2_13B_2080:latest',
+    maxLength: 12000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'wizardcoder13b_python_2080:latest': {
+    id: 'wizardcoder13b_python_2080:latest',
+    maxLength: 12000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'Ollama',
   },
 };
