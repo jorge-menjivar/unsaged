@@ -28,13 +28,10 @@ export async function getAvailableOllamaModels() {
     const json = await response.json();
 
     const models: AiModel[] = json.models.map((ollamaModel: any) => {
-      return {
-        id: ollamaModel.name,
-        maxLength: 12000,
-        tokenLimit: 4000,
-        requestLimit: 3000,
-        vendor: 'Ollama',
-      };
+      console.log(ollamaModel.name);
+      if (ollamaModel.name in PossibleAiModels) {
+        return PossibleAiModels[ollamaModel.name];
+      }
     });
 
     return { data: models };
