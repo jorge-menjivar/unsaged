@@ -174,6 +174,20 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 3000,
     vendor: 'Ollama',
   },
+  'phind-codellama:34b-v2': {
+    id: 'phind-codellama:34b-v2',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:34b-python': {
+    id: 'phind-codellama:34b-python',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
   //
   // Custom models
   //
@@ -193,6 +207,13 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
   },
   'phindcodellama-34b-_2080:latest': {
     id: 'phindcodellama-34b-_2080:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:34bv2-vram2080': {
+    id: 'phind-codellama:34bv2-vram2080',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
