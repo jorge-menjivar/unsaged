@@ -49,7 +49,9 @@ Leveraging the power of Next.js and Supabase, it offers a user-friendly and robu
 
 - **[OpenAI](https://openai.com/)**
   - GPT-3.5-Turbo
-  - GPT 4
+  - GPT-3.5-Turbo-16k
+  - GPT-4
+  - GPT-4-32k 
 - **[Anthropic](https://www.anthropic.com/)**
   - Claude Instant 1 (100k)
   - Claude 2 (100k)
@@ -117,7 +119,7 @@ Or run with Docker:
 
 ```sh
 docker build -t unsaged . --rm
-docker run --env-file=.env.local -p 3000:3000 --name unsaged unsaged
+docker run --env-file=.env.local -p 127.0.0.1:3000:3000 --name unsaged unsaged
 ```
 
 ### (Optional) Step 8. Provide API Keys in .env.local
