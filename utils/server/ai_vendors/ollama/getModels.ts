@@ -27,9 +27,11 @@ export async function getAvailableOllamaModels() {
 
     const json = await response.json();
 
-    const models: AiModel[] = json.models.map((ollamaModel: any) => {
+    const models: AiModel[] = [];
+
+    json.models.map((ollamaModel: any) => {
       if (ollamaModel.name in PossibleAiModels) {
-        return PossibleAiModels[ollamaModel.name];
+        models.push(PossibleAiModels[ollamaModel.name]);
       }
     });
 
