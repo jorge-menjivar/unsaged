@@ -18,6 +18,10 @@ export const DEFAULT_PALM_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT) ||
   "You are Bard, a large language model trained by Google. Follow the user's instructions carefully. Respond using markdown. Always specify the programming language you are using when making a markdown code block.";
 
+export const DEFAULT_OLLAMA_SYSTEM_PROMPT =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT) ||
+  'You are a helpful AI assisstant. Follow the my instructions carefully. Respond using markdown. ';
+
 export const AZURE_DEPLOYMENT_ID =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID) || '';
 
@@ -54,6 +58,8 @@ export const PALM_API_URL =
   'https://generativelanguage.googleapis.com/v1beta2';
 
 export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
+
+export const OLLAMA_HOST = dockerEnvVarFix(process.env.OLLAMA_HOST) || '';
 
 export const APP_DOMAIN =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_APP_DOMAIN) ||

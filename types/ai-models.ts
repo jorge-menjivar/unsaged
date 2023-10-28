@@ -5,7 +5,7 @@ export interface AiModel {
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
-  vendor: 'OpenAI' | 'Anthropic' | 'Google';
+  vendor: 'OpenAI' | 'Anthropic' | 'Google' | 'Ollama';
 }
 
 export interface PossibleAiModelsInterface {
@@ -75,5 +75,148 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Google',
+  },
+  'llama2:latest': {
+    id: 'llama2:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2:7b': {
+    id: 'llama2:7b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2:13b': {
+    id: 'llama2:13b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2:70b': {
+    id: 'llama2:70b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'codellama:latest': {
+    id: 'codellama:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'codellama:7b': {
+    id: 'codellama:7b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'codellama:13b': {
+    id: 'codellama:13b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'codellama:34b': {
+    id: 'codellama:34b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'wizardcoder:latest': {
+    id: 'wizardcoder:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'wizardcoder:7b-python': {
+    id: 'wizardcoder:7b-python',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'wizardcoder:13b-python': {
+    id: 'wizardcoder:13b-python',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'wizardcoder:34b-python': {
+    id: 'wizardcoder:34b-python',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:latest': {
+    id: 'phind-codellama:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:34b': {
+    id: 'phind-codellama:34b',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:34b-v2': {
+    id: 'phind-codellama:34b-v2',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:34b-python': {
+    id: 'phind-codellama:34b-python',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  //
+  // Custom models
+  //
+  'llama2_13B_2080:latest': {
+    id: 'llama2_13B_2080:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'wizardcoder13b_python_2080:latest': {
+    id: 'wizardcoder13b_python_2080:latest',
+    maxLength: 32000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phindcodellama-34b-_2080:latest': {
+    id: 'phindcodellama-34b-_2080:latest',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'phind-codellama:34bv2-vram2080': {
+    id: 'phind-codellama:34bv2-vram2080',
+    maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
   },
 };
