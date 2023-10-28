@@ -1,3 +1,4 @@
+import { AiModel } from './ai-models';
 import { User } from './auth';
 import { Conversation, Message } from './chat';
 import { FolderInterface } from './folder';
@@ -27,6 +28,7 @@ export interface Database {
   getConversations(
     user: User,
     systemPrompts: SystemPrompt[],
+    models: AiModel[],
   ): Promise<Conversation[]>;
 
   updateConversations(

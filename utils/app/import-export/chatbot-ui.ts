@@ -18,7 +18,7 @@ export function getConversationsFromChatbotUIFile(
       if (!chatbotUIConversation.model_id) {
         chatbotUIConversation.model =
           OPENAI_API_TYPE === 'azure'
-            ? PossibleAiModels['gpt-35-az']
+            ? PossibleAiModels['gpt-35-turbo']
             : PossibleAiModels['gpt-3.5-turbo'];
       }
 

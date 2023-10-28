@@ -113,7 +113,14 @@ const Home = () => {
   useModels(dispatch, savedSettings, models);
 
   // CONVERSATIONS -----------------------------------------------------------
-  useConversations(dispatch, database, user, conversations, systemPrompts);
+  useConversations(
+    dispatch,
+    database,
+    user,
+    conversations,
+    systemPrompts,
+    models,
+  );
 
   // MESSAGES ----------------------------------------------------------------
   useMessages(dispatch, database, user);

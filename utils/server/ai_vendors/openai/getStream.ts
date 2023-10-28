@@ -46,6 +46,8 @@ export async function streamOpenAI(
     url = `${OPENAI_API_URL}/openai/deployments/${model.id}/chat/completions?api-version=${OPENAI_API_VERSION}`;
   }
 
+  console.log(model.id);
+
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

@@ -15,9 +15,13 @@ export const config = {
 export async function getAvailableOpenAIModels(key?: string) {
   let url = `${OPENAI_API_URL}/models`;
   if (OPENAI_API_TYPE === 'azure') {
-    url = `${OPENAI_API_URL}/openai/deployments?api-version=${OPENAI_API_VERSION}`;
+    // The endpoint to get models might have been removed from the Azure API after the 2023-05-15 version
+    url = `${OPENAI_API_URL}/openai/deployments?api-version=2023-05-15`;
   }
-  const response = await fetch(url, {
+
+  const encodedUrl = encodeURI(url);
+
+  const response = await fetch(encodedUrl, {
     headers: {
       'Content-Type': 'application/json',
       ...(OPENAI_API_TYPE === 'openai' && {
@@ -34,6 +38,7 @@ export async function getAvailableOpenAIModels(key?: string) {
   });
 
   if (response.status !== 200) {
+    console.error('Error getting models', response.status, response.body);
     return { error: response.status, data: response.body };
   }
 
@@ -44,7 +49,13 @@ export async function getAvailableOpenAIModels(key?: string) {
       const model_name =
         OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
 
-      return PossibleAiModels[model_name];
+      const model = PossibleAiModels[model_name];
+
+      if (OPENAI_API_TYPE === 'azure') {
+        model.id = openaiModel.id;
+      }
+
+      return model;
     })
     .filter(Boolean);
 

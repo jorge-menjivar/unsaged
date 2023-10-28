@@ -50,7 +50,7 @@ export const Conversations = () => {
   );
 
   const {
-    state: { conversations, messages, database, folders, user },
+    state: { conversations, messages, database, folders, user, models },
     dispatch: homeDispatch,
     handleCreateFolder,
     handleNewConversation,
@@ -82,6 +82,7 @@ export const Conversations = () => {
       user,
       data,
       systemPrompts,
+      models,
     );
     homeDispatch({ field: 'conversations', value: conversations });
     homeDispatch({

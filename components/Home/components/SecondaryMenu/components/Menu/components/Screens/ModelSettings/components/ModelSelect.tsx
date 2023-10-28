@@ -12,11 +12,13 @@ export const ModelSelect = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const model_id = e.target.value as string;
-    const model: AiModel = PossibleAiModels[model_id];
+
+    const selectedModel = models.find((m) => m.id === model_id);
+
     selectedConversation &&
       handleUpdateConversation(selectedConversation, {
         key: 'model',
-        value: model,
+        value: selectedModel,
       });
   };
 

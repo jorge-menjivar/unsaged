@@ -1,5 +1,5 @@
 import { SupaDatabase } from '../types/supabase';
-import { PossibleAiModels } from '@/types/ai-models';
+import { AiModel, PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { SystemPrompt } from '@/types/system-prompt';
 
@@ -8,6 +8,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 export const supaGetConversations = async (
   supabase: SupabaseClient<SupaDatabase>,
   systemPrompts: SystemPrompt[],
+  models: AiModel[],
 ) => {
   const { data: supaConversations, error } = await supabase
     .from('conversations')
@@ -38,10 +39,14 @@ export const supaGetConversations = async (
         supaConversation.model_id = 'claude-2';
       }
 
+      const selectedModel = models.find(
+        (model) => model.id === supaConversation.model_id,
+      );
+
       const conversation: Conversation = {
         id: supaConversation.id,
         name: supaConversation.name,
-        model: PossibleAiModels[supaConversation.model_id],
+        model: selectedModel!,
         systemPrompt: systemPrompt,
         temperature: supaConversation.temperature,
         folderId: supaConversation.folder_id,
