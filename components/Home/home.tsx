@@ -82,6 +82,7 @@ const Home = () => {
       folders,
       conversations,
       models,
+      modelsLoaded,
       prompts,
       savedSettings,
       selectedConversation,
@@ -110,7 +111,7 @@ const Home = () => {
   useDatabase(dispatch, database);
 
   // MODELS ------------------------------------------------------------------
-  useModels(dispatch, savedSettings, models);
+  useModels(dispatch, savedSettings, models, modelsLoaded);
 
   // CONVERSATIONS -----------------------------------------------------------
   useConversations(
@@ -120,6 +121,7 @@ const Home = () => {
     conversations,
     systemPrompts,
     models,
+    modelsLoaded,
   );
 
   // MESSAGES ----------------------------------------------------------------

@@ -46,6 +46,8 @@ export async function streamOpenAI(
     url = `${OPENAI_API_URL}/openai/deployments/${model.id}/chat/completions?api-version=${OPENAI_API_VERSION}`;
   }
 
+  console.log('complete url', url);
+
   console.log(model.id);
 
   const res = await fetch(url, {
@@ -104,15 +106,19 @@ export async function streamOpenAI(
             return;
           }
 
+          console.log('data', data);
+
           try {
             const json = JSON.parse(data);
-            if (json.choices[0].finish_reason != null) {
-              controller.close();
-              return;
+            if (json.choices.length > 0) {
+              if (json.choices[0].finish_reason != null) {
+                controller.close();
+                return;
+              }
+              const text = json.choices[0].delta.content;
+              const queue = encoder.encode(text);
+              controller.enqueue(queue);
             }
-            const text = json.choices[0].delta.content;
-            const queue = encoder.encode(text);
-            controller.enqueue(queue);
           } catch (e) {
             controller.error(e);
           }

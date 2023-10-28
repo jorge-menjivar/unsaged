@@ -28,12 +28,13 @@ export const useConversations = (
   conversations: Conversation[],
   systemPrompts: SystemPrompt[],
   models: AiModel[],
+  modelsLoaded: boolean,
 ) => {
   const [conversationsLoaded, setConversationsLoaded] = useState(false);
 
   const fetchModels = useCallback(async () => {
     if (!conversationsLoaded) {
-      if (database && user) {
+      if (database && user && modelsLoaded) {
         const _conversations = await storageGetConversations(
           database,
           user,

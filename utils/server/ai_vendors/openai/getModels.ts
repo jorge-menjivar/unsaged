@@ -2,7 +2,6 @@ import {
   OPENAI_API_KEY,
   OPENAI_API_TYPE,
   OPENAI_API_URL,
-  OPENAI_API_VERSION,
   OPENAI_ORGANIZATION,
 } from '@/utils/app/const';
 
@@ -16,12 +15,10 @@ export async function getAvailableOpenAIModels(key?: string) {
   let url = `${OPENAI_API_URL}/models`;
   if (OPENAI_API_TYPE === 'azure') {
     // The endpoint to get models might have been removed from the Azure API after the 2023-05-15 version
-    url = `${OPENAI_API_URL}/openai/deployments?api-version=2023-05-15`;
+    url = `${OPENAI_API_URL}/openai/deployments?api-version=2023-03-15-preview`;
   }
 
-  const encodedUrl = encodeURI(url);
-
-  const response = await fetch(encodedUrl, {
+  const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
       ...(OPENAI_API_TYPE === 'openai' && {
@@ -44,10 +41,15 @@ export async function getAvailableOpenAIModels(key?: string) {
 
   const json = await response.json();
 
-  const models: AiModel[] = json.data
+  const models: (AiModel | null)[] = json.data
     .map((openaiModel: any) => {
       const model_name =
         OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
+
+      if (!PossibleAiModels[model_name]) {
+        console.warn('Model not implemented in unSAGED:', model_name);
+        return null;
+      }
 
       const model = PossibleAiModels[model_name];
 
@@ -59,5 +61,8 @@ export async function getAvailableOpenAIModels(key?: string) {
     })
     .filter(Boolean);
 
-  return { data: models };
+  // Drop null values
+  const modelsWithoutNull = models.filter(Boolean);
+
+  return { data: modelsWithoutNull };
 }

@@ -27,6 +27,7 @@ export interface HomeInitialState {
   messages: Message[];
   modelError: ErrorMessage | null;
   models: AiModel[];
+  modelsLoaded: boolean;
   prompts: Prompt[];
   savedSettings: SavedSetting[];
   searchTerm: string;
@@ -58,6 +59,7 @@ export const initialState: HomeInitialState = {
   messages: [],
   modelError: null,
   models: [],
+  modelsLoaded: false,
   prompts: [],
   savedSettings: [],
   searchTerm: '',
