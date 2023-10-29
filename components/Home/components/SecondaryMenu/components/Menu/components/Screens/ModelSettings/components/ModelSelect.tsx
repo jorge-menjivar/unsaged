@@ -20,8 +20,6 @@ export const ModelSelect = () => {
       return 0;
     });
 
-    console.log(_sorted);
-
     setSortedModels(_sorted);
   }, [models]);
 
