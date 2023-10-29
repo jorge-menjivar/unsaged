@@ -147,9 +147,11 @@ When deploying the application, the following environment variables can be set:
 | No        | ANTHROPIC_API_VERSION                       | `2023-06-01`                                        | The version of the Anthropic API                                                                                                     |
 | No        | PALM_API_URL                                | `https://generativelanguage.googleapis.com/v1beta2` | The base url for the PALM 2 API from Google                                                                                          |
 | No        | PALM_API_KEY                                |                                                     | The default API key used for authenticating with PaLM 2. [Get Key](https://developers.generativeai.google/products/palm)             |
+| No        | OLLAMA_HOST                                 | Example: `http://localhost:11434`                   | The base url for Ollama                                                                                                              |
 | No        | NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT    | Defined in [constants file](./utils/app/const.ts)   | The default system prompt to use on new conversations for OpenAI models.                                                             |
 | No        | NEXT_PUBLIC_DEFAULT_ANTHROPIC_SYSTEM_PROMPT | Defined in [constants file](./utils/app/const.ts)   | The default system prompt to use on new conversations for Anthropic models.                                                          |
 | No        | NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT      | Defined in [constants file](./utils/app/const.ts)   | The default system prompt to use on new conversations for PaLM 2 models.                                                             |
+| No        | NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT    | Defined in [constants file](./utils/app/const.ts)   | The default system prompt to use on new conversations for Ollama models.                                                             |
 | No        | NEXT_PUBLIC_DEFAULT_MODEL                   | `gpt-3.5-turbo`                                     | The default model to use on new conversations                                                                                        |
 | Yes       | NEXT_PUBLIC_SUPABASE_URL                    |                                                     | The project URL.                                                                                                                     |
 | Yes       | NEXT_PUBLIC_SUPABASE_ANON_KEY               |                                                     | The supabase project anon key.                                                                                                       |
@@ -199,6 +201,8 @@ AUTH0_CLIENT_ID=xxxxxxxxxxxxx
 AUTH0_CLIENT_SECRET=xxxxxxxxxxxxx
 AUTH0_ISSUER=https://mydomain.us.auth0.com
 ```
+
+To enable the Ollama models running locally (llama2, codellama, wizard, etc.) check `https://ollama.ai/`.
 
 ## 📝 License
 

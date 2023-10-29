@@ -20,6 +20,9 @@ import { MemoizedReactMarkdown } from '@/components/Markdown/MemoizedReactMarkdo
 
 import ChatContext from './Chat.context';
 
+// `rehype-katex` does not import the CSS for you
+import 'katex/dist/katex.min.css';
+import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -232,7 +235,8 @@ export const ChatMessage: FC<Props> = memo(
                 <MemoizedReactMarkdown
                   className="prose dark:prose-invert flex-1"
                   remarkPlugins={[remarkGfm, remarkMath]}
-                  rehypePlugins={[rehypeRaw]}
+                  // @ts-ignore
+                  rehypePlugins={[rehypeRaw, rehypeKatex]}
                   components={{
                     code({ node, inline, className, children, ...props }) {
                       if (children.length) {
