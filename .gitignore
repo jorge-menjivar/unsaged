@@ -42,3 +42,5 @@ pnpm-lock.yaml
 
 # ide
 .vscode/
+
+*.json

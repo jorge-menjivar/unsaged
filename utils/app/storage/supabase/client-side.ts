@@ -1,4 +1,5 @@
 import { SupaDatabase } from './types/supabase';
+import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
@@ -117,8 +118,9 @@ export class ClientDatabase implements Database {
   async getConversations(
     user: User,
     systemPrompts: SystemPrompt[],
+    models: AiModel[],
   ): Promise<Conversation[]> {
-    return await supaGetConversations(this.supabase!, systemPrompts);
+    return await supaGetConversations(this.supabase!, systemPrompts, models);
   }
 
   async updateConversations(

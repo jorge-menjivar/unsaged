@@ -1,3 +1,4 @@
+import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
@@ -7,8 +8,9 @@ export const storageGetConversations = async (
   database: Database,
   user: User,
   systemPrompts: SystemPrompt[],
+  models: AiModel[],
 ) => {
-  return await database.getConversations(user, systemPrompts);
+  return await database.getConversations(user, systemPrompts, models);
 };
 
 export const storageUpdateConversations = async (

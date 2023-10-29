@@ -2,7 +2,7 @@ import { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import { ActionType } from '@/hooks/useCreateReducer';
 
-import { PossibleAiModels } from '@/types/ai-models';
+import { AiModel, PossibleAiModels } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
@@ -27,16 +27,19 @@ export const useConversations = (
   user: User | null,
   conversations: Conversation[],
   systemPrompts: SystemPrompt[],
+  models: AiModel[],
+  modelsLoaded: boolean,
 ) => {
   const [conversationsLoaded, setConversationsLoaded] = useState(false);
 
   const fetchModels = useCallback(async () => {
     if (!conversationsLoaded) {
-      if (database && user) {
+      if (database && user && modelsLoaded) {
         const _conversations = await storageGetConversations(
           database,
           user,
           systemPrompts,
+          models,
         );
 
         if (_conversations) {
@@ -68,7 +71,14 @@ export const useConversations = (
         setConversationsLoaded(true);
       }
     }
-  }, [conversationsLoaded, database, homeDispatch, systemPrompts, user]);
+  }, [
+    conversationsLoaded,
+    database,
+    homeDispatch,
+    models,
+    systemPrompts,
+    user,
+  ]);
 
   useEffect(() => {
     fetchModels();

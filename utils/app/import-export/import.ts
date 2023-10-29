@@ -1,3 +1,4 @@
+import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
@@ -68,12 +69,14 @@ export const exportData = async (
   database: Database,
   user: User,
   systemPrompts: SystemPrompt[],
+  models: AiModel[],
 ) => {
   // TODO: This function is not ready yet
   let conversations = await storageGetConversations(
     database,
     user,
     systemPrompts,
+    models,
   );
   let messages = await storageGetMessages(database, user);
   let folders = await storageGetFolders(database, user);
@@ -108,6 +111,7 @@ export const importData = async (
   user: User,
   data: SupportedExportFormats,
   systemPrompts: SystemPrompt[],
+  models: AiModel[],
 ): Promise<LatestExportFormat> => {
   const {
     conversations: importedConversations,
@@ -133,6 +137,7 @@ export const importData = async (
     database,
     user,
     systemPrompts,
+    models,
   );
   const updatedConversations: Conversation[] = [
     ...conversations,

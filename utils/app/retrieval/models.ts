@@ -13,6 +13,7 @@ export const useModels = (
   homeDispatch: Dispatch<ActionType<HomeInitialState>>,
   savedSettings: SavedSetting[],
   models: AiModel[],
+  modelsLoaded: boolean,
 ) => {
   const fetchModels = useCallback(async () => {
     if (models.length === 0) {
@@ -49,6 +50,7 @@ export const useModels = (
       const models = await results.json();
 
       homeDispatch({ field: 'models', value: models });
+      homeDispatch({ field: 'modelsLoaded', value: true });
     }
   }, [homeDispatch, models.length, savedSettings]);
 
