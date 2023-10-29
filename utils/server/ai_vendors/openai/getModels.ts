@@ -18,6 +18,8 @@ export async function getAvailableOpenAIModels(key?: string) {
     url = `${OPENAI_API_URL}/openai/deployments?api-version=2023-03-15-preview`;
   }
 
+  console.log('url', url);
+
   const response = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

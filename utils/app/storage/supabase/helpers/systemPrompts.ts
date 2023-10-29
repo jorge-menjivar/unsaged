@@ -6,8 +6,6 @@ import { SupabaseClient } from '@supabase/supabase-js';
 export const supaGetSystemPrompts = async (
   supabase: SupabaseClient<SupaDatabase>,
 ) => {
-  console.log('supaGetSystemPrompts');
-
   const { data: supaSystemPrompts, error } = await supabase
     .from('system_prompts')
     .select('*');

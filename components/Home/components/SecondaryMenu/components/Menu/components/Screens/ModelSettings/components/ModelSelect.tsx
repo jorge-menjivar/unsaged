@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel } from '@/types/ai-models';
 
 import HomeContext from '@/components/Home/home.context';
 
@@ -9,6 +9,21 @@ export const ModelSelect = () => {
     state: { selectedConversation, models, defaultModelId },
     handleUpdateConversation,
   } = useContext(HomeContext);
+
+  const [sortedModels, setSortedModels] = useState<AiModel[]>(models);
+
+  useEffect(() => {
+    const _sorted = models.sort((a, b) => {
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+
+      return 0;
+    });
+
+    console.log(_sorted);
+
+    setSortedModels(_sorted);
+  }, [models]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const model_id = e.target.value as string;
@@ -37,7 +52,7 @@ export const ModelSelect = () => {
         value={selectedConversation?.model?.id || defaultModelId}
         onChange={handleChange}
       >
-        {models.map((model) => (
+        {sortedModels.map((model) => (
           <option
             key={model.id}
             value={model.id}
