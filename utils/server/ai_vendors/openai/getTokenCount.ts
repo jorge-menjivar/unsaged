@@ -1,74 +1,94 @@
+// Import necessary types and modules
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
+import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
+import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
+import wasm from '@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
+import { TokenCountTransaction } from '@/types/tokenCounts';
+import { storageCreateTokenCount } from '../../../app/storage/tokenCount';
+import { Database } from '@/types/database';
+import { User } from '@/types/auth';
 
-// // @ts-expect-error
-// import wasm from '../../../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
 
-// import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
-// import { Tiktoken, init } from '@dqbd/tiktoken/lite/init';
 
-// TODO: Fix tokenizer. Not working with app dir.
+
+
+/// Initialization function
+async function initializeTiktoken() {
+  await init((imports) => WebAssembly.instantiate(wasm, imports));
+  return new Tiktoken(
+    tiktokenModel.bpe_ranks,
+    tiktokenModel.special_tokens,
+    tiktokenModel.pat_str,
+  );
+}
+
+// Function to calculate tokens for a text string
+function calculateTokens(encoding: any, text: string) {
+  return encoding.encode(text).length;
+}
+
+
+// Main token counting function
 export async function countTokensOpenAI(
   model: AiModel,
   systemPrompt: string,
   messages: Message[],
+  database: Database, // <-- Added this argument
+  user: User, // <-- Added this argument
+  countCompletion: boolean = false,
+  transactionType: string,
+  completionMessage?: string
 ) {
-  // await init((imports) => WebAssembly.instantiate(wasm, imports));
-  // const encoding = new Tiktoken(
-  //   tiktokenModel.bpe_ranks,
-  //   tiktokenModel.special_tokens,
-  //   tiktokenModel.pat_str,
-  // );
+  const encoding = await initializeTiktoken();
+  let tokens_per_message = model.id.includes('gpt-3.5') ? 5 : 4;
 
-  // const prompt_tokens = encoding.encode(systemPrompt);
+  let inputTokenCount = calculateTokens(encoding, systemPrompt);
+  let outputTokenCount = 0;
+  let completionTokenCount = 0;
 
-  // let tokens_per_message = 0;
-  // if (model.id === 'gpt-3.5-turbo' || model.id === 'gpt-35-az') {
-  //   tokens_per_message = 5;
-  // } else if (model.id === 'gpt-4' || model.id === 'gpt-4-32k') {
-  //   tokens_per_message = 4;
-  // }
-
-  // let tokenCount = prompt_tokens.length + tokens_per_message;
-
-  // for (let i = messages.length - 1; i >= 0; i--) {
-  //   const message = {
-  //     role: messages[i].role,
-  //     content: messages[i].content,
-  //   };
-
-  //   const tokens = encoding.encode(message.content);
-
-  //   if (tokens) {
-  //     tokenCount += tokens.length + tokens_per_message;
-  //   }
-  //   if (tokenCount > model.requestLimit) {
-  //     encoding.free();
-  //     return { error: 'Token limit exceeded' };
-  //   }
-  // }
-
-  // // every reply is primed with <|start|>assistant<|message|>
-  // tokenCount += 3;
-
-  // encoding.free();
-
-  let tokenCount = systemPrompt.length / 4;
-
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const text = `\n\n${messages[i].role}: ${messages[i].content}`;
-
-    if (text.length > 0) {
-      tokenCount += text.length / 4;
-    }
-
-    if (tokenCount > model.requestLimit) {
-      return { error: 'Token limit exceeded' };
-    }
+  if (countCompletion && completionMessage) {
+    completionTokenCount += calculateTokens(encoding, completionMessage) + tokens_per_message;
   }
 
-  // Convert to integer
-  tokenCount = Math.ceil(tokenCount);
+  messages.forEach((message) => {
+    const tokens = calculateTokens(encoding, message.content) + tokens_per_message;
+    if (message.role === 'user') {
+      inputTokenCount += tokens;
+    } else if (message.role === 'assistant') {
+      outputTokenCount += tokens;
+    }
+  });
 
-  return { count: tokenCount };
+  if (inputTokenCount + outputTokenCount > model.requestLimit) {
+    encoding.free();
+    return { error: 'Token limit exceeded' };
+  }
+
+  // Calculate the total token count
+  const totalTokenCount = inputTokenCount + outputTokenCount;
+
+  console.log('openai/getTokenCount.ts total token count', totalTokenCount);
+  console.log('openai/getTokenCount.ts model', model.id);
+
+  // Create a new TokenCountTransaction object
+  const newTokenCountTransaction: TokenCountTransaction = {
+    totalTokenCount,  // this is calculated in your existing code
+    aimodel: model,  // 'model' is an existing parameter in your function
+    transactionType: "testValue"  // this is an existing parameter in your function
+    // ... populate other fields as necessary
+  };
+
+  console.log('getTokenCount.ts database', database);
+
+  // Insert the new transaction into the database
+  //storageCreateTokenCount(database, user, newTokenCountTransaction);
+
+  return {
+    inputCount: Math.ceil(inputTokenCount),
+    outputCount: Math.ceil(outputTokenCount),
+    completionCount: Math.ceil(completionTokenCount),
+  };
+
+
 }
