@@ -26,7 +26,11 @@ export async function countTokensOpenAI(
   let tokens_per_message = 0;
   if (model.id === 'gpt-3.5-turbo' || model.id === 'gpt-35-az') {
     tokens_per_message = 5;
-  } else if (model.id === 'gpt-4' || model.id === 'gpt-4-32k') {
+  } else if (
+    model.id === 'gpt-4' ||
+    model.id === 'gpt-4-32k' ||
+    model.id === 'gpt-4-1106-preview'
+  ) {
     tokens_per_message = 4;
   }
 

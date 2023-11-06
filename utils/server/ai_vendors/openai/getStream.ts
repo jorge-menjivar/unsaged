@@ -46,6 +46,23 @@ export async function streamOpenAI(
     url = `${OPENAI_API_URL}/openai/deployments/${model.id}/chat/completions?api-version=${OPENAI_API_VERSION}`;
   }
 
+  const body: { [key: string]: any } = {
+    ...(OPENAI_API_TYPE === 'openai' && { model: model.id }),
+    messages: [
+      {
+        role: 'system',
+        content: systemPrompt,
+      },
+      ...messagesToSend,
+    ],
+    temperature: temperature,
+    stream: true,
+  };
+
+  if (model.id !== 'gpt-4-1106-preview') {
+    body['max_tokens'] = model.tokenLimit - tokenCount;
+  }
+
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -61,19 +78,7 @@ export async function streamOpenAI(
         }),
     },
     method: 'POST',
-    body: JSON.stringify({
-      ...(OPENAI_API_TYPE === 'openai' && { model: model.id }),
-      messages: [
-        {
-          role: 'system',
-          content: systemPrompt,
-        },
-        ...messagesToSend,
-      ],
-      max_tokens: model.tokenLimit - tokenCount,
-      temperature: temperature,
-      stream: true,
-    }),
+    body: JSON.stringify(body),
   });
 
   const encoder = new TextEncoder();
