@@ -1,5 +1,3 @@
-import { AZURE_DEPLOYMENT_ID } from '@/utils/app/const';
-
 export interface AiModel {
   id: string;
   maxLength: number; // maximum length of a message
@@ -191,6 +189,20 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
   'phind-codellama:34b-python': {
     id: 'phind-codellama:34b-python',
     maxLength: 32000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'mistral:latest': {
+    id: 'mistral:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'mistral-openorca:latest': {
+    id: 'mistral-openorca:latest',
+    maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',

@@ -3,12 +3,6 @@ import { OLLAMA_HOST } from '@/utils/app/const';
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
-import {
-  ParsedEvent,
-  ReconnectInterval,
-  createParser,
-} from 'eventsource-parser';
-
 export async function streamOllama(
   model: AiModel,
   systemPrompt: string,
@@ -40,6 +34,7 @@ export async function streamOllama(
       prompt: prompt,
       options: { temperature: temperature },
       system: systemPrompt,
+      stream: true,
     }),
   });
 
@@ -61,54 +56,35 @@ export async function streamOllama(
 
   const stream = new ReadableStream({
     async start(controller) {
+      let fullText = '';
       try {
         for await (const chunk of res.body as any) {
-          const text = decoder.decode(chunk);
-          const parsedData = JSON.parse(text);
-          if (parsedData.response) {
-            controller.enqueue(encoder.encode(parsedData.response));
+          const decodedText = decoder.decode(chunk);
+
+          const splits = decodedText.split('}\n{');
+          for (let i = 0; i < splits.length; i++) {
+            let split = splits[i];
+            if (i !== 0) {
+              split = '{' + split;
+            }
+            if (i !== splits.length - 1) {
+              split = split + '}';
+            }
+            const parsedData = JSON.parse(split);
+            if (parsedData.response) {
+              fullText += parsedData.response;
+              controller.enqueue(encoder.encode(parsedData.response));
+            }
           }
         }
         controller.close();
       } catch (e) {
+        console.log('Error parsing JSON', e);
         controller.error(e);
       }
+      // console.log(fullText);
     },
   });
-
-  // const stream = new ReadableStream({
-  //   async start(controller) {
-  //     const onParse = (event: ParsedEvent | ReconnectInterval) => {
-
-  //       if (event.type === 'event') {
-  //         const data = event.data;
-  //         if (data === '[DONE]') {
-  //           controller.close();
-  //           return;
-  //         }
-
-  //         try {
-  //           const json = JSON.parse(data);
-  //           if (json.choices[0].finish_reason != null) {
-  //             controller.close();
-  //             return;
-  //           }
-  //           const text = json.choices[0].delta.content;
-  //           const queue = encoder.encode(text);
-  //           controller.enqueue(queue);
-  //         } catch (e) {
-  //           controller.error(e);
-  //         }
-  //       }
-  //     };
-
-  //     const parser = createParser(onParse);
-
-  //     for await (const chunk of res.body as any) {
-  //       parser.feed(decoder.decode(chunk));
-  //     }
-  //   },
-  // });
 
   return { stream: stream };
 }
