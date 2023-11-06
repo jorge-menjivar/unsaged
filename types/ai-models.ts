@@ -46,6 +46,13 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 30000,
     vendor: 'OpenAI',
   },
+  'gpt-4-1106-preview': {
+    id: 'gpt-4-1106-preview',
+    maxLength: 500000,
+    tokenLimit: 128000,
+    requestLimit: 120000,
+    vendor: 'OpenAI',
+  },
   'gpt-35-turbo': {
     id: 'will get from azure',
     maxLength: 12000,

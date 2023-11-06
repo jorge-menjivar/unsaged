@@ -42,7 +42,7 @@ You can use it live at [unsaged.com](https://unsaged.com). Just make sure not to
 
 - **[OpenAI](https://openai.com/)**
   - GPT-3.5-Turbo, GPT-3.5-Turbo-16k
-  - GPT-4, GPT-4-32k
+  - GPT-4, GPT-4-32k, GPT-4-Turbo
 - **[Anthropic](https://www.anthropic.com/)**
   - Claude Instant 1 (100k)
   - Claude 2 (100k)
@@ -211,7 +211,7 @@ unSAGED is licensed under the Apache 2.0 License. For more information, please r
 
 We welcome contributions to the unSAGED project! If you're interested in contributing, please take a look at our [CONTRIBUTING.md](./CONTRIBUTING.md) file for guidelines and details on the process.
 
-![Alt](https://repobeats.axiom.co/api/embed/2c05c0cd48aef8736ac7e34523691c1bfa08b835.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/2c05c0cd48aef8736ac7e34523691c1bfa08b835.svg 'Repobeats analytics image')
 
 ## 📸 Screenshots
 
