@@ -1,6 +1,6 @@
 import { OLLAMA_HOST } from '@/utils/app/const';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { PossibleAiModels } from '@/types/ai-models';
 
 export const config = {
   runtime: 'edge',
@@ -21,21 +21,30 @@ export async function getAvailableOllamaModels() {
     });
 
     if (response.status !== 200) {
-      console.log('Error fetching Ollama models');
+      console.error('Error fetching Ollama models');
+      console.error(response.text());
       return { data: [] };
     }
 
     const json = await response.json();
 
-    const models: AiModel[] = [];
+    const models = json.models.map((ollamaModel: any) => {
+      const model_name = ollamaModel.name;
 
-    json.models.map((ollamaModel: any) => {
-      if (ollamaModel.name in PossibleAiModels) {
-        models.push(PossibleAiModels[ollamaModel.name]);
+      if (!PossibleAiModels[model_name]) {
+        console.warn('Ollama model not implemented in unSAGED:', model_name);
+        return null;
       }
+
+      const model = PossibleAiModels[model_name];
+
+      return model;
     });
 
-    return { data: models };
+    // Drop null values
+    const modelsWithoutNull = models.filter(Boolean);
+
+    return { data: modelsWithoutNull };
   } catch (error) {
     console.error('Error fetching Ollama models ' + error);
     return { data: [] };

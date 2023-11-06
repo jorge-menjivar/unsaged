@@ -47,7 +47,7 @@ export async function getAvailableOpenAIModels(key?: string) {
         OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
 
       if (!PossibleAiModels[model_name]) {
-        console.warn('Model not implemented in unSAGED:', model_name);
+        console.warn('OpenAI model not implemented in unSAGED:', model_name);
         return null;
       }
 

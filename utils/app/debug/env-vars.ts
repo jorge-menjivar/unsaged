@@ -84,4 +84,5 @@ export function printEnvVariables() {
   console.log('NEXT_PUBLIC_SUPABASE_ANON_KEY', SUPABASE_ANON_KEY);
   console.log('SUPABASE_SERVICE_ROLE_KEY', SUPABASE_SERVICE_ROLE_KEY);
   console.log('SUPABASE_JWT_SECRET', SUPABASE_JWT_SECRET);
+  console.log('OLLAMA_HOST', process.env.OLLAMA_HOST);
 }

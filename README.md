@@ -4,7 +4,6 @@
 
 [![Join our Discord](https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2)](https://discord.gg/rMH2acSEzq)
 
-
 # 🎉 Welcome to unSAGED
 
 unSAGED is a cutting-edge chat kit engineered for seamless interaction with AI models. It allows you to easily have conversations with different AI models from a variety of providers, all in one place. It also allows you to manage multiple users and conversations, and synchronize them across different devices.
@@ -42,20 +41,22 @@ You can use it live at [unsaged.com](https://unsaged.com). Just make sure not to
 ## 🤖 Supported AI Models
 
 - **[OpenAI](https://openai.com/)**
-  - GPT-3.5-Turbo
-  - GPT-3.5-Turbo-16k
-  - GPT-4
-  - GPT-4-32k 
+  - GPT-3.5-Turbo, GPT-3.5-Turbo-16k
+  - GPT-4, GPT-4-32k
 - **[Anthropic](https://www.anthropic.com/)**
   - Claude Instant 1 (100k)
   - Claude 2 (100k)
 - **[Google PaLM 2](https://developers.generativeai.google/products/palm)**
   - Chat Bison (Bard)
 - **[Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)**
-  - GPT-3.5-Turbo
-  - GPT-3.5-Turbo-16k
-  - GPT-4
-  - GPT-4-32k 
+  - GPT-3.5-Turbo, GPT-3.5-Turbo-16k
+  - GPT-4, GPT-4-32k
+- **[Ollama](https://github.com/jmorganca/ollama)**
+  - Llama2-7b, Llama2-13b, Llama2-70b
+  - Codellama-7b, Codellama-13b, Codellama-70b
+  - Wizard-7b, Wizard-13b, Wizard-34b
+  - Phind-Codellama
+  - Mistral, Mistral-OpenOrca
 
 ## 🚧 Getting Started with unSAGED
 
@@ -221,7 +222,6 @@ We welcome contributions to the unSAGED project! If you're interested in contrib
 ![Screenshot-4](./public/screenshots/screenshot-4.png)
 
 ![Screenshot-5](./public/screenshots/screenshot-5.png)
-
 
 ## 📚 Built With
 
