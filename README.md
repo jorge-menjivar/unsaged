@@ -211,6 +211,8 @@ unSAGED is licensed under the Apache 2.0 License. For more information, please r
 
 We welcome contributions to the unSAGED project! If you're interested in contributing, please take a look at our [CONTRIBUTING.md](./CONTRIBUTING.md) file for guidelines and details on the process.
 
+![Alt](https://repobeats.axiom.co/api/embed/2c05c0cd48aef8736ac7e34523691c1bfa08b835.svg "Repobeats analytics image")
+
 ## 📸 Screenshots
 
 ![Screenshot-1](./public/screenshots/screenshot-1.png)
