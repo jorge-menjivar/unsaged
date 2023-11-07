@@ -21,8 +21,8 @@ export async function getAvailableOllamaModels() {
     });
 
     if (response.status !== 200) {
-      console.error('Error fetching Ollama models');
-      console.error(response.text());
+      const error = await response.text();
+      console.error('Error fetching OpenAI models', response.status, error);
       return { data: [] };
     }
 

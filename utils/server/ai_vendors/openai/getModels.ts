@@ -35,7 +35,7 @@ export async function getAvailableOpenAIModels(key?: string) {
   });
 
   if (response.status !== 200) {
-    console.error('Error getting models', response.status, response.body);
+    console.error('Error fetching OpenAi models', response.status, response.body);
     return { error: response.status, data: response.body };
   }
 
