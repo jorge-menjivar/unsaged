@@ -1,4 +1,4 @@
-import { OLLAMA_HOST } from '@/utils/app/const';
+import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
@@ -27,6 +27,9 @@ export async function streamOllama(
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache',
       Pragma: 'no-cache',
+      ...((OLLAMA_BASIC_USER && OLLAMA_BASIC_PWD) && {
+        Authorization: `Basic ${Buffer.from(OLLAMA_BASIC_USER + ":" + OLLAMA_BASIC_PWD).toString('base64')}`,
+      }),
     },
     method: 'POST',
     body: JSON.stringify({

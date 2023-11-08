@@ -61,6 +61,10 @@ export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
 
 export const OLLAMA_HOST = dockerEnvVarFix(process.env.OLLAMA_HOST) || '';
 
+export const OLLAMA_BASIC_USER = dockerEnvVarFix(process.env.OLLAMA_BASIC_USER) || '';
+
+export const OLLAMA_BASIC_PWD = dockerEnvVarFix(process.env.OLLAMA_BASIC_PWD) || '';
+
 export const APP_DOMAIN =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_APP_DOMAIN) ||
   'http://localhost:3000';
