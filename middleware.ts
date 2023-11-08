@@ -22,7 +22,7 @@ export default withAuth({
       if (!token?.email) {
         return false;
       } else {
-        const patterns = getEmailPatterns();
+        const patterns = await getEmailPatterns();
         if (patterns.length === 0) {
           return true; // No patterns specified, allow access
         }
