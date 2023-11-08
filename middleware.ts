@@ -1,4 +1,5 @@
 import { withAuth } from 'next-auth/middleware';
+import { get } from '@vercel/edge-config';
 
 import { dockerEnvVarFix } from './utils/app/docker/envFix';
 
@@ -6,8 +7,12 @@ const getSecret = () => {
   return dockerEnvVarFix(process.env.NEXTAUTH_SECRET);
 };
 
-const getEmailPatterns = () => {
-  const patternsString = dockerEnvVarFix(process.env.NEXTAUTH_EMAIL_PATTERNS);
+const getEmailPatterns = async () => {
+  let patternsString = dockerEnvVarFix(process.env.NEXTAUTH_EMAIL_PATTERNS);
+
+  if (dockerEnvVarFix(process.env.EDGE_CONFIG))
+    patternsString = await get<string>('NEXTAUTH_EMAIL_PATTERNS');
+
   return patternsString ? patternsString.split(',') : [];
 };
 
