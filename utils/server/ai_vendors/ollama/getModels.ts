@@ -1,4 +1,4 @@
-import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD } from '@/utils/app/const';
+import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD, DEBUG_MODE } from '@/utils/app/const';
 
 import { PossibleAiModels } from '@/types/ai-models';
 
@@ -34,7 +34,7 @@ export async function getAvailableOllamaModels() {
     const models = json.models.map((ollamaModel: any) => {
       const model_name = ollamaModel.name;
 
-      if (!PossibleAiModels[model_name]) {
+      if (!PossibleAiModels[model_name] && DEBUG_MODE) {
         console.warn('Ollama model not implemented in unSAGED:', model_name);
         return null;
       }

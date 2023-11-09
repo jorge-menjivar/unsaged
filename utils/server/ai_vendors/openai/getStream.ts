@@ -1,9 +1,5 @@
 import {
-  OPENAI_API_KEY,
   OPENAI_API_TYPE,
-  OPENAI_API_URL,
-  OPENAI_API_VERSION,
-  OPENAI_ORGANIZATION,
 } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
@@ -14,6 +10,8 @@ import {
   ReconnectInterval,
   createParser,
 } from 'eventsource-parser';
+import { getOpenAiApi } from './openai';
+import { CreateChatCompletionRequest } from 'openai-edge';
 
 export async function streamOpenAI(
   model: AiModel,
@@ -23,14 +21,6 @@ export async function streamOpenAI(
   messages: Message[],
   tokenCount: number,
 ) {
-  if (!apiKey) {
-    if (!OPENAI_API_KEY) {
-      return { error: 'Missing API key' };
-    } else {
-      apiKey = OPENAI_API_KEY;
-    }
-  }
-
   let messagesToSend: any[] = [];
 
   for (let i = messages.length - 1; i >= 0; i--) {
@@ -41,13 +31,8 @@ export async function streamOpenAI(
     messagesToSend = [message, ...messagesToSend];
   }
 
-  let url = `${OPENAI_API_URL}/chat/completions`;
-  if (OPENAI_API_TYPE === 'azure') {
-    url = `${OPENAI_API_URL}/openai/deployments/${model.id}/chat/completions?api-version=${OPENAI_API_VERSION}`;
-  }
-
-  const body: { [key: string]: any } = {
-    ...(OPENAI_API_TYPE === 'openai' && { model: model.id }),
+  const body: CreateChatCompletionRequest = {
+    model: model.id,
     messages: [
       {
         role: 'system',
@@ -56,30 +41,16 @@ export async function streamOpenAI(
       ...messagesToSend,
     ],
     temperature: temperature,
-    stream: true,
+    stream: true
   };
 
   if (model.id !== 'gpt-4-1106-preview') {
-    body['max_tokens'] = model.tokenLimit - tokenCount;
+    body.max_tokens = model.tokenLimit - tokenCount;
   }
 
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(OPENAI_API_TYPE === 'openai' && {
-        Authorization: `Bearer ${apiKey}`,
-      }),
-      ...(OPENAI_API_TYPE === 'azure' && {
-        'api-key': apiKey,
-      }),
-      ...(OPENAI_API_TYPE === 'openai' &&
-        OPENAI_ORGANIZATION && {
-          'OpenAI-Organization': OPENAI_ORGANIZATION,
-        }),
-    },
-    method: 'POST',
-    body: JSON.stringify(body),
-  });
+  const azureModelId = OPENAI_API_TYPE === 'azure' ? model.id : undefined;
+  const openai = getOpenAiApi(apiKey, azureModelId);
+  const res = await openai.createChatCompletion(body);
 
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
@@ -90,8 +61,7 @@ export async function streamOpenAI(
       return { error: result.error };
     } else {
       throw new Error(
-        `OpenAI API returned an error: ${
-          decoder.decode(result?.value) || result.statusText
+        `OpenAI API returned an error: ${decoder.decode(result?.value) || result.statusText
         }`,
       );
     }
