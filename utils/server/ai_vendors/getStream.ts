@@ -42,7 +42,12 @@ export async function getStream(
       tokenCount,
     );
   } else if (model.vendor === 'Ollama') {
-    return streamOllama(model, systemPrompt, temperature, messages);
+    return streamOllama(
+      model,
+      systemPrompt,
+      temperature,
+      messages
+    );
   }
   return { error: 'Unknown vendor' };
 }
