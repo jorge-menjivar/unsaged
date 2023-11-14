@@ -7,7 +7,7 @@ export const supaGetMessages = async (
   supabase: SupabaseClient<SupaDatabase>,
   conversationId?: string,
 ) => {
-  let supaMessages = [];
+  let supaMessages: SupaDatabase['public']['Tables']['messages']['Row'][] = [];
   let lastTimestamp = '1970-01-01T00:00:00+00:00';
 
   while (true) {
