@@ -15,7 +15,8 @@ export const supaCreateConversation = async (
       system_prompt_id: newConversation.systemPrompt?.id,
       folder_id: newConversation.folderId,
       timestamp: newConversation.timestamp,
-      params: JSON.stringify(newConversation.params),
+      // @ts-ignore
+      params: newConversation.params,
     };
 
   const { error } = await supabase
@@ -41,7 +42,8 @@ export const supaUpdateConversation = async (
       system_prompt_id: updatedConversation.systemPrompt?.id,
       folder_id: updatedConversation.folderId,
       timestamp: updatedConversation.timestamp,
-      params: JSON.stringify(updatedConversation.params),
+      // @ts-ignore
+      params: updatedConversation.params,
     };
 
   const { error } = await supabase
