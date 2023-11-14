@@ -2,6 +2,8 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { Metadata } from 'next';
 
+import { ThemeProvider } from '@/components/common/ui/theme-provider';
+
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -23,7 +25,14 @@ export default function RootLayout({
     <html lang="en">
       <Analytics />
       <body className="absolute inset-0 overflow-hidden overscroll-none h-screen">
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

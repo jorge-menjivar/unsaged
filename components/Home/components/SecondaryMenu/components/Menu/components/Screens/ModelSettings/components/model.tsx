@@ -61,11 +61,7 @@ export const ModelSelect = () => {
 
         <SelectContent>
           {sortedModels.map((model) => (
-            <SelectItem
-              key={model.id}
-              value={model.id}
-              className="bg-theme-primary-menu-light dark:bg-theme-primary-menu-dark text-black dark:text-white"
-            >
+            <SelectItem key={model.id} value={model.id}>
               {model.id}
             </SelectItem>
           ))}

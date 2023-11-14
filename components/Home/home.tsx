@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
@@ -104,6 +105,8 @@ const Home = () => {
       }
     }
   }, [debugLogPrinted]);
+
+  const { setTheme } = useTheme();
 
   // AUTH --------------------------------------------------------------------
   useAuth(dispatch, user);
@@ -486,12 +489,9 @@ const Home = () => {
         settings,
       );
 
-      dispatch({
-        field: 'lightMode',
-        value: lightMode,
-      });
+      setTheme(lightMode);
     }
-  }, [savedSettings, settings, dispatch]);
+  }, [savedSettings, settings, dispatch, setTheme]);
 
   if (user && database && conversations.length > 0) {
     return (
@@ -510,7 +510,7 @@ const Home = () => {
         {selectedConversation && (
           <div
             className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
-          text-black dark:text-white ${lightMode} m-0 p-0 overflow-hidden`}
+          text-black dark:text-white m-0 p-0 overflow-hidden`}
           >
             <div className="absolute top-0 z-50 w-full sm:hidden">
               <Navbar

@@ -123,11 +123,7 @@ export const SystemPromptSelect = () => {
         </SelectTrigger>
         <SelectContent>
           {availableSystemPrompts.map((prompt) => (
-            <SelectItem
-              key={prompt.id}
-              value={prompt.id}
-              className="bg-theme-primary-menu-light dark:bg-theme-primary-menu-dark text-black dark:text-white"
-            >
+            <SelectItem key={prompt.id} value={prompt.id}>
               {prompt.id === defaultSystemPromptId
                 ? `Default (${prompt.name})`
                 : prompt.name}
