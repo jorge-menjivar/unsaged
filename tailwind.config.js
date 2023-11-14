@@ -8,17 +8,20 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      colors: {
-        'theme-dark': '#24292e',
-        'theme-light': '#ffffff',
-        'theme-button-dark': 'rgb(180, 180, 180)',
-        'theme-button-light': 'rgb(90, 90, 90)',
-        'theme-button-hover-dark': 'rgb(245, 245, 245)',
-        'theme-button-hover-light': 'rgb(40, 40, 40)',
-        'theme-activity-bar-dark': '#24292e',
-        'theme-activity-bar-light': '#ffffff',
-        'theme-primary-menu-dark': '#1f2428',
-        'theme-primary-menu-light': '#f4f6ff',
+      animation: {
+        'zoom-pulse-slow': 'zoom-pulse 8s ease infinite',
+        'zoom-pulse-fast': 'zoom-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'bg-pan-fast': 'bg-pan 7s ease infinite',
+        'bg-pan-slow': 'bg-pan 15s ease infinite',
+        slideDownAndFade:
+          'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideLeftAndFade:
+          'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideRightAndFade:
+          'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       backgroundColor: {
         'theme-dark': '#24292e',
@@ -40,15 +43,66 @@ module.exports = {
         'theme-tooltip-dark': '#24292e',
         'theme-tooltip-light': '#ffffff',
       },
+      backgroundSize: {
+        auto: 'auto',
+        cover: 'cover',
+        contain: 'contain',
+        '175%': '175%',
+      },
       borderColor: {
         'theme-border-dark': '#1b1f23',
         'theme-border-light': 'rgba(210, 210, 205, 1)',
         'theme-button-border-dark': 'rgba(100, 100, 100, 1)',
         'theme-button-border-light': 'rgba(180, 180, 180, 1)',
       },
-      fill: {
-        'theme-tooltip-dark': '#24292e',
-        'theme-tooltip-light': '#ffffff',
+      colors: {
+        'theme-dark': '#24292e',
+        'theme-light': '#ffffff',
+        'theme-button-dark': 'rgb(180, 180, 180)',
+        'theme-button-light': 'rgb(90, 90, 90)',
+        'theme-button-hover-dark': 'rgb(245, 245, 245)',
+        'theme-button-hover-light': 'rgb(40, 40, 40)',
+        'theme-activity-bar-dark': '#24292e',
+        'theme-activity-bar-light': '#ffffff',
+        'theme-primary-menu-dark': '#1f2428',
+        'theme-primary-menu-light': '#f4f6ff',
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        fill: {
+          'theme-tooltip-dark': '#24292e',
+          'theme-tooltip-light': '#ffffff',
+        },
       },
       textColor: {
         'theme-button-icon-dark': 'rgb(180, 180, 180)',
@@ -61,12 +115,6 @@ module.exports = {
         'theme-activity-bar-tab-hover-light': 'rgb(65 65 65 / 1)',
         'theme-activity-bar-tab-selected-dark': 'rgb(230 230 245 / 1)',
         'theme-activity-bar-tab-selected-light': 'rgb(40 40 40 / 1)',
-      },
-      backgroundSize: {
-        auto: 'auto',
-        cover: 'cover',
-        contain: 'contain',
-        '175%': '175%',
       },
       keyframes: {
         'bg-pan': {
@@ -95,19 +143,14 @@ module.exports = {
           from: { opacity: 0, transform: 'translateX(-2px)' },
           to: { opacity: 1, transform: 'translateX(0)' },
         },
-      },
-      animation: {
-        'zoom-pulse-slow': 'zoom-pulse 8s ease infinite',
-        'zoom-pulse-fast': 'zoom-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite',
-        'bg-pan-fast': 'bg-pan 7s ease infinite',
-        'bg-pan-slow': 'bg-pan 15s ease infinite',
-        slideDownAndFade:
-          'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideLeftAndFade:
-          'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideRightAndFade:
-          'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
       },
     },
   },
@@ -116,5 +159,5 @@ module.exports = {
       visibility: ['group-hover'],
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
 };

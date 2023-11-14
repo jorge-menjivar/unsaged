@@ -1,33 +1,103 @@
-import { useTranslation } from 'react-i18next';
+import { useContext, useMemo } from 'react';
 
-import { ModelSelect } from './components/ModelSelect';
-import { SystemPromptSelect } from './components/SystemPromptSelect';
-import { TemperatureSlider } from './components/Temperature';
-import { PrimaryLabel } from '@/components/Common/Labels/PrimaryLabel';
+import { RepeatPenaltySlider } from './components/frequency-penalty';
+import { MaxTokensSlider } from './components/max-tokens';
+import { ModelSelect } from './components/model';
+import { PresencePenaltySlider } from './components/presence-penalty';
+import { SeedInput } from './components/seed';
+import { StopInput } from './components/stop-input';
+import { SystemPromptSelect } from './components/system-prompt';
+import { TemperatureSlider } from './components/temperature';
+import { TopKInput } from './components/top-k';
+import { TopPSlider } from './components/top-p';
+import HomeContext from '@/components/Home/home.context';
+
+const openAiSupportedParameters = [
+  'temperature',
+  'max_tokens',
+  'top_p',
+  'repeat_penalty',
+  'presence_penalty',
+  'stop',
+  'seed',
+];
+
+const claudeSupportedParameters = [
+  'temperature',
+  'max_tokens',
+  'top_p',
+  'top_k',
+  'stop',
+];
+
+const bardSupportedParameters = [
+  'temperature',
+  'max_tokens',
+  'top_p',
+  'top_k',
+  'stop',
+];
+
+const ollamaSupportedParameters = [
+  'temperature',
+  'max_tokens',
+  'repeat_penalty',
+  'top_p',
+  'top_k',
+  'stop',
+];
 
 export const ModelSettings = () => {
-  const { t } = useTranslation('modelSettings');
+  const {
+    state: { selectedConversation },
+  } = useContext(HomeContext);
+
+  const model = selectedConversation?.model;
+
+  const supportedParameters = useMemo(() => {
+    if (!model) {
+      return [];
+    }
+
+    switch (model.vendor) {
+      case 'OpenAI':
+        return openAiSupportedParameters;
+      case 'Anthropic':
+        return claudeSupportedParameters;
+      case 'Google':
+        return bardSupportedParameters;
+      case 'Ollama':
+        return ollamaSupportedParameters;
+      default:
+        return [];
+    }
+  }, [model]);
 
   return (
-    <div className="pt-2 px-1 space-y-1">
-      <PrimaryLabel tip={t('The model used for this conversation')}>
-        {t('Model')}
-      </PrimaryLabel>
+    <div className="pt-2 px-1 space-y-4">
       <ModelSelect />
 
-      <PrimaryLabel tip={t('The system prompt to use when sending a message')}>
-        {t('System Prompt')}
-      </PrimaryLabel>
       <SystemPromptSelect />
 
-      <PrimaryLabel
-        tip={t(
-          'Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.',
-        )}
-      >
-        {t('Temperature')}
-      </PrimaryLabel>
-      <TemperatureSlider />
+      {supportedParameters.includes('temperature') && <TemperatureSlider />}
+
+      {supportedParameters.includes('max_tokens') && <MaxTokensSlider />}
+
+      {supportedParameters.includes('top_p') && <TopPSlider />}
+
+      {supportedParameters.includes('top_k') && <TopKInput />}
+
+      {supportedParameters.includes('repeat_penalty') && (
+        <RepeatPenaltySlider />
+      )}
+
+      {supportedParameters.includes('presence_penalty') && (
+        <PresencePenaltySlider />
+      )}
+
+      {supportedParameters.includes('stop') && <StopInput />}
+
+      {supportedParameters.includes('seed') && <SeedInput />}
     </div>
   );
 };

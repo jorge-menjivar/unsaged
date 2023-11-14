@@ -1,9 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { PossibleAiModels } from '@/types/ai-models';
 import { SystemPrompt } from '@/types/system-prompt';
 
+import { PrimaryLabel } from '@/components/Common/Labels/PrimaryLabel';
 import HomeContext from '@/components/Home/home.context';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/common/ui/select';
 
 export const SystemPromptSelect = () => {
   const {
@@ -91,9 +100,9 @@ export const SystemPromptSelect = () => {
     builtInSystemPrompts,
   ]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (value: string) => {
     const systemPrompt =
-      systemPrompts.filter((prompt) => prompt.id === e.target.value)[0] || null;
+      systemPrompts.filter((prompt) => prompt.id === value)[0] || null;
 
     selectedConversation &&
       handleUpdateConversation(selectedConversation, {
@@ -102,33 +111,30 @@ export const SystemPromptSelect = () => {
       });
   };
 
+  const { t } = useTranslation('modelSettings');
   return (
-    <div
-      className="
-      w-full rounded-sm
-      bg-transparent text-white
-      bg-gradient-to-r from-fuchsia-600 via-violet-900 to-indigo-500
-      dark:from-fuchsia-500 dark:via-violet-600 dark:to-indigo-400
-      bg-175% animate-bg-pan-slow appearance-none dark:bg-gray-700 hover:opacity-90
-      "
-    >
-      <select
-        className="text-left w-full bg-transparent p-1 text-sm"
-        value={currentSystemPromptId || ''}
-        onChange={handleChange}
-      >
-        {availableSystemPrompts.map((prompt) => (
-          <option
-            key={prompt.id}
-            value={prompt.id}
-            className="bg-theme-primary-menu-light dark:bg-theme-primary-menu-dark text-black dark:text-white"
-          >
-            {prompt.id === defaultSystemPromptId
-              ? `Default (${prompt.name})`
-              : prompt.name}
-          </option>
-        ))}
-      </select>
+    <div className="flex flex-col mt-4">
+      <PrimaryLabel tip={t('The system prompt to use when sending a message')}>
+        {t('System Prompt')}
+      </PrimaryLabel>
+      <Select value={currentSystemPromptId || ''} onValueChange={handleChange}>
+        <SelectTrigger className="w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {availableSystemPrompts.map((prompt) => (
+            <SelectItem
+              key={prompt.id}
+              value={prompt.id}
+              className="bg-theme-primary-menu-light dark:bg-theme-primary-menu-dark text-black dark:text-white"
+            >
+              {prompt.id === defaultSystemPromptId
+                ? `Default (${prompt.name})`
+                : prompt.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 };

@@ -15,8 +15,9 @@ export interface SupaDatabase {
           id: string;
           model_id: string;
           name: string;
+          params: Json;
           system_prompt_id: string | null;
-          temperature: number;
+          temperature: number | null;
           timestamp: string;
           user_id: string;
         };
@@ -25,8 +26,9 @@ export interface SupaDatabase {
           id?: string;
           model_id: string;
           name: string;
+          params?: Json;
           system_prompt_id?: string | null;
-          temperature: number;
+          temperature?: number | null;
           timestamp: string;
           user_id?: string;
         };
@@ -35,8 +37,9 @@ export interface SupaDatabase {
           id?: string;
           model_id?: string;
           name?: string;
+          params?: Json;
           system_prompt_id?: string | null;
-          temperature?: number;
+          temperature?: number | null;
           timestamp?: string;
           user_id?: string;
         };
@@ -44,12 +47,14 @@ export interface SupaDatabase {
           {
             foreignKeyName: 'conversation_owner';
             columns: ['user_id'];
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
             foreignKeyName: 'conversation_owner_folder';
             columns: ['folder_id'];
+            isOneToOne: false;
             referencedRelation: 'folders';
             referencedColumns: ['id'];
           },
@@ -78,6 +83,7 @@ export interface SupaDatabase {
           {
             foreignKeyName: 'folder_owner';
             columns: ['user_id'];
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
@@ -112,12 +118,14 @@ export interface SupaDatabase {
           {
             foreignKeyName: 'message_owner';
             columns: ['user_id'];
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
             foreignKeyName: 'message_owner_convo';
             columns: ['conversation_id'];
+            isOneToOne: false;
             referencedRelation: 'conversations';
             referencedColumns: ['id'];
           },
@@ -155,12 +163,14 @@ export interface SupaDatabase {
           {
             foreignKeyName: 'prompt_owner';
             columns: ['user_id'];
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
             foreignKeyName: 'prompt_owner_folder';
             columns: ['folder_id'];
+            isOneToOne: false;
             referencedRelation: 'folders';
             referencedColumns: ['id'];
           },
@@ -195,12 +205,14 @@ export interface SupaDatabase {
           {
             foreignKeyName: 'system_prompt_owner';
             columns: ['user_id'];
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
             foreignKeyName: 'system_prompt_owner_folder';
             columns: ['folder_id'];
+            isOneToOne: false;
             referencedRelation: 'folders';
             referencedColumns: ['id'];
           },

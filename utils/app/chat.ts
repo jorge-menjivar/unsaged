@@ -19,7 +19,7 @@ export const sendChatRequest = async (
     messages: messages,
     apiKey: apiKey,
     systemPrompt: conversation.systemPrompt!,
-    temperature: conversation.temperature,
+    params: conversation.params,
   };
 
   let body = JSON.stringify(chatBody);

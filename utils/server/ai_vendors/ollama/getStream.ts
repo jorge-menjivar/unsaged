@@ -1,12 +1,16 @@
-import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD } from '@/utils/app/const';
+import {
+  OLLAMA_BASIC_PWD,
+  OLLAMA_BASIC_USER,
+  OLLAMA_HOST,
+} from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
-import { Message } from '@/types/chat';
+import { Message, ModelParams } from '@/types/chat';
 
 export async function streamOllama(
   model: AiModel,
   systemPrompt: string,
-  temperature: number,
+  params: ModelParams,
   messages: Message[],
 ) {
   if (OLLAMA_HOST == '') {
@@ -21,24 +25,54 @@ export async function streamOllama(
 
   let url = `${OLLAMA_HOST}/api/generate`;
 
+  const body: { [key: string]: any } = {
+    model: model.id,
+    prompt: prompt,
+    options: { temperature: params.temperature },
+    system: systemPrompt,
+    stream: true,
+  };
+
+  if (params.max_tokens) {
+    body['num_predict'] = params.max_tokens;
+  }
+
+  if (params.repeat_penalty) {
+    body['repeat_penalty'] = params.repeat_penalty;
+  }
+
+  // Only supports one stop token
+  if (params.stop) {
+    body['stop'] = params.stop[0];
+  }
+
+  if (params.top_k) {
+    body['top_k'] = params.top_k;
+  }
+
+  if (params.top_p) {
+    body['top_p'] = params.top_p;
+  }
+
+  if (params.seed) {
+    body['seed'] = params.seed;
+  }
+
   const res = await fetch(url, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache',
       Pragma: 'no-cache',
-      ...((OLLAMA_BASIC_USER && OLLAMA_BASIC_PWD) && {
-        Authorization: `Basic ${Buffer.from(OLLAMA_BASIC_USER + ":" + OLLAMA_BASIC_PWD).toString('base64')}`,
-      }),
+      ...(OLLAMA_BASIC_USER &&
+        OLLAMA_BASIC_PWD && {
+          Authorization: `Basic ${Buffer.from(
+            OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
+          ).toString('base64')}`,
+        }),
     },
     method: 'POST',
-    body: JSON.stringify({
-      model: model.id,
-      prompt: prompt,
-      options: { temperature: temperature },
-      system: systemPrompt,
-      stream: true,
-    }),
+    body: JSON.stringify(body),
   });
 
   const encoder = new TextEncoder();

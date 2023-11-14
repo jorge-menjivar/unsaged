@@ -112,10 +112,11 @@ CREATE TABLE public.conversations (
 	"name" text NOT NULL,
 	model_id text NOT NULL,
 	system_prompt_id uuid NULL,
-	temperature float4 NOT NULL,
+	temperature float4 NULL,
 	folder_id uuid NULL,
 	"timestamp" timestamptz NOT NULL,
 	user_id uuid NOT NULL DEFAULT next_auth.uid(),
+	jsonb NOT NULL DEFAULT '{}'::jsonb,
 	CONSTRAINT unique_conversation_id PRIMARY KEY (id)
 );
 

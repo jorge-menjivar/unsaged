@@ -27,9 +27,11 @@ export function getConversationsFromChatbotUIFile(
         name: chatbotUIConversation.name,
         model: chatbotUIConversation.model,
         systemPrompt: chatbotUIConversation.systemPrompt || null,
-        temperature: chatbotUIConversation.temperature || DEFAULT_TEMPERATURE,
         folderId: chatbotUIConversation.folderId || null,
         timestamp: chatbotUIConversation.timestamp || new Date().toISOString(),
+        params: chatbotUIConversation.params || {
+          temperature: DEFAULT_TEMPERATURE,
+        },
       };
 
       unSagedConversations.push(cleanConversation);

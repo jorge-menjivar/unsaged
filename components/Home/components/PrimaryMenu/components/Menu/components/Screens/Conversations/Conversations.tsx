@@ -120,9 +120,11 @@ export const Conversations = () => {
       name: 'New Conversation',
       model: PossibleAiModels[DEFAULT_MODEL],
       systemPrompt: null,
-      temperature: DEFAULT_TEMPERATURE,
       folderId: null,
       timestamp: new Date().toISOString(),
+      params: {
+        temperature: DEFAULT_TEMPERATURE,
+      },
     };
 
     const updatedConversations = storageCreateConversation(
@@ -173,9 +175,11 @@ export const Conversations = () => {
         name: 'New Conversation',
         model: PossibleAiModels[DEFAULT_MODEL],
         systemPrompt: null,
-        temperature: DEFAULT_TEMPERATURE,
         folderId: null,
         timestamp: new Date().toISOString(),
+        params: {
+          temperature: DEFAULT_TEMPERATURE,
+        },
       };
 
       updatedConversations = storageCreateConversation(

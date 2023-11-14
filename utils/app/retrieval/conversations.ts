@@ -94,9 +94,11 @@ export const useConversations = (
       name: 'New Conversation',
       model: model,
       systemPrompt: null,
-      temperature: DEFAULT_TEMPERATURE,
       folderId: null,
       timestamp: new Date().toISOString(),
+      params: {
+        temperature: DEFAULT_TEMPERATURE,
+      },
     };
 
     const updatedConversations = storageCreateConversation(

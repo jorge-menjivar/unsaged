@@ -263,9 +263,11 @@ const Home = () => {
         name: 'New Conversation',
         model: model,
         systemPrompt: null,
-        temperature: DEFAULT_TEMPERATURE,
         folderId: null,
         timestamp: new Date().toISOString(),
+        params: {
+          temperature: DEFAULT_TEMPERATURE,
+        },
       };
 
       const updatedConversations = storageCreateConversation(
@@ -355,6 +357,30 @@ const Home = () => {
     const updatedConversation: Conversation = {
       ...conversation,
       [data.key]: data.value,
+    };
+
+    const updatedConversations = storageUpdateConversation(
+      database,
+      user,
+      updatedConversation,
+      conversations,
+    );
+
+    dispatch({ field: 'conversations', value: updatedConversations });
+  };
+
+  const handleUpdateConversationParams = (
+    conversation: Conversation,
+    data: KeyValuePair,
+  ) => {
+    if (!database || !user) return;
+
+    const updatedConversation: Conversation = {
+      ...conversation,
+      params: {
+        ...conversation.params,
+        [data.key]: data.value,
+      },
     };
 
     const updatedConversations = storageUpdateConversation(
@@ -478,6 +504,7 @@ const Home = () => {
           handleUpdateFolder,
           handleSelectConversation,
           handleUpdateConversation,
+          handleUpdateConversationParams,
         }}
       >
         {selectedConversation && (

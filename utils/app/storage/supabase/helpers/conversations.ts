@@ -1,6 +1,6 @@
 import { SupaDatabase } from '../types/supabase';
 import { AiModel, PossibleAiModels } from '@/types/ai-models';
-import { Conversation } from '@/types/chat';
+import { Conversation, ModelParams } from '@/types/chat';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import { SupabaseClient } from '@supabase/supabase-js';
@@ -51,7 +51,12 @@ export const supaGetConversations = async (
         temperature: supaConversation.temperature,
         folderId: supaConversation.folder_id,
         timestamp: supaConversation.timestamp,
+        params: supaConversation.params as ModelParams,
       };
+
+      if (!conversation.params.temperature) {
+        conversation.params.temperature = 0.7;
+      }
 
       conversations.push(conversation);
     }
@@ -71,9 +76,9 @@ export const supaUpdateConversations = async (
         name: conversation.name,
         model_id: conversation.model.id,
         system_prompt_id: conversation.systemPrompt?.id || null,
-        temperature: conversation.temperature,
         folder_id: conversation.folderId,
         timestamp: conversation.timestamp,
+        params: JSON.stringify(conversation.params),
       })
       .eq('id', conversation.id);
     if (error) {

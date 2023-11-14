@@ -13,8 +13,19 @@ export interface ChatBody {
   model: AiModel;
   messages: Message[];
   systemPrompt: SystemPrompt;
-  temperature: number;
+  params: ModelParams;
   apiKey?: string;
+}
+
+export interface ModelParams {
+  temperature?: number;
+  top_p?: number;
+  top_k?: number;
+  repeat_penalty?: number;
+  presence_penalty?: number;
+  stop?: string[];
+  max_tokens?: number;
+  seed?: number;
 }
 
 export interface Conversation {
@@ -22,7 +33,8 @@ export interface Conversation {
   name: string;
   model: AiModel;
   systemPrompt: SystemPrompt | null;
-  temperature: number;
+  temperature?: number | null | undefined;
   folderId: string | null;
   timestamp: string;
+  params: ModelParams;
 }

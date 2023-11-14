@@ -20,6 +20,10 @@ export interface HomeContextProps {
     conversation: Conversation,
     data: KeyValuePair,
   ) => void;
+  handleUpdateConversationParams: (
+    conversation: Conversation,
+    data: KeyValuePair,
+  ) => void;
 }
 
 const HomeContext = createContext<HomeContextProps>(undefined!);

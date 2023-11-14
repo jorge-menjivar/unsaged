@@ -5,7 +5,7 @@ import {
 } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
-import { Message } from '@/types/chat';
+import { Message, ModelParams } from '@/types/chat';
 
 import {
   ParsedEvent,
@@ -16,7 +16,7 @@ import {
 export async function streamAnthropic(
   model: AiModel,
   systemPrompt: string,
-  temperature: number,
+  params: ModelParams,
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
@@ -45,6 +45,32 @@ export async function streamAnthropic(
 
   let url = `${ANTHROPIC_API_URL}/complete`;
 
+  const body: { [key: string]: any } = {
+    prompt: prompt,
+    model: model.id,
+    max_tokens_to_sample: model.tokenLimit - tokenCount,
+    stop_sequences: ['\n\nUser:'],
+    temperature: params.temperature,
+    stream: true,
+  };
+
+  if (params.max_tokens) {
+    body['max_tokens_to_sample'] = params.max_tokens;
+  }
+
+  // Only supports one stop token
+  if (params.stop) {
+    body['stop_sequences'] = params.stop[0];
+  }
+
+  if (params.top_k) {
+    body['top_k'] = params.top_k;
+  }
+
+  if (params.top_p) {
+    body['top_p'] = params.top_p;
+  }
+
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -52,14 +78,7 @@ export async function streamAnthropic(
       'x-api-key': apiKey,
     },
     method: 'POST',
-    body: JSON.stringify({
-      prompt: prompt,
-      model: model.id,
-      max_tokens_to_sample: model.tokenLimit - tokenCount,
-      stop_sequences: ['\n\nUser:'],
-      temperature: temperature,
-      stream: true,
-    }),
+    body: JSON.stringify(body),
   });
 
   const encoder = new TextEncoder();

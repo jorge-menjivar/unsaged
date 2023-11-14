@@ -10,10 +10,13 @@ import { v4 as uuidv4 } from 'uuid';
 export const cleanSelectedConversation = (conversation: Conversation) => {
   let updatedConversation = conversation;
 
-  if (!updatedConversation.temperature) {
+  if (!updatedConversation.params.temperature) {
     updatedConversation = {
       ...updatedConversation,
-      temperature: updatedConversation.temperature || DEFAULT_TEMPERATURE,
+      params: {
+        ...updatedConversation.params,
+        temperature: updatedConversation.temperature || DEFAULT_TEMPERATURE,
+      },
     };
   }
 
@@ -102,9 +105,11 @@ export const cleanConversationHistory = (
         name: conversation.name,
         model: conversation.model,
         systemPrompt: conversation.systemPrompt || null,
-        temperature: conversation.temperature || DEFAULT_TEMPERATURE,
         folderId: conversation.folderId || null,
         timestamp: conversation.timestamp || new Date().toISOString(),
+        params: conversation.params || {
+          temperature: DEFAULT_TEMPERATURE,
+        },
       };
 
       cleanConversations.push(cleanConversation);

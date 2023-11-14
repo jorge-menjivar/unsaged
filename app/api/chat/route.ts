@@ -6,7 +6,7 @@ import { ChatBody } from '@/types/chat';
 export const runtime = 'edge';
 
 const handler = async (req: Request): Promise<Response> => {
-  const { model, messages, apiKey, systemPrompt, temperature } =
+  const { model, messages, apiKey, systemPrompt, params } =
     (await req.json()) as ChatBody;
 
   const { error: tokenCountError, count } = await getTokenCount(
@@ -26,7 +26,7 @@ const handler = async (req: Request): Promise<Response> => {
   const { error: streamError, stream } = await getStream(
     model,
     systemPrompt.content,
-    temperature,
+    params,
     apiKey,
     messages,
     count!,

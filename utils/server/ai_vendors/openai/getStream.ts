@@ -7,7 +7,7 @@ import {
 } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
-import { Message } from '@/types/chat';
+import { Message, ModelParams } from '@/types/chat';
 
 import {
   ParsedEvent,
@@ -18,7 +18,7 @@ import {
 export async function streamOpenAI(
   model: AiModel,
   systemPrompt: string,
-  temperature: number,
+  params: ModelParams,
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
@@ -55,12 +55,36 @@ export async function streamOpenAI(
       },
       ...messagesToSend,
     ],
-    temperature: temperature,
+    temperature: params.temperature,
     stream: true,
   };
 
   if (model.id !== 'gpt-4-1106-preview') {
     body['max_tokens'] = model.tokenLimit - tokenCount;
+  }
+
+  if (params.max_tokens) {
+    body['max_tokens'] = params.max_tokens;
+  }
+
+  if (params.repeat_penalty) {
+    body['frequency_penalty'] = params.repeat_penalty;
+  }
+
+  if (params.presence_penalty) {
+    body['presence_penalty'] = params.presence_penalty;
+  }
+
+  if (params.stop) {
+    body['stop'] = params.stop;
+  }
+
+  if (params.top_p) {
+    body['top_p'] = params.top_p;
+  }
+
+  if (params.seed) {
+    body['seed'] = params.seed;
   }
 
   const res = await fetch(url, {

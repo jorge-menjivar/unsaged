@@ -38,7 +38,6 @@ export interface HomeInitialState {
   showPrimaryMenu: boolean;
   showSecondaryMenu: boolean;
   systemPrompts: SystemPrompt[];
-  temperature: number;
   user: User | null;
 }
 
@@ -70,6 +69,5 @@ export const initialState: HomeInitialState = {
   showPrimaryMenu: true,
   showSecondaryMenu: true,
   systemPrompts: [],
-  temperature: 1,
   user: null,
 };

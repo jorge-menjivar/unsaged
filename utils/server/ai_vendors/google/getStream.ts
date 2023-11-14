@@ -1,7 +1,7 @@
 import { PALM_API_KEY, PALM_API_URL } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
-import { Message } from '@/types/chat';
+import { Message, ModelParams } from '@/types/chat';
 
 import {
   ParsedEvent,
@@ -12,7 +12,7 @@ import {
 export async function streamPaLM2(
   model: AiModel,
   systemPrompt: string,
-  temperature: number,
+  params: ModelParams,
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
@@ -66,13 +66,29 @@ export async function streamPaLM2(
     messages: [...messagesToSend],
   };
 
-  const body = {
+  const body: { [key: string]: any } = {
     prompt: prompt,
-    temperature: temperature,
+    temperature: params.temperature,
     candidate_count: 1,
     top_p: 0.95,
     top_k: 40,
   };
+
+  if (params.max_tokens) {
+    body['maxOutputTokens'] = params.max_tokens;
+  }
+
+  if (params.stop) {
+    body['stopSequences'] = params.stop;
+  }
+
+  if (params.top_k) {
+    body['topK'] = params.top_k;
+  }
+
+  if (params.top_p) {
+    body['topP'] = params.top_p;
+  }
 
   const res = await fetch(url, {
     headers: {
