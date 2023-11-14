@@ -7,31 +7,46 @@ export const supaGetMessages = async (
   supabase: SupabaseClient<SupaDatabase>,
   conversationId?: string,
 ) => {
-  let supaMessages = [];
+  let supaMessages: SupaDatabase['public']['Tables']['messages']['Row'][] = [];
+  let lastTimestamp = '1970-01-01T00:00:00+00:00';
 
-  if (conversationId) {
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .eq('conversation_id', conversationId)
-      .order('timestamp', { ascending: true });
+  while (true) {
+    if (conversationId) {
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .gt('timestamp', lastTimestamp)
+        .eq('conversation_id', conversationId)
+        .order('timestamp', { ascending: true });
 
-    if (error) {
-      return [];
+      if (error) {
+        console.error(error);
+        break;
+      }
+      if (data.length === 0) {
+        break;
+      }
+
+      supaMessages = [...supaMessages, ...data];
+      lastTimestamp = data[data.length - 1].timestamp;
+    } else {
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .gt('timestamp', lastTimestamp)
+        .order('timestamp', { ascending: true });
+
+      if (error) {
+        console.error(error);
+        break;
+      }
+      if (data.length === 0) {
+        break;
+      }
+
+      supaMessages = [...supaMessages, ...data];
+      lastTimestamp = data[data.length - 1].timestamp;
     }
-
-    supaMessages = data;
-  } else {
-    const { data, error } = await supabase
-      .from('messages')
-      .select('*')
-      .order('timestamp', { ascending: true });
-
-    if (error) {
-      return [];
-    }
-
-    supaMessages = data;
   }
 
   const messages = supaMessages.map((supaMessage) => {
