@@ -15,7 +15,7 @@ export const supaCreateConversation = async (
       system_prompt_id: newConversation.systemPrompt?.id,
       folder_id: newConversation.folderId,
       timestamp: newConversation.timestamp,
-      params: newConversation.params,
+      params: JSON.stringify(newConversation.params),
     };
 
   const { error } = await supabase
@@ -33,17 +33,20 @@ export const supaUpdateConversation = async (
   supabase: SupabaseClient<SupaDatabase>,
   updatedConversation: Conversation,
 ) => {
-  const { error } = await supabase
-    .from('conversations')
-    .upsert({
+  const supaConversation: SupaDatabase['public']['Tables']['conversations']['Insert'] =
+    {
       id: updatedConversation.id,
       name: updatedConversation.name,
       model_id: updatedConversation.model.id,
       system_prompt_id: updatedConversation.systemPrompt?.id,
       folder_id: updatedConversation.folderId,
       timestamp: updatedConversation.timestamp,
-      params: updatedConversation.params,
-    })
+      params: JSON.stringify(updatedConversation.params),
+    };
+
+  const { error } = await supabase
+    .from('conversations')
+    .upsert(supaConversation)
     .eq('id', updatedConversation.id);
 
   if (error) {
