@@ -52,6 +52,10 @@ export const SystemSettings: SettingsSection[] = [
           {
             name: 'Dark',
             value: 'dark',
+          },
+          {
+            name: 'System',
+            value: 'system',
             default: true,
           },
         ],

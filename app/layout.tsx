@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className="absolute inset-0 overflow-hidden overscroll-none h-screen">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
