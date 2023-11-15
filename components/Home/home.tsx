@@ -259,7 +259,10 @@ const Home = () => {
     if (savedSettings && settings) {
       const lastConversation = conversations[conversations.length - 1];
 
-      const model = lastConversation?.model || PossibleAiModels[DEFAULT_MODEL];
+      let model = lastConversation?.model || models[0];
+      if (DEFAULT_MODEL) {
+        model = PossibleAiModels[DEFAULT_MODEL];
+      }
 
       const modelDefaults = getModelDefaults(model);
 

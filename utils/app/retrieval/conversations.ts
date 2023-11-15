@@ -89,7 +89,11 @@ export const useConversations = (
   const autogenerateConversation = useCallback(async () => {
     if (!database || !user) return;
 
-    const model = PossibleAiModels[DEFAULT_MODEL];
+    let model = models[0];
+
+    if (DEFAULT_MODEL) {
+      model = PossibleAiModels[DEFAULT_MODEL];
+    }
 
     const modelDefaults = getModelDefaults(model);
 
@@ -116,7 +120,7 @@ export const useConversations = (
     homeDispatch({ field: 'conversations', value: updatedConversations });
 
     saveSelectedConversationId(user, newConversation.id);
-  }, [database, homeDispatch, user]);
+  }, [database, homeDispatch, models, user]);
 
   useEffect(() => {
     if (conversations.length === 0 && conversationsLoaded) {

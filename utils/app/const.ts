@@ -3,8 +3,9 @@ import { dockerEnvVarFix } from './docker/envFix';
 export const DEBUG_MODE =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEBUG_MODE) === 'true' || false;
 
-export const DEFAULT_MODEL =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_MODEL) || 'gpt-3.5-turbo';
+export const DEFAULT_MODEL = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_MODEL,
+);
 
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
