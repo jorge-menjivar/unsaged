@@ -3,22 +3,26 @@ import { Conversation } from '@/types/chat';
 import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
 
-import { DEFAULT_TEMPERATURE, OPENAI_API_TYPE } from './const';
+import { OPENAI_API_TYPE } from './const';
+import { getModelDefaults } from './settings/model-defaults';
 
 import { v4 as uuidv4 } from 'uuid';
 
 export const cleanSelectedConversation = (conversation: Conversation) => {
   let updatedConversation = conversation;
 
-  if (!updatedConversation.params.temperature) {
-    updatedConversation = {
-      ...updatedConversation,
-      params: {
-        ...updatedConversation.params,
-        temperature: updatedConversation.temperature || DEFAULT_TEMPERATURE,
-      },
-    };
-  }
+  const model = conversation.model;
+
+  const modelDefaults = getModelDefaults(model);
+
+  // Replaces undefined params with default params
+  updatedConversation = {
+    ...updatedConversation,
+    params: {
+      ...modelDefaults,
+      ...updatedConversation.params,
+    },
+  };
 
   if (!updatedConversation.folderId) {
     updatedConversation = {
@@ -100,6 +104,8 @@ export const cleanConversationHistory = (
             : PossibleAiModels['gpt-3.5-turbo'];
       }
 
+      const modelDefaults = getModelDefaults(conversation.model);
+
       const cleanConversation: Conversation = {
         id: conversation.id,
         name: conversation.name,
@@ -107,8 +113,10 @@ export const cleanConversationHistory = (
         systemPrompt: conversation.systemPrompt || null,
         folderId: conversation.folderId || null,
         timestamp: conversation.timestamp || new Date().toISOString(),
-        params: conversation.params || {
-          temperature: DEFAULT_TEMPERATURE,
+        // Replaces undefined params with default params
+        params: {
+          ...modelDefaults,
+          ...conversation.params,
         },
       };
 

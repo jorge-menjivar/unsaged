@@ -1,7 +1,8 @@
 import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
 
-import { DEFAULT_TEMPERATURE, OPENAI_API_TYPE } from '../const';
+import { OPENAI_API_TYPE } from '../const';
+import { getModelDefaults } from '../settings/model-defaults';
 
 export function getConversationsFromChatbotUIFile(
   chatbotUIConversations: any[],
@@ -22,6 +23,10 @@ export function getConversationsFromChatbotUIFile(
             : PossibleAiModels['gpt-3.5-turbo'];
       }
 
+      const model = PossibleAiModels[chatbotUIConversation.model_id];
+
+      const modelDefaults = getModelDefaults(model);
+
       const cleanConversation: Conversation = {
         id: chatbotUIConversation.id,
         name: chatbotUIConversation.name,
@@ -29,8 +34,9 @@ export function getConversationsFromChatbotUIFile(
         systemPrompt: chatbotUIConversation.systemPrompt || null,
         folderId: chatbotUIConversation.folderId || null,
         timestamp: chatbotUIConversation.timestamp || new Date().toISOString(),
-        params: chatbotUIConversation.params || {
-          temperature: DEFAULT_TEMPERATURE,
+        params: {
+          temperature: chatbotUIConversation.temperature,
+          ...modelDefaults,
         },
       };
 

@@ -64,7 +64,6 @@ export const PresencePenaltySlider = () => {
         value={value}
         onValueChange={setValue}
         onValueCommit={handleChange}
-        onMouseUp={(e) => console.log(e)}
         min={-2}
         max={2}
         step={0.05}

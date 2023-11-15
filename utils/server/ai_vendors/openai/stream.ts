@@ -6,8 +6,8 @@ import {
   OPENAI_ORGANIZATION,
 } from '@/utils/app/const';
 
-import { AiModel } from '@/types/ai-models';
-import { Message, ModelParams } from '@/types/chat';
+import { AiModel, ModelParams } from '@/types/ai-models';
+import { Message } from '@/types/chat';
 
 import {
   ParsedEvent,
@@ -55,12 +55,15 @@ export async function streamOpenAI(
       },
       ...messagesToSend,
     ],
-    temperature: params.temperature,
     stream: true,
   };
 
   if (model.id !== 'gpt-4-1106-preview') {
     body['max_tokens'] = model.tokenLimit - tokenCount;
+  }
+
+  if (params.temperature) {
+    body['temperature'] = params.temperature;
   }
 
   if (params.max_tokens) {

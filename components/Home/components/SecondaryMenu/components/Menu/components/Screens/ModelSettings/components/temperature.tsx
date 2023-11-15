@@ -1,12 +1,13 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import { getModelDefaults } from '@/utils/app/settings/model-defaults';
 
 import { PrimaryLabel } from '@/components/Common/Labels/PrimaryLabel';
 import HomeContext from '@/components/Home/home.context';
 import { Slider } from '@/components/common/ui/slider';
+import { Switch } from '@/components/common/ui/switch';
 
 export const TemperatureSlider = () => {
   const { t } = useTranslation('chat');
@@ -14,7 +15,7 @@ export const TemperatureSlider = () => {
     state: { selectedConversation },
     handleUpdateConversationParams,
   } = useContext(HomeContext);
-  const handleChange = (value: number[]) => {
+  const handleChange = (value: number[] | undefined[]) => {
     const newValue = value[0];
     if (selectedConversation) {
       handleUpdateConversationParams(selectedConversation, {
@@ -23,24 +24,38 @@ export const TemperatureSlider = () => {
       });
     }
   };
-
   const [value, setValue] = useState<number[]>([
-    selectedConversation?.params.temperature ?? DEFAULT_TEMPERATURE,
+    selectedConversation?.params.temperature ?? 1.0,
   ]);
 
   useEffect(() => {
-    setValue([selectedConversation?.params.temperature ?? DEFAULT_TEMPERATURE]);
-  }, [selectedConversation?.params.temperature]);
+    setValue([selectedConversation?.params.temperature ?? 1.0]);
+  }, [
+    selectedConversation?.params.temperature,
+    selectedConversation?.model?.id,
+  ]);
 
   return (
     <div className="flex flex-col">
-      <PrimaryLabel
-        tip={t(
-          'Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.',
-        )}
-      >
-        {t('Temperature')}
-      </PrimaryLabel>
+      <div className="flex justify-between items-center">
+        <PrimaryLabel
+          tip={t(
+            'Higher values will make the output more random, while lower values will make it more focused and deterministic.',
+          )}
+        >
+          {t('Temperature')}
+        </PrimaryLabel>
+        <Switch
+          checked={selectedConversation?.params.temperature !== undefined}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              handleChange([1.0]);
+            } else {
+              handleChange([undefined]);
+            }
+          }}
+        />
+      </div>
       <span className="mb-1 text-center text-neutral-900 dark:text-neutral-100">
         {value[0].toFixed(2)}
       </span>
@@ -51,6 +66,11 @@ export const TemperatureSlider = () => {
         onMouseUp={(e) => console.log(e)}
         max={1.0}
         step={0.05}
+        className={
+          selectedConversation?.params.temperature !== undefined
+            ? ''
+            : 'opacity-50'
+        }
       />
 
       <ul className="w mt-2 pb-8 flex justify-between px-[24px] text-neutral-900 dark:text-neutral-100">

@@ -1,6 +1,6 @@
 import { SupaDatabase } from '../types/supabase';
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
-import { Conversation, ModelParams } from '@/types/chat';
+import { AiModel, ModelParams } from '@/types/ai-models';
+import { Conversation } from '@/types/chat';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import { SupabaseClient } from '@supabase/supabase-js';
@@ -53,10 +53,6 @@ export const supaGetConversations = async (
         timestamp: supaConversation.timestamp,
         params: supaConversation.params as ModelParams,
       };
-
-      if (!conversation.params.temperature) {
-        conversation.params.temperature = 0.7;
-      }
 
       conversations.push(conversation);
     }

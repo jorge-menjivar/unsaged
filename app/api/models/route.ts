@@ -1,9 +1,9 @@
 import { DEBUG_MODE } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
-import { getAvailableAnthropicModels } from '@/utils/server/ai_vendors/anthropic/getModels';
-import { getAvailablePalm2Models } from '@/utils/server/ai_vendors/google/getModels';
-import { getAvailableOllamaModels } from '@/utils/server/ai_vendors/ollama/getModels';
-import { getAvailableOpenAIModels } from '@/utils/server/ai_vendors/openai/getModels';
+import { getAvailableAnthropicModels } from '@/utils/server/ai_vendors/anthropic/models';
+import { getAvailablePalm2Models } from '@/utils/server/ai_vendors/google/models';
+import { getAvailableOllamaModels } from '@/utils/server/ai_vendors/ollama/models';
+import { getAvailableOpenAIModels } from '@/utils/server/ai_vendors/openai/models';
 
 import { AiModel } from '@/types/ai-models';
 

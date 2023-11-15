@@ -246,3 +246,14 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     vendor: 'Ollama',
   },
 };
+
+export interface ModelParams {
+  temperature?: number;
+  top_p?: number;
+  top_k?: number;
+  repeat_penalty?: number;
+  presence_penalty?: number;
+  stop?: string[];
+  max_tokens?: number;
+  seed?: number;
+}

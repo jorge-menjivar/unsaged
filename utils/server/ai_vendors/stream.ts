@@ -1,10 +1,10 @@
-import { AiModel } from '@/types/ai-models';
-import { Message, ModelParams } from '@/types/chat';
+import { AiModel, ModelParams } from '@/types/ai-models';
+import { Message } from '@/types/chat';
 
-import { streamAnthropic } from './anthropic/getStream';
-import { streamPaLM2 } from './google/getStream';
-import { streamOllama } from './ollama/getStream';
-import { streamOpenAI } from './openai/getStream';
+import { streamAnthropic } from './anthropic/stream';
+import { streamPaLM2 } from './google/stream';
+import { streamOllama } from './ollama/stream';
+import { streamOpenAI } from './openai/stream';
 
 export async function getStream(
   model: AiModel,

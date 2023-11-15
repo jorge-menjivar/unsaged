@@ -45,6 +45,7 @@ const ollamaSupportedParameters = [
   'top_p',
   'top_k',
   'stop',
+  'seed',
 ];
 
 export const ModelSettings = () => {

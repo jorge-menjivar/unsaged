@@ -12,7 +12,6 @@ import {
   DEFAULT_OLLAMA_SYSTEM_PROMPT,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
   DEFAULT_PALM_SYSTEM_PROMPT,
-  DEFAULT_TEMPERATURE,
 } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { useAuth } from '@/utils/app/retrieval/auth';
@@ -21,6 +20,7 @@ import { useDatabase } from '@/utils/app/retrieval/database';
 import { useMessages } from '@/utils/app/retrieval/messages';
 import { useModels } from '@/utils/app/retrieval/models';
 import { getSettings } from '@/utils/app/settings/getSettings';
+import { getModelDefaults } from '@/utils/app/settings/model-defaults';
 import { setSettingChoices } from '@/utils/app/settings/settingChoices';
 import {
   storageCreateConversation,
@@ -261,6 +261,8 @@ const Home = () => {
 
       const model = lastConversation?.model || PossibleAiModels[DEFAULT_MODEL];
 
+      const modelDefaults = getModelDefaults(model);
+
       const newConversation: Conversation = {
         id: uuidv4(),
         name: 'New Conversation',
@@ -268,9 +270,7 @@ const Home = () => {
         systemPrompt: null,
         folderId: null,
         timestamp: new Date().toISOString(),
-        params: {
-          temperature: DEFAULT_TEMPERATURE,
-        },
+        params: modelDefaults,
       };
 
       const updatedConversations = storageCreateConversation(

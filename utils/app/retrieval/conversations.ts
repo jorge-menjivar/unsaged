@@ -11,7 +11,8 @@ import { SystemPrompt } from '@/types/system-prompt';
 import { HomeInitialState } from '@/components/Home/home.state';
 
 import { cleanConversationHistory, cleanSelectedConversation } from '../clean';
-import { DEFAULT_MODEL, DEFAULT_TEMPERATURE } from '../const';
+import { DEFAULT_MODEL } from '../const';
+import { getModelDefaults } from '../settings/model-defaults';
 import { storageCreateConversation } from '../storage/conversation';
 import { storageGetConversations } from '../storage/conversations';
 import {
@@ -76,6 +77,7 @@ export const useConversations = (
     database,
     homeDispatch,
     models,
+    modelsLoaded,
     systemPrompts,
     user,
   ]);
@@ -89,6 +91,8 @@ export const useConversations = (
 
     const model = PossibleAiModels[DEFAULT_MODEL];
 
+    const modelDefaults = getModelDefaults(model);
+
     const newConversation: Conversation = {
       id: uuidv4(),
       name: 'New Conversation',
@@ -96,9 +100,7 @@ export const useConversations = (
       systemPrompt: null,
       folderId: null,
       timestamp: new Date().toISOString(),
-      params: {
-        temperature: DEFAULT_TEMPERATURE,
-      },
+      params: modelDefaults,
     };
 
     const updatedConversations = storageCreateConversation(

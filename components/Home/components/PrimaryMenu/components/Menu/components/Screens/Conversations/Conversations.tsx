@@ -5,8 +5,9 @@ import { useTranslation } from 'next-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import { DEFAULT_MODEL, DEFAULT_TEMPERATURE } from '@/utils/app/const';
+import { DEFAULT_MODEL } from '@/utils/app/const';
 import { importData } from '@/utils/app/import-export/import';
+import { getModelDefaults } from '@/utils/app/settings/model-defaults';
 import {
   storageCreateConversation,
   storageDeleteConversation,
@@ -115,16 +116,18 @@ export const Conversations = () => {
     homeDispatch({ field: 'folders', value: updatedFolders });
     storageUpdateFolders(database, user, updatedFolders);
 
+    const model = PossibleAiModels[DEFAULT_MODEL];
+
+    const modelDefaults = getModelDefaults(model);
+
     const newConversation: Conversation = {
       id: uuidv4(),
       name: 'New Conversation',
-      model: PossibleAiModels[DEFAULT_MODEL],
+      model: model,
       systemPrompt: null,
       folderId: null,
       timestamp: new Date().toISOString(),
-      params: {
-        temperature: DEFAULT_TEMPERATURE,
-      },
+      params: modelDefaults,
     };
 
     const updatedConversations = storageCreateConversation(
@@ -170,16 +173,18 @@ export const Conversations = () => {
         updatedConversations[updatedConversations.length - 1].id,
       );
     } else {
+      const model = PossibleAiModels[DEFAULT_MODEL];
+
+      const modelDefaults = getModelDefaults(model);
+
       const newConversation: Conversation = {
         id: uuidv4(),
         name: 'New Conversation',
-        model: PossibleAiModels[DEFAULT_MODEL],
+        model: model,
         systemPrompt: null,
         folderId: null,
         timestamp: new Date().toISOString(),
-        params: {
-          temperature: DEFAULT_TEMPERATURE,
-        },
+        params: modelDefaults,
       };
 
       updatedConversations = storageCreateConversation(

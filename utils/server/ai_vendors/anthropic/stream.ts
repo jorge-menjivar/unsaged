@@ -4,8 +4,8 @@ import {
   ANTHROPIC_API_VERSION,
 } from '@/utils/app/const';
 
-import { AiModel } from '@/types/ai-models';
-import { Message, ModelParams } from '@/types/chat';
+import { AiModel, ModelParams } from '@/types/ai-models';
+import { Message } from '@/types/chat';
 
 import {
   ParsedEvent,
@@ -50,12 +50,15 @@ export async function streamAnthropic(
     model: model.id,
     max_tokens_to_sample: model.tokenLimit - tokenCount,
     stop_sequences: ['\n\nUser:'],
-    temperature: params.temperature,
     stream: true,
   };
 
   if (params.max_tokens) {
     body['max_tokens_to_sample'] = params.max_tokens;
+  }
+
+  if (params.temperature) {
+    body['temperature'] = params.temperature;
   }
 
   // Only supports one stop token

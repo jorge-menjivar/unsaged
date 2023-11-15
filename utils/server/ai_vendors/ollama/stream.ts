@@ -4,8 +4,8 @@ import {
   OLLAMA_HOST,
 } from '@/utils/app/const';
 
-import { AiModel } from '@/types/ai-models';
-import { Message, ModelParams } from '@/types/chat';
+import { AiModel, ModelParams } from '@/types/ai-models';
+import { Message } from '@/types/chat';
 
 export async function streamOllama(
   model: AiModel,
@@ -28,34 +28,38 @@ export async function streamOllama(
   const body: { [key: string]: any } = {
     model: model.id,
     prompt: prompt,
-    options: { temperature: params.temperature },
+    options: {},
     system: systemPrompt,
     stream: true,
   };
 
+  if (params.temperature) {
+    body.options['temperature'] = params.temperature;
+  }
+
   if (params.max_tokens) {
-    body['num_predict'] = params.max_tokens;
+    body.options['num_predict'] = params.max_tokens;
   }
 
   if (params.repeat_penalty) {
-    body['repeat_penalty'] = params.repeat_penalty;
+    body.options['repeat_penalty'] = params.repeat_penalty;
   }
 
   // Only supports one stop token
   if (params.stop) {
-    body['stop'] = params.stop[0];
+    body.options['stop'] = params.stop[0];
   }
 
   if (params.top_k) {
-    body['top_k'] = params.top_k;
+    body.options['top_k'] = params.top_k;
   }
 
   if (params.top_p) {
-    body['top_p'] = params.top_p;
+    body.options['top_p'] = params.top_p;
   }
 
   if (params.seed) {
-    body['seed'] = params.seed;
+    body.options['seed'] = params.seed;
   }
 
   const res = await fetch(url, {

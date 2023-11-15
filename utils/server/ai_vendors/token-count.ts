@@ -1,10 +1,10 @@
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
-import { countTokensAnthropic } from './anthropic/getTokenCount';
-import { countTokensGoogle } from './google/getTokenCount';
-import { countTokensOllama } from './ollama/getTokenCount';
-import { countTokensOpenAI } from './openai/getTokenCount';
+import { countTokensAnthropic } from './anthropic/token-count';
+import { countTokensGoogle } from './google/token-count';
+import { countTokensOllama } from './ollama/token-count';
+import { countTokensOpenAI } from './openai/token-count';
 
 export async function getTokenCount(
   model: AiModel,

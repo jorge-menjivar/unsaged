@@ -1,4 +1,4 @@
-import { AiModel } from './ai-models';
+import { AiModel, ModelParams } from './ai-models';
 import { SystemPrompt } from './system-prompt';
 
 export interface Message {
@@ -15,17 +15,6 @@ export interface ChatBody {
   systemPrompt: SystemPrompt;
   params: ModelParams;
   apiKey?: string;
-}
-
-export interface ModelParams {
-  temperature?: number;
-  top_p?: number;
-  top_k?: number;
-  repeat_penalty?: number;
-  presence_penalty?: number;
-  stop?: string[];
-  max_tokens?: number;
-  seed?: number;
 }
 
 export interface Conversation {

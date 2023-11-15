@@ -10,24 +10,84 @@ export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
   "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
 
+export const DEFAULT_OPENAI_TEMPERATURE = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OPENAI_TEMPERATURE,
+);
+
+export const DEFAULT_OPENAI_TOP_P = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OPENAI_TOP_P,
+);
+
+export const DEFAULT_OPENAI_PRESENCE_PENALTY = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OPENAI_PRESENCE_PENALTY,
+);
+
+export const DEFAULT_OPENAI_FREQUENCY_PENALTY = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OPENAI_FREQUENCY_PENALTY,
+);
+
+export const DEFAULT_OPENAI_SEED = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SEED,
+);
+
 export const DEFAULT_ANTHROPIC_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_SYSTEM_PROMPT) ||
   '\n\nHuman: You are Claude, a large language model trained by Anthropic. Follow the my instructions carefully. Respond using markdown.\n\nAssistant: Okay.';
+
+export const DEFAULT_ANTHROPIC_TEMPERATURE = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_TEMPERATURE,
+);
+
+export const DEFAULT_ANTHROPIC_TOP_P = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_P,
+);
+
+export const DEFAULT_ANTHROPIC_TOP_K = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_K,
+);
 
 export const DEFAULT_PALM_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT) ||
   "You are Bard, a large language model trained by Google. Follow the user's instructions carefully. Respond using markdown. Always specify the programming language you are using when making a markdown code block.";
 
+export const DEFAULT_PALM_TEMPERATURE = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_PALM_TEMPERATURE,
+);
+
+export const DEFAULT_PALM_TOP_P = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_PALM_TOP_P,
+);
+
+export const DEFAULT_PALM_TOP_K = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_PALM_TOP_K,
+);
+
 export const DEFAULT_OLLAMA_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT) ||
-  'You are a helpful AI assisstant. Follow the my instructions carefully. Your responses will be automatically parsed as markdown. Do not surround your response with any language tags.';
+  'You are a helpful AI assistant. Follow the my instructions carefully. Your responses will be automatically parsed as markdown. Do not surround your response with any language tags.';
+
+export const DEFAULT_OLLAMA_TEMPERATURE = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_TEMPERATURE,
+);
+
+export const DEFAULT_OLLAMA_TOP_P = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_P,
+);
+
+export const DEFAULT_OLLAMA_TOP_K = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_K,
+);
+
+export const DEFAULT_OLLAMA_REPEAT_PENALTY = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_REPEAT_PENALTY,
+);
+
+export const DEFAULT_OLLAMA_SEED = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_SEED,
+);
 
 export const AZURE_DEPLOYMENT_ID =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID) || '';
-
-export const DEFAULT_TEMPERATURE = parseFloat(
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_TEMPERATURE) || '0.7',
-);
 
 export const OPENAI_API_URL =
   dockerEnvVarFix(process.env.OPENAI_API_URL) || 'https://api.openai.com/v1';
@@ -61,13 +121,11 @@ export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
 
 export const OLLAMA_HOST = dockerEnvVarFix(process.env.OLLAMA_HOST) || '';
 
-export const OLLAMA_BASIC_USER = dockerEnvVarFix(process.env.OLLAMA_BASIC_USER) || '';
+export const OLLAMA_BASIC_USER =
+  dockerEnvVarFix(process.env.OLLAMA_BASIC_USER) || '';
 
-export const OLLAMA_BASIC_PWD = dockerEnvVarFix(process.env.OLLAMA_BASIC_PWD) || '';
-
-export const APP_DOMAIN =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_APP_DOMAIN) ||
-  'http://localhost:3000';
+export const OLLAMA_BASIC_PWD =
+  dockerEnvVarFix(process.env.OLLAMA_BASIC_PWD) || '';
 
 export const SUPABASE_URL =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_URL) ||

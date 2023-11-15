@@ -1,5 +1,5 @@
-import { getStream } from '@/utils/server/ai_vendors/getStream';
-import { getTokenCount } from '@/utils/server/ai_vendors/getTokenCount';
+import { getStream } from '@/utils/server/ai_vendors/stream';
+import { getTokenCount } from '@/utils/server/ai_vendors/token-count';
 
 import { ChatBody } from '@/types/chat';
 
