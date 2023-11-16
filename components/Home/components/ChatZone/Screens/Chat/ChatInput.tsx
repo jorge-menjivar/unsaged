@@ -270,7 +270,7 @@ export const ChatInput = ({
     >
       <div
         className="relative flex flex-col mb-2 mt-4 last:mb-2 md:mx-4 md:mt-[52px]
-      md:last:mb-6 lg:mx-auto lg:max-w-3xl"
+      md:last:mb-6 lg:mx-auto md:max-w-2xl md:py-6 lg:max-w-full lg:px-0 2xl:max-w-5xl 3xl:max-w-6xl 4xl:max-w-7xl 5xl:max-w-[1920px] justify-center"
       >
         <div className="flex flex-row justify-center items-center">
           {messageIsStreaming && (
