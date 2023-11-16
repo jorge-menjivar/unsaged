@@ -60,22 +60,22 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
     URL.revokeObjectURL(url);
   };
   return (
-    <div className="codeblock relative font-sans text-[16px]">
-      <div className="flex items-center justify-between py-1.5 px-4">
-        <span className="text-xs lowercase text-black dark:text-white">
+    <div className="codeblock relative font-sans text-base w-full overflow-hidden">
+      <div className="flex items-center justify-between py-1.5 px-4 overflow-hidden">
+        <span className="text-xs font-semibold lowercase text-white dark:text-white">
           {language}
         </span>
 
         <div className="flex items-center">
           <button
-            className="flex gap-1.5 items-center rounded bg-none p-1 text-xs text-black dark:text-white"
+            className="flex gap-1.5 items-center rounded bg-none p-1 text-xs font-light text-white dark:text-white"
             onClick={copyToClipboard}
           >
             {isCopied ? <IconCheck size={18} /> : <IconClipboard size={18} />}
             {isCopied ? t('Copied!') : t('Copy code')}
           </button>
           <button
-            className="flex items-center rounded bg-none p-1 text-xs text-black dark:text-white"
+            className="flex items-center rounded bg-none p-1 text-xs text-white dark:text-white"
             onClick={downloadAsFile}
           >
             <IconDownload size={18} />
@@ -86,7 +86,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
       <SyntaxHighlighter
         language={language}
         style={oneDark}
-        customStyle={{ margin: 0 }}
+        customStyle={{ margin: 0, fontSize: '15px' }}
       >
         {value}
       </SyntaxHighlighter>

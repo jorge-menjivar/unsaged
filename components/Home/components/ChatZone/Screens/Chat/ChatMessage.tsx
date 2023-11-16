@@ -158,13 +158,13 @@ export const ChatMessage: FC<Props> = memo(
         }`}
         style={{ overflowWrap: 'anywhere' }}
       >
-        <div className="group relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
+        <div className="group relative m-auto flex p-4 text-base md:max-w-2xl md:py-6 lg:max-w-full lg:px-0 2xl:max-w-5xl 3xl:max-w-6xl 4xl:max-w-7xl 5xl:max-w-[1920px] justify-center">
           <div className="min-w-[40px] text-right font-bold">
             {message.role === 'assistant' && <IconRobot size={30} />}
             {message.role === 'user' && <IconUser size={30} />}
           </div>
 
-          <div className="prose mt-[-2px] w-full dark:prose-invert">
+          <div className="prose mt-[-2px] w-full max-w-none dark:prose-invert prose-slate">
             {message.role === 'user' && (
               <div className="flex w-full">
                 {isEditing ? (
@@ -207,7 +207,7 @@ export const ChatMessage: FC<Props> = memo(
                     </div>
                   </div>
                 ) : (
-                  <div className="prose whitespace-pre-wrap dark:prose-invert flex-1">
+                  <div className="whitespace-pre-wrap flex-1">
                     {message.content}
                   </div>
                 )}
@@ -233,7 +233,7 @@ export const ChatMessage: FC<Props> = memo(
             {message.role === 'assistant' && (
               <div className="flex flex-row">
                 <MemoizedReactMarkdown
-                  className="prose dark:prose-invert flex-1"
+                  className="flex-1"
                   remarkPlugins={[remarkGfm, remarkMath]}
                   // @ts-ignore
                   rehypePlugins={[rehypeRaw, rehypeKatex]}
