@@ -24,7 +24,7 @@ export const ChipList = ({
           handleSelect={handleSelectModel}
           isSelected={selectedModels.includes(model.id)}
         >
-          {model.id}
+          {model.id} - {model.vendor}
         </Chip>
       ))}
     </div>
