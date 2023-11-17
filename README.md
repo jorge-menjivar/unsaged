@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./public/icon-256.svg" alt="unSAGED logo" width="200px">
+    <img src="./packages/unsaged/public/icon-256.svg" alt="unSAGED logo" width="200px">
 </p>
 
 [![Join our Discord](https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2)](https://discord.gg/rMH2acSEzq)
