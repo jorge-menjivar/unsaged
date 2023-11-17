@@ -9,6 +9,8 @@ import {
 } from 'react';
 import { Toaster } from 'react-hot-toast';
 
+import { DEFAULT_TITLE } from '@/utils/app/const';
+
 import Image from 'next/image';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
@@ -237,7 +239,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         {models.length === 0 ? (
           <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[600px]">
             <div className="text-center text-4xl font-bold text-black dark:text-white">
-              Welcome to unSAGED
+              Welcome to {DEFAULT_TITLE}
             </div>
           </div>
         ) : modelError ? (
@@ -272,7 +274,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                           dark:from-fuchsia-500 dark:via-violet-600 dark:to-indigo-400
                           bg-clip-text bg-175% animate-bg-pan-fast rotate-0"
                         >
-                          <div className="text-5xl font-semibold">unSAGED</div>
+                          <div className="text-5xl font-semibold">{DEFAULT_TITLE}</div>
                         </div>
                       </div>
                     </div>

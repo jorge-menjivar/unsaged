@@ -7,6 +7,11 @@ export const DEFAULT_MODEL = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_DEFAULT_MODEL,
 );
 
+export const DEFAULT_TITLE = dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || "unsaged";
+
+export const DEFAULT_DESCRIPTION = dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
+  "Open source chat kit engineered for seamless interaction with AI models";
+
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
   "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
