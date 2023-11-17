@@ -1,4 +1,5 @@
 import {
+  DEBUG_MODE,
   OPENAI_API_KEY,
   OPENAI_API_TYPE,
   OPENAI_API_URL,
@@ -29,8 +30,8 @@ export async function getAvailableOpenAIModels(key?: string) {
       }),
       ...(OPENAI_API_TYPE === 'openai' &&
         OPENAI_ORGANIZATION && {
-          'OpenAI-Organization': OPENAI_ORGANIZATION,
-        }),
+        'OpenAI-Organization': OPENAI_ORGANIZATION,
+      }),
     },
   });
 
@@ -47,7 +48,9 @@ export async function getAvailableOpenAIModels(key?: string) {
         OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
 
       if (!PossibleAiModels[model_name]) {
-        console.warn('OpenAI model not implemented in unSAGED:', model_name);
+        if (DEBUG_MODE)
+          console.warn('OpenAI model not implemented:', model_name);
+
         return null;
       }
 

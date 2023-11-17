@@ -47,11 +47,14 @@ Follow the installation instructions in the [Getting Started](https://unsaged.co
   - GPT-3.5-Turbo, GPT-3.5-Turbo-16k
   - GPT-4, GPT-4-32k
 - **[Ollama](https://github.com/jmorganca/ollama)**
-  - Llama2-7b, Llama2-13b, Llama2-70b
+  - Llama2-7b, Llama2-13b, Llama2-70b, goliath, llama2-uncensored
   - Codellama-7b, Codellama-13b, Codellama-70b
   - Wizard-7b, Wizard-13b, Wizard-34b
   - Phind-Codellama
-  - Mistral, Mistral-OpenOrca
+  - Mistral, Mistral-OpenOrca, neural-chat
+  - openchat
+  - orca-mini
+  - vicuna
 
 ## 🚀 Upgrading unSAGED
 
