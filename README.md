@@ -12,14 +12,18 @@ Leveraging the power of Next.js and Supabase, it offers a user-friendly and robu
 You can use it live at [app.unsaged.com](https://app.unsaged.com). Just make sure not to put in personal information as your conversations will be stored in Postgres (Supabase) until you delete them.
 
 - [🎉 Welcome to unSAGED](#-welcome-to-unsaged)
+  - [🚧 Installation](#-installation)
   - [🌟 Key Features](#-key-features)
   - [🤖 Supported AI Models](#-supported-ai-models)
-  - [🚧 Getting Started with unSAGED](#-getting-started-with-unsaged)
   - [🚀 Upgrading unSAGED](#-upgrading-unsaged)
   - [📝 License](#-license)
   - [🤝 How to Contribute](#-how-to-contribute)
   - [📸 Screenshots](#-screenshots)
   - [📚 Built With](#-built-with)
+
+## 🚧 Installation
+
+Follow the installation instructions in the [Getting Started](https://unsaged.com/docs/getting-started/installation) section of the documentation.
 
 ## 🌟 Key Features
 
@@ -48,10 +52,6 @@ You can use it live at [app.unsaged.com](https://app.unsaged.com). Just make sur
   - Wizard-7b, Wizard-13b, Wizard-34b
   - Phind-Codellama
   - Mistral, Mistral-OpenOrca
-
-## 🚧 Getting Started with unSAGED
-
-Follow the installation instructions in the [Getting Started](https://unsaged.com/docs/getting-started/installation) section of the documentation.
 
 ## 🚀 Upgrading unSAGED
 
