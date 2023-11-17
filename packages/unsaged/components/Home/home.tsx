@@ -41,7 +41,7 @@ import {
 import {
   localGetShowPrimaryMenu,
   localGetShowSecondaryMenu,
-} from '@/utils/app/storage/local/uiState';
+} from '@/utils/app/storage/local/ui-state';
 import { storageDeleteMessages } from '@/utils/app/storage/messages';
 import {
   storageGetPrompts,
@@ -399,31 +399,20 @@ const Home = () => {
     dispatch({ field: 'conversations', value: updatedConversations });
   };
 
-  // EFFECTS  --------------------------------------------
-
-  useEffect(() => {
-    if (window.innerWidth < 640) {
-      dispatch({ field: 'showPrimaryMenu', value: false });
-      dispatch({ field: 'showSecondaryMenu', value: false });
-    }
-  }, [dispatch, display]);
-
   // ON LOAD --------------------------------------------
 
   useEffect(() => {
     if (!database || !user) return;
 
-    if (window.innerWidth < 640) {
-      dispatch({ field: 'showPrimaryMenu', value: false });
-    }
-
     const showPrimaryMenu = localGetShowPrimaryMenu(user);
-    if (showPrimaryMenu) {
+    console.log('showPrimaryMenu', showPrimaryMenu);
+    if (showPrimaryMenu !== null) {
       dispatch({ field: 'showPrimaryMenu', value: showPrimaryMenu });
     }
 
     const showSecondaryMenu = localGetShowSecondaryMenu(user);
-    if (showSecondaryMenu) {
+    console.log('showSecondaryMenu', showSecondaryMenu);
+    if (showSecondaryMenu !== null) {
       dispatch({ field: 'showSecondaryMenu', value: showSecondaryMenu });
     }
 

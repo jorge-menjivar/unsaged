@@ -12,7 +12,18 @@ export const localSaveShowPromptBar = (user: User, show: boolean) => {
 
 export const localGetShowPrimaryMenu = (user: User) => {
   const itemName = `showPrimaryMenu-${user.email}`;
-  return JSON.parse(localStorage.getItem(itemName) || '[]') as boolean;
+
+  const savedValue = localStorage.getItem(itemName);
+
+  if (!savedValue) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(savedValue) as boolean;
+  } catch {
+    return null;
+  }
 };
 
 export const localSaveShowPrimaryMenu = (user: User, show: boolean) => {
@@ -22,7 +33,18 @@ export const localSaveShowPrimaryMenu = (user: User, show: boolean) => {
 
 export const localGetShowSecondaryMenu = (user: User) => {
   const itemName = `showSecondaryMenu-${user.email}`;
-  return JSON.parse(localStorage.getItem(itemName) || '[]') as boolean;
+
+  const savedValue = localStorage.getItem(itemName);
+
+  if (!savedValue) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(savedValue) as boolean;
+  } catch {
+    return null;
+  }
 };
 
 export const localSaveShowSecondaryMenu = (user: User, show: boolean) => {

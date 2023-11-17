@@ -1,5 +1,7 @@
 import { useContext } from 'react';
 
+import { localSaveShowSecondaryMenu } from '@/utils/app/storage/local/ui-state';
+
 import { ActivityBarTab } from './components/ActivityBarTab';
 import HomeContext from '@/components/Home/home.context';
 
@@ -7,7 +9,7 @@ import SecondaryMenuContext from '../../SecondaryMenu.context';
 
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const {
-    state: { showSecondaryMenu },
+    state: { showSecondaryMenu, user },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -19,10 +21,12 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
       homeDispatch({ field: 'showSecondaryMenu', value: !showSecondaryMenu });
+      localSaveShowSecondaryMenu(user!, !showSecondaryMenu);
     }
 
     if (!showSecondaryMenu) {
       homeDispatch({ field: 'showSecondaryMenu', value: !showSecondaryMenu });
+      localSaveShowSecondaryMenu(user!, !showSecondaryMenu);
     }
     secondaryMenuDispatch({ field: 'selectedIndex', value: index });
   };

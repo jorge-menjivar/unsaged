@@ -4,7 +4,7 @@ import { FC, useContext } from 'react';
 import {
   localSaveShowPrimaryMenu,
   localSaveShowSecondaryMenu,
-} from '@/utils/app/storage/local/uiState';
+} from '@/utils/app/storage/local/ui-state';
 
 import { Conversation } from '@/types/chat';
 
@@ -32,20 +32,22 @@ export const Navbar: FC<Props> = ({
     if (!showPrimaryMenu) {
       homeDispatch({ field: 'showPrimaryMenu', value: true });
       homeDispatch({ field: 'showSecondaryMenu', value: false });
+      localSaveShowPrimaryMenu(user!, true);
     } else {
       homeDispatch({ field: 'showPrimaryMenu', value: false });
+      localSaveShowPrimaryMenu(user!, false);
     }
-    localSaveShowPrimaryMenu(user!, showPrimaryMenu);
   };
 
   const handleShowSecondaryMenu = () => {
     if (!showSecondaryMenu) {
       homeDispatch({ field: 'showPrimaryMenu', value: false });
       homeDispatch({ field: 'showSecondaryMenu', value: true });
+      localSaveShowSecondaryMenu(user!, true);
     } else {
       homeDispatch({ field: 'showSecondaryMenu', value: false });
+      localSaveShowSecondaryMenu(user!, false);
     }
-    localSaveShowSecondaryMenu(user!, showSecondaryMenu);
   };
 
   return (

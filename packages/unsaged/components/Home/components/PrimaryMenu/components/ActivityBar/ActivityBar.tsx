@@ -7,6 +7,7 @@ import {
 import { signOut } from 'next-auth/react';
 import { useContext } from 'react';
 
+import { localSaveShowPrimaryMenu } from '@/utils/app/storage/local/ui-state';
 import { deleteSelectedConversationId } from '@/utils/app/storage/selectedConversation';
 
 import { ActivityBarButton } from './components/ActivityBarButton';
@@ -29,10 +30,12 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
       homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
 
     if (!showPrimaryMenu) {
       homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
     primaryMenuDispatch({ field: 'selectedIndex', value: index });
   };

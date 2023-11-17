@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Analytics />
-      <body className="absolute inset-0 overflow-hidden overscroll-none h-screen">
+      <body className="absolute inset-0 overflow-hidden overscroll-none h-full w-full">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
