@@ -66,8 +66,8 @@ export const initialState: HomeInitialState = {
   serverSideApiKeyIsSet: false,
   settings: [],
   settingsLoaded: false,
-  showPrimaryMenu: window.innerWidth > 992,
-  showSecondaryMenu: window.innerWidth > 1200,
+  showPrimaryMenu: true,
+  showSecondaryMenu: true,
   systemPrompts: [],
   user: null,
 };

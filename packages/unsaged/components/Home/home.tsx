@@ -404,6 +404,14 @@ const Home = () => {
   useEffect(() => {
     if (!database || !user) return;
 
+    if (window.innerWidth < 992) {
+      dispatch({ field: 'showPrimaryMenu', value: false });
+    }
+
+    if (window.innerWidth < 1200) {
+      dispatch({ field: 'showSecondaryMenu', value: false });
+    }
+
     const showPrimaryMenu = localGetShowPrimaryMenu(user);
     console.log('showPrimaryMenu', showPrimaryMenu);
     if (showPrimaryMenu !== null) {
