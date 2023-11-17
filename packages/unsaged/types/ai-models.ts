@@ -250,6 +250,30 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 3000,
     vendor: 'Ollama',
   },
+  'vicuna:latest': {
+    id: 'vicuna:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'orca-mini:latest': {
+    id: 'orca-mini:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2-uncensored:latest': {
+    id: 'llama2-uncensored:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  //
+  // Ollama - Custom Models
+  //
   'llama2_13B_2080:latest': {
     id: 'llama2_13B_2080:latest',
     maxLength: 32000,
