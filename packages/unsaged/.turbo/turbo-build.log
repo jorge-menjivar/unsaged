@@ -1,0 +1,36 @@
+
+> unsaged@0.2.0 build /home/jorge/js_projects/unSAGED/packages/unsaged
+> next build
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+ ⚠ Using edge runtime on a page currently disables static generation for that page
+   Generating static pages (0/48) ...
+   Generating static pages (12/48) 
+   Generating static pages (24/48) 
+   Generating static pages (36/48) 
+ ✓ Generating static pages (48/48) 
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    556 kB          637 kB
+├ ○ /_not-found                          887 B          81.5 kB
+├ λ /api/auth/[...nextauth]              0 B                0 B
+├ ℇ /api/chat                            0 B                0 B
+└ ℇ /api/models                          0 B                0 B
++ First Load JS shared by all            80.6 kB
+  ├ chunks/397-3e9d59b59b9651cc.js       27.6 kB
+  ├ chunks/65a4853b-d3892b6e0a097773.js  50.9 kB
+  ├ chunks/main-app-d8cf1f6fdbb7c7a6.js  239 B
+  └ chunks/webpack-9f00040ac5983b65.js   1.83 kB
+
+
+ƒ Middleware                             63.2 kB
+
+ℇ  (Streaming)  server-side renders with streaming (uses React 18 SSR streaming or Server Components)
+λ  (Server)     server-side renders at runtime (uses getInitialProps or getServerSideProps)
+○  (Static)     automatically rendered as static HTML (uses no initial props)
+

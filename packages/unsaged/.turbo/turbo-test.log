@@ -1,0 +1,16 @@
+
+> unsaged@0.2.0 test
+> vitest
+
+
+ DEV  v0.29.8 /home/jorge/js_projects/unSAGED/packages/unsaged
+
+include: **/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}
+exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*
+watch exclude:  **/node_modules/**, **/dist/**
+
+No test files found, exiting with code 1
+npm ERR! Lifecycle script `test` failed with error: 
+npm ERR! Error: command failed 
+npm ERR!   in workspace: unsaged@0.2.0 
+npm ERR!   at location: /home/jorge/js_projects/unSAGED/packages/unsaged 
