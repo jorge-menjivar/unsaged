@@ -10,12 +10,16 @@
 /test-results
 
 # next.js
-/.next/
-/out/
-/dist
+.next/
+out/
+build
+.swc/
+
+# Sentry
+.sentryclirc
 
 # production
-/build
+build/
 
 # misc
 .DS_Store
@@ -31,7 +35,13 @@ yarn-error.log*
 .env
 .env*.local
 
-# vercel
+# turbo
+.turbo
+
+# Sentry Auth Token
+.sentryclirc
+
+# Vercel
 .vercel
 
 # typescript
@@ -41,7 +51,3 @@ next-env.d.ts
 
 # ide
 .vscode/
-
-+ .turbo
-*/.turbo
-*/**/.turbo

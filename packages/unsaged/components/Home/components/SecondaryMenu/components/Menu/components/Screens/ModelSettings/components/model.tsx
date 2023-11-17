@@ -62,7 +62,7 @@ export const ModelSelect = () => {
         <SelectContent>
           {sortedModels.map((model) => (
             <SelectItem key={model.id} value={model.id}>
-              {model.id}
+              {model.id} - {model.vendor}
             </SelectItem>
           ))}
         </SelectContent>

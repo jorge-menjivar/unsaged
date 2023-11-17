@@ -1,4 +1,7 @@
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/utils/app/const';
+
 import { Analytics } from '@vercel/analytics/react';
+import { AxiomWebVitals } from 'next-axiom';
 
 import { Metadata } from 'next';
 
@@ -7,9 +10,8 @@ import { ThemeProvider } from '@/components/common/ui/theme-provider';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'unSAGED',
-  description:
-    'Open source chat kit engineered for seamless interaction with AI models',
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
   viewport:
     'height=device-height, width=device-width, initial-scale=1, user-scalable=no',
 };
@@ -24,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Analytics />
+      <AxiomWebVitals />
       <body className="absolute inset-0 overflow-hidden overscroll-none h-full w-full">
         <ThemeProvider
           attribute="class"

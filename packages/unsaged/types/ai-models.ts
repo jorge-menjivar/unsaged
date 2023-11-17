@@ -11,6 +11,9 @@ export interface PossibleAiModelsInterface {
 }
 
 export const PossibleAiModels: PossibleAiModelsInterface = {
+  //
+  // OpenAI
+  //
   'gpt-3.5-turbo': {
     id: 'gpt-3.5-turbo',
     maxLength: 12000,
@@ -53,6 +56,9 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 120000,
     vendor: 'OpenAI',
   },
+  //
+  // Azure
+  //
   'gpt-35-turbo': {
     id: 'will get from azure',
     maxLength: 12000,
@@ -67,6 +73,9 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 12000,
     vendor: 'OpenAI',
   },
+  //
+  // Anthropic
+  //
   'claude-instant-1': {
     id: 'claude-instant-1',
     maxLength: 400000,
@@ -81,6 +90,9 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 98000,
     vendor: 'Anthropic',
   },
+  //
+  // Google
+  //
   bard: {
     id: 'bard',
     maxLength: 12000,
@@ -88,6 +100,9 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 3000,
     vendor: 'Google',
   },
+  //
+  // Ollama
+  //
   'llama2:latest': {
     id: 'llama2:latest',
     maxLength: 32000,
@@ -214,8 +229,50 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     requestLimit: 3000,
     vendor: 'Ollama',
   },
+  'openchat:latest': {
+    id: 'openchat:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'neural-chat:latest': {
+    id: 'neural-chat:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'goliath:latest': {
+    id: 'goliath:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'vicuna:latest': {
+    id: 'vicuna:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'orca-mini:latest': {
+    id: 'orca-mini:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
+  'llama2-uncensored:latest': {
+    id: 'llama2-uncensored:latest',
+    maxLength: 16000,
+    tokenLimit: 4096,
+    requestLimit: 3000,
+    vendor: 'Ollama',
+  },
   //
-  // Custom models
+  // Ollama - Custom Models
   //
   'llama2_13B_2080:latest': {
     id: 'llama2_13B_2080:latest',
