@@ -55,7 +55,7 @@ Follow the installation instructions in the [Getting Started](https://unsaged.co
 
 ## 🚀 Upgrading unSAGED
 
-On November 13th, 2023, we released a major update to unSAGED, which required a database table columns update. If you are upgrading from a version of unSAGED released before this date, you will need to run the [Upgrade Script](./UpgradeScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
+On November 13th, 2023, we released a major update to unSAGED, which required a database table columns update. If you are upgrading from a version of unSAGED released before this date, you will need to run the [Upgrade Script](./db/UpgradeScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
 
 ## 📝 License
 
