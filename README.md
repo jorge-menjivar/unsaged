@@ -69,13 +69,13 @@ We welcome contributions to the unSAGED project! If you're interested in contrib
 
 ## 📸 Screenshots
 
-![Screenshot-1](./public/screenshots/screenshot-1.png)
+![Screenshot-1](./packages/unsaged/public/screenshots/screenshot-1.png)
 
-![Screenshot-2](./public/screenshots/screenshot-2.png)
+![Screenshot-2](./packages/unsaged/public/screenshots/screenshot-2.png)
 
-![Screenshot-4](./public/screenshots/screenshot-4.png)
+![Screenshot-4](./packages/unsaged/public/screenshots/screenshot-4.png)
 
-![Screenshot-5](./public/screenshots/screenshot-5.png)
+![Screenshot-5](./packages/unsaged/public/screenshots/screenshot-5.png)
 
 ## 📚 Built With
 
