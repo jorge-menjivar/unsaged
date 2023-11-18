@@ -95,37 +95,56 @@ export async function streamOllama(
     }
   }
 
-  const stream = new ReadableStream({
-    async start(controller) {
-      let fullText = '';
-      try {
-        for await (const chunk of res.body as any) {
-          const decodedText = decoder.decode(chunk);
+  if (res.body) {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder('utf-8');
+    const encoder = new TextEncoder();
+    let buffer = '';
 
-          const splits = decodedText.split('}\n{');
-          for (let i = 0; i < splits.length; i++) {
-            let split = splits[i];
-            if (i !== 0) {
-              split = '{' + split;
+    const stream = new ReadableStream({
+      async start(controller) {
+        function push() {
+          reader.read().then(({ done, value }) => {
+            if (done) {
+              controller.close();
+              return;
             }
-            if (i !== splits.length - 1) {
-              split = split + '}';
+
+            buffer += decoder.decode(value, { stream: true });
+            let boundary = buffer.lastIndexOf('\n');
+
+            if (boundary !== -1) {
+              const completeResponse = buffer.slice(0, boundary);
+              buffer = buffer.slice(boundary + 1); // Keep the incomplete chunk in the buffer
+
+              completeResponse.split('\n').forEach((line) => {
+                if (line) {
+                  try {
+                    const parsedData = JSON.parse(line);
+                    if (parsedData.response) {
+                      controller.enqueue(encoder.encode(parsedData.response));
+                    }
+                  } catch (e) {
+                    console.error('Error parsing JSON', e);
+                    controller.error(e);
+                  }
+                }
+              });
             }
-            const parsedData = JSON.parse(split);
-            if (parsedData.response) {
-              fullText += parsedData.response;
-              controller.enqueue(encoder.encode(parsedData.response));
-            }
-          }
+            push();
+          }).catch((e) => {
+            console.error('Stream reading error', e);
+            controller.error(e);
+          });
         }
-        controller.close();
-      } catch (e) {
-        console.log('Error parsing JSON', e);
-        controller.error(e);
-      }
-      // console.log(fullText);
-    },
-  });
 
-  return { stream: stream };
+        push();
+      },
+    });
+
+    return { stream };
+  } else {
+    // Handle the case where res.body is null
+    throw new Error('Response body is null');
+  }
 }
