@@ -116,7 +116,7 @@ CREATE TABLE public.conversations (
 	folder_id uuid NULL,
 	"timestamp" timestamptz NOT NULL,
 	user_id uuid NOT NULL DEFAULT next_auth.uid(),
-	jsonb NOT NULL DEFAULT '{}'::jsonb,
+	params jsonb NOT NULL DEFAULT '{}'::jsonb,
 	CONSTRAINT unique_conversation_id PRIMARY KEY (id)
 );
 
