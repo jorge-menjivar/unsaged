@@ -42,6 +42,11 @@ The base url for the API.
 OPENAI_API_URL="https://api.openai.com/v1"
 ```
 
+It is possible to use the new [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/)
+```sh
+OPENAI_API_URL="https://gateway.ai.cloudflare.com/v1/ACCOUNT_TAG/GATEWAY"
+```
+
 ---
 
 ### OPENAI_API_TYPE
@@ -81,7 +86,7 @@ The default system prompt for OpenAI models.
 #### Example
 
 ```sh
-NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT= "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown."
+NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT="You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown."
 ```
 
 ---

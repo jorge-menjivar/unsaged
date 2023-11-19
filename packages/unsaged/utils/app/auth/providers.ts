@@ -94,7 +94,7 @@ export async function getProviders() {
     );
   }
   if (EMAIL_FROM) {
-    const provider = await import('@/node_modules/next-auth/providers/email');
+    const provider = await import('next-auth/providers/email');
     const EmailProvider = provider.default;
     providers.push(
       EmailProvider({
