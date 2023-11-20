@@ -12,7 +12,12 @@ git clone https://github.com/jorge-menjivar/unSAGED.git
 
 ## Generate Supabase Tables
 
-Run the [Generation Script](https://github.com/jorge-menjivar/unSAGED/packages/unsaged/db/GenerationScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
+Create a Supabase project.
+
+Run the migration script using the Supabase CLI
+```sh
+supabase db push
+```
 
 This will do the following:
 
