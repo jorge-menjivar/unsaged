@@ -55,6 +55,7 @@ Follow the installation instructions in the [Getting Started](https://unsaged.co
   - openchat
   - orca-mini
   - vicuna
+  - deepseek-coder-1b, deepseek-coder-6.7b, deepseek-coder-33b
 
 ## 🚀 Upgrading unSAGED
 
