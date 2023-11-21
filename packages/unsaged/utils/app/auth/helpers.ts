@@ -1,4 +1,4 @@
-import { getSession } from '@/node_modules/next-auth/react';
+import { getSession } from 'next-auth/react';
 
 import { Session, User } from '@/types/auth';
 
