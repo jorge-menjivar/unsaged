@@ -8,7 +8,7 @@ sidebar_position: 5
 
 To give everyone using your instance of unSAGED access to OpenAI models like GPT-4, set the following environment variables:
 
-```sh title="packages/unsaged/.env.local"
+```sh title="apps/unsaged/.env.local"
 OPENAI_API_KEY=your_openai_api_key
 ```
 

@@ -8,7 +8,7 @@ To give everyone using your instance of unSAGED access to OpenAI models hosted o
 
 ## Global Access Configuration
 
-```sh title="packages/unsaged/.env.local"
+```sh title="apps/unsaged/.env.local"
 OPENAI_API_URL=the_url_of_your_azure_api
 OPENAI_API_KEY=your_api_key
 OPENAI_API_TYPE=azure

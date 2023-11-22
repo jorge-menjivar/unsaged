@@ -8,7 +8,7 @@ sidebar_position: 7
 
 To give everyone using your instance of unSAGED access to Anthropic models like Claude 2, set the following environment variables:
 
-```sh title="packages/unsaged/.env.local"
+```sh title="apps/unsaged/.env.local"
 ANTHROPIC_API_KEY=your_anthropic_api_key
 ```
 
