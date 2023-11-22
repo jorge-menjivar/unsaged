@@ -13,6 +13,7 @@ import {
   SecondaryMenuOpener,
 } from '../../../common/Sidebar/components/OpenCloseButton';
 import HomeContext from '@/components/Home/home.context';
+import { useUser } from '@clerk/nextjs';
 
 interface Props {
   selectedConversation: Conversation;
@@ -24,9 +25,10 @@ export const Navbar: FC<Props> = ({
   onNewConversation,
 }) => {
   const {
-    state: { showPrimaryMenu, showSecondaryMenu, user },
+    state: { showPrimaryMenu, showSecondaryMenu },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
+  const { user } = useUser();
 
   const handleShowPrimaryMenu = () => {
     if (!showPrimaryMenu) {

@@ -26,6 +26,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import { useUser } from '@clerk/nextjs';
 
 export interface Props {
   message: Message;
@@ -43,10 +44,10 @@ export const ChatMessage: FC<Props> = memo(
         messages,
         messageIsStreaming,
         selectedConversation,
-        user,
       },
       dispatch: homeDispatch,
     } = useContext(HomeContext);
+    const { user } = useUser();
 
     const {
       state: { selectedConversationMessages },

@@ -17,6 +17,7 @@ import HomeContext from '@/components/Home/home.context';
 
 import SettingsContext from './Settings.context';
 import { SettingsInitialState, initialState } from './Settings.state';
+import { useUser } from '@clerk/nextjs';
 
 export const Settings = () => {
   const { t } = useTranslation('settings');
@@ -31,9 +32,10 @@ export const Settings = () => {
   } = settingsContextValue;
 
   const {
-    state: { user, settings },
+    state: { settings },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
+  const { user } = useUser();
 
   useEffect(() => {
     // fetchFiles(searchQuery);

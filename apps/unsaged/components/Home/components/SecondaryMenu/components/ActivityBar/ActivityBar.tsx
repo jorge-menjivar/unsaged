@@ -6,12 +6,14 @@ import { ActivityBarTab } from './components/ActivityBarTab';
 import HomeContext from '@/components/Home/home.context';
 
 import SecondaryMenuContext from '../../SecondaryMenu.context';
+import { useUser } from '@clerk/nextjs';
 
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const {
-    state: { showSecondaryMenu, user },
+    state: { showSecondaryMenu },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
+  const { user } = useUser();
 
   const {
     state: { selectedIndex },

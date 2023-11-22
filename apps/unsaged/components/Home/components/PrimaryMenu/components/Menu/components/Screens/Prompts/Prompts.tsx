@@ -23,6 +23,7 @@ import PromptsContext from './Prompts.context';
 import { PromptsInitialState, initialState } from './Prompts.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
 
 const Prompts = () => {
   const { t } = useTranslation('promptbar');
@@ -32,10 +33,11 @@ const Prompts = () => {
   });
 
   const {
-    state: { prompts, database, user },
+    state: { prompts, database },
     dispatch: homeDispatch,
     handleCreateFolder,
   } = useContext(HomeContext);
+  const { user } = useUser();
 
   const {
     state: { searchTerm, filteredPrompts },

@@ -24,6 +24,7 @@ import SystemPromptsContext from './SystemPrompts.context';
 import { SystemPromptsInitialState, initialState } from './SystemPrompts.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
 
 const SystemPrompts = () => {
   const { t } = useTranslation('systemPrompts');
@@ -38,7 +39,6 @@ const SystemPrompts = () => {
     state: {
       systemPrompts,
       database,
-      user,
       models,
       conversations,
       selectedConversation,
@@ -46,6 +46,7 @@ const SystemPrompts = () => {
     dispatch: homeDispatch,
     handleCreateFolder,
   } = useContext(HomeContext);
+  const { user } = useUser();
 
   const {
     state: { searchTerm, filteredSystemPrompts },

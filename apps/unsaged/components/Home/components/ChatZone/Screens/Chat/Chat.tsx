@@ -30,6 +30,7 @@ import { ChatInitialState, initialState } from './Chat.state';
 import { ChatInput } from './ChatInput';
 import { ChatLoader } from './ChatLoader';
 import { MemoizedChatMessage } from './MemoizedChatMessage';
+import { useUser } from '@clerk/nextjs';
 
 interface Props {
   stopConversationRef: MutableRefObject<boolean>;
@@ -45,12 +46,13 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       modelError,
       loading,
       builtInSystemPrompts,
-      user,
       savedSettings,
       selectedConversation,
     },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
+
+  const { user } = useUser();
 
   const liveMessages = useRef<Message[]>([]);
 
