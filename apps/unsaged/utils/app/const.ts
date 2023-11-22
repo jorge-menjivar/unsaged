@@ -145,3 +145,6 @@ export const SUPABASE_ANON_KEY =
 
 export const SUPABASE_JWT_SECRET =
   dockerEnvVarFix(process.env.SUPABASE_JWT_SECRET) || '';
+
+export const CLERK_TOKEN_TEMPLATE_NAME =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_CLERK_TOKEN_TEMPLATE_NAME) || 'supabase';
