@@ -33,9 +33,8 @@ export async function streamAnthropic(
 
   let parsedMessages = '';
   for (let i = messages.length - 1; i >= 0; i--) {
-    const parsedMessage = `\n\n${
-      messages[i].role === 'user' ? 'Human' : 'Assistant'
-    }: ${messages[i].content}`;
+    const parsedMessage = `\n\n${messages[i].role === 'user' ? 'Human' : 'Assistant'
+      }: ${messages[i].content}`;
     parsedMessages = parsedMessage + parsedMessages;
   }
 
@@ -93,8 +92,7 @@ export async function streamAnthropic(
       return { error: result.error };
     } else {
       throw new Error(
-        `Anthropic API returned an error: ${
-          decoder.decode(result?.value) || result.statusText
+        `Anthropic API returned an error: ${decoder.decode(result?.value) || result.statusText
         }`,
       );
     }

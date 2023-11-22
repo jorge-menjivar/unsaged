@@ -1,6 +1,7 @@
 // Import necessary types and modules
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
+import { DEBUG_MODE } from '@/utils/app/const';
 
 // @ts-ignore
 import tiktokenModel from '@dqbd/tiktoken/encoders/cl100k_base.json';
@@ -56,7 +57,8 @@ export async function countTokensOpenAI(
   // every reply is primed with <|start|>assistant<|message|>
   tokenCount += 3;
 
-  console.log('tokenCount', tokenCount);
+  if (DEBUG_MODE)
+    console.log('tokenCount', tokenCount);
 
   encoding.free();
   return { count: tokenCount };

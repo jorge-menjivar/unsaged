@@ -70,10 +70,10 @@ export async function streamOllama(
       Pragma: 'no-cache',
       ...(OLLAMA_BASIC_USER &&
         OLLAMA_BASIC_PWD && {
-          Authorization: `Basic ${Buffer.from(
-            OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
-          ).toString('base64')}`,
-        }),
+        Authorization: `Basic ${Buffer.from(
+          OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
+        ).toString('base64')}`,
+      }),
     },
     method: 'POST',
     body: JSON.stringify(body),
@@ -88,8 +88,7 @@ export async function streamOllama(
       return { error: result.error };
     } else {
       throw new Error(
-        `Ollama API returned an error: ${
-          decoder.decode(result?.value) || result.statusText
+        `Ollama API returned an error: ${decoder.decode(result?.value) || result.statusText
         }`,
       );
     }

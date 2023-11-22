@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
@@ -21,5 +22,6 @@
     "tailwindcss": "^3.3.5",
     "tailwindcss-animate": "^1.0.7"
   },
-  "packageManager": "pnpm@8.10.5"
+  "packageManager": "pnpm@8.10.5",
+  "name": "monorepo"
 }
