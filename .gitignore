@@ -15,6 +15,10 @@ out/
 build
 .swc/
 
+# Docusaurus
+.docusaurus
+.cache-loader
+
 # Sentry
 .sentryclirc
 
