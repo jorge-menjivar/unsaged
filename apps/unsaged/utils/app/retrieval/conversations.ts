@@ -21,17 +21,18 @@ import {
 } from '../storage/selectedConversation';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
 
 export const useConversations = (
   homeDispatch: Dispatch<ActionType<HomeInitialState>>,
   database: Database | null,
-  user: User | null | undefined,
   conversations: Conversation[],
   systemPrompts: SystemPrompt[],
   models: AiModel[],
   modelsLoaded: boolean,
 ) => {
   const [conversationsLoaded, setConversationsLoaded] = useState(false);
+  const { user } = useUser();
 
   const fetchModels = useCallback(async () => {
     if (!conversationsLoaded) {

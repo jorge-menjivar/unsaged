@@ -38,7 +38,6 @@ export interface HomeInitialState {
   showPrimaryMenu: boolean;
   showSecondaryMenu: boolean;
   systemPrompts: SystemPrompt[];
-  user: UserResource | null | undefined;
 }
 
 export const initialState: HomeInitialState = {
@@ -69,5 +68,4 @@ export const initialState: HomeInitialState = {
   showPrimaryMenu: true,
   showSecondaryMenu: true,
   systemPrompts: [],
-  user: null,
 };

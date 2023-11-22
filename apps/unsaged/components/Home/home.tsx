@@ -95,7 +95,7 @@ const Home = () => {
     dispatch,
   } = contextValue;
 
-  const { isLoaded, isSignedIn, user } = useUser();
+  const { isSignedIn, user } = useUser();
   const { getToken } = useAuth();
 
   useEffect(() => {
@@ -110,9 +110,6 @@ const Home = () => {
 
   const { setTheme } = useTheme();
 
-  // AUTH --------------------------------------------------------------------
-  // useAuth(dispatch, user);
-
   // DATABASE ----------------------------------------------------------------
   useDatabase(dispatch, database, getToken);
 
@@ -123,7 +120,6 @@ const Home = () => {
   useConversations(
     dispatch,
     database,
-    user,
     conversations,
     systemPrompts,
     models,
@@ -131,7 +127,7 @@ const Home = () => {
   );
 
   // MESSAGES ----------------------------------------------------------------
-  useMessages(dispatch, database, user);
+  useMessages(dispatch, database);
 
   useEffect(() => {
     const _selectedConversation = conversations.find(

@@ -40,9 +40,11 @@ import ConversationsContext from './Conversations.context';
 import { ConversationsInitialState, initialState } from './Conversations.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/nextjs';
 
 export const Conversations = () => {
   const { t } = useTranslation('conversations');
+  const { user } = useUser();
 
   const conversationsContextValue = useCreateReducer<ConversationsInitialState>(
     {
@@ -51,7 +53,7 @@ export const Conversations = () => {
   );
 
   const {
-    state: { conversations, messages, database, folders, user, models },
+    state: { conversations, messages, database, folders, models },
     dispatch: homeDispatch,
     handleCreateFolder,
     handleNewConversation,

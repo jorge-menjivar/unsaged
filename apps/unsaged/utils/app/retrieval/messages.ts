@@ -9,13 +9,14 @@ import { Database } from '@/types/database';
 import { HomeInitialState } from '@/components/Home/home.state';
 
 import { storageGetMessages } from '../storage/messages';
+import { useUser } from '@clerk/nextjs';
 
 export const useMessages = (
   homeDispatch: Dispatch<ActionType<HomeInitialState>>,
   database: Database | null,
-  user: User | null | undefined,
 ) => {
   const [messagesLoaded, setMessagesLoaded] = useState(false);
+  const { user } = useUser();
 
   const fetchModels = useCallback(async () => {
     if (!messagesLoaded) {
