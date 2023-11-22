@@ -4,7 +4,7 @@ import { SavedSetting, SettingsSection } from '@/types/settings';
 const STORAGE_KEY = 'saved_settings';
 
 export const getSavedSettings = (user: User): SavedSetting[] => {
-  const itemName = `${STORAGE_KEY}-${user.email}`;
+  const itemName = `${STORAGE_KEY}-${user.id}`;
   const savedSettingsRaw = localStorage.getItem(itemName);
   if (savedSettingsRaw) {
     try {
@@ -17,12 +17,12 @@ export const getSavedSettings = (user: User): SavedSetting[] => {
 };
 
 export const setSavedSettings = (user: User, savedSettings: SavedSetting[]) => {
-  const itemName = `${STORAGE_KEY}-${user.email}`;
+  const itemName = `${STORAGE_KEY}-${user.id}`;
   localStorage.setItem(itemName, JSON.stringify(savedSettings));
 };
 
 export const deleteSettings = (user: User) => {
-  const itemName = `${STORAGE_KEY}-${user.email}`;
+  const itemName = `${STORAGE_KEY}-${user.id}`;
   localStorage.removeItem(itemName);
 };
 
