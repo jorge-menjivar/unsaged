@@ -45,13 +45,6 @@ export interface SupaDatabase {
         };
         Relationships: [
           {
-            foreignKeyName: 'conversation_owner';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
             foreignKeyName: 'conversation_owner_folder';
             columns: ['folder_id'];
             isOneToOne: false;
@@ -79,15 +72,6 @@ export interface SupaDatabase {
           name?: string;
           user_id?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: 'folder_owner';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-        ];
       };
       messages: {
         Row: {
@@ -115,13 +99,6 @@ export interface SupaDatabase {
           user_id?: string;
         };
         Relationships: [
-          {
-            foreignKeyName: 'message_owner';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
           {
             foreignKeyName: 'message_owner_convo';
             columns: ['conversation_id'];
@@ -161,13 +138,6 @@ export interface SupaDatabase {
         };
         Relationships: [
           {
-            foreignKeyName: 'prompt_owner';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
             foreignKeyName: 'prompt_owner_folder';
             columns: ['folder_id'];
             isOneToOne: false;
@@ -202,13 +172,6 @@ export interface SupaDatabase {
           user_id?: string;
         };
         Relationships: [
-          {
-            foreignKeyName: 'system_prompt_owner';
-            columns: ['user_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
           {
             foreignKeyName: 'system_prompt_owner_folder';
             columns: ['folder_id'];

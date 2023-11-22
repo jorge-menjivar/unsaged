@@ -7,6 +7,8 @@ import { Metadata } from 'next';
 
 import { ThemeProvider } from '@/components/common/ui/theme-provider';
 
+import { ClerkProvider } from '@clerk/nextjs'
+
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
@@ -24,19 +26,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <Analytics />
-      <AxiomWebVitals />
-      <body className="absolute inset-0 overflow-hidden overscroll-none h-full w-full">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <Analytics />
+        <AxiomWebVitals />
+        <body className="absolute inset-0 overflow-hidden overscroll-none h-full w-full">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

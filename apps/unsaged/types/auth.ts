@@ -1,11 +1,3 @@
-export interface User {
-  email?: string | null;
-  image?: string | null;
-  name?: string | null;
-}
+import { UserResource } from "@clerk/types";
 
-export interface Session {
-  user?: User | null;
-  customAccessToken?: string;
-  expires: string;
-}
+export interface User extends UserResource { }

@@ -13,7 +13,7 @@ import { storageGetMessages } from '../storage/messages';
 export const useMessages = (
   homeDispatch: Dispatch<ActionType<HomeInitialState>>,
   database: Database | null,
-  user: User | null,
+  user: User | null | undefined,
 ) => {
   const [messagesLoaded, setMessagesLoaded] = useState(false);
 

@@ -1,7 +1,6 @@
 import { DEFAULT_MODEL } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
-import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 import { ErrorMessage } from '@/types/error';
@@ -9,6 +8,7 @@ import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
 import { SavedSetting, SettingsSection } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
+import type { UserResource } from '@clerk/types';
 
 export interface HomeInitialState {
   builtInSystemPrompts: SystemPrompt[];
@@ -38,7 +38,7 @@ export interface HomeInitialState {
   showPrimaryMenu: boolean;
   showSecondaryMenu: boolean;
   systemPrompts: SystemPrompt[];
-  user: User | null;
+  user: UserResource | null | undefined;
 }
 
 export const initialState: HomeInitialState = {

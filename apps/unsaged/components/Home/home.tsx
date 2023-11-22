@@ -14,7 +14,6 @@ import {
   DEFAULT_PALM_SYSTEM_PROMPT,
 } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
-import { useAuth } from '@/utils/app/retrieval/auth';
 import { useConversations } from '@/utils/app/retrieval/conversations';
 import { useDatabase } from '@/utils/app/retrieval/database';
 import { useMessages } from '@/utils/app/retrieval/messages';
@@ -67,6 +66,7 @@ import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useUser, useAuth } from '@clerk/nextjs';
 
 const Home = () => {
   const [debugLogPrinted, setDebugLogPrinted] = useState(false);
@@ -91,10 +91,12 @@ const Home = () => {
       settings,
       settingsLoaded,
       systemPrompts,
-      user,
     },
     dispatch,
   } = contextValue;
+
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
   useEffect(() => {
     if (DEBUG_MODE) {
@@ -109,10 +111,10 @@ const Home = () => {
   const { setTheme } = useTheme();
 
   // AUTH --------------------------------------------------------------------
-  useAuth(dispatch, user);
+  // useAuth(dispatch, user);
 
   // DATABASE ----------------------------------------------------------------
-  useDatabase(dispatch, database);
+  useDatabase(dispatch, database, getToken);
 
   // MODELS ------------------------------------------------------------------
   useModels(dispatch, savedSettings, models, modelsLoaded);

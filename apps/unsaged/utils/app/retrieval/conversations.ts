@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const useConversations = (
   homeDispatch: Dispatch<ActionType<HomeInitialState>>,
   database: Database | null,
-  user: User | null,
+  user: User | null | undefined,
   conversations: Conversation[],
   systemPrompts: SystemPrompt[],
   models: AiModel[],

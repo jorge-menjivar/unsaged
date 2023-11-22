@@ -1,4 +1,4 @@
-import { IconFileExport, IconLogout, IconSettings } from '@tabler/icons-react';
+import { IconFileExport } from '@tabler/icons-react';
 import { useContext } from 'react';
 
 import { useTranslation } from 'next-i18next';

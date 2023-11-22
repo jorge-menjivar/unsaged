@@ -1,20 +1,19 @@
 import {
   IconBrandDiscord,
   IconBrandGithub,
-  IconLogout,
   IconSettings,
 } from '@tabler/icons-react';
-import { signOut } from 'next-auth/react';
 import { useContext } from 'react';
 
 import { localSaveShowPrimaryMenu } from '@/utils/app/storage/local/ui-state';
-import { deleteSelectedConversationId } from '@/utils/app/storage/selectedConversation';
 
 import { ActivityBarButton } from './components/ActivityBarButton';
 import { ActivityBarTab } from './components/ActivityBarTab';
 import HomeContext from '@/components/Home/home.context';
 
 import PrimaryMenuContext from '../../PrimaryMenu.context';
+import { UserButton } from '@clerk/nextjs';
+import Link from 'next/link';
 
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const {
@@ -38,14 +37,6 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
       localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
     primaryMenuDispatch({ field: 'selectedIndex', value: index });
-  };
-
-  const handleSignOut = () => {
-    if (database!.name !== 'local') {
-      deleteSelectedConversationId(user!);
-    }
-
-    signOut();
   };
 
   const handleShowSettings = () => {
@@ -86,17 +77,17 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
       {/* Settings buttons align to bottom */}
       <div className="flex flex-col items-center space-y-6">
         <ActivityBarButton>
-          <a href="https://github.com/jorge-menjivar/unSAGED" target="_blank">
+          <Link href="https://github.com/jorge-menjivar/unSAGED" target="_blank">
             <IconBrandGithub size={28} />
-          </a>
+          </Link>
         </ActivityBarButton>
         <ActivityBarButton>
-          <a href="https://discord.gg/rMH2acSEzq" target="_blank">
+          <Link href="https://discord.gg/rMH2acSEzq" target="_blank">
             <IconBrandDiscord size={28} />
-          </a>
+          </Link>
         </ActivityBarButton>
-        <ActivityBarButton handleClick={handleSignOut}>
-          <IconLogout size={28} />
+        <ActivityBarButton>
+          <UserButton afterSignOutUrl="/" />
         </ActivityBarButton>
         <ActivityBarButton handleClick={handleShowSettings}>
           <IconSettings size={28} />
