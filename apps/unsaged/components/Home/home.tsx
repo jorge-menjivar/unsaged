@@ -95,7 +95,7 @@ const Home = () => {
     dispatch,
   } = contextValue;
 
-  const { user } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const { getToken } = useAuth();
 
   useEffect(() => {
@@ -532,7 +532,7 @@ const Home = () => {
   } else {
     let text = '';
 
-    if (!user) {
+    if (!isLoaded && !isSignedIn) {
       text = 'Initializing Auth System...';
     } else if (!database) {
       text = 'Initializing Database...';
