@@ -40,6 +40,8 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=my_public_key
 CLERK_SECRET_KEY=my_secret
 ```
 
+You need to add the JWT Secret to your Clerk application. [Integrate Supabase with Clerk](https://clerk.com/docs/integrations/databases/supabase#integrate-supabase-with-clerk)
+
 See [Clerk Documentation](https://clerk.com/docs/quickstarts/nextjs) for more information.
 
 ### Set Supabase Variables
