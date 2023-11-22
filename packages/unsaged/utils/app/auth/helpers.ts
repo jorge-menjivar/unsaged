@@ -1,44 +1,58 @@
-import { getSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-import { Session, User } from '@/types/auth';
+// Assuming you have initialized your Supabase client somewhere in your code
+const supabase = createClientComponentClient();
 
-export const getClientSession = async () => {
-  const authjsSession = await getSession();
+export async function getClientSession() {
+  try {
+    const { data: sessionWrapper } = await supabase.auth.getSession();
+    const session = sessionWrapper?.session;
 
-  if (authjsSession) {
-    let user: User | undefined = undefined;
-    if (authjsSession.user) {
+    if (!session) {
+      return null;
+    }
+
+    const sessionData = {
+      user: session.user?.email || '',
+      expires: session.expires_at || '',
+      customAccessToken: session.access_token || '',
+    };
+
+    return sessionData;
+  } catch (error) {
+    // Handle the error here, e.g., log it or return an error response
+    console.error(error);
+    return null;
+  }
+}
+
+export async function getUser() {
+  try {
+    const { data: sessionWrapper } = await supabase.auth.getSession();
+    const session = sessionWrapper?.session;
+
+    let user;
+
+    if (session?.user) {
+      const { email, user_metadata } = session.user;
       user = {
-        email: authjsSession?.user?.email,
-        name: authjsSession?.user?.name,
-        image: authjsSession?.user?.image,
+        email: email || 'default_user',
+        image: '',
+        name: user_metadata?.full_name || 'Default User',
+      };
+    } else {
+      user = {
+        email: 'default_user',
+        image: '',
+        name: 'Default User',
       };
     }
 
-    const session: Session = {
-      user: user,
-      expires: authjsSession.expires,
-      customAccessToken: authjsSession.customAccessToken,
-    };
-
-    return session;
+    return user;
+  } catch (error) {
+    // Handle the error here, e.g., log it or return an error response
+    console.error(error);
+    return null;
   }
-
-  return null;
-};
-
-export const getUser = async () => {
-  const session = await getClientSession();
-
-  let user = session?.user;
-
-  if (!user) {
-    user = {
-      email: 'default_user',
-      image: null,
-      name: 'Default User',
-    };
-  }
-
-  return user;
-};
+}

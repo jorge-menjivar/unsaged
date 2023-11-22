@@ -48,48 +48,6 @@ SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
 ---
 
-### SUPABASE_JWT_SECRET
-
-#### Description
-
-The JWT secret for your Supabase instance. This is a required environment variable.
-
-#### Example
-
-```sh
-SUPABASE_JWT_SECRET=your_supabase_jwt_secret
-```
-
----
-
-### NEXTAUTH_SECRET
-
-#### Description
-
-The secret used to encrypt cookies. This is a required environment variable.
-
-#### Example
-
-```sh
-NEXTAUTH_SECRET=your_nextauth_secret
-```
-
----
-
-### NEXTAUTH_URL
-
-#### Description
-
-The base url for your app. This is a required environment variable when running in production.
-
-#### Example
-
-```sh
-NEXTAUTH_URL=https://yourdomain.com
-```
-
----
-
 ### NEXT_PUBLIC_DEFAULT_MODEL
 
 #### Description
