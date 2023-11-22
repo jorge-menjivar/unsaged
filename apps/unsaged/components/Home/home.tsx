@@ -532,7 +532,7 @@ const Home = () => {
   } else {
     let text = '';
 
-    if (!isLoaded && !isSignedIn) {
+    if (!isSignedIn) {
       text = 'Initializing Auth System...';
     } else if (!database) {
       text = 'Initializing Database...';
