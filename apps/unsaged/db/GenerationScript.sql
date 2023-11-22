@@ -1,9 +1,9 @@
---- uid() function to be used in RLS policies
-CREATE FUNCTION requesting_user_id() RETURNS text
-    LANGUAGE sql STABLE
-    AS $$
-  select
-    select nullif(current_setting('request.jwt.claims', true)::json->>'sub', '')::text;
+-- Create new user_id function
+create or replace function requesting_user_id()
+returns text 
+language sql stable
+as $$
+  select nullif(current_setting('request.jwt.claims', true)::json->>'sub', '')::text;
 $$;
 
 
