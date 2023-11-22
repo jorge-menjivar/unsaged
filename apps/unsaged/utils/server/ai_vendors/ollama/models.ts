@@ -1,12 +1,12 @@
 import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD, DEBUG_MODE } from '@/utils/app/const';
 
-import { PossibleAiModels } from '@/types/ai-models';
+import { GetAvailableOpenAIModelResponse, PossibleAiModels } from '@/types/ai-models';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOllamaModels() {
+export async function getAvailableOllamaModels(): Promise<GetAvailableOpenAIModelResponse> {
   if (OLLAMA_HOST == '') {
     return { data: [] };
   }

@@ -6,6 +6,11 @@ export interface AiModel {
   vendor: 'OpenAI' | 'Anthropic' | 'Google' | 'Ollama';
 }
 
+export interface GetAvailableOpenAIModelResponse {
+  error?: any;
+  data: any[];
+}
+
 export interface PossibleAiModelsInterface {
   [modelId: string]: AiModel;
 }
@@ -277,28 +282,28 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
-  },  
+  },
   'deepseek-coder:latest': {
     id: 'deepseek-coder:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
-  }, 
+  },
   'deepseek-coder:6.7b': {
     id: 'deepseek-coder:6.7b',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
-  }, 
+  },
   'deepseek-coder:33b': {
     id: 'deepseek-coder:33b',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
-  },      
+  },
   //
   // Ollama - Custom Models
   //

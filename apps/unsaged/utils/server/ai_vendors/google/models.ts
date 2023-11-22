@@ -1,12 +1,12 @@
 import { PALM_API_KEY } from '@/utils/app/const';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel, GetAvailableOpenAIModelResponse, PossibleAiModels } from '@/types/ai-models';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailablePalm2Models(key?: string) {
+export async function getAvailablePalm2Models(key?: string): Promise<GetAvailableOpenAIModelResponse> {
   if (!key) {
     key = PALM_API_KEY;
 

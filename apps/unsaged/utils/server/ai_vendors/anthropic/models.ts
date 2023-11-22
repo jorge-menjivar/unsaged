@@ -1,12 +1,12 @@
 import { ANTHROPIC_API_KEY } from '@/utils/app/const';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel, GetAvailableOpenAIModelResponse, PossibleAiModels } from '@/types/ai-models';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableAnthropicModels(key?: string) {
+export async function getAvailableAnthropicModels(key?: string): Promise<GetAvailableOpenAIModelResponse> {
   if (!key) {
     key = ANTHROPIC_API_KEY;
 

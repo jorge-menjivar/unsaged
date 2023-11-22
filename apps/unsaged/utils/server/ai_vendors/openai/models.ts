@@ -3,14 +3,14 @@ import {
   OPENAI_API_TYPE,
 } from '@/utils/app/const';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel, GetAvailableOpenAIModelResponse, PossibleAiModels } from '@/types/ai-models';
 import { getOpenAi } from './openai';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOpenAIModels(key?: string) {
+export async function getAvailableOpenAIModels(key?: string): Promise<GetAvailableOpenAIModelResponse> {
   const openai = await getOpenAi(key);
 
   const list = await openai.models.list();
@@ -34,8 +34,7 @@ export async function getAvailableOpenAIModels(key?: string) {
       }
 
       return model;
-    })
-    .filter(Boolean);
+    });
 
   // Drop null values
   const modelsWithoutNull = models.filter(Boolean);
