@@ -1,8 +1,0 @@
-{
-  "label": "Auth Providers",
-  "position": 4,
-  "link": {
-    "type": "generated-index",
-    "description": "Auth Provider configuration variables"
-  }
-}
