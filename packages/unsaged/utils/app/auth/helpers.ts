@@ -1,27 +1,23 @@
-import { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/types/supabase.types';
 
-// Assuming you have initialized your Supabase client somewhere in your code
-const supabase = createClientComponentClient();
+// Initialize your Supabase client once here
+const supabaseClient = createClientComponentClient();
 
 export async function getClientSession() {
   try {
-    const { data: sessionWrapper } = await supabase.auth.getSession();
-    const session = sessionWrapper?.session;
-
-    if (!session) {
-      return null;
-    }
+    const {
+      data: { session },
+    } = await supabaseClient.auth.getSession();
 
     const sessionData = {
-      user: session.user?.email || '',
-      expires: session.expires_at || '',
-      customAccessToken: session.access_token || '',
+      user: session?.user?.email || '',
+      expires: session?.expires_at || '',
+      customAccessToken: session?.access_token || '',
     };
 
     return sessionData;
   } catch (error) {
-    // Handle the error here, e.g., log it or return an error response
     console.error(error);
     return null;
   }
@@ -29,29 +25,24 @@ export async function getClientSession() {
 
 export async function getUser() {
   try {
-    const { data: sessionWrapper } = await supabase.auth.getSession();
-    const session = sessionWrapper?.session;
+    const {
+      data: { session },
+    } = await supabaseClient.auth.getSession();
 
-    let user;
-
-    if (session?.user) {
-      const { email, user_metadata } = session.user;
-      user = {
-        email: email || 'default_user',
-        image: '',
-        name: user_metadata?.full_name || 'Default User',
-      };
-    } else {
-      user = {
-        email: 'default_user',
-        image: '',
-        name: 'Default User',
-      };
-    }
+    const user = session?.user
+      ? {
+          email: session.user.email || 'default_user',
+          image: session.user.user_metadata?.avatar_url || '',
+          name: session.user.user_metadata?.full_name || 'Default User',
+        }
+      : {
+          email: 'default_user',
+          image: '',
+          name: 'Default User',
+        };
 
     return user;
   } catch (error) {
-    // Handle the error here, e.g., log it or return an error response
     console.error(error);
     return null;
   }
