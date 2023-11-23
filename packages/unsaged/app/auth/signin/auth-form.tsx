@@ -6,7 +6,7 @@ import { Database } from '@/types/supabase.types'
 
 export default function AuthForm() {
   const supabase = createClientComponentClient<Database>()
-  const providersFromEnv = process.env.AUTH_PROVIDERS ? process.env.AUTH_PROVIDERS.split(',') : [];
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL; // Access the environment variable
 
   return (
     <Auth
@@ -16,7 +16,7 @@ export default function AuthForm() {
       theme="dark"
       showLinks={false}
       providers={['google']}
-      redirectTo="http://localhost:3000/auth/callback"
+      redirectTo={`${baseUrl}/auth/callback`} // Use the environment variable in the URL
     />
   )
 }
