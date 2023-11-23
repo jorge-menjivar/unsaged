@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./packages/unsaged/public/icon-256.svg" alt="unSAGED logo" width="200px">
+    <img src="./apps/unsaged/public/icon-256.svg" alt="unSAGED logo" width="200px">
 </p>
 
 [![Join our Discord](https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2)](https://discord.gg/rMH2acSEzq)
@@ -59,8 +59,8 @@ Follow the installation instructions in the [Getting Started](https://unsaged.co
 
 ## 🚀 Upgrading unSAGED
 
-* On November 13th, 2023, we released a major update to unSAGED, which introduced more settings to the conversation. It requires that you update some database table columns. If you are upgrading from a version of unSAGED released before this date, you will need to run the [Upgrade Script](./packages/unsaged/db/UpgradeScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
-* On November 16th, 2023, we released a major update to unSAGED, which converts this repo into monorepo to support the documentation website. It requires that you change a setting in your Vercel project, if you have one. If you do have one, you need to set `packages/unsaged` as the [Root Directory](https://vercel.com/docs/deployments/configure-a-build#root-directory) in your Vercel project's settings.
+* On November 13th, 2023, we released a major update to unSAGED, which introduced more settings to the conversation. It requires that you update some database table columns. If you are upgrading from a version of unSAGED released before this date, you will need to run the [Upgrade Script](./apps/unsaged/db/UpgradeScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
+* On November 16th, 2023, we released a major update to unSAGED, which converts this repo into monorepo to support the documentation website. It requires that you change a setting in your Vercel project, if you have one. If you do have one, you need to set `apps/unsaged` as the [Root Directory](https://vercel.com/docs/deployments/configure-a-build#root-directory) in your Vercel project's settings.
 
 ## 📝 License
 
@@ -74,13 +74,13 @@ We welcome contributions to the unSAGED project! If you're interested in contrib
 
 ## 📸 Screenshots
 
-![Screenshot-1](./packages/unsaged/public/screenshots/screenshot-1.png)
+![Screenshot-1](./apps/unsaged/public/screenshots/screenshot-1.png)
 
-![Screenshot-2](./packages/unsaged/public/screenshots/screenshot-2.png)
+![Screenshot-2](./apps/unsaged/public/screenshots/screenshot-2.png)
 
-![Screenshot-4](./packages/unsaged/public/screenshots/screenshot-4.png)
+![Screenshot-4](./apps/unsaged/public/screenshots/screenshot-4.png)
 
-![Screenshot-5](./packages/unsaged/public/screenshots/screenshot-5.png)
+![Screenshot-5](./apps/unsaged/public/screenshots/screenshot-5.png)
 
 ## 📚 Built With
 
