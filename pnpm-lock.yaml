@@ -258,6 +258,9 @@ importers:
       endent:
         specifier: ^2.1.0
         version: 2.1.0
+      eslint:
+        specifier: ^8.53.0
+        version: 8.54.0
       eslint-config-custom:
         specifier: workspace:*
         version: link:../../packages/eslint-config-custom
