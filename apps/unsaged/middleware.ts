@@ -1,43 +1,29 @@
-import { withAuth } from 'next-auth/middleware';
-import { get } from '@vercel/edge-config';
+import { createMiddlewareSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse } from 'next/server'
 
-import { dockerEnvVarFix } from './utils/app/docker/envFix';
+import type { NextRequest } from 'next/server'
 
-const getSecret = () => {
-  return dockerEnvVarFix(process.env.NEXTAUTH_SECRET);
-};
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next()
+  const supabase = createMiddlewareSupabaseClient({ req, res })
 
-const getEmailPatterns = async () => {
-  let patternsString = dockerEnvVarFix(process.env.NEXTAUTH_EMAIL_PATTERNS);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  if (dockerEnvVarFix(process.env.EDGE_CONFIG))
-    patternsString = await get<string>('NEXTAUTH_EMAIL_PATTERNS');
+  // if user is signed in and the current path is / redirect the user to /account
+  if (user && req.nextUrl.pathname !== '/') {
+    return NextResponse.redirect(new URL('/', req.url))
+  }
 
-  return patternsString ? patternsString.split(',') : [];
-};
+  // if user is not signed in and the current path is not / redirect the user to /
+  if (!user && req.nextUrl.pathname !== '/auth/signin') {
+    return NextResponse.redirect(new URL('/auth/signin', req.url))
+  }
 
-export default withAuth({
-  callbacks: {
-    async authorized({ token }) {
-      if (!token?.email) {
-        return false;
-      } else {
-        const patterns = await getEmailPatterns();
-        if (patterns.length === 0) {
-          return true; // No patterns specified, allow access
-        }
+  return res
+}
 
-        const email = token.email.toLowerCase();
-        for (const pattern of patterns) {
-          const regex = new RegExp(pattern.trim());
-          if (email.match(regex)) {
-            return true; // Email matches one of the patterns, allow access
-          }
-        }
-
-        return false; // Email does not match any of the patterns, deny access
-      }
-    },
-  },
-  secret: getSecret(),
-});
+export const config = {
+  matcher: ['/','/auth/signin', '/account'],
+}

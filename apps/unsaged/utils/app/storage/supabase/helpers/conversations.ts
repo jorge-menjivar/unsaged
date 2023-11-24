@@ -39,6 +39,12 @@ export const supaGetConversations = async (
         supaConversation.model_id = 'claude-2';
       }
 
+      if (!Array.isArray(models)) {
+        console.error('models is not an array:');
+        console.log(models);
+        return; // or handle the error appropriately
+      }
+
       const selectedModel = models.find(
         (model) => model.id === supaConversation.model_id,
       );

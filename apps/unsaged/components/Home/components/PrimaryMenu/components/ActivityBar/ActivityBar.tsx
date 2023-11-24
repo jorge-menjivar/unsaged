@@ -4,8 +4,8 @@ import {
   IconLogout,
   IconSettings,
 } from '@tabler/icons-react';
-import { signOut } from 'next-auth/react';
 import { useContext } from 'react';
+
 
 import { localSaveShowPrimaryMenu } from '@/utils/app/storage/local/ui-state';
 import { deleteSelectedConversationId } from '@/utils/app/storage/selectedConversation';
@@ -15,6 +15,11 @@ import { ActivityBarTab } from './components/ActivityBarTab';
 import HomeContext from '@/components/Home/home.context';
 
 import PrimaryMenuContext from '../../PrimaryMenu.context';
+
+import type { Database } from '@/types/database'
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { useRouter } from 'next/navigation'
+const supabase = createBrowserSupabaseClient<Database>()
 
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const {
@@ -40,14 +45,15 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
     primaryMenuDispatch({ field: 'selectedIndex', value: index });
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     if (database!.name !== 'local') {
-      deleteSelectedConversationId(user!);
+      await deleteSelectedConversationId(user!);
     }
-
-    signOut();
+  
+    await supabase.auth.signOut()
+    window.location.replace('/');
   };
-
+  
   const handleShowSettings = () => {
     if (display !== 'settings') {
       homeDispatch({ field: 'display', value: 'settings' });

@@ -10,34 +10,41 @@ export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOpenAIModels(key?: string): Promise<GetAvailableOpenAIModelResponse> {
-  const openai = await getOpenAi(key);
+export async function getAvailableOpenAIModels(key?: string): Promise<GetAvailableOpenAIModelResponse | null> {
+  try {
+    const openai = await getOpenAi(key);
 
-  const list = await openai.models.list();
+    const list = await openai.models.list();
 
-  const models: (AiModel | null)[] = list.data
-    .map((openaiModel: any) => {
-      const model_name =
-        OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
+    const models: (AiModel | null)[] = list.data
+      .map((openaiModel: any) => {
+        const model_name =
+          OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
 
-      if (!PossibleAiModels[model_name]) {
-        if (DEBUG_MODE)
-          console.warn('OpenAI model not implemented:', model_name);
+        if (!PossibleAiModels[model_name]) {
+          if (DEBUG_MODE)
+            console.warn('OpenAI model not implemented:', model_name);
 
-        return null;
-      }
+          return null;
+        }
 
-      const model = PossibleAiModels[model_name];
+        const model = PossibleAiModels[model_name];
 
-      if (OPENAI_API_TYPE === 'azure') {
-        model.id = openaiModel.id;
-      }
+        if (OPENAI_API_TYPE === 'azure') {
+          model.id = openaiModel.id;
+        }
 
-      return model;
-    });
+        return model;
+      });
 
-  // Drop null values
-  const modelsWithoutNull = models.filter(Boolean);
+    // Drop null values
+    const modelsWithoutNull = models.filter(Boolean);
 
-  return { data: modelsWithoutNull };
+    return { data: modelsWithoutNull };
+  } catch (error) {
+    if (DEBUG_MODE) {
+      console.error('Error fetching OpenAI models:', error);
+    }
+    return null; // Return null if there's an error
+  }
 }
