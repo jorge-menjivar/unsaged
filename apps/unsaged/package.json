@@ -76,7 +76,6 @@
     "@vitest/coverage-c8": "^0.29.8",
     "autoprefixer": "^10.4.16",
     "endent": "^2.1.0",
-    "eslint": "^8.53.0",
     "eslint-config-custom": "workspace:*",
     "jsdom": "^21.1.2",
     "postcss": "^8.4.31",
