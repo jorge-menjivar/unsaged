@@ -23,7 +23,7 @@
     "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/auth-ui-react": "^0.4.6",
     "@supabase/auth-ui-shared": "^0.1.8",
-    "@supabase/ssr": "^latest",
+    "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "@tabler/icons-react": "^2.42.0",
     "@vercel/analytics": "^1.1.1",
