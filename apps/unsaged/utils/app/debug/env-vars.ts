@@ -49,12 +49,10 @@ export function printEnvVariables() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
-  const SUPABASE_JWT_SECRET = dockerEnvVarFix(process.env.SUPABASE_JWT_SECRET);
 
   const DEFAULT_MODEL = dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_MODEL);
 
   console.log('SUPABASE_SERVICE_ROLE_KEY', SUPABASE_SERVICE_ROLE_KEY);
-  console.log('SUPABASE_JWT_SECRET', SUPABASE_JWT_SECRET);
   console.log('NEXT_PUBLIC_SUPABASE_URL', SUPABASE_URL);
   console.log('NEXT_PUBLIC_SUPABASE_ANON_KEY', SUPABASE_ANON_KEY);
 

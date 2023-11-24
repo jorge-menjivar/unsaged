@@ -46,7 +46,6 @@ See https://supabase.com/dashboard/project/xxxxxxx/auth/url-configuration
 ```sh title="apps/unsaged/.env.local"
 NEXT_PUBLIC_SUPABASE_URL="https://xxxxxxxxxxxxxxxx.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY=supabase_anon_key
-SUPABASE_JWT_SECRET=supabase_jwt_secret
 SUPABASE_SERVICE_ROLE_KEY=supabase_service_role_key
 ```
 
