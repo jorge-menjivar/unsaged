@@ -108,7 +108,7 @@ importers:
         specifier: ^0.1.8
         version: 0.1.8(@supabase/supabase-js@2.38.5)
       '@supabase/ssr':
-        specifier: ^0.0.10
+        specifier: latest
         version: 0.0.10(@supabase/supabase-js@2.38.5)
       '@supabase/supabase-js':
         specifier: latest
