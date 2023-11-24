@@ -283,8 +283,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tsconfig
       typescript:
-        specifier: ^3.7.5
-        version: 3.7.5
+        specifier: ^5.2.2
+        version: 5.2.2
       vitest:
         specifier: ^0.29.8
         version: 0.29.8(jsdom@21.1.2)
@@ -14725,12 +14725,6 @@ packages:
     dependencies:
       is-typedarray: 1.0.0
     dev: false
-
-  /typescript@3.7.5:
-    resolution: {integrity: sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
 
   /typescript@5.2.2:
     resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
