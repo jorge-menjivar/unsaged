@@ -5,7 +5,6 @@ export interface SettingChoice {
 }
 
 export interface Setting {
-  id: string;
   name: string;
   description: string;
   type: 'choice' | 'string' | 'number' | 'boolean' | 'multiline-string';
@@ -17,221 +16,63 @@ export interface Setting {
   storage: 'local' | HttpOnlyCookie;
 }
 
+export interface Settings {
+  [settingId: string]: Setting;
+}
+
 export interface HttpOnlyCookie {
   domain: string;
   path: string;
 }
 
-export interface SettingsSection {
-  id: string;
-  name: string;
-  settings: Setting[];
+export interface SavedSettings {
+  [settingId: string]: any;
 }
 
-export interface SavedSetting {
-  sectionId: string;
-  settingId: string;
-  value: any;
-}
-
-export const SystemSettings: SettingsSection[] = [
-  {
-    id: 'personalization',
-    name: 'Personalization',
-    settings: [
+export const SystemSettings: Settings = {
+  'app.theme': {
+    name: 'Theme',
+    description: 'Choose your theme.',
+    type: 'choice',
+    choices: [
       {
-        id: 'theme',
-        name: 'Theme',
-        description: 'Choose your theme.',
-        type: 'choice',
-        choices: [
-          {
-            name: 'Light',
-            value: 'light',
-          },
-          {
-            name: 'Dark',
-            value: 'dark',
-          },
-          {
-            name: 'System',
-            value: 'system',
-            default: true,
-          },
-        ],
-        storage: 'local',
+        name: 'Light',
+        value: 'light',
+      },
+      {
+        name: 'Dark',
+        value: 'dark',
+      },
+      {
+        name: 'System',
+        value: 'system',
+        default: true,
       },
     ],
+    storage: 'local',
   },
-  {
-    id: 'openai',
-    name: 'OpenAI',
-    settings: [
-      {
-        id: 'api_key',
-        name: 'API Key',
-        description: 'The API key to use for OpenAI models.',
-        type: 'string',
-        storage: 'local',
-      },
-      // {
-      //   id: 'gpt-3.5-turbo_default_system_prompt',
-      //   name: 'GPT-3.5 Default System Prompt',
-      //   description: 'The default system prompt to use for GPT-3.5.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'gpt-4_default_system_prompt',
-      //   name: 'GPT-4 Default System Prompt',
-      //   description: 'The default system prompt to use for GPT-4.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-    ],
+  'openai.key': {
+    name: 'OpenAI API Key',
+    description: 'The API key to use for OpenAI models.',
+    type: 'string',
+    storage: 'local',
   },
-  {
-    id: 'anthropic',
-    name: 'Anthropic',
-    settings: [
-      {
-        id: 'api_key',
-        name: 'API Key',
-        description: 'The API key to use for Anthropic models.',
-        type: 'string',
-        storage: 'local',
-      },
-      // {
-      //   id: 'claude-v1_default_system_prompt',
-      //   name: 'Claude V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-v1-100k_default_system_prompt',
-      //   name: 'Claude V1 100k Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1_default_system_prompt',
-      //   name: 'Claude Instant V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude Instant V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1-100k_default_system_prompt',
-      //   name: 'Claude Instant V1 100k Default System Prompt',
-      //   description:
-      //     'The default system prompt to use for Claude Instant V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-    ],
+  'anthropic.key': {
+    name: 'Anthropic API Key',
+    description: 'The API key to use for Anthropic models.',
+    type: 'string',
+    storage: 'local',
   },
-  {
-    id: 'google',
-    name: 'Google',
-    settings: [
-      {
-        id: 'api_key',
-        name: 'API Key',
-        description: 'The API key to use for PaLM 2 models.',
-        type: 'string',
-        storage: 'local',
-      },
-      // {
-      //   id: 'claude-v1_default_system_prompt',
-      //   name: 'Claude V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-v1-100k_default_system_prompt',
-      //   name: 'Claude V1 100k Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1_default_system_prompt',
-      //   name: 'Claude Instant V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude Instant V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1-100k_default_system_prompt',
-      //   name: 'Claude Instant V1 100k Default System Prompt',
-      //   description:
-      //     'The default system prompt to use for Claude Instant V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-    ],
+  'google.key': {
+    name: 'PaLM 2 API Key',
+    description: 'The API key to use for PaLM 2 models.',
+    type: 'string',
+    storage: 'local',
   },
-];
+  'ollama.url': {
+    name: 'Ollama URL',
+    description: 'The host URL for Ollama models.',
+    type: 'string',
+    storage: 'local',
+  },
+};

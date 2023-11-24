@@ -2,7 +2,7 @@ import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 
-import { saveSelectedConversationId } from './selectedConversation';
+import { saveSelectedConversationId } from './local/selected-conversation';
 
 export const storageCreateConversation = (
   database: Database,
@@ -35,7 +35,7 @@ export const storageUpdateConversation = (
     return c;
   });
 
-  saveSelectedConversationId(user, updatedConversation.id);
+  saveSelectedConversationId(updatedConversation.id);
 
   database.updateConversation(user, updatedConversation).then((success) => {
     if (!success) {

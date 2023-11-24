@@ -10,10 +10,14 @@ export async function streamPaLM2(
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
-) {
+  controller: AbortController,
+): Promise<{
+  stream: ReadableStream | null;
+  error: string | null;
+}> {
   if (!apiKey) {
     if (!PALM_API_KEY) {
-      return { error: 'Missing API key' };
+      return { stream: null, error: 'Missing API key' };
     } else {
       apiKey = PALM_API_KEY;
     }
@@ -93,6 +97,7 @@ export async function streamPaLM2(
     },
     method: 'POST',
     body: JSON.stringify(body),
+    signal: controller.signal,
   });
 
   if (res.status !== 200) {
@@ -119,5 +124,5 @@ export async function streamPaLM2(
     },
   });
 
-  return { stream: stream };
+  return { stream: stream, error: null };
 }

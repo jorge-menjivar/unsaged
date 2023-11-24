@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalEnv": [
+    "NEXT_PUBLIC_TAURI",
     "NEXT_PUBLIC_DEBUG_MODE",
     "NEXT_PUBLIC_DEFAULT_MODEL",
     "NEXT_PUBLIC_TITLE",
@@ -42,7 +43,10 @@
     "NEXT_PUBLIC_SUPABASE_URL",
     "SUPABASE_SERVICE_ROLE_KEY",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY",
-    "SUPABASE_JWT_SECRET"
+    "SUPABASE_JWT_SECRET",
+    "NEXTAUTH_SECRET",
+    "NEXTAUTH_EMAIL_PATTERNS",
+    "EDGE_CONFIG"
   ],
   "pipeline": {
     "build": {

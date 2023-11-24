@@ -4,7 +4,7 @@ import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 import { FolderInterface } from '@/types/folder';
-import { Prompt } from '@/types/prompt';
+import { Template } from '@/types/prompt';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import { OPENAI_API_KEY, SUPABASE_ANON_KEY, SUPABASE_URL } from '../../const';
@@ -62,7 +62,7 @@ import {
 
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 
-export class ClientDatabase implements Database {
+export class SupabaseDatabase implements Database {
   name = 'supabase';
   supabase: SupabaseClient | null = null;
 
@@ -201,28 +201,31 @@ export class ClientDatabase implements Database {
   }
 
   // -----------------------------------Prompt-----------------------------------
-  async createPrompt(user: User, newPrompt: Prompt): Promise<boolean> {
+  async createTemplate(user: User, newPrompt: Template): Promise<boolean> {
     return await supaCreatePrompt(this.supabase!, newPrompt);
   }
 
-  async updatePrompt(user: User, updatedPrompt: Prompt): Promise<boolean> {
+  async updateTemplate(user: User, updatedPrompt: Template): Promise<boolean> {
     return await supaUpdatePrompt(this.supabase!, updatedPrompt);
   }
 
-  async deletePrompt(user: User, promptId: string): Promise<boolean> {
+  async deleteTemplate(user: User, promptId: string): Promise<boolean> {
     return await supaDeletePrompt(this.supabase!, promptId);
   }
 
   // -----------------------------------Prompts-----------------------------------
-  async getPrompts(user: User): Promise<Prompt[]> {
+  async getTemplates(user: User): Promise<Template[]> {
     return await supaGetPrompts(this.supabase!);
   }
 
-  async updatePrompts(user: User, updatedPrompts: Prompt[]): Promise<boolean> {
+  async updateTemplates(
+    user: User,
+    updatedPrompts: Template[],
+  ): Promise<boolean> {
     return await supaUpdatePrompts(this.supabase!, updatedPrompts);
   }
 
-  async deletePrompts(user: User, promptIds: string[]): Promise<boolean> {
+  async deleteTemplates(user: User, promptIds: string[]): Promise<boolean> {
     return await supaDeletePrompts(this.supabase!, promptIds);
   }
 

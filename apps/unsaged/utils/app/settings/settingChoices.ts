@@ -1,27 +1,15 @@
-import { SettingChoice, SettingsSection } from '@/types/settings';
+import { SettingChoice, Settings } from '@/types/settings';
 
 export const setSettingChoices = (
-  settings: SettingsSection[],
-  sectionId: string,
+  settings: Settings,
   settingId: string,
   newChoices: SettingChoice[],
 ) => {
-  const newSettings = settings.map((section) => {
-    if (section.id === sectionId) {
-      return {
-        ...section,
-        settings: section.settings.map((setting) => {
-          if (setting.id === settingId) {
-            return {
-              ...setting,
-              choices: newChoices,
-            };
-          }
-          return setting;
-        }),
-      };
-    }
-    return section;
-  });
-  return newSettings;
+  if (!settings[settingId]) {
+    console.error(`Setting ${settingId} not found`);
+    return;
+  }
+  settings[settingId].choices = newChoices;
+
+  return settings;
 };

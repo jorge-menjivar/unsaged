@@ -1,7 +1,7 @@
 import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { FolderInterface } from '@/types/folder';
-import { Prompt } from '@/types/prompt';
+import { Template } from '@/types/prompt';
 
 import { OPENAI_API_TYPE } from './const';
 import { getModelDefaults } from './settings/model-defaults';
@@ -58,7 +58,7 @@ export const cleanFolders = (importedFolders: any[]): FolderInterface[] => {
   return folders;
 };
 
-export const cleanMessageTemplates = (importedPrompts: any[]): Prompt[] => {
+export const cleanMessageTemplates = (importedPrompts: any[]): Template[] => {
   if (!Array.isArray(importedPrompts)) {
     console.warn('importedPrompts is not an array. Returning an empty array.');
     return [];
@@ -67,7 +67,7 @@ export const cleanMessageTemplates = (importedPrompts: any[]): Prompt[] => {
   const prompts = [];
   for (const rawPrompt of importedPrompts) {
     try {
-      const prompt: Prompt = {
+      const prompt: Template = {
         id: rawPrompt.id || uuidv4(),
         name: rawPrompt.name || '',
         content: rawPrompt.content || '',

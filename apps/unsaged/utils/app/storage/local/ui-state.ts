@@ -1,17 +1,15 @@
-import { User } from '@/types/auth';
-
-export const localGetShowPromptBar = (user: User) => {
-  const itemName = `showPromptbar-${user.email}`;
+export const localGetShowPromptBar = () => {
+  const itemName = `showPromptbar`;
   return JSON.parse(localStorage.getItem(itemName) || '[]') as boolean;
 };
 
-export const localSaveShowPromptBar = (user: User, show: boolean) => {
-  const itemName = `showPromptbar-${user.email}`;
+export const localSaveShowPromptBar = (show: boolean) => {
+  const itemName = `showPromptbar`;
   localStorage.setItem(itemName, JSON.stringify(show));
 };
 
-export const localGetShowPrimaryMenu = (user: User) => {
-  const itemName = `showPrimaryMenu-${user.email}`;
+export const localGetShowPrimaryMenu = () => {
+  const itemName = `showPrimaryMenu`;
 
   const savedValue = localStorage.getItem(itemName);
 
@@ -26,13 +24,13 @@ export const localGetShowPrimaryMenu = (user: User) => {
   }
 };
 
-export const localSaveShowPrimaryMenu = (user: User, show: boolean) => {
-  const itemName = `showPrimaryMenu-${user.email}`;
+export const localSaveShowPrimaryMenu = (show: boolean) => {
+  const itemName = `showPrimaryMenu`;
   localStorage.setItem(itemName, JSON.stringify(show));
 };
 
-export const localGetShowSecondaryMenu = (user: User) => {
-  const itemName = `showSecondaryMenu-${user.email}`;
+export const localGetShowSecondaryMenu = () => {
+  const itemName = `showSecondaryMenu`;
 
   const savedValue = localStorage.getItem(itemName);
 
@@ -47,7 +45,7 @@ export const localGetShowSecondaryMenu = (user: User) => {
   }
 };
 
-export const localSaveShowSecondaryMenu = (user: User, show: boolean) => {
-  const itemName = `showSecondaryMenu-${user.email}`;
+export const localSaveShowSecondaryMenu = (show: boolean) => {
+  const itemName = `showSecondaryMenu`;
   localStorage.setItem(itemName, JSON.stringify(show));
 };

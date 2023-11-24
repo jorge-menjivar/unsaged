@@ -1,1 +1,1 @@
-export { ClientDatabase } from './client-side';
+export { SupabaseDatabase } from './client-side';

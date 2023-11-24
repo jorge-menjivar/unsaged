@@ -1,37 +1,51 @@
-import { ChatBody, Conversation, Message } from '@/types/chat';
-import { SavedSetting } from '@/types/settings';
+import { Conversation, Message } from '@/types/chat';
+import { SavedSettings } from '@/types/settings';
 
+import { getStream } from '../server/ai_vendors/stream';
+import { getTokenCount } from '../server/ai_vendors/token-count';
 import { getSavedSettingValue } from './storage/local/settings';
 
-export const sendChatRequest = async (
+export async function sendChatRequest(
   conversation: Conversation,
   messages: Message[],
-  savedSetting: SavedSetting[],
-) => {
+  savedSettings: SavedSettings,
+): Promise<{
+  stream: ReadableStream | null;
+  controller: AbortController | null;
+}> {
   const apiKey: string | undefined = getSavedSettingValue(
-    savedSetting,
-    conversation.model.vendor.toLowerCase(),
-    'api_key',
+    savedSettings,
+    `${conversation.model.vendor.toLowerCase()}.api_key`,
   );
 
-  const chatBody: ChatBody = {
-    model: conversation.model,
-    messages: messages,
-    apiKey: apiKey,
-    systemPrompt: conversation.systemPrompt!,
-    params: conversation.params,
-  };
+  const { error: tokenCountError, count } = await getTokenCount(
+    conversation.model,
+    conversation.systemPrompt!.content,
+    messages,
+  );
 
-  let body = JSON.stringify(chatBody);
+  if (tokenCountError) {
+    console.error(tokenCountError);
+    return { stream: null, controller: null };
+  }
+
   const controller = new AbortController();
-  const response = await fetch('api/chat', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    signal: controller.signal,
-    body,
-  });
 
-  return { response: response, controller: controller };
-};
+  const { stream, error } = await getStream(
+    savedSettings,
+    conversation.model,
+    conversation.systemPrompt!.content,
+    conversation.params,
+    apiKey,
+    messages,
+    count!,
+    controller,
+  );
+
+  if (error) {
+    console.error(error);
+    return { stream: null, controller: null };
+  }
+
+  return { stream: stream, controller: controller };
+}

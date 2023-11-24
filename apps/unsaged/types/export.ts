@@ -1,6 +1,6 @@
 import { Conversation, Message } from './chat';
 import { FolderInterface } from './folder';
-import { Prompt } from './prompt';
+import { Template } from './prompt';
 import { SystemPrompt } from './system-prompt';
 
 export type SupportedExportFormats = UnsagedExportFormatV1;
@@ -12,6 +12,6 @@ export interface UnsagedExportFormatV1 {
   conversations: Conversation[];
   messages: Message[];
   folders: FolderInterface[];
-  message_templates: Prompt[];
+  message_templates: Template[];
   system_prompts: SystemPrompt[];
 }

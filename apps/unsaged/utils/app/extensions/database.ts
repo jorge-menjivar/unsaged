@@ -1,14 +1,16 @@
-import { Database } from '@/types/database';
-
 import { getClientSession } from '../auth/helpers';
-
-import { ChatConfig } from '@/chat.config';
+import { LocalDatabase } from '../storage/local-database';
+import { SupabaseDatabase } from '../storage/supabase';
 
 export const getDatabase = async () => {
-  const database: Database = new ChatConfig.database();
-  let customAccessToken: string | undefined = undefined;
   const session = await getClientSession();
-  customAccessToken = session?.customAccessToken;
-  await database.connect({ customAccessToken: customAccessToken });
-  return database;
+  if (session.user?.email === 'default-user') {
+    return new LocalDatabase();
+  } else {
+    const database = new SupabaseDatabase();
+    let customAccessToken: string | undefined = undefined;
+    customAccessToken = session?.customAccessToken;
+    await database.connect({ customAccessToken: customAccessToken! });
+    return database;
+  }
 };

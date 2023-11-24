@@ -1,16 +1,16 @@
 import { User } from '@/types/auth';
 import { Database } from '@/types/database';
-import { Prompt } from '@/types/prompt';
+import { Template } from '@/types/prompt';
 
 export const storageCreatePrompt = (
   database: Database,
   user: User,
-  newPrompt: Prompt,
-  allPrompts: Prompt[],
+  newPrompt: Template,
+  allPrompts: Template[],
 ) => {
   const updatedPrompts = [...allPrompts, newPrompt];
 
-  database.createPrompt(user, newPrompt).then((success) => {
+  database.createTemplate(user, newPrompt).then((success) => {
     if (!success) {
       console.error('Failed to create prompt');
     }
@@ -22,8 +22,8 @@ export const storageCreatePrompt = (
 export const storageUpdatePrompt = (
   database: Database,
   user: User,
-  updatedPrompt: Prompt,
-  allPrompts: Prompt[],
+  updatedPrompt: Template,
+  allPrompts: Template[],
 ) => {
   const updatedPrompts = allPrompts.map((c) => {
     if (c.id === updatedPrompt.id) {
@@ -33,7 +33,7 @@ export const storageUpdatePrompt = (
     return c;
   });
 
-  database.updatePrompt(user, updatedPrompt).then((success) => {
+  database.updateTemplate(user, updatedPrompt).then((success) => {
     if (!success) {
       console.error('Failed to update prompt');
     }
@@ -49,11 +49,11 @@ export const storageDeletePrompt = (
   database: Database,
   user: User,
   promptId: string,
-  allPrompts: Prompt[],
+  allPrompts: Template[],
 ) => {
   const updatedPrompts = allPrompts.filter((p) => p.id !== promptId);
 
-  database.deletePrompt(user, promptId).then((success) => {
+  database.deleteTemplate(user, promptId).then((success) => {
     if (!success) {
       console.error('Failed to delete prompt');
     }

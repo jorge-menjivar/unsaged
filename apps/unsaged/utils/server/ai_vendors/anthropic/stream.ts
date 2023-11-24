@@ -20,10 +20,14 @@ export async function streamAnthropic(
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
-) {
+  abortController: AbortController,
+): Promise<{
+  stream: ReadableStream | null;
+  error: string | null;
+}> {
   if (!apiKey) {
     if (!ANTHROPIC_API_KEY) {
-      return { error: 'Missing API key' };
+      return { stream: null, error: 'Missing API key' };
     } else {
       apiKey = ANTHROPIC_API_KEY;
     }
@@ -33,8 +37,9 @@ export async function streamAnthropic(
 
   let parsedMessages = '';
   for (let i = messages.length - 1; i >= 0; i--) {
-    const parsedMessage = `\n\n${messages[i].role === 'user' ? 'Human' : 'Assistant'
-      }: ${messages[i].content}`;
+    const parsedMessage = `\n\n${
+      messages[i].role === 'user' ? 'Human' : 'Assistant'
+    }: ${messages[i].content}`;
     parsedMessages = parsedMessage + parsedMessages;
   }
 
@@ -81,6 +86,7 @@ export async function streamAnthropic(
     },
     method: 'POST',
     body: JSON.stringify(body),
+    signal: abortController.signal,
   });
 
   const encoder = new TextEncoder();
@@ -89,10 +95,11 @@ export async function streamAnthropic(
   if (res.status !== 200) {
     const result = await res.json();
     if (result.error) {
-      return { error: result.error };
+      return { stream: null, error: result.error };
     } else {
       throw new Error(
-        `Anthropic API returned an error: ${decoder.decode(result?.value) || result.statusText
+        `Anthropic API returned an error: ${
+          decoder.decode(result?.value) || result.statusText
         }`,
       );
     }
@@ -127,5 +134,5 @@ export async function streamAnthropic(
     },
   });
 
-  return { stream: stream };
+  return { stream: stream, error: null };
 }

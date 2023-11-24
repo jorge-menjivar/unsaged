@@ -1,5 +1,5 @@
 import { SupaDatabase } from '../types/supabase';
-import { Prompt } from '@/types/prompt';
+import { Template } from '@/types/prompt';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 
@@ -15,7 +15,7 @@ export const supaGetPrompts = async (
   }
 
   const prompts = supaPrompts.map((supaPrompt) => {
-    const prompt: Prompt = {
+    const prompt: Template = {
       id: supaPrompt.id,
       content: supaPrompt.content,
       description: supaPrompt.description,
@@ -32,7 +32,7 @@ export const supaGetPrompts = async (
 
 export const supaUpdatePrompts = async (
   supabase: SupabaseClient<SupaDatabase>,
-  updatedPrompts: Prompt[],
+  updatedPrompts: Template[],
 ) => {
   const updates = updatedPrompts.map((prompt) =>
     supabase

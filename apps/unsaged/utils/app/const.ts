@@ -1,5 +1,7 @@
 import { dockerEnvVarFix } from './docker/envFix';
 
+export const TAURI = dockerEnvVarFix(process.env.NEXT_PUBLIC_TAURI) === 'true';
+
 export const DEBUG_MODE =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEBUG_MODE) === 'true' || false;
 
@@ -7,10 +9,12 @@ export const DEFAULT_MODEL = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_DEFAULT_MODEL,
 );
 
-export const DEFAULT_TITLE = dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || "unsaged";
+export const DEFAULT_TITLE =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || 'unsaged';
 
-export const DEFAULT_DESCRIPTION = dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
-  "Open source chat kit engineered for seamless interaction with AI models";
+export const DEFAULT_DESCRIPTION =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
+  'Open source chat kit engineered for seamless interaction with AI models';
 
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
@@ -125,7 +129,8 @@ export const PALM_API_URL =
 
 export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
 
-export const OLLAMA_HOST = dockerEnvVarFix(process.env.OLLAMA_HOST) || '';
+export const OLLAMA_HOST =
+  dockerEnvVarFix(process.env.OLLAMA_HOST) || 'http://127.0.0.1:11434';
 
 export const OLLAMA_BASIC_USER =
   dockerEnvVarFix(process.env.OLLAMA_BASIC_USER) || '';

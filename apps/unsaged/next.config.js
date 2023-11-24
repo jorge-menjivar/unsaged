@@ -1,8 +1,7 @@
-const { i18n } = require('./next-i18next.config');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  i18n,
+  output: process.env.NEXT_PUBLIC_TAURI ? 'export' : 'standalone',
+  distDir: './out',
   reactStrictMode: true,
   webpack(config, { isServer, dev }) {
     config.experiments = {

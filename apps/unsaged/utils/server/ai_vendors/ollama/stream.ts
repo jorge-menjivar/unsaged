@@ -6,15 +6,21 @@ import {
 
 import { AiModel, ModelParams } from '@/types/ai-models';
 import { Message } from '@/types/chat';
+import { SavedSettings } from '@/types/settings';
 
 export async function streamOllama(
+  savedSettings: SavedSettings,
   model: AiModel,
   systemPrompt: string,
   params: ModelParams,
   messages: Message[],
-) {
+  controller: AbortController,
+): Promise<{
+  stream: ReadableStream | null;
+  error: string | null;
+}> {
   if (OLLAMA_HOST == '') {
-    return { error: 'Missing OLLAMA_HOST' };
+    return { stream: null, error: 'Missing OLLAMA_HOST' };
   }
 
   let prompt: string = '';
@@ -23,7 +29,12 @@ export async function streamOllama(
     prompt += messages[i].content + '\n';
   }
 
-  let url = `${OLLAMA_HOST}/api/generate`;
+  let base_url = OLLAMA_HOST;
+  if (savedSettings['ollama.url']) {
+    base_url = savedSettings['ollama.url'];
+  }
+
+  const url = `${base_url}/api/generate`;
 
   const body: { [key: string]: any } = {
     model: model.id,
@@ -66,29 +77,28 @@ export async function streamOllama(
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
       ...(OLLAMA_BASIC_USER &&
         OLLAMA_BASIC_PWD && {
-        Authorization: `Basic ${Buffer.from(
-          OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
-        ).toString('base64')}`,
-      }),
+          Authorization: `Basic ${Buffer.from(
+            OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
+          ).toString('base64')}`,
+        }),
     },
     method: 'POST',
     body: JSON.stringify(body),
+    signal: controller.signal,
   });
 
-  const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
   if (res.status !== 200) {
     const result = await res.json();
     if (result.error) {
-      return { error: result.error };
+      return { stream: null, error: result.error };
     } else {
       throw new Error(
-        `Ollama API returned an error: ${decoder.decode(result?.value) || result.statusText
+        `Ollama API returned an error: ${
+          decoder.decode(result?.value) || result.statusText
         }`,
       );
     }
@@ -96,52 +106,54 @@ export async function streamOllama(
 
   if (res.body) {
     const reader = res.body.getReader();
-    const decoder = new TextDecoder('utf-8');
     const encoder = new TextEncoder();
     let buffer = '';
 
     const stream = new ReadableStream({
       async start(controller) {
         function push() {
-          reader.read().then(({ done, value }) => {
-            if (done) {
-              controller.close();
-              return;
-            }
+          reader
+            .read()
+            .then(({ done, value }) => {
+              if (done) {
+                controller.close();
+                return;
+              }
 
-            buffer += decoder.decode(value, { stream: true });
-            let boundary = buffer.lastIndexOf('\n');
+              buffer += decoder.decode(value, { stream: true });
+              let boundary = buffer.lastIndexOf('\n');
 
-            if (boundary !== -1) {
-              const completeResponse = buffer.slice(0, boundary);
-              buffer = buffer.slice(boundary + 1); // Keep the incomplete chunk in the buffer
+              if (boundary !== -1) {
+                const completeResponse = buffer.slice(0, boundary);
+                buffer = buffer.slice(boundary + 1); // Keep the incomplete chunk in the buffer
 
-              completeResponse.split('\n').forEach((line) => {
-                if (line) {
-                  try {
-                    const parsedData = JSON.parse(line);
-                    if (parsedData.response) {
-                      controller.enqueue(encoder.encode(parsedData.response));
+                completeResponse.split('\n').forEach((line) => {
+                  if (line) {
+                    try {
+                      const parsedData = JSON.parse(line);
+                      if (parsedData.response) {
+                        controller.enqueue(encoder.encode(parsedData.response));
+                      }
+                    } catch (e) {
+                      console.error('Error parsing JSON', e);
+                      controller.error(e);
                     }
-                  } catch (e) {
-                    console.error('Error parsing JSON', e);
-                    controller.error(e);
                   }
-                }
-              });
-            }
-            push();
-          }).catch((e) => {
-            console.error('Stream reading error', e);
-            controller.error(e);
-          });
+                });
+              }
+              push();
+            })
+            .catch((e) => {
+              console.error('Stream reading error', e);
+              controller.error(e);
+            });
         }
 
         push();
       },
     });
 
-    return { stream };
+    return { stream, error: null };
   } else {
     // Handle the case where res.body is null
     throw new Error('Response body is null');

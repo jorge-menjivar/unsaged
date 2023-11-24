@@ -6,7 +6,7 @@ export interface AiModel {
   vendor: 'OpenAI' | 'Anthropic' | 'Google' | 'Ollama';
 }
 
-export interface GetAvailableOpenAIModelResponse {
+export interface GetAvailableModelsResponse {
   error?: any;
   data: any[];
 }

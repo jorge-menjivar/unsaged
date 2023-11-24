@@ -2,7 +2,7 @@ import { AiModel } from './ai-models';
 import { User } from './auth';
 import { Conversation, Message } from './chat';
 import { FolderInterface } from './folder';
-import { Prompt } from './prompt';
+import { Template } from './prompt';
 import { SystemPrompt } from './system-prompt';
 
 export interface Database {
@@ -72,18 +72,18 @@ export interface Database {
   deleteMessages(user: User, messageIds: string[]): Promise<boolean>;
 
   // ------------------------------Prompt------------------------------
-  createPrompt(user: User, newPrompt: Prompt): Promise<boolean>;
+  createTemplate(user: User, newPrompt: Template): Promise<boolean>;
 
-  updatePrompt(user: User, updatedPrompt: Prompt): Promise<boolean>;
+  updateTemplate(user: User, updatedPrompt: Template): Promise<boolean>;
 
-  deletePrompt(user: User, promptId: string): Promise<boolean>;
+  deleteTemplate(user: User, promptId: string): Promise<boolean>;
 
   // ------------------------------Prompts------------------------------
-  getPrompts(user: User): Promise<Prompt[]>;
+  getTemplates(user: User): Promise<Template[]>;
 
-  updatePrompts(user: User, updatedPrompts: Prompt[]): Promise<boolean>;
+  updateTemplates(user: User, updatedPrompts: Template[]): Promise<boolean>;
 
-  deletePrompts(user: User, promptIds: string[]): Promise<boolean>;
+  deleteTemplates(user: User, promptIds: string[]): Promise<boolean>;
 
   // ------------------------------SystemPrompt------------------------------
   createSystemPrompt(

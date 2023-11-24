@@ -1,4 +1,4 @@
-import { InfoTooltip } from '@/components/Home/components/SecondaryMenu/components/Menu/components/Screens/ModelSettings/components/InfoTooltip';
+import { InfoTooltip } from '@/components/home/components/secondary-menu/components/menu/components/screens/model-settings/components/InfoTooltip';
 
 export const PrimaryLabel = ({ children, tip }: any) => {
   return (

@@ -1,9 +1,9 @@
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/utils/app/const';
-
 import { Analytics } from '@vercel/analytics/react';
+
+import { Metadata, Viewport } from 'next';
 import { AxiomWebVitals } from 'next-axiom';
 
-import { Metadata } from 'next';
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/utils/app/const';
 
 import { ThemeProvider } from '@/components/common/ui/theme-provider';
 
@@ -12,8 +12,15 @@ import '@/styles/globals.css';
 export const metadata: Metadata = {
   title: DEFAULT_TITLE,
   description: DEFAULT_DESCRIPTION,
-  viewport:
-    'height=device-height, width=device-width, initial-scale=1, user-scalable=no',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  height: 'device-height',
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

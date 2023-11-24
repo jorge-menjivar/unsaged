@@ -1,11 +1,11 @@
 import { SupaDatabase } from '../types/supabase';
-import { Prompt } from '@/types/prompt';
+import { Template } from '@/types/prompt';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 
 export const supaCreatePrompt = async (
   supabase: SupabaseClient<SupaDatabase>,
-  newPrompt: Prompt,
+  newPrompt: Template,
 ) => {
   const supaPrompt: SupaDatabase['public']['Tables']['prompts']['Insert'] = {
     id: newPrompt.id,
@@ -27,7 +27,7 @@ export const supaCreatePrompt = async (
 
 export const supaUpdatePrompt = async (
   supabase: SupabaseClient<SupaDatabase>,
-  updatedPrompt: Prompt,
+  updatedPrompt: Template,
 ) => {
   const { error } = await supabase
     .from('prompts')

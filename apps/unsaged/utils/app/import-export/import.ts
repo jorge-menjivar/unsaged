@@ -8,7 +8,7 @@ import {
   UnsagedExportFormatV1,
 } from '@/types/export';
 import { FolderInterface } from '@/types/folder';
-import { Prompt } from '@/types/prompt';
+import { Template } from '@/types/prompt';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import { cleanFolders, cleanMessageTemplates } from '../clean';
@@ -17,16 +17,16 @@ import {
   storageUpdateConversations,
 } from '../storage/conversations';
 import { storageGetFolders, storageUpdateFolders } from '../storage/folders';
+import {
+  deleteSelectedConversationId,
+  saveSelectedConversationId,
+} from '../storage/local/selected-conversation';
 import { storageUpdateMessage } from '../storage/message';
 import { storageGetMessages } from '../storage/messages';
 import {
   storageGetPrompts as storageGetTemplates,
   storageUpdatePrompts as storageUpdateTemplates,
 } from '../storage/prompts';
-import {
-  deleteSelectedConversationId,
-  saveSelectedConversationId,
-} from '../storage/selectedConversation';
 import { storageUpdateSystemPrompt } from '../storage/systemPrompt';
 import { storageGetSystemPrompts } from '../storage/systemPrompts';
 import {
@@ -151,11 +151,10 @@ export const importData = async (
   // Updating selected conversation
   if (updatedConversations.length > 0) {
     saveSelectedConversationId(
-      user,
       updatedConversations[updatedConversations.length - 1].id,
     );
   } else {
-    deleteSelectedConversationId(user);
+    deleteSelectedConversationId();
   }
 
   // Updating messages
@@ -171,7 +170,7 @@ export const importData = async (
 
   // Updating message templates
   const messageTemplates = await storageGetTemplates(database, user);
-  const updatedMessageTemplates: Prompt[] = [
+  const updatedMessageTemplates: Template[] = [
     ...messageTemplates,
     ...importedMessageTemplates,
   ].filter(

@@ -1,31 +1,48 @@
-import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD, DEBUG_MODE } from '@/utils/app/const';
+import {
+  DEBUG_MODE,
+  OLLAMA_BASIC_PWD,
+  OLLAMA_BASIC_USER,
+  OLLAMA_HOST,
+} from '@/utils/app/const';
 
-import { GetAvailableOpenAIModelResponse, PossibleAiModels } from '@/types/ai-models';
+import {
+  GetAvailableModelsResponse,
+  PossibleAiModels,
+} from '@/types/ai-models';
+import { SavedSettings } from '@/types/settings';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOllamaModels(): Promise<GetAvailableOpenAIModelResponse> {
-  if (OLLAMA_HOST == '') {
-    return { data: [] };
-  }
-
+export async function getAvailableOllamaModels(
+  savedSettings: SavedSettings,
+): Promise<GetAvailableModelsResponse> {
   try {
-    const url = `${OLLAMA_HOST}/api/tags`;
+    let base_url = OLLAMA_HOST;
+    if (savedSettings['ollama.url']) {
+      base_url = savedSettings['ollama.url'];
+    }
+    if (base_url == '') {
+      return { data: [] };
+    }
+    const url = `${base_url}/api/tags`;
 
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
-        ...((OLLAMA_BASIC_USER && OLLAMA_BASIC_PWD) && {
-          Authorization: `Basic ${Buffer.from(OLLAMA_BASIC_USER + ":" + OLLAMA_BASIC_PWD).toString('base64')}`,
-        }),
+        ...(OLLAMA_BASIC_USER &&
+          OLLAMA_BASIC_PWD && {
+            Authorization: `Basic ${Buffer.from(
+              OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
+            ).toString('base64')}`,
+          }),
       },
     });
 
     if (response.status !== 200) {
       const error = await response.text();
-      console.error('Error fetching OpenAI models', response.status, error);
+      console.error('Error fetching Ollama models', response.status, error);
       return { data: [] };
     }
 

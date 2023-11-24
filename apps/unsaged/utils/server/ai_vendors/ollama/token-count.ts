@@ -1,6 +1,7 @@
+import { DEBUG_MODE } from '@/utils/app/const';
+
 import { AiModel } from '@/types/ai-models';
 import { Message } from '@/types/chat';
-import { DEBUG_MODE } from '@/utils/app/const';
 
 // TODO: This is currently just an estimate. We need to actually count the tokens.
 export async function countTokensOllama(
@@ -25,8 +26,7 @@ export async function countTokensOllama(
   // Convert to integer
   tokenCount = Math.ceil(tokenCount);
 
-  if (DEBUG_MODE)
-    console.log('tokenCount', tokenCount);
+  if (DEBUG_MODE) console.log('tokenCount', tokenCount);
 
   return { count: tokenCount };
 }

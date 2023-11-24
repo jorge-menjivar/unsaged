@@ -9,12 +9,6 @@ import {
 import { AiModel, ModelParams } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
-import {
-  ParsedEvent,
-  ReconnectInterval,
-  createParser,
-} from 'eventsource-parser';
-
 export async function streamOpenAI(
   model: AiModel,
   systemPrompt: string,
@@ -22,10 +16,14 @@ export async function streamOpenAI(
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
-) {
+  controller: AbortController,
+): Promise<{
+  stream: ReadableStream | null;
+  error: string | null;
+}> {
   if (!apiKey) {
     if (!OPENAI_API_KEY) {
-      return { error: 'Missing API key' };
+      return { stream: null, error: 'Missing API key' };
     } else {
       apiKey = OPENAI_API_KEY;
     }
@@ -106,15 +104,15 @@ export async function streamOpenAI(
     },
     method: 'POST',
     body: JSON.stringify(body),
+    signal: controller.signal,
   });
 
-  const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
   if (res.status !== 200) {
     const result = await res.json();
     if (result.error) {
-      return { error: result.error };
+      return { stream: null, error: result.error as string };
     } else {
       throw new Error(
         `OpenAI API returned an error: ${
@@ -124,40 +122,81 @@ export async function streamOpenAI(
     }
   }
 
+  if (res.body == null) {
+    return { stream: null, error: 'No response body' };
+  }
+
+  const reader = res.body.getReader();
+  let buffer = '';
+  const encoder = new TextEncoder();
+
   const stream = new ReadableStream({
     async start(controller) {
-      const onParse = (event: ParsedEvent | ReconnectInterval) => {
-        if (event.type === 'event') {
-          const data = event.data;
-          if (data === '[DONE]') {
-            controller.close();
-            return;
-          }
-
-          try {
-            const json = JSON.parse(data);
-            if (json.choices.length > 0) {
-              if (json.choices[0].finish_reason != null) {
+      function push() {
+        reader
+          .read()
+          .then(({ done, value }) => {
+            if (done) {
+              // Check if the controller is already closed before trying to close it
+              if (!controller.desiredSize) {
                 controller.close();
-                return;
               }
-              const text = json.choices[0].delta.content;
-              const queue = encoder.encode(text);
-              controller.enqueue(queue);
+              return;
             }
-          } catch (e) {
-            controller.error(e);
-          }
-        }
-      };
 
-      const parser = createParser(onParse);
+            buffer += decoder.decode(value, { stream: true });
+            let boundary = buffer.lastIndexOf('\n\n');
 
-      for await (const chunk of res.body as any) {
-        parser.feed(decoder.decode(chunk));
+            if (boundary !== -1) {
+              const completeResponse = buffer.slice(0, boundary);
+              buffer = buffer.slice(boundary + 1); // Keep the incomplete chunk in the buffer
+
+              completeResponse.split('\n\n').forEach((line) => {
+                if (line) {
+                  try {
+                    line = line.slice(6, line.length);
+                    console.log('Line 1:', line);
+
+                    if (line === '[DONE]') {
+                      // Check if the controller is already closed before trying to close it
+                      if (!controller.desiredSize) {
+                        controller.close();
+                      }
+                      return;
+                    }
+                    line = line.slice(0, line.length);
+
+                    console.log('Line 2:', line);
+
+                    const parsedData = JSON.parse(line);
+
+                    if (parsedData.choices.length > 0) {
+                      if (parsedData.choices[0].finish_reason != null) {
+                        controller.close();
+                        return;
+                      }
+                      const text = parsedData.choices[0].delta.content;
+                      controller.enqueue(encoder.encode(text));
+                    }
+                  } catch (e) {
+                    console.error('Error parsing JSON', e);
+                    controller.error(e);
+                  }
+                }
+              });
+            }
+
+            push();
+          })
+          .catch((error) => {
+            console.error('Stream reading error:', error);
+            controller.error(error);
+          });
       }
+
+      push();
     },
   });
 
-  return { stream: stream };
+  return { stream: stream, error: null };
 }
