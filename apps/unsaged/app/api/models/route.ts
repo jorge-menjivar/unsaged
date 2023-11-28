@@ -23,21 +23,28 @@ const handler = async (req: Request): Promise<Response> => {
     };
 
     const models: AiModel[] = [];
-    const { error: openaiError, data: openaiModels } =
-      await getAvailableOpenAIModels(openai_key);
-    if (openaiError) {
-      console.error('Error getting OpenAI models');
-    } else {
-      models.push(...(openaiModels as AiModel[]));
+
+    if (openai_key && openai_key !== '') {
+      const { error: openaiError, data: openaiModels } =
+        await getAvailableOpenAIModels(openai_key);
+      if (openaiError) {
+        console.error('Error getting OpenAI models');
+      } else {
+        models.push(...(openaiModels as AiModel[]));
+      }
     }
 
-    const { data: anthropicModels } = await getAvailableAnthropicModels(
-      anthropic_key,
-    );
-    models.push(...(anthropicModels as AiModel[]));
+    if (anthropic_key && anthropic_key !== '') {
+      const { data: anthropicModels } = await getAvailableAnthropicModels(
+        anthropic_key,
+      );
+      models.push(...(anthropicModels as AiModel[]));
+    }
 
-    const { data: palm2Models } = await getAvailablePalm2Models(palm_key);
-    models.push(...(palm2Models as AiModel[]));
+    if (palm_key && palm_key !== '') {
+      const { data: palm2Models } = await getAvailablePalm2Models(palm_key);
+      models.push(...(palm2Models as AiModel[]));
+    }
 
     const { data: ollamaModels } = await getAvailableOllamaModels();
     models.push(...(ollamaModels as AiModel[]));
