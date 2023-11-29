@@ -10,7 +10,11 @@ export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOpenAIModels(key?: string): Promise<GetAvailableOpenAIModelResponse> {
+export async function getAvailableOpenAIModels(key: string): Promise<GetAvailableOpenAIModelResponse> {
+  if (!key) {
+    return { data: [] };
+  }
+
   const openai = await getOpenAi(key);
 
   const list = await openai.models.list();

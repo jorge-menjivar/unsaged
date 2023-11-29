@@ -35,9 +35,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     if (anthropic_key && anthropic_key !== '') {
-      const { data: anthropicModels } = await getAvailableAnthropicModels(
-        anthropic_key,
-      );
+      const { data: anthropicModels } = await getAvailableAnthropicModels(anthropic_key);
       models.push(...(anthropicModels as AiModel[]));
     }
 
