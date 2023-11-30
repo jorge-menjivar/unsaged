@@ -553,7 +553,7 @@ const Home = () => {
                 className="animate-bounce"
                 width={256}
                 height={256}
-                src="/icon-256.svg"
+                src="/icon-256.png"
                 alt="Braindump Logo"
                 priority
               />

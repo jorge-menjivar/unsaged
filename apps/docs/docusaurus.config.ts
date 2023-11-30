@@ -55,8 +55,8 @@ const config: Config = {
     navbar: {
       title: 'Braindump',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/icon-64.svg',
+        alt: 'Braindump',
+        src: 'img/icon-64.png',
       },
       items: [
         { to: 'https://braindump.guru', label: 'App', position: 'left' },
