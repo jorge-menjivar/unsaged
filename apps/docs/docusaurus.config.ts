@@ -3,12 +3,12 @@ import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
 
 const config: Config = {
-  title: 'unSAGED',
+  title: 'Braindump,
   tagline: 'Advanced AI Chat Dashboard',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://unsaged.com',
+  url: 'https://braindump.guru',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -16,7 +16,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'jorge-menjivar', // Usually your GitHub org/user name.
-  projectName: 'unSAGED', // Usually your repo name.
+  projectName: 'Braindump', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -37,7 +37,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/jorge-menjivar/unSAGED/tree/main/docs',
+          editUrl: 'https://github.com/jairodriguez/Braindump2.git',
         },
         blog: {
           showReadingTime: true,
@@ -53,13 +53,13 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'unSAGED',
+      title: 'Braindump',
       logo: {
         alt: 'My Site Logo',
         src: 'img/icon-64.svg',
       },
       items: [
-        { to: 'https://app.unsaged.com', label: 'App', position: 'left' },
+        { to: 'https://braindump.guru', label: 'App', position: 'left' },
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
@@ -68,7 +68,7 @@ const config: Config = {
         },
         // { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/jorge-menjivar/unSAGED',
+          href: 'https://github.com/jairodriguez/Braindump2.git',
           label: 'GitHub',
           position: 'right',
         },
@@ -78,7 +78,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'unSAGED Docs',
+          title: 'Docs',
           items: [
             {
               label: 'Introduction',
@@ -108,12 +108,12 @@ const config: Config = {
             // },
             {
               label: 'GitHub',
-              href: 'https://github.com/jorge-menjivar/unSAGED',
+              href: 'https://github.com/jairodriguez/Braindump2.git',
             },
           ],
         },
       ],
-      copyright: `unSAGED © Jorge Menjivar ${new Date().getFullYear()}`,
+      copyright: `Braindump © Jairo Rodriguez ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,
