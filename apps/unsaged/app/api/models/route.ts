@@ -1,4 +1,4 @@
-import { DEBUG_MODE } from '@/utils/app/const';
+import { ANTHROPIC_API_KEY, DEBUG_MODE, OPENAI_API_KEY, PALM_API_KEY } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { getAvailableAnthropicModels } from '@/utils/server/ai_vendors/anthropic/models';
 import { getAvailablePalm2Models } from '@/utils/server/ai_vendors/google/models';
@@ -16,7 +16,7 @@ const handler = async (req: Request): Promise<Response> => {
       printEnvVariables();
     }
 
-    const { openai_key, anthropic_key, palm_key } = (await req.json()) as {
+    const { openai_key = OPENAI_API_KEY, anthropic_key = ANTHROPIC_API_KEY, palm_key = PALM_API_KEY } = (await req.json()) as {
       openai_key: string;
       anthropic_key: string;
       palm_key: string;
@@ -35,9 +35,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     if (anthropic_key && anthropic_key !== '') {
-      const { data: anthropicModels } = await getAvailableAnthropicModels(
-        anthropic_key,
-      );
+      const { data: anthropicModels } = await getAvailableAnthropicModels(anthropic_key);
       models.push(...(anthropicModels as AiModel[]));
     }
 
