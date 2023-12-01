@@ -263,7 +263,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                           w-fit bg-[#e7eaf5] dark:bg-[#1b1f23] rounded-2xl px-2 py-1 shadow-xl"
                       >
                         <Image
-                          src="./icon-64.png"
+                          src="/icon-64.png"
                           height={64}
                           width={64}
                           alt="logo"
