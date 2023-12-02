@@ -34,6 +34,7 @@
     "i18next": "^22.5.1",
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
+    "katex": "^0.16.9",
     "next": "^13.5.6",
     "next-auth": "^4.24.5",
     "next-axiom": "^1.1.1",
