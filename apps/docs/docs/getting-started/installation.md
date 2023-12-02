@@ -12,7 +12,7 @@ git clone https://github.com/jorge-menjivar/unSAGED.git
 
 ## Generate Supabase Tables
 
-Run the [Generation Script](https://github.com/jorge-menjivar/unsaged/blob/main/apps/unsaged/db/GenerationScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
+Run the [Generation Script](https://github.com/jorge-menjivar/unsaged/blob/dev/apps/unsaged/db/GenerationScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
 
 This will do the following:
 
