@@ -14,17 +14,17 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
+        
+      - name: Create .env.local
+        run: |
+          echo "${{ secrets.ENV_LOCAL }}" > apps/unsaged/.env.local
+          
       - name: Install dependencies for unsaged app
         run: |
           cd apps/unsaged
           pnpm install
           cd ../../
-
-      - name: Create .env.local
-        run: |
-          echo "${{ secrets.ENV_LOCAL }}" > apps/unsaged/.env.local
-
+          
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       
