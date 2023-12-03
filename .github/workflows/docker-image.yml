@@ -93,6 +93,3 @@ jobs:
         push: true
         tags: bpvarsity/unsaged:${{ github.ref_name }}
 
-      
-                tags: bpvarsity/unsaged:${{ github.ref_name }}
-
