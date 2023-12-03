@@ -23,6 +23,10 @@ export async function streamOpenAI(
   messages: Message[],
   tokenCount: number,
 ) {
+  if (model.type != 'text') {
+    return { error: 'Chat Stream is only available for model type text' };
+  }
+
   if (!apiKey) {
     if (!OPENAI_API_KEY) {
       return { error: 'Missing API key' };
@@ -101,8 +105,8 @@ export async function streamOpenAI(
       }),
       ...(OPENAI_API_TYPE === 'openai' &&
         OPENAI_ORGANIZATION && {
-          'OpenAI-Organization': OPENAI_ORGANIZATION,
-        }),
+        'OpenAI-Organization': OPENAI_ORGANIZATION,
+      }),
     },
     method: 'POST',
     body: JSON.stringify(body),
@@ -117,8 +121,7 @@ export async function streamOpenAI(
       return { error: result.error };
     } else {
       throw new Error(
-        `OpenAI API returned an error: ${
-          decoder.decode(result?.value) || result.statusText
+        `OpenAI API returned an error: ${decoder.decode(result?.value) || result.statusText
         }`,
       );
     }

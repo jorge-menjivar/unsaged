@@ -17,6 +17,13 @@ export interface ChatBody {
   apiKey?: string;
 }
 
+export interface ImageBody {
+  model: AiModel;
+  prompt: string;
+  params: ModelParams;
+  apiKey?: string;
+}
+
 export interface Conversation {
   id: string;
   name: string;
