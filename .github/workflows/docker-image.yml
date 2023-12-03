@@ -53,51 +53,46 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
 
       
-      - name: Install dependencies for unsaged app
-        run: |
-          cd apps/unsaged
-          pnpm install
-          cd ../../
-          
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      
-      - name: Login to DockerHub (or your preferred registry)
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      # Fetch the current latest image
-      - name: Pull the latest Docker image
-        run: docker pull bpvarsity/unsaged:latest
-      
-      # Retag the current latest image with the GitHub Actions build number
-      - name: Retag the latest Docker image with build number
-        run: docker tag bpvarsity/unsaged:latest bpvarsity/unsaged:${{ github.run_number }}
-      
-      # Push the retagged image
-      - name: Push the retagged Docker image
-        run: docker push bpvarsity/unsaged:${{ github.run_number }}
-      
-      # Build and push the new latest image
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./apps/unsaged/Dockerfile
-          push: true
-          tags: bpvarsity/unsaged:latest
-      
-      # This section remains the same for version-tagged builds
-      - name: Build and push Docker image with version
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: bpvarsity/unsaged:${{ github.ref_name }}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    
+    - name: Login to DockerHub (or your preferred registry)
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    
+    # Fetch the current latest image
+    - name: Pull the latest Docker image
+      run: docker pull bpvarsity/unsaged:latest
+    
+    # Retag the current latest image with the GitHub Actions build number
+    - name: Retag the latest Docker image with build number
+      run: docker tag bpvarsity/unsaged:latest bpvarsity/unsaged:${{ github.run_number }}
+    
+    # Push the retagged image
+    - name: Push the retagged Docker image
+      run: docker push bpvarsity/unsaged:${{ github.run_number }}
+    
+    # Build and push the new latest image
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: ./apps/unsaged/Dockerfile
+        push: true
+        tags: bpvarsity/unsaged:latest
+    
+    # This section remains the same for version-tagged builds
+    - name: Build and push Docker image with version
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: bpvarsity/unsaged:${{ github.ref_name }}
+
       
                 tags: bpvarsity/unsaged:${{ github.ref_name }}
 
