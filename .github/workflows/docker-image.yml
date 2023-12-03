@@ -17,7 +17,7 @@ jobs:
         
       - name: Create .env.local
         run: |
-          echo "${{ secrets.ENV_LOCAL }}" > apps/unsaged/.env.local
+          echo "${{ secrets.ENV_LOCAL }}" > ./apps/unsaged/.env.local
           
       - name: Install dependencies for unsaged app
         run: |
