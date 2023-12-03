@@ -67,19 +67,30 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # This step will only run for non-tag commits and will not push a 'latest' tag
-      - name: Build and push Docker image (non-tag commits)
-        if: "!startsWith(github.ref, 'refs/tags/')"
+      
+      # Fetch the current latest image
+      - name: Pull the latest Docker image
+        run: docker pull bpvarsity/unsaged:latest
+      
+      # Retag the current latest image
+      - name: Retag the latest Docker image
+        run: docker tag bpvarsity/unsaged:latest bpvarsity/unsaged:new-tag
+      
+      # Push the retagged image
+      - name: Push the retagged Docker image
+        run: docker push bpvarsity/unsaged:new-tag
+      
+      # Build and push the new latest image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./apps/unsaged/Dockerfile
           push: true
-          tags: bpvarsity/unsaged:${{ github.sha }}
-
-      # This step will run only for tag commits and will push a tag based on the git tag
-      - name: Build and push Docker image with version tag
+          tags: bpvarsity/unsaged:latest
+      
+      # This section remains the same for version-tagged builds
+      - name: Build and push Docker image with version
         if: startsWith(github.ref, 'refs/tags/')
         uses: docker/build-push-action@v3
         with:
@@ -88,5 +99,3 @@ jobs:
           push: true
           tags: bpvarsity/unsaged:${{ github.ref_name }}
 
-          push: true
-          tags: bpvarsity/unsaged:${{ github.ref_name }}
