@@ -54,7 +54,7 @@ export async function messageSender(
   } else {
     const { response, controller } = await sendImageRequest(
       promptInjectedConversation,
-      messages[0].content,
+      messages[messages.length - 1].content,
       savedSettings,
     );
 
