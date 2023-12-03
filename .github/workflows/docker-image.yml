@@ -17,38 +17,38 @@ jobs:
 
       - name: Create .env.local file
         run: |
-          echo "NEXT_PUBLIC_DEFAULT_MODEL=gpt-4" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_TITLE=Bortus-AI" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DESCRIPTION=Open source chat kit engineered for seamless interaction with AI models" >> ./apps/unsaged/.env.local
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> ./apps/unsaged/.env.local
-          echo "OPENAI_API_URL=https://api.openai.com/v1" >> ./apps/unsaged/.env.local
-          echo "OPENAI_API_TYPE=openai" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT=You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructi carefully. Respond using markdown." >> ./apps/unsaged/.env.local
-          echo "OLLAMA_HOST=https://code.bortus.ai" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT=You are a helpful AI assistant. Follow the my instructions carefully. Your responses will be automatically parsed as markdown. Do not surround your response with any language tags." >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TEMPERATURE=1.0" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_P=1.0" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_K=40" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_REPEAT_PENALTY=1.0" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SEED=7" >> ./apps/unsaged/.env.local
-          echo "ANTHROPIC_API_URL=https://api.anthropic.com/v1" >> ./apps/unsaged/.env.local
-          echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> ./apps/unsaged/.env.local
-          echo "ANTRHOPIC_VERSION=2023-06-01" >> ./apps/unsaged/.env.local
-          echo "PALM_API_URL=https://generativelanguage.googleapis.com/v1beta2" >> ./apps/unsaged/.env.local
-          echo "PALM_API_KEY=${{ secrets.PALM_API_KEY }}" >> ./apps/unsaged/.env.local
-          echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> ./apps/unsaged/.env.local
-          echo "NEXTAUTH_URL=http://chat7.bortus.ai:3000" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEBUG_MODE=true" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" >> ./apps/unsaged/.env.local
-          echo "AUTH0_CLIENT_ID=${{ secrets.AUTH0_CLIENT_ID }}" >> ./apps/unsaged/.env.local
-          echo "AUTH0_CLIENT_SECRET=${{ secrets.AUTH0_CLIENT_SECRET }}" >> ./apps/unsaged/.env.local
-          echo "AUTH0_ISSUER=https://dev-atz0i8gtht86so7o.us.auth0.com" >> ./apps/unsaged/.env.local
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> ./apps/unsaged/.env.local
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_SUPABASE_URL=https://khoximvqphadhuohusah.supabase.co" >> ./apps/unsaged/.env.local
-          echo "SUPABASE_JWT_SECRET=${{ secrets.SUPABASE_JWT_SECRET }}" >> ./apps/unsaged/.env.local
-          echo "SUPABASE_SERVICE_ROLE_KEY=${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" >> ./apps/unsaged/.env.local
-          echo "DEBUG_MESSAGES_FLAG=true" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_MODEL='gpt-4'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_TITLE='Bortus-AI'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DESCRIPTION='Open source chat kit engineered for seamless interaction with AI models'" >> ./apps/unsaged/.env.local
+          echo "OPENAI_API_KEY='${{ secrets.OPENAI_API_KEY }}'" >> ./apps/unsaged/.env.local
+          echo "OPENAI_API_URL='https://api.openai.com/v1'" >> ./apps/unsaged/.env.local
+          echo "OPENAI_API_TYPE='openai'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT='You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructi carefully. Respond using markdown.'" >> ./apps/unsaged/.env.local
+          echo "OLLAMA_HOST='https://code.bortus.ai'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT='You are a helpful AI assistant. Follow the my instructions carefully. Your responses will be automatically parsed as markdown. Do not surround your response with any language tags.'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TEMPERATURE='1.0'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_P='1.0'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_K='40'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_REPEAT_PENALTY='1.0'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SEED='7'" >> ./apps/unsaged/.env.local
+          echo "ANTHROPIC_API_URL='https://api.anthropic.com/v1'" >> ./apps/unsaged/.env.local
+          echo "ANTHROPIC_API_KEY='${{ secrets.ANTHROPIC_API_KEY }}'" >> ./apps/unsaged/.env.local
+          echo "ANTRHOPIC_VERSION='2023-06-01'" >> ./apps/unsaged/.env.local
+          echo "PALM_API_URL='https://generativelanguage.googleapis.com/v1beta2'" >> ./apps/unsaged/.env.local
+          echo "PALM_API_KEY='${{ secrets.PALM_API_KEY }}'" >> ./apps/unsaged/.env.local
+          echo "NEXTAUTH_SECRET='${{ secrets.NEXTAUTH_SECRET }}'" >> ./apps/unsaged/.env.local
+          echo "NEXTAUTH_URL='http://chat7.bortus.ai:3000'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEBUG_MODE='true'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_ANON_KEY='${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}'" >> ./apps/unsaged/.env.local
+          echo "AUTH0_CLIENT_ID='${{ secrets.AUTH0_CLIENT_ID }}'" >> ./apps/unsaged/.env.local
+          echo "AUTH0_CLIENT_SECRET='${{ secrets.AUTH0_CLIENT_SECRET }}'" >> ./apps/unsaged/.env.local
+          echo "AUTH0_ISSUER='https://dev-atz0i8gtht86so7o.us.auth0.com'" >> ./apps/unsaged/.env.local
+          echo "GOOGLE_CLIENT_ID='${{ secrets.GOOGLE_CLIENT_ID }}'" >> ./apps/unsaged/.env.local
+          echo "GOOGLE_CLIENT_SECRET='${{ secrets.GOOGLE_CLIENT_SECRET }}'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_SUPABASE_URL='https://khoximvqphadhuohusah.supabase.co'" >> ./apps/unsaged/.env.local
+          echo "SUPABASE_JWT_SECRET='${{ secrets.SUPABASE_JWT_SECRET }}'" >> ./apps/unsaged/.env.local
+          echo "SUPABASE_SERVICE_ROLE_KEY='${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}'" >> ./apps/unsaged/.env.local
+          echo "DEBUG_MESSAGES_FLAG='true'" >> ./apps/unsaged/.env.local
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
