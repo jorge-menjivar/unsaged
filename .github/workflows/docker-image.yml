@@ -18,7 +18,6 @@ jobs:
       - name: Create .env.local file
         run: |
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> ./apps/unsaged/.env.local
-          echo "OPENAI_API_URL=https://api.openai.com/v1" >> ./apps/unsaged/.env.local
           echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> ./apps/unsaged/.env.local
           echo "PALM_API_KEY=${{ secrets.PALM_API_KEY }}" >> ./apps/unsaged/.env.local
           echo "NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}" >> ./apps/unsaged/.env.local
