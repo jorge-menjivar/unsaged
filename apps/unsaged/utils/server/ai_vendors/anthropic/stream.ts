@@ -29,6 +29,10 @@ export async function streamAnthropic(
     }
   }
 
+  if (model.type != 'text') {
+    return { error: 'Chat Stream is only available for model type text' };
+  }
+
   let prompt = systemPrompt;
 
   let parsedMessages = '';

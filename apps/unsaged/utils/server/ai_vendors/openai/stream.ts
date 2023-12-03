@@ -23,16 +23,16 @@ export async function streamOpenAI(
   messages: Message[],
   tokenCount: number,
 ) {
-  if (model.type != 'text') {
-    return { error: 'Chat Stream is only available for model type text' };
-  }
-
   if (!apiKey) {
     if (!OPENAI_API_KEY) {
       return { error: 'Missing API key' };
     } else {
       apiKey = OPENAI_API_KEY;
     }
+  }
+
+  if (model.type != 'text') {
+    return { error: 'Chat Stream is only available for model type text' };
   }
 
   let messagesToSend: any[] = [];

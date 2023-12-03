@@ -12,40 +12,51 @@ import { TopKInput } from './components/top-k';
 import { TopPSlider } from './components/top-p';
 import HomeContext from '@/components/Home/home.context';
 
+const possibleParameters = {
+  'temperature': { modelType: 'text', component: TemperatureSlider },
+  'max_tokens': { modelType: 'text', component: MaxTokensSlider },
+  'top_p': { modelType: 'text', component: TopPSlider },
+  'top_k': { modelType: 'text', component: TopKInput },
+  'repeat_penalty': { modelType: 'text', component: RepeatPenaltySlider },
+  'presence_penalty': { modelType: 'text', component: PresencePenaltySlider },
+  'stop': { modelType: 'text', component: StopInput },
+  'seed': { modelType: 'text', component: SeedInput },
+}
+
 const openAiSupportedParameters = [
-  'temperature',
-  'max_tokens',
-  'top_p',
-  'repeat_penalty',
-  'presence_penalty',
-  'stop',
-  'seed',
+  possibleParameters['temperature'],
+  possibleParameters['max_tokens'],
+  possibleParameters['top_p'],
+  possibleParameters['repeat_penalty'],
+  possibleParameters['presence_penalty'],
+  possibleParameters['stop'],
+  possibleParameters['seed'],
 ];
 
 const claudeSupportedParameters = [
-  'temperature',
-  'max_tokens',
-  'top_p',
-  'top_k',
-  'stop',
+  possibleParameters['temperature'],
+  possibleParameters['max_tokens'],
+  possibleParameters['top_p'],
+  possibleParameters['top_k'],
+  possibleParameters['stop'],
 ];
 
 const bardSupportedParameters = [
-  'temperature',
-  'max_tokens',
-  'top_p',
-  'top_k',
-  'stop',
+  possibleParameters['temperature'],
+  possibleParameters['max_tokens'],
+  possibleParameters['top_p'],
+  possibleParameters['top_k'],
+  possibleParameters['stop'],
 ];
 
 const ollamaSupportedParameters = [
-  'temperature',
-  'max_tokens',
-  'repeat_penalty',
-  'top_p',
-  'top_k',
-  'stop',
-  'seed',
+  possibleParameters['temperature'],
+  possibleParameters['max_tokens'],
+  possibleParameters['repeat_penalty'],
+  possibleParameters['top_p'],
+  possibleParameters['top_k'],
+  possibleParameters['stop'],
+  possibleParameters['seed'],
 ];
 
 export const ModelSettings = () => {
@@ -80,25 +91,12 @@ export const ModelSettings = () => {
 
       <SystemPromptSelect />
 
-      {supportedParameters.includes('temperature') && <TemperatureSlider />}
-
-      {supportedParameters.includes('max_tokens') && <MaxTokensSlider />}
-
-      {supportedParameters.includes('top_p') && <TopPSlider />}
-
-      {supportedParameters.includes('top_k') && <TopKInput />}
-
-      {supportedParameters.includes('repeat_penalty') && (
-        <RepeatPenaltySlider />
-      )}
-
-      {supportedParameters.includes('presence_penalty') && (
-        <PresencePenaltySlider />
-      )}
-
-      {supportedParameters.includes('stop') && <StopInput />}
-
-      {supportedParameters.includes('seed') && <SeedInput />}
+      {supportedParameters.map((parameter, index) => {
+        if (parameter.modelType === model?.type) {
+          const ParameterComponent = parameter.component;
+          return <ParameterComponent key={index} />;
+        }
+      })}
     </div>
   );
 };

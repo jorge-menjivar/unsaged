@@ -13,7 +13,7 @@ export async function messageSender(
   messages: Message[],
   savedSettings: SavedSetting[],
   dispatch: React.Dispatch<any>,
-) {
+): Promise<{ data: null; controller: null; } | { data: ReadableStream<Uint8Array>; controller: AbortController; }> {
   let customPrompt = selectedConversation.systemPrompt;
 
   if (!selectedConversation.systemPrompt) {
@@ -51,7 +51,7 @@ export async function messageSender(
 
     dispatch({ field: 'loading', value: false });
     return { data, controller };
-  } else if (model.type == 'image') {
+  } else {
     const { response, controller } = await sendImageRequest(
       promptInjectedConversation,
       messages[0].content,

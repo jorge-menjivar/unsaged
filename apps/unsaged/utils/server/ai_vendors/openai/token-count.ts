@@ -48,7 +48,7 @@ export async function countTokensOpenAI(
     if (tokens) {
       tokenCount += tokens.length + tokens_per_message;
     }
-    if (tokenCount > model.requestLimit) {
+    if (model.type == 'text' && tokenCount > model.requestLimit) {
       encoding.free();
       return { error: 'Token limit exceeded' };
     }

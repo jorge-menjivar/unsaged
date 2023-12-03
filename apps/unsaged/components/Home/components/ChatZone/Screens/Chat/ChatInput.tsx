@@ -70,15 +70,20 @@ export const ChatInput = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const maxLength = selectedConversation?.model.maxLength;
 
-    if (maxLength && value.length > maxLength) {
-      alert(
+    if (selectedConversation?.model.type == 'text') {
+      const maxLength = selectedConversation?.model.maxLength;
+
+      if (maxLength && value.length > maxLength) {
+        alert(
+          t(
+            `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
+            { maxLength, valueLength: value.length },
+          ),
+        );
+        return;
+      }
         t('messageLimit',
-          { maxLength, valueLength: value.length },
-        ),
-      );
-      return;
     }
 
     setContent(value);
@@ -325,10 +330,11 @@ export const ChatInput = ({
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
-              overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400
-                ? 'auto'
-                : 'hidden'
-                }`,
+              overflow: `${
+                textareaRef.current && textareaRef.current.scrollHeight > 400
+                  ? 'auto'
+                  : 'hidden'
+              }`,
             }}
             placeholder={
               t('startTyping')
