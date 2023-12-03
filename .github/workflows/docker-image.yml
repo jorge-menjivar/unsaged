@@ -14,10 +14,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-        
-      - name: Create .env.local
+
+      - name: Create .env.local file
         run: |
-          echo "${{ secrets.ENV_LOCAL }}" > ./apps/unsaged/.env.local
+          echo "$UNSAGED_ENV_LOCAL" > ./apps/unsaged/.env.local
+        env:
+          UNSAGED_ENV_LOCAL: ${{ secrets.UNSAGED_ENV_LOCAL }}
           
       - name: Install dependencies for unsaged app
         run: |
