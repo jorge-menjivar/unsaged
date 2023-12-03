@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ./apps/unsaged/Dockerfile
           push: true
           tags: bpvarsity/unsaged:latest
 
