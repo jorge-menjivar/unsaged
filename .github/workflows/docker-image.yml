@@ -37,7 +37,7 @@ jobs:
           echo "PALM_API_URL='https://generativelanguage.googleapis.com/v1beta2'" >> ./apps/unsaged/.env.local
           echo "PALM_API_KEY='${{ secrets.PALM_API_KEY }}'" >> ./apps/unsaged/.env.local
           echo "NEXTAUTH_SECRET='${{ secrets.NEXTAUTH_SECRET }}'" >> ./apps/unsaged/.env.local
-          echo "NEXTAUTH_URL='http://chat7.bortus.ai:3000'" >> ./apps/unsaged/.env.local
+          echo "NEXTAUTH_URL='https://chat.bortus.ai'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_DEBUG_MODE='true'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_SUPABASE_ANON_KEY='${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}'" >> ./apps/unsaged/.env.local
           echo "AUTH0_CLIENT_ID='${{ secrets.AUTH0_CLIENT_ID }}'" >> ./apps/unsaged/.env.local
