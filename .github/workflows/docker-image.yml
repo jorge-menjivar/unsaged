@@ -18,7 +18,7 @@ jobs:
       - name: Create .env.local file
         run: |
           echo "NEXT_PUBLIC_DEFAULT_MODEL='gpt-4'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_TITLE='Bortus-AI'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_TITLE='unsaged'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_DESCRIPTION='Open source chat kit engineered for seamless interaction with AI models'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT='You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructi carefully. Respond using markdown.'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT='You are a helpful AI assistant. Follow the my instructions carefully. Your responses will be automatically parsed as markdown. Do not surround your response with any language tags.'" >> ./apps/unsaged/.env.local
