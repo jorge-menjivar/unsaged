@@ -64,16 +64,25 @@ jobs:
       
       # Fetch the current latest image
       - name: Pull the latest Docker image
-        run: docker pull bpvarsity/unsaged:latest
+        run: docker pull bpvarsity/unsaged:latest || true # Will not fail if the image does not exist
       
-      # Retag the current latest image with the GitHub Actions build number
+      # Retag the current latest image with the GitHub Actions build number if it exists
       - name: Retag the latest Docker image with build number
-        run: docker tag bpvarsity/unsaged:latest bpvarsity/unsaged:${{ github.run_number }}
+        run: |
+          if [[ "$(docker images -q bpvarsity/unsaged:latest 2> /dev/null)" != "" ]]; then
+            docker tag bpvarsity/unsaged:latest bpvarsity/unsaged:${{ github.run_number }}
+            echo "Image retagged with build number: ${{ github.run_number }}"
+          else
+            echo "No latest image to retag. Skipping this step."
+          fi
       
-      # Push the retagged image
+      # Push the retagged image if it exists
       - name: Push the retagged Docker image
+        if: env.RETAGGED_IMAGE
         run: docker push bpvarsity/unsaged:${{ github.run_number }}
-      
+        env:
+          RETAGGED_IMAGE: ${{ steps.retag.outputs.retagged }}
+
       # Build and push the new latest image
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
