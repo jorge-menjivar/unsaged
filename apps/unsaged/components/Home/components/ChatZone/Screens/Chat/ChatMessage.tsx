@@ -234,7 +234,7 @@ export const ChatMessage: FC<Props> = memo(
                 )}
               </div>
             )}
-            {message.role === 'assistant' && (
+            {message.role === 'assistant' && message.content && (
               <div className="flex flex-row">
                 {selectedConversation?.model.type === "text" ?
                   <>

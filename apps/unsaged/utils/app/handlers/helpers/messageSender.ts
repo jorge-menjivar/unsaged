@@ -61,13 +61,17 @@ export async function messageSender(
       savedSettings,
     );
 
-    const data = response.body;
-    if (!data) {
-      dispatch({ field: 'loading', value: false });
-      return { data: null, controller: null };
+    if (response.ok) {
+      const data = response.body;
+      if (data) {
+        dispatch({ field: 'loading', value: false });
+        return { data, controller };
+      }
     }
 
+    toast.error(response.statusText);
+
     dispatch({ field: 'loading', value: false });
-    return { data, controller };
+    return { data: null, controller: null };
   }
 }

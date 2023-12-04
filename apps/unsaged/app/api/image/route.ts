@@ -8,27 +8,27 @@ const handler = async (req: Request): Promise<Response> => {
   const { model, prompt, apiKey, params } =
     (await req.json()) as ImageBody;
 
-  const { error: streamError, images } = await getImage(
+  const { error: imageError, images } = await getImage(
     model,
     params,
     apiKey,
     prompt
   );
 
-  // if (streamError) {
-  //   let message = streamError;
+  if (imageError) {
+    let message = imageError;
 
-  //   if (message.message) {
-  //     message = message.message;
-  //   }
+    if (message.message) {
+      message = message.message;
+    }
 
-  //   console.error(message);
+    console.error(message);
 
-  //   return new Response('Error', {
-  //     status: 500,
-  //     statusText: message,
-  //   });
-  // }
+    return new Response('Error', {
+      status: 500,
+      statusText: message,
+    });
+  }
 
   return new Response(JSON.stringify(images), { status: 200 });
 };
