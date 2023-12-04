@@ -26,6 +26,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import { ImageChatMessage } from './ImageChatMessage';
 
 export interface Props {
   message: Message;
@@ -303,19 +304,8 @@ export const ChatMessage: FC<Props> = memo(
                           );
                         },
                         img({ src, alt, width, height }) {
-                          if (!width && !height) {
-                            width = '1024px';
-                            height = '1024px';
-                          }
                           return (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={src!}
-                              alt={alt!}
-                              width={parseInt(width as string)}
-                              height={parseInt(height as string)}
-                              className="m-1"
-                            />
+                            <ImageChatMessage src={src} alt={alt} width={width} height={height} />
                           );
                         },
                       }}
@@ -329,7 +319,7 @@ export const ChatMessage: FC<Props> = memo(
                     </MemoizedReactMarkdown>
                   </> :
                   <>
-                    <img src={JSON.parse(message.content)[0].url} />
+                    <ImageChatMessage src={JSON.parse(message.content)[0].url} />
                   </>
                 }
 
