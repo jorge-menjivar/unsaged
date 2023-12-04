@@ -21,7 +21,8 @@ jobs:
           tags: ${{ env.RELEASE_VERSION }}, latest
           registry: ghcr.io
           multiPlatform: true
-          platform: linux/amd64
+          platform: linux/amd64,linux/arm64
+          dockerfile: apps/unsaged/Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
