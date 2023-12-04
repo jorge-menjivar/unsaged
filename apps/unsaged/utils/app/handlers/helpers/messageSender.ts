@@ -52,13 +52,16 @@ export async function messageSender(
     dispatch({ field: 'loading', value: false });
     return { data, controller };
   } else {
-    const messagesToSend = messages.filter((m) => {
-      m.role == 'user'
-    }).map(m => m.content);
+    // const messagesToSend = messages.filter((m) => {
+    //   m.role == 'user'
+    // }).map(m => m.content);
+    // const prompt = messagesToSend.join(' ');
+    const prompt = messages[messages.length -1].content;
 
     const { response, controller } = await sendImageRequest(
       promptInjectedConversation,
-      messagesToSend.join(' '),
+      // messagesToSend.join(' '),
+      prompt,
       savedSettings,
     );
 

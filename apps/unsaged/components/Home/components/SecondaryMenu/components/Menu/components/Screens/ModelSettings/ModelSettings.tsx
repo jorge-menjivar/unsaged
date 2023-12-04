@@ -13,6 +13,7 @@ import { TopPSlider } from './components/top-p';
 import HomeContext from '@/components/Home/home.context';
 
 const possibleParameters = {
+  'system_prompt': { modelType: 'text', component: SystemPromptSelect },
   'temperature': { modelType: 'text', component: TemperatureSlider },
   'max_tokens': { modelType: 'text', component: MaxTokensSlider },
   'top_p': { modelType: 'text', component: TopPSlider },
@@ -24,6 +25,7 @@ const possibleParameters = {
 }
 
 const openAiSupportedParameters = [
+  possibleParameters['system_prompt'],
   possibleParameters['temperature'],
   possibleParameters['max_tokens'],
   possibleParameters['top_p'],
@@ -34,6 +36,7 @@ const openAiSupportedParameters = [
 ];
 
 const claudeSupportedParameters = [
+  possibleParameters['system_prompt'],
   possibleParameters['temperature'],
   possibleParameters['max_tokens'],
   possibleParameters['top_p'],
@@ -42,6 +45,7 @@ const claudeSupportedParameters = [
 ];
 
 const bardSupportedParameters = [
+  possibleParameters['system_prompt'],
   possibleParameters['temperature'],
   possibleParameters['max_tokens'],
   possibleParameters['top_p'],
@@ -50,6 +54,7 @@ const bardSupportedParameters = [
 ];
 
 const ollamaSupportedParameters = [
+  possibleParameters['system_prompt'],
   possibleParameters['temperature'],
   possibleParameters['max_tokens'],
   possibleParameters['repeat_penalty'],
@@ -88,8 +93,6 @@ export const ModelSettings = () => {
   return (
     <div className="pt-2 px-1 space-y-4">
       <ModelSelect />
-
-      <SystemPromptSelect />
 
       {supportedParameters.map((parameter, index) => {
         if (parameter.modelType === model?.type) {
