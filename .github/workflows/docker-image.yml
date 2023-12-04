@@ -101,7 +101,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: bpvarsity/unsaged:${{ github.ref_name }}
-          
-      - name: Deploy to Coolify
-        run: | 
-         curl --request GET '${{ secrets.COOLIFY_WEBHOOK }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
