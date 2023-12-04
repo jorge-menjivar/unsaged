@@ -12,6 +12,7 @@ import {
   ReconnectInterval,
   createParser,
 } from 'eventsource-parser';
+import { AnthropicStream } from 'ai';
 
 export async function streamAnthropic(
   model: AiModel,
@@ -20,7 +21,7 @@ export async function streamAnthropic(
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
-) {
+): Promise<{ error?: any, stream?: any }> {
   if (!apiKey) {
     if (!ANTHROPIC_API_KEY) {
       return { error: 'Missing API key' };
@@ -87,7 +88,6 @@ export async function streamAnthropic(
     body: JSON.stringify(body),
   });
 
-  const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
   if (res.status !== 200) {
@@ -102,34 +102,7 @@ export async function streamAnthropic(
     }
   }
 
-  const stream = new ReadableStream({
-    async start(controller) {
-      const onParse = (event: ParsedEvent | ReconnectInterval) => {
-        if (event.type === 'event') {
-          const raw_data = event.data;
-
-          try {
-            const data = JSON.parse(raw_data);
-            if (data.stop_reason != null) {
-              controller.close();
-              return;
-            }
-            const text = data.completion;
-            const queue = encoder.encode(text);
-            controller.enqueue(queue);
-          } catch (e) {
-            controller.error(e);
-          }
-        }
-      };
-
-      const parser = createParser(onParse);
-
-      for await (const chunk of res.body as any) {
-        parser.feed(decoder.decode(chunk));
-      }
-    },
-  });
+  const stream = AnthropicStream(res);
 
   return { stream: stream };
 }

@@ -12,7 +12,7 @@ export async function streamOllama(
   systemPrompt: string,
   params: ModelParams,
   messages: Message[],
-) {
+): Promise<{ error?: any, stream?: any }> {
   if (OLLAMA_HOST == '') {
     return { error: 'Missing OLLAMA_HOST' };
   }
