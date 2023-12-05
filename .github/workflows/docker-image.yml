@@ -39,7 +39,18 @@ jobs:
           echo "NEXT_PUBLIC_SUPABASE_URL='https://dummy.supabase.co'" >> ./apps/unsaged/.env.local
           echo "SUPABASE_JWT_SECRET='dummy_supabase_jwt_secret'" >> ./apps/unsaged/.env.local
           echo "SUPABASE_SERVICE_ROLE_KEY='dummy_supabase_service_role_key'" >> ./apps/unsaged/.env.local
-
+        env:
+          OPENAI_API_KEY: 'dummy_openai_api_key'
+          ANTHROPIC_API_KEY: 'dummy_anthropic_api_key'
+          PALM_API_KEY: 'dummy_palm_api_key'
+          NEXTAUTH_SECRET: 'dummy_nextauth_secret'
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: 'dummy_supabase_anon_key'
+          AUTH0_CLIENT_ID: 'dummy_auth0_client_id'
+          AUTH0_CLIENT_SECRET: 'dummy_auth0_client_secret'
+          GOOGLE_CLIENT_ID: 'dummy_google_client_id'
+          GOOGLE_CLIENT_SECRET: 'dummy_google_client_secret'
+          SUPABASE_JWT_SECRET: 'dummy_supabase_jwt_secret'
+          SUPABASE_SERVICE_ROLE_KEY: 'dummy_supabase_service_role_key'
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
