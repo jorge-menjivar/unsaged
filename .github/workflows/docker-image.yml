@@ -55,18 +55,24 @@ jobs:
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      
+
       - name: Login to DockerHub (or your preferred registry)
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
-      # Fetch the current latest image
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Pull the latest Docker image
-        run: docker pull bpvarsity/unsaged:latest || true # Will not fail if the image does not exist
-      
-      # Retag the current latest image with the GitHub Actions build number if it exists
+        run: docker pull bpvarsity/unsaged:latest || true
+
       - name: Retag the latest Docker image with build number
         run: |
           if [[ "$(docker images -q bpvarsity/unsaged:latest 2> /dev/null)" != "" ]]; then
@@ -75,15 +81,13 @@ jobs:
           else
             echo "No latest image to retag. Skipping this step."
           fi
-      
-      # Push the retagged image if it exists
+
       - name: Push the retagged Docker image
         if: env.RETAGGED_IMAGE
         run: docker push bpvarsity/unsaged:${{ github.run_number }}
         env:
           RETAGGED_IMAGE: ${{ steps.retag.outputs.retagged }}
 
-      # Build and push the new latest image
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -91,13 +95,25 @@ jobs:
           file: ./apps/unsaged/Dockerfile
           push: true
           tags: bpvarsity/unsaged:latest
-      
-      # This section remains the same for version-tagged builds
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+      - name: Update cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Build and push Docker image with version
         if: startsWith(github.ref, 'refs/tags/')
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ./apps/unsaged/Dockerfile
           push: true
           tags: bpvarsity/unsaged:${{ github.ref_name }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+
