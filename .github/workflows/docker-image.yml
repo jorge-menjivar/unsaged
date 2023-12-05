@@ -93,17 +93,16 @@ jobs:
         if: env.RETAGGED_IMAGE
         run: docker push bpvarsity/unsaged:${{ github.run_number }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (No Cache)
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./apps/unsaged/Dockerfile
           push: true
           tags: bpvarsity/unsaged:latest
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          no-cache: true # This flag disables the use of cache
 
-      - name: Build and push Docker image with version
+      - name: Build and push Docker image with version (No Cache)
         if: startsWith(github.ref, 'refs/tags/')
         uses: docker/build-push-action@v3
         with:
@@ -111,5 +110,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: bpvarsity/unsaged:${{ github.ref_name }}
-          cache-from: type=local,src=/tmp/.buildx-cache
+          no-cache: true # This flag disables the use of cach
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
