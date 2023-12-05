@@ -1,23 +1,22 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
-import HomeContext from '@/components/home/home.context';
+
+import { useConversations } from '@/providers/conversations';
 
 export const RepeatPenaltySlider = () => {
   const { t } = useTranslation('chat');
-  const {
-    state: { selectedConversation },
-    handleUpdateConversationParams,
-  } = useContext(HomeContext);
+
+  const { selectedConversation, updateConversationParams } = useConversations();
 
   const handleChange = (value: number[] | undefined[]) => {
     const newValue = value[0];
     if (selectedConversation) {
-      handleUpdateConversationParams(selectedConversation, {
+      updateConversationParams(selectedConversation, {
         key: 'repeat_penalty',
         value: newValue,
       });

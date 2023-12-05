@@ -1,13 +1,11 @@
 import { useContext } from 'react';
 
-import HomeContext from '@/components/home/home.context';
-
 import SecondaryMenuContext from '../../secondary-menu.context';
 
+import { useDisplay } from '@/providers/display';
+
 const Menu = ({ screens }: { screens: JSX.Element[] }) => {
-  const {
-    state: { showSecondaryMenu },
-  } = useContext(HomeContext);
+  const { showSecondaryMenu } = useDisplay();
 
   const {
     state: { selectedIndex },

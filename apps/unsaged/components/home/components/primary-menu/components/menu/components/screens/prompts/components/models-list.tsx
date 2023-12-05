@@ -1,7 +1,6 @@
-import { useContext } from 'react';
+import { Chip } from '@/components/common/ui/chip';
 
-import { Chip } from '@/components/common/Chips/Chip';
-import HomeContext from '@/components/home/home.context';
+import { useModels } from '@/providers/models';
 
 // Return a list of models as chips without any scrolling
 export const ChipList = ({
@@ -11,9 +10,7 @@ export const ChipList = ({
   selectedModels: string[];
   handleSelectModel: any;
 }) => {
-  const {
-    state: { models },
-  } = useContext(HomeContext);
+  const { models } = useModels();
 
   return (
     <div className="flex flex-wrap space-x-2">

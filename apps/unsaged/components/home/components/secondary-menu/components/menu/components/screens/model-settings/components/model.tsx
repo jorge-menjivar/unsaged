@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { DEFAULT_MODEL } from '@/utils/app/const';
 
 import { AiModel } from '@/types/ai-models';
 
-import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import {
   Select,
   SelectContent,
@@ -11,13 +13,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/common/ui/select';
-import HomeContext from '@/components/home/home.context';
+
+import { useConversations } from '@/providers/conversations';
+import { useModels } from '@/providers/models';
 
 export const ModelSelect = () => {
-  const {
-    state: { selectedConversation, models, defaultModelId },
-    handleUpdateConversation,
-  } = useContext(HomeContext);
+  const { models } = useModels();
+  const { selectedConversation, updateConversation } = useConversations();
 
   const [sortedModels, setSortedModels] = useState<AiModel[]>(models);
 
@@ -38,7 +40,7 @@ export const ModelSelect = () => {
     const selectedModel = models.find((m) => m.id === model_id);
 
     selectedConversation &&
-      handleUpdateConversation(selectedConversation, {
+      updateConversation(selectedConversation, {
         key: 'model',
         value: selectedModel,
       });
@@ -52,7 +54,7 @@ export const ModelSelect = () => {
       </PrimaryLabel>
 
       <Select
-        value={selectedConversation?.model?.id || defaultModelId}
+        value={selectedConversation?.model?.id || DEFAULT_MODEL}
         onValueChange={handleChange}
       >
         <SelectTrigger className="w-full">

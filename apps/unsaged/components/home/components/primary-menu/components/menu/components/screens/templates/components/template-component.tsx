@@ -12,31 +12,31 @@ import {
   useState,
 } from 'react';
 
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
-import SidebarActionButton from '@/components/common/Buttons/SidebarActionButton';
+import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
 
 import PromptsContext from '../prompts.context';
 import { PromptModal } from './template-modal';
 
+import { useTemplates } from '@/providers/templates';
+
 interface Props {
-  prompt: Template;
+  template: Template;
 }
 
-export const PromptComponent = ({ prompt }: Props) => {
-  const {
-    dispatch: promptDispatch,
-    handleUpdatePrompt,
-    handleDeletePrompt,
-  } = useContext(PromptsContext);
+export const TemplateComponent = ({ template }: Props) => {
+  const { updateTemplate, deleteTemplate } = useTemplates();
+
+  const { dispatch: promptDispatch } = useContext(PromptsContext);
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const [renameValue, setRenameValue] = useState('');
 
-  const handleUpdate = (prompt: Template) => {
-    handleUpdatePrompt(prompt);
+  const handleUpdate = (template: Template) => {
+    updateTemplate(template);
     promptDispatch({ field: 'searchTerm', value: '' });
   };
 
@@ -44,7 +44,7 @@ export const PromptComponent = ({ prompt }: Props) => {
     e.stopPropagation();
 
     if (isDeleting) {
-      handleDeletePrompt(prompt);
+      deleteTemplate(template);
       promptDispatch({ field: 'searchTerm', value: '' });
     }
 
@@ -88,7 +88,7 @@ export const PromptComponent = ({ prompt }: Props) => {
           e.stopPropagation();
           setShowModal(true);
         }}
-        onDragStart={(e) => handleDragStart(e, prompt)}
+        onDragStart={(e) => handleDragStart(e, template)}
         onMouseLeave={() => {
           setIsDeleting(false);
           setIsRenaming(false);
@@ -101,7 +101,7 @@ export const PromptComponent = ({ prompt }: Props) => {
           className="relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap
         break-all pr-4 text-left text-[12.5px] leading-3"
         >
-          {prompt.name}
+          {template.name}
         </div>
       </button>
 
@@ -133,7 +133,7 @@ export const PromptComponent = ({ prompt }: Props) => {
 
       {showModal && (
         <PromptModal
-          prompt={prompt}
+          template={template}
           onClose={() => setShowModal(false)}
           onUpdatePrompt={handleUpdate}
         />

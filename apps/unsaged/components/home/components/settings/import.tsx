@@ -6,9 +6,9 @@ import { useTranslation } from 'next-i18next';
 import { SupportedExportFormats } from '@/types/export';
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { SidebarButton } from '@/components/common/Sidebar/SidebarButton';
+import { SidebarButton } from '@/components/common/side-bar/side-bar-button';
 
-import HomeContext from '../../home.context';
+import { useSystemPrompts } from '@/providers/system_prompts';
 
 interface Props {
   onImport: (
@@ -20,9 +20,7 @@ interface Props {
 export const Import: FC<Props> = ({ onImport }) => {
   const { t } = useTranslation('sidebar');
 
-  const {
-    state: { systemPrompts },
-  } = useContext(HomeContext);
+  const { systemPrompts } = useSystemPrompts();
 
   return (
     <>

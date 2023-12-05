@@ -6,20 +6,23 @@ import {
 } from '@tabler/icons-react';
 import { useContext } from 'react';
 
+import { TAURI } from '@/utils/app/const';
 import { deleteSelectedConversationId } from '@/utils/app/storage/local/selected-conversation';
 import { localSaveShowPrimaryMenu } from '@/utils/app/storage/local/ui-state';
 
 import { ActivityBarButton } from './components/activity-bar-button';
 import { ActivityBarTab } from './components/activity-bar-tab';
-import HomeContext from '@/components/home/home.context';
 
 import PrimaryMenuContext from '../../primary-menu.context';
 
+import { useDatabase } from '@/providers/database';
+import { useDisplay } from '@/providers/display';
+import { open } from '@tauri-apps/api/shell';
+
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
-  const {
-    state: { database, showPrimaryMenu, display },
-    dispatch: homeDispatch,
-  } = useContext(HomeContext);
+  const { database } = useDatabase();
+  const { display, setDisplay, setShowPrimaryMenu, showPrimaryMenu } =
+    useDisplay();
 
   const {
     state: { selectedIndex },
@@ -28,12 +31,12 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
-      homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      setShowPrimaryMenu(!showPrimaryMenu);
       localSaveShowPrimaryMenu(!showPrimaryMenu);
     }
 
     if (!showPrimaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      setShowPrimaryMenu(true);
       localSaveShowPrimaryMenu(!showPrimaryMenu);
     }
     primaryMenuDispatch({ field: 'selectedIndex', value: index });
@@ -49,12 +52,12 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleShowSettings = () => {
     if (display !== 'settings') {
-      homeDispatch({ field: 'display', value: 'settings' });
+      setDisplay('settings');
     } else {
       if (window.innerWidth < 640) {
-        homeDispatch({ field: 'showPrimaryMenu', value: false });
+        setShowPrimaryMenu(false);
       } else {
-        homeDispatch({ field: 'display', value: 'chat' });
+        setDisplay('chat');
       }
     }
   };
@@ -84,20 +87,34 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
       {/* Settings buttons align to bottom */}
       <div className="flex flex-col items-center space-y-6">
-        <ActivityBarButton>
-          <a href="https://github.com/jorge-menjivar/unSAGED" target="_blank">
-            <IconBrandGithub size={28} />
-          </a>
+        <ActivityBarButton
+          onClick={() => {
+            const url = 'https://github.com/jorge-menjivar/unSAGED';
+            if (TAURI) {
+              open(url);
+            } else {
+              window.open(url, '_blank');
+            }
+          }}
+        >
+          <IconBrandGithub size={28} />
         </ActivityBarButton>
-        <ActivityBarButton>
-          <a href="https://discord.gg/rMH2acSEzq" target="_blank">
-            <IconBrandDiscord size={28} />
-          </a>
+        <ActivityBarButton
+          onClick={() => {
+            const url = 'https://discord.gg/rMH2acSEzq';
+            if (TAURI) {
+              open(url);
+            } else {
+              window.open(url, '_blank');
+            }
+          }}
+        >
+          <IconBrandDiscord size={28} />
         </ActivityBarButton>
-        <ActivityBarButton handleClick={handleSignOut}>
+        <ActivityBarButton onClick={handleSignOut}>
           <IconLogout size={28} />
         </ActivityBarButton>
-        <ActivityBarButton handleClick={handleShowSettings}>
+        <ActivityBarButton onClick={handleShowSettings}>
           <IconSettings size={28} />
         </ActivityBarButton>
       </div>

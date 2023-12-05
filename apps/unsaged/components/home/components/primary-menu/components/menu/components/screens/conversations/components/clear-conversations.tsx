@@ -1,23 +1,20 @@
 import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { SidebarButton } from '@/components/common/Sidebar/SidebarButton';
+import { SidebarButton } from '@/components/common/side-bar/side-bar-button';
 
-interface Props {
-  onClearConversations: () => void;
-}
+import { useConversations } from '@/providers/conversations';
+import { useFolders } from '@/providers/folders';
 
-export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
+export function ClearConversationsComponent() {
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
 
   const { t } = useTranslation('sidebar');
 
-  const handleClearConversations = () => {
-    onClearConversations();
-    setIsConfirming(false);
-  };
+  const { clearConversations } = useConversations();
+  const { clearFolders } = useFolders();
 
   return isConfirming ? (
     <div className="flex w-full cursor-pointer items-center rounded-lg py-3 px-3 hover:bg-gray-500/10">
@@ -33,7 +30,9 @@ export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
           size={18}
           onClick={(e) => {
             e.stopPropagation();
-            handleClearConversations();
+            clearConversations();
+            clearFolders('chat');
+            setIsConfirming(false);
           }}
         />
 
@@ -54,4 +53,4 @@ export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
       onClick={() => setIsConfirming(true)}
     />
   );
-};
+}

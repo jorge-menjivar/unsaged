@@ -1,22 +1,21 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Input } from '@/components/common/ui/input';
-import HomeContext from '@/components/home/home.context';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
+
+import { useConversations } from '@/providers/conversations';
 
 export const TopKInput = () => {
   const { t } = useTranslation('chat');
-  const {
-    state: { selectedConversation },
-    handleUpdateConversationParams,
-  } = useContext(HomeContext);
+
+  const { selectedConversation, updateConversationParams } = useConversations();
 
   const handleChange = (value: number | undefined) => {
     const newValue = value;
     if (selectedConversation) {
-      handleUpdateConversationParams(selectedConversation, {
+      updateConversationParams(selectedConversation, {
         key: 'top_k',
         value: newValue,
       });

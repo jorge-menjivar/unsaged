@@ -1,24 +1,13 @@
 import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import { storageUpdateConversations } from '@/utils/app/storage/conversations';
-import {
-  storageCreateSystemPrompt,
-  storageDeleteSystemPrompt,
-  storageUpdateSystemPrompt,
-} from '@/utils/app/storage/systemPrompt';
-
-import { SystemPrompt } from '@/types/system-prompt';
-
 import { SystemPromptFolders } from './components/folders';
 import { SystemPromptList } from './components/system-prompt-list';
-import { PrimaryButton } from '@/components/common/Buttons/PrimaryButton';
-import { SecondaryButton } from '@/components/common/Buttons/SecondaryButton';
 import Search from '@/components/common/Search';
-import HomeContext from '@/components/home/home.context';
+import { Button } from '@/components/common/ui/button';
 
 import SystemPromptsContext from './system-prompts.context';
 import {
@@ -26,10 +15,15 @@ import {
   initialState,
 } from './system-prompts.state';
 
-import { v4 as uuidv4 } from 'uuid';
+import { useFolders } from '@/providers/folders';
+import { useSystemPrompts } from '@/providers/system_prompts';
 
 const SystemPrompts = () => {
   const { t } = useTranslation('systemPrompts');
+
+  const { createFolder } = useFolders();
+  const { systemPrompts, createSystemPrompt, updateSystemPrompt } =
+    useSystemPrompts();
 
   const systemPromptsContextValue = useCreateReducer<SystemPromptsInitialState>(
     {
@@ -38,108 +32,9 @@ const SystemPrompts = () => {
   );
 
   const {
-    state: {
-      systemPrompts,
-      database,
-      user,
-      models,
-      conversations,
-      selectedConversation,
-    },
-    dispatch: homeDispatch,
-    handleCreateFolder,
-  } = useContext(HomeContext);
-
-  const {
     state: { searchTerm, filteredSystemPrompts },
     dispatch: promptDispatch,
   } = systemPromptsContextValue;
-
-  const handleCreateSystemPrompt = async () => {
-    const newSystemPrompt: SystemPrompt = {
-      id: uuidv4(),
-      name: `${t('New System Prompt')}`,
-      content: '',
-      folderId: null,
-      models: [],
-    };
-
-    const updatedSystemPrompts = storageCreateSystemPrompt(
-      database!,
-      user!,
-      newSystemPrompt,
-      systemPrompts,
-    );
-
-    homeDispatch({ field: 'systemPrompts', value: updatedSystemPrompts });
-  };
-
-  const handleUpdateSystemPrompt = (updatedSystemPrompt: SystemPrompt) => {
-    let update: {
-      single: SystemPrompt;
-      all: SystemPrompt[];
-    };
-
-    update = storageUpdateSystemPrompt(
-      database!,
-      user!,
-      updatedSystemPrompt,
-      systemPrompts,
-    );
-
-    homeDispatch({ field: 'systemPrompts', value: update.all });
-  };
-
-  const handleDeleteSystemPrompt = (systemPromptId: string) => {
-    const updatedSystemPrompts = systemPrompts.filter(
-      (s) => s.id !== systemPromptId,
-    );
-
-    storageDeleteSystemPrompt(database!, user!, systemPromptId, systemPrompts);
-
-    for (const model of models) {
-      // const sectionId = model.vendor.toLowerCase();
-      // const settingId = `${model.id}_default_system_prompt`;
-      // const modelDefaultSystemPromptId = getSavedSettingValue(
-      //   savedSettings,
-      //   sectionId,
-      //   settingId,
-      //   settings,
-      // );
-
-      // if (modelDefaultSystemPromptId === systemPromptId) {
-      //   // Resetting default system prompt to built-in
-      //   setSavedSetting(user, sectionId, settingId, null);
-      // }
-      homeDispatch({ field: 'systemPrompts', value: updatedSystemPrompts });
-    }
-
-    const updatedConversations = [];
-    for (const conversation of conversations) {
-      if (conversation.systemPrompt?.id === systemPromptId) {
-        const updatedConversation = {
-          ...conversation,
-          systemPrompt: null,
-        };
-        updatedConversations.push(updatedConversation);
-      } else {
-        updatedConversations.push(conversation);
-      }
-    }
-
-    if (selectedConversation?.systemPrompt?.id === systemPromptId) {
-      const updatedSelectedConversation = {
-        ...selectedConversation,
-        systemPrompt: null,
-      };
-      homeDispatch({
-        field: 'selectedConversation',
-        value: updatedSelectedConversation,
-      });
-    }
-
-    storageUpdateConversations(database!, user!, updatedConversations);
-  };
 
   const handleDrop = (e: any) => {
     if (e.dataTransfer) {
@@ -150,7 +45,7 @@ const SystemPrompts = () => {
         folderId: e.target.dataset.folderId,
       };
 
-      handleUpdateSystemPrompt(updatedSystemPrompt);
+      updateSystemPrompt(updatedSystemPrompt);
 
       e.target.style.background = 'none';
     }
@@ -193,30 +88,27 @@ const SystemPrompts = () => {
   const doSearch = (term: string) =>
     promptDispatch({ field: 'searchTerm', value: term });
 
-  const createFolder = () =>
-    handleCreateFolder(t('New folder'), 'system_prompt');
-
   return (
     <SystemPromptsContext.Provider
       value={{
         ...systemPromptsContextValue,
-        handleCreateSystemPrompt,
-        handleUpdateSystemPrompt,
-        handleDeleteSystemPrompt,
       }}
     >
       <div className="flex items-center gap-x-2">
-        <PrimaryButton
+        <Button
           onClick={() => {
-            handleCreateSystemPrompt();
+            createSystemPrompt();
             doSearch('');
           }}
         >
           {t('New system prompt')}
-        </PrimaryButton>
-        <SecondaryButton onClick={createFolder}>
+        </Button>
+        <Button
+          variant={'secondary'}
+          onClick={() => createFolder(t('New folder'), 'system_prompt')}
+        >
           <IconFolderPlus size={16} />
-        </SecondaryButton>
+        </Button>
       </div>
       <Search
         placeholder={t('Search...') || ''}

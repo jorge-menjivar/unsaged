@@ -1,16 +1,16 @@
 export const ActivityBarButton = ({
   children,
-  handleClick,
+  onClick,
 }: {
   children: JSX.Element;
-  handleClick?: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <>
       <button
         className="text-theme-activity-bar-tab-light dark:text-theme-activity-bar-tab-dark
         hover:text-theme-activity-bar-tab-hover-light dark:hover:text-theme-activity-bar-tab-hover-dark"
-        onClick={handleClick}
+        onClick={onClick}
       >
         {children}
       </button>

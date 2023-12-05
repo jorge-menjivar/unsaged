@@ -11,11 +11,12 @@ import { useTranslation } from 'next-i18next';
 
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { PrimaryButton } from '@/components/common/Buttons/PrimaryButton';
-import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
+import { Button } from '@/components/common/ui/button';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 
-import SystemPromptsContext from '../system-prompts.context';
 import { ChipList } from './models-list';
+
+import { useSystemPrompts } from '@/providers/system_prompts';
 
 interface Props {
   systemPrompt: SystemPrompt;
@@ -23,8 +24,9 @@ interface Props {
 }
 
 export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
-  const { handleUpdateSystemPrompt } = useContext(SystemPromptsContext);
   const { t } = useTranslation('systemPrompt');
+
+  const { updateSystemPrompt } = useSystemPrompts();
 
   const [name, setName] = useState(systemPrompt.name);
   const [content, setContent] = useState(systemPrompt.content);
@@ -43,7 +45,7 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
         models: models,
       };
       if (updatedPrompt.content !== '') {
-        handleUpdateSystemPrompt(updatedPrompt);
+        updateSystemPrompt(updatedPrompt);
         onClose();
       }
     }
@@ -137,14 +139,14 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
             />
 
             <div className="flex space-x-4 mt-4">
-              <PrimaryButton
+              <Button
                 onClick={() => {
                   onClose();
                 }}
               >
                 {t('Cancel')}
-              </PrimaryButton>
-              <PrimaryButton
+              </Button>
+              <Button
                 onClick={() => {
                   const updatedPrompt: SystemPrompt = {
                     id: systemPrompt.id,
@@ -153,12 +155,12 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
                     folderId: systemPrompt.folderId,
                     models: models,
                   };
-                  handleUpdateSystemPrompt(updatedPrompt);
+                  updateSystemPrompt(updatedPrompt);
                   onClose();
                 }}
               >
                 {t('Save')}
-              </PrimaryButton>
+              </Button>
             </div>
           </div>
         </div>

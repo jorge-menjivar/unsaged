@@ -1,17 +1,16 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Input } from '@/components/common/ui/input';
-import HomeContext from '@/components/home/home.context';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
+
+import { useConversations } from '@/providers/conversations';
 
 export const StopInput = () => {
   const { t } = useTranslation('chat');
-  const {
-    state: { selectedConversation },
-    handleUpdateConversationParams,
-  } = useContext(HomeContext);
+
+  const { selectedConversation, updateConversationParams } = useConversations();
 
   const handleChange = (value: string | undefined) => {
     if (!selectedConversation) {
@@ -19,7 +18,7 @@ export const StopInput = () => {
     }
 
     if (value === undefined) {
-      handleUpdateConversationParams(selectedConversation, {
+      updateConversationParams(selectedConversation, {
         key: 'stop',
         value: value,
       });
@@ -36,7 +35,7 @@ export const StopInput = () => {
 
     splits = splits?.filter((split) => split !== '');
 
-    handleUpdateConversationParams(selectedConversation, {
+    updateConversationParams(selectedConversation, {
       key: 'stop',
       value: splits,
     });

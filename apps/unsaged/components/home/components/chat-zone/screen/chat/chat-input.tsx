@@ -16,39 +16,37 @@ import {
 
 import { useTranslation } from 'next-i18next';
 
-import { Conversation, Message } from '@/types/chat';
-import { Template } from '@/types/prompt';
-
-import HomeContext from '@/components/home/home.context';
+import { Message } from '@/types/chat';
+import { Template } from '@/types/templates';
 
 import ChatContext from './chat.context';
-import { PromptList } from './prompt-list';
+import { TemplateListComponent } from './template-list';
 import { VariableModal } from './variable-modal';
 
+import { useConversations } from '@/providers/conversations';
+import { useDisplay } from '@/providers/display';
+import { useMessages } from '@/providers/messages';
+import { useTemplates } from '@/providers/templates';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
-  onSend: (message: Message) => void;
-  onRegenerate: () => void;
   onScrollDownClick: () => void;
-  stopConversationRef: MutableRefObject<boolean>;
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
   showScrollDownButton: boolean;
 }
 
 export const ChatInput = ({
-  onSend,
-  onRegenerate,
   onScrollDownClick,
-  stopConversationRef,
   textareaRef,
   showScrollDownButton,
 }: Props) => {
   const { t } = useTranslation('chat');
 
-  const {
-    state: { selectedConversation, messageIsStreaming, prompts },
-  } = useContext(HomeContext);
+  const { messageIsStreaming } = useDisplay();
+  const { templates } = useTemplates();
+  const { selectedConversation } = useConversations();
+  const { sendMessage, setSelectedMessage, regenerateMessage, stopStreaming } =
+    useMessages();
 
   const {
     state: { selectedConversationMessages },
@@ -64,7 +62,7 @@ export const ChatInput = ({
 
   const promptListRef = useRef<HTMLUListElement | null>(null);
 
-  const filteredPrompts = prompts.filter((prompt) =>
+  const filteredPrompts = templates.filter((prompt) =>
     prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
   );
 
@@ -99,27 +97,22 @@ export const ChatInput = ({
     }
 
     const messageId = uuidv4();
-    onSend({
+
+    const newMessage: Message = {
       id: messageId,
       role: 'user',
       content: content.trim(),
       conversationId: selectedConversation.id,
       timestamp: new Date().toISOString(),
-    });
+    };
+
+    setSelectedMessage(newMessage);
+    sendMessage(newMessage);
     setContent('');
 
     if (window.innerWidth < 640 && textareaRef && textareaRef.current) {
       textareaRef.current.blur();
     }
-  };
-
-  const handleRegenerate = () => {
-    if (!selectedConversation) return;
-    onRegenerate();
-  };
-
-  const handleStopConversation = () => {
-    stopConversationRef.current = true;
   };
 
   const isMobile = () => {
@@ -150,7 +143,7 @@ export const ChatInput = ({
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         setActivePromptIndex((prevIndex) =>
-          prevIndex < prompts.length - 1 ? prevIndex + 1 : prevIndex,
+          prevIndex < templates.length - 1 ? prevIndex + 1 : prevIndex,
         );
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
@@ -160,7 +153,7 @@ export const ChatInput = ({
       } else if (e.key === 'Tab') {
         e.preventDefault();
         setActivePromptIndex((prevIndex) =>
-          prevIndex < prompts.length - 1 ? prevIndex + 1 : 0,
+          prevIndex < templates.length - 1 ? prevIndex + 1 : 0,
         );
       } else if (e.key === 'Enter') {
         e.preventDefault();
@@ -275,7 +268,7 @@ export const ChatInput = ({
             items-center gap-3 rounded border border-neutral-200 bg-theme-light
             py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600
             dark:bg-theme-dark dark:text-white md:mt-2"
-              onClick={handleStopConversation}
+              onClick={stopStreaming}
             >
               <IconPlayerStop size={16} /> {t('Stop Generating')}
             </button>
@@ -289,7 +282,7 @@ export const ChatInput = ({
               items-center gap-3 rounded border border-neutral-200 bg-theme-light
               py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600 
               dark:bg-theme-dark dark:text-white md:mt-2"
-                onClick={handleRegenerate}
+                onClick={regenerateMessage}
               >
                 <IconRepeat size={16} /> {t('Regenerate response')}
               </button>
@@ -353,9 +346,9 @@ export const ChatInput = ({
 
           {showPromptList && filteredPrompts.length > 0 && (
             <div className="absolute bottom-12 w-full">
-              <PromptList
+              <TemplateListComponent
                 activePromptIndex={activePromptIndex}
-                prompts={filteredPrompts}
+                templates={filteredPrompts}
                 onSelect={handleInitModal}
                 onMouseOver={setActivePromptIndex}
                 promptListRef={promptListRef}
@@ -365,7 +358,7 @@ export const ChatInput = ({
 
           {isModalVisible && (
             <VariableModal
-              prompt={filteredPrompts[activePromptIndex]}
+              templates={filteredPrompts[activePromptIndex]}
               variables={variables}
               onSubmit={handleSubmit}
               onClose={() => setIsModalVisible(false)}

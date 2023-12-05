@@ -23,12 +23,12 @@ import {
 } from '../storage/local/selected-conversation';
 import { storageUpdateMessage } from '../storage/message';
 import { storageGetMessages } from '../storage/messages';
-import {
-  storageGetPrompts as storageGetTemplates,
-  storageUpdatePrompts as storageUpdateTemplates,
-} from '../storage/prompts';
 import { storageUpdateSystemPrompt } from '../storage/systemPrompt';
 import { storageGetSystemPrompts } from '../storage/systemPrompts';
+import {
+  storageGetTemplates,
+  storageUpdateTemplates,
+} from '../storage/templates';
 import {
   getConversationsFromChatbotUIFile,
   getMessagesFromChatbotUIFile,

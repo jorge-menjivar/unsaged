@@ -1,26 +1,25 @@
-import { useContext } from 'react';
-
 import { FolderInterface } from '@/types/folder';
 
-import Folder from '@/components/common/Folder';
-import HomeContext from '@/components/home/home.context';
+import Folder from '@/components/common/folder';
 
 import { ConversationComponent } from './conversation-component';
+
+import { useConversations } from '@/providers/conversations';
+import { useFolders } from '@/providers/folders';
 
 interface Props {
   searchTerm: string;
 }
 
 export const ConversationsFolders = ({ searchTerm }: Props) => {
-  const {
-    state: { folders, conversations },
-    handleUpdateConversation,
-  } = useContext(HomeContext);
+  const { folders } = useFolders();
+
+  const { conversations, updateConversation } = useConversations();
 
   const handleDrop = (e: any, folder: FolderInterface) => {
     if (e.dataTransfer) {
       const conversation = JSON.parse(e.dataTransfer.getData('conversation'));
-      handleUpdateConversation(conversation, {
+      updateConversation(conversation, {
         key: 'folderId',
         value: folder.id,
       });

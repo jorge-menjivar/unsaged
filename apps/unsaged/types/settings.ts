@@ -13,7 +13,7 @@ export interface Setting {
   choices?: SettingChoice[];
   min?: number;
   max?: number;
-  storage: 'local' | HttpOnlyCookie;
+  secret?: boolean;
 }
 
 export interface Settings {
@@ -49,30 +49,28 @@ export const SystemSettings: Settings = {
         default: true,
       },
     ],
-    storage: 'local',
   },
   'openai.key': {
     name: 'OpenAI API Key',
     description: 'The API key to use for OpenAI models.',
     type: 'string',
-    storage: 'local',
+    secret: true,
   },
   'anthropic.key': {
     name: 'Anthropic API Key',
     description: 'The API key to use for Anthropic models.',
     type: 'string',
-    storage: 'local',
+    secret: true,
   },
   'google.key': {
     name: 'PaLM 2 API Key',
     description: 'The API key to use for PaLM 2 models.',
     type: 'string',
-    storage: 'local',
+    secret: true,
   },
   'ollama.url': {
     name: 'Ollama URL',
     description: 'The host URL for Ollama models.',
     type: 'string',
-    storage: 'local',
   },
 };

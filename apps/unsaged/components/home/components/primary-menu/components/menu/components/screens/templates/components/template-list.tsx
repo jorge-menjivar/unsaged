@@ -1,21 +1,21 @@
 import { FC } from 'react';
 
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
-import { PromptComponent } from './template-component';
+import { TemplateComponent } from './template-component';
 
 interface Props {
-  prompts: Template[];
+  templates: Template[];
 }
 
-export const PromptList: FC<Props> = ({ prompts }) => {
+export const PromptList: FC<Props> = ({ templates }) => {
   return (
     <div className="flex w-full flex-col gap-1">
-      {prompts
+      {templates
         .slice()
         .reverse()
-        .map((prompt, index) => (
-          <PromptComponent key={index} prompt={prompt} />
+        .map((t, index) => (
+          <TemplateComponent key={index} template={t} />
         ))}
     </div>
   );

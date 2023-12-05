@@ -3,15 +3,13 @@ import { useContext } from 'react';
 import { localSaveShowSecondaryMenu } from '@/utils/app/storage/local/ui-state';
 
 import { ActivityBarTab } from './components/activity-bar-tab';
-import HomeContext from '@/components/home/home.context';
 
 import SecondaryMenuContext from '../../secondary-menu.context';
 
+import { useDisplay } from '@/providers/display';
+
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
-  const {
-    state: { showSecondaryMenu, user },
-    dispatch: homeDispatch,
-  } = useContext(HomeContext);
+  const { showSecondaryMenu, setShowSecondaryMenu } = useDisplay();
 
   const {
     state: { selectedIndex },
@@ -20,13 +18,13 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
-      homeDispatch({ field: 'showSecondaryMenu', value: !showSecondaryMenu });
+      setShowSecondaryMenu(!showSecondaryMenu);
       localSaveShowSecondaryMenu(!showSecondaryMenu);
     }
 
     if (!showSecondaryMenu) {
-      homeDispatch({ field: 'showSecondaryMenu', value: !showSecondaryMenu });
-      localSaveShowSecondaryMenu(!showSecondaryMenu);
+      setShowSecondaryMenu(true);
+      localSaveShowSecondaryMenu(true);
     }
     secondaryMenuDispatch({ field: 'selectedIndex', value: index });
   };

@@ -1,16 +1,16 @@
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
 interface Props {
-  prompt: Template;
+  templates: Template;
   variables: string[];
   onSubmit: (updatedVariables: string[]) => void;
   onClose: () => void;
 }
 
 export const VariableModal: FC<Props> = ({
-  prompt,
+  templates,
   variables,
   onSubmit,
   onClose,
@@ -87,11 +87,11 @@ export const VariableModal: FC<Props> = ({
         role="dialog"
       >
         <div className="mb-4 text-xl font-bold text-black dark:text-neutral-200">
-          {prompt.name}
+          {templates.name}
         </div>
 
         <div className="mb-4 text-sm italic text-black dark:text-neutral-200">
-          {prompt.description}
+          {templates.description}
         </div>
 
         {updatedVariables.map((variable, index) => (

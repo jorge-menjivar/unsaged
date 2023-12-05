@@ -1,12 +1,4 @@
-import {
-  MutableRefObject,
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import Image from 'next/image';
@@ -14,42 +6,24 @@ import Image from 'next/image';
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
 import { DEFAULT_TITLE } from '@/utils/app/const';
-import { editMessageHandler } from '@/utils/app/handlers/edit-message';
-import { regenerateMessageHandler } from '@/utils/app/handlers/regenerate-message';
-import { sendHandlerFunction } from '@/utils/app/handlers/send-message';
 import { throttle } from '@/utils/data/throttle';
+import { debug } from '@/utils/logging';
 
 import { Message } from '@/types/chat';
 
-import { ErrorMessageDiv } from '@/components/common/ErrorMessageDiv';
-import HomeContext from '@/components/home/home.context';
-
 import { ChatInput } from './chat-input';
-import { ChatLoader } from './chat-loader';
 import ChatContext from './chat.context';
 import { ChatInitialState, initialState } from './chat.state';
 import { MemoizedChatMessage } from './memoized-chat-message';
 
-interface Props {
-  stopConversationRef: MutableRefObject<boolean>;
-}
+import { useConversations } from '@/providers/conversations';
+import { useMessages } from '@/providers/messages';
+import { useModels } from '@/providers/models';
 
-export const Chat = memo(({ stopConversationRef }: Props) => {
-  const {
-    state: {
-      conversations,
-      database,
-      messages,
-      models,
-      modelError,
-      loading,
-      builtInSystemPrompts,
-      user,
-      savedSettings,
-      selectedConversation,
-    },
-    dispatch: homeDispatch,
-  } = useContext(HomeContext);
+export const Chat = memo(() => {
+  const { models } = useModels();
+  const { selectedConversation } = useConversations();
+  const { messages, setSelectedMessage } = useMessages();
 
   const liveMessages = useRef<Message[]>([]);
 
@@ -66,21 +40,21 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     dispatch: chatDispatch,
   } = chatContextValue;
 
-  const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
   const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
   const [showScrollDownButton, setShowScrollDownButton] =
     useState<boolean>(false);
 
   useEffect(() => {
-    if (selectedConversation) {
-      const _conversationMessages = messages.filter(
-        (message) => message.conversationId === selectedConversation.id,
-      );
-      chatDispatch({
-        field: 'selectedConversationMessages',
-        value: _conversationMessages,
-      });
-    }
+    if (!selectedConversation) return;
+
+    const _conversationMessages = messages.filter(
+      (message) => message.conversationId === selectedConversation.id,
+    );
+
+    chatDispatch({
+      field: 'selectedConversationMessages',
+      value: _conversationMessages,
+    });
   }, [chatDispatch, messages, selectedConversation]);
 
   const getRandomQuote = useCallback(() => {
@@ -117,30 +91,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleSend = useCallback(sendHandlerFunction, [
-    conversations,
-    homeDispatch,
-    selectedConversation,
-    stopConversationRef,
-    database,
-  ]);
-
-  const handleEdit = useCallback(editMessageHandler, [
-    conversations,
-    homeDispatch,
-    selectedConversation,
-    stopConversationRef,
-    database,
-  ]);
-
-  const handleRegenerate = useCallback(regenerateMessageHandler, [
-    conversations,
-    homeDispatch,
-    selectedConversation,
-    stopConversationRef,
-    database,
-  ]);
 
   const scrollToBottom = useCallback(() => {
     if (autoScrollEnabled) {
@@ -189,12 +139,17 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
       if (lastMessageIndex !== -1) {
         const lastMessage = selectedConversationMessages[lastMessageIndex];
-        setCurrentMessage(lastMessage);
+        setSelectedMessage(lastMessage);
       } else {
-        setCurrentMessage(null);
+        setSelectedMessage(null);
       }
     }
-  }, [selectedConversation, selectedConversationMessages, throttledScrollDown]);
+  }, [
+    selectedConversation,
+    selectedConversationMessages,
+    throttledScrollDown,
+    setSelectedMessage,
+  ]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -241,8 +196,6 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
               Welcome to {DEFAULT_TITLE}
             </div>
           </div>
-        ) : modelError ? (
-          <ErrorMessageDiv error={modelError} />
         ) : (
           <>
             <div
@@ -288,29 +241,10 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
                       key={index}
                       message={message}
                       messageIndex={index}
-                      onEdit={(editedMessage) => {
-                        if (!selectedConversation) return;
-
-                        setCurrentMessage(editedMessage);
-                        // discard edited message and the ones that come after then resend
-                        handleEdit({
-                          user: user!,
-                          updatedMessage: editedMessage,
-                          index,
-                          stopConversationRef,
-                          builtInSystemPrompts,
-                          conversations,
-                          database: database!,
-                          savedSettings,
-                          dispatch: homeDispatch,
-                          messages: liveMessages.current,
-                          selectedConversation,
-                        });
-                      }}
                     />
                   ))}
 
-                  {loading && <ChatLoader />}
+                  {/* {loading && <ChatLoader />} */}
 
                   <div
                     className="h-[100px] sm:h-[162px] bg-theme-light dark:bg-theme-dark"
@@ -321,43 +255,8 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             </div>
 
             <ChatInput
-              stopConversationRef={stopConversationRef}
               textareaRef={textareaRef}
-              onSend={(message) => {
-                if (!selectedConversation) return;
-
-                setCurrentMessage(message);
-                handleSend({
-                  user: user!,
-                  newMessage: message,
-                  stopConversationRef,
-                  builtInSystemPrompts,
-                  conversations,
-                  database: database!,
-                  savedSettings,
-                  dispatch: homeDispatch,
-                  messages: liveMessages.current,
-                  selectedConversation,
-                });
-              }}
               onScrollDownClick={handleScrollDown}
-              onRegenerate={() => {
-                if (!selectedConversation) return;
-
-                if (currentMessage) {
-                  handleRegenerate({
-                    user: user!,
-                    stopConversationRef,
-                    builtInSystemPrompts,
-                    conversations,
-                    database: database!,
-                    savedSettings,
-                    dispatch: homeDispatch,
-                    messages: liveMessages.current,
-                    selectedConversation,
-                  });
-                }
-              }}
               showScrollDownButton={showScrollDownButton}
             />
           </>

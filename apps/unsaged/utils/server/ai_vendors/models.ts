@@ -1,3 +1,5 @@
+import { debug } from '@/utils/logging';
+
 import { AiModel } from '@/types/ai-models';
 import { SavedSettings } from '@/types/settings';
 

@@ -14,37 +14,32 @@ import {
 
 import { SystemPrompt } from '@/types/system-prompt';
 
-import SidebarActionButton from '@/components/common/Buttons/SidebarActionButton';
+import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
 
 import SystemPromptsContext from '../system-prompts.context';
 import { SystemPromptEditModal } from './system-prompt-edit-modal';
+
+import { useSystemPrompts } from '@/providers/system_prompts';
 
 interface Props {
   systemPrompt: SystemPrompt;
 }
 
 export const SystemPromptComponent = ({ systemPrompt }: Props) => {
-  const {
-    handleUpdateSystemPrompt,
-    handleDeleteSystemPrompt,
-    dispatch: promptDispatch,
-  } = useContext(SystemPromptsContext);
+  const { deleteSystemPrompt } = useSystemPrompts();
+
+  const { dispatch: promptDispatch } = useContext(SystemPromptsContext);
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
   const [renameValue, setRenameValue] = useState('');
 
-  const handleUpdate = (systemPrompts: SystemPrompt) => {
-    handleUpdateSystemPrompt(systemPrompt);
-    promptDispatch({ field: 'searchTerm', value: '' });
-  };
-
   const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
 
     if (isDeleting) {
-      handleDeleteSystemPrompt(systemPrompt.id);
+      deleteSystemPrompt(systemPrompt.id);
       promptDispatch({ field: 'searchTerm', value: '' });
     }
 

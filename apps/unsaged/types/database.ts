@@ -2,8 +2,8 @@ import { AiModel } from './ai-models';
 import { User } from './auth';
 import { Conversation, Message } from './chat';
 import { FolderInterface } from './folder';
-import { Template } from './prompt';
 import { SystemPrompt } from './system-prompt';
+import { Template } from './templates';
 
 export interface Database {
   name: string;

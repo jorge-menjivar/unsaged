@@ -1,30 +1,47 @@
+import { debug, error } from '@/utils/logging';
+
 import { User } from '@/types/auth';
 import { SavedSettings, Settings } from '@/types/settings';
 
+import { storageGetSecret, storageSetSecret } from './secret-storage';
+
 const STORAGE_KEY = 'saved-settings';
 
-export const getSavedSettings = (user: User): Settings => {
+export async function storageGetSavedSettings(
+  settings: Settings,
+  user: User,
+  includeSecrets = false,
+): Promise<SavedSettings> {
+  let savedSettings: SavedSettings = {};
   try {
     const itemName = `${STORAGE_KEY}-${user.email}`;
-    const savedSettings = JSON.parse(
+    savedSettings = JSON.parse(
       localStorage.getItem(itemName) || '{}',
     ) as SavedSettings;
-
-    return savedSettings;
-  } catch (error) {
-    console.log(error);
-    return {};
+  } catch (e) {
+    error(e);
   }
-};
 
-export const setSavedSettings = (user: User, savedSettings: SavedSettings) => {
+  if (includeSecrets) {
+    for (const settingId in settings) {
+      const setting = settings[settingId];
+      if (setting) {
+        if (setting.secret) {
+          const secret = await storageGetSecret(settingId);
+          if (secret) {
+            savedSettings[settingId] = secret;
+          }
+        }
+      }
+    }
+  }
+
+  return savedSettings;
+}
+
+const storageSetSavedSettings = (user: User, savedSettings: SavedSettings) => {
   const itemName = `${STORAGE_KEY}-${user.email}`;
   localStorage.setItem(itemName, JSON.stringify(savedSettings));
-};
-
-export const deleteSettings = (user: User) => {
-  const itemName = `${STORAGE_KEY}-${user.email}`;
-  localStorage.removeItem(itemName);
 };
 
 export const getDefaultValue = (settings: Settings, settingId: string) => {
@@ -47,7 +64,7 @@ export const getDefaultValue = (settings: Settings, settingId: string) => {
   }
 };
 
-export const getSavedSettingValue = (
+export const storageGetSavedSettingValue = (
   savedSettings: SavedSettings,
   settingId: string,
   settings?: Settings,
@@ -66,9 +83,29 @@ export const getSavedSettingValue = (
   return;
 };
 
-export const setSavedSetting = (user: User, settingId: string, value: any) => {
-  const savedSettings = getSavedSettings(user);
-  savedSettings[settingId] = value;
-  setSavedSettings(user, savedSettings);
-  return savedSettings;
-};
+export async function storageSetSavedSetting(
+  settings: Settings,
+  user: User,
+  settingId: string,
+  value: any,
+) {
+  if (!settings[settingId]) {
+    error(`Setting ${settingId} not found`);
+    return await storageGetSavedSettings(settings, user, true);
+  }
+
+  let isSecret = false;
+  if (settings[settingId]) {
+    isSecret = settings[settingId].secret || false;
+  }
+
+  if (isSecret) {
+    await storageSetSecret(settingId, value);
+  } else {
+    const publicSavedSettings = await storageGetSavedSettings(settings, user);
+    publicSavedSettings[settingId] = value;
+    storageSetSavedSettings(user, publicSavedSettings);
+  }
+
+  return await storageGetSavedSettings(settings, user, true);
+}

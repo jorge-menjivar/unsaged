@@ -2,28 +2,37 @@ import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
-import { PrimaryButton } from '@/components/common/Buttons/PrimaryButton';
+import { Button } from '@/components/common/ui/button';
 
 interface Props {
-  prompt: Template;
+  template: Template;
   onClose: () => void;
-  onUpdatePrompt: (prompt: Template) => void;
+  onUpdatePrompt: (template: Template) => void;
 }
 
-export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
-  const { t } = useTranslation('promptbar');
-  const [name, setName] = useState(prompt.name);
-  const [description, setDescription] = useState(prompt.description);
-  const [content, setContent] = useState(prompt.content);
+export const PromptModal: FC<Props> = ({
+  template,
+  onClose,
+  onUpdatePrompt,
+}) => {
+  const { t } = useTranslation('templates=-bar');
+  const [name, setName] = useState(template.name);
+  const [description, setDescription] = useState(template.description);
+  const [content, setContent] = useState(template.content);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      onUpdatePrompt({ ...prompt, name, description, content: content.trim() });
+      onUpdatePrompt({
+        ...template,
+        name,
+        description,
+        content: content.trim(),
+      });
       onClose();
     }
   };
@@ -107,10 +116,10 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
               rows={10}
             />
 
-            <PrimaryButton
+            <Button
               onClick={() => {
                 const updatedPrompt = {
-                  ...prompt,
+                  ...template,
                   name,
                   description,
                   content: content.trim(),
@@ -121,7 +130,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
               }}
             >
               {t('Save')}
-            </PrimaryButton>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
 export interface PromptsInitialState {
   searchTerm: string;

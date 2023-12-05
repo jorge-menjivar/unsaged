@@ -155,7 +155,6 @@ export async function streamOpenAI(
                 if (line) {
                   try {
                     line = line.slice(6, line.length);
-                    console.log('Line 1:', line);
 
                     if (line === '[DONE]') {
                       // Check if the controller is already closed before trying to close it
@@ -165,8 +164,6 @@ export async function streamOpenAI(
                       return;
                     }
                     line = line.slice(0, line.length);
-
-                    console.log('Line 2:', line);
 
                     const parsedData = JSON.parse(line);
 

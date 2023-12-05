@@ -9,17 +9,16 @@ import {
   DragEvent,
   KeyboardEvent,
   MouseEventHandler,
-  useContext,
   useEffect,
   useState,
 } from 'react';
 
 import { Conversation } from '@/types/chat';
 
-import SidebarActionButton from '@/components/common/Buttons/SidebarActionButton';
-import HomeContext from '@/components/home/home.context';
+import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
 
-import ConversationsContext from '../conversations.context';
+import { useConversations } from '@/providers/conversations';
+import { useDisplay } from '@/providers/display';
 
 interface Props {
   conversation: Conversation;
@@ -27,12 +26,13 @@ interface Props {
 
 export const ConversationComponent = ({ conversation }: Props) => {
   const {
-    state: { selectedConversation, messageIsStreaming },
-    handleSelectConversation,
-    handleUpdateConversation,
-  } = useContext(HomeContext);
+    selectedConversation,
+    selectConversation,
+    updateConversation,
+    deleteConversation,
+  } = useConversations();
 
-  const { handleDeleteConversation } = useContext(ConversationsContext);
+  const { messageIsStreaming } = useDisplay();
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isRenaming, setIsRenaming] = useState(false);
@@ -56,7 +56,7 @@ export const ConversationComponent = ({ conversation }: Props) => {
 
   const handleRename = (conversation: Conversation) => {
     if (renameValue.trim().length > 0) {
-      handleUpdateConversation(conversation, {
+      updateConversation(conversation, {
         key: 'name',
         value: renameValue,
       });
@@ -68,7 +68,7 @@ export const ConversationComponent = ({ conversation }: Props) => {
   const handleConfirm: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     if (isDeleting) {
-      handleDeleteConversation(conversation);
+      deleteConversation(conversation);
     } else if (isRenaming) {
       handleRename(conversation);
     }
@@ -131,7 +131,7 @@ export const ConversationComponent = ({ conversation }: Props) => {
              : 'bg-theme-selected-light dark:bg-theme-selected-dark'
          }
           `}
-          onClick={() => handleSelectConversation(conversation)}
+          onClick={() => selectConversation(conversation)}
           disabled={messageIsStreaming}
           draggable="true"
           onDragStart={(e) => handleDragStart(e, conversation)}

@@ -10,7 +10,8 @@ import { SystemPromptSelect } from './components/system-prompt';
 import { TemperatureSlider } from './components/temperature';
 import { TopKInput } from './components/top-k';
 import { TopPSlider } from './components/top-p';
-import HomeContext from '@/components/home/home.context';
+
+import { useConversations } from '@/providers/conversations';
 
 const openAiSupportedParameters = [
   'temperature',
@@ -49,9 +50,7 @@ const ollamaSupportedParameters = [
 ];
 
 export const ModelSettings = () => {
-  const {
-    state: { selectedConversation },
-  } = useContext(HomeContext);
+  const { selectedConversation } = useConversations();
 
   const supportedParameters = useMemo(() => {
     const model = selectedConversation?.model;
@@ -71,7 +70,7 @@ export const ModelSettings = () => {
       default:
         return [];
     }
-  }, []);
+  }, [selectedConversation?.model]);
 
   return (
     <div className="pt-2 px-1 space-y-4">

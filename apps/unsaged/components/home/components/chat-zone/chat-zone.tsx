@@ -1,24 +1,18 @@
-import { useContext, useRef } from 'react';
-
 import { useCreateReducer } from '@/hooks/useCreateReducer';
-
-import HomeContext from '@/components/home/home.context';
 
 import ChatZoneContext from './chat-zone.context';
 import { ChatZoneInitialState, initialState } from './chat-zone.state';
 import { Chat } from './screen/chat/chat';
 import { Settings } from './screen/settings/settings';
 
+import { useDisplay } from '@/providers/display';
+
 export const ChatZone = () => {
   const chatBarContextValue = useCreateReducer<ChatZoneInitialState>({
     initialState,
   });
 
-  const {
-    state: { display, showPrimaryMenu, showSecondaryMenu },
-  } = useContext(HomeContext);
-
-  const stopConversationRef = useRef<boolean>(false);
+  const { showPrimaryMenu, showSecondaryMenu, display } = useDisplay();
 
   return (
     <ChatZoneContext.Provider value={chatBarContextValue}>
@@ -28,9 +22,7 @@ export const ChatZone = () => {
         }`}
       >
         {display == 'settings' && <Settings />}
-        {display == 'chat' && (
-          <Chat stopConversationRef={stopConversationRef} />
-        )}
+        {display == 'chat' && <Chat />}
       </div>
     </ChatZoneContext.Provider>
   );

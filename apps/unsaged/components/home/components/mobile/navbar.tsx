@@ -1,51 +1,46 @@
 import { IconPlus } from '@tabler/icons-react';
-import { FC, useContext } from 'react';
 
 import {
   localSaveShowPrimaryMenu,
   localSaveShowSecondaryMenu,
 } from '@/utils/app/storage/local/ui-state';
 
-import { Conversation } from '@/types/chat';
-
 import {
   PrimaryMenuOpener,
   SecondaryMenuOpener,
-} from '../../../common/Sidebar/components/OpenCloseButton';
-import HomeContext from '@/components/home/home.context';
+} from '../../../common/side-bar/components/OpenCloseButton';
 
-interface Props {
-  selectedConversation: Conversation | null;
-  onNewConversation: () => void;
-}
+import { useConversations } from '@/providers/conversations';
+import { useDisplay } from '@/providers/display';
 
-export const Navbar: FC<Props> = ({
-  selectedConversation,
-  onNewConversation,
-}) => {
+export function Navbar() {
   const {
-    state: { showPrimaryMenu, showSecondaryMenu, user },
-    dispatch: homeDispatch,
-  } = useContext(HomeContext);
+    showPrimaryMenu,
+    showSecondaryMenu,
+    setShowPrimaryMenu,
+    setShowSecondaryMenu,
+  } = useDisplay();
+
+  const { selectedConversation, newConversation } = useConversations();
 
   const handleShowPrimaryMenu = () => {
     if (!showPrimaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: true });
-      homeDispatch({ field: 'showSecondaryMenu', value: false });
+      setShowPrimaryMenu(true);
+      setShowSecondaryMenu(false);
       localSaveShowPrimaryMenu(true);
     } else {
-      homeDispatch({ field: 'showPrimaryMenu', value: false });
+      setShowPrimaryMenu(false);
       localSaveShowPrimaryMenu(false);
     }
   };
 
   const handleShowSecondaryMenu = () => {
     if (!showSecondaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: false });
-      homeDispatch({ field: 'showSecondaryMenu', value: true });
+      setShowPrimaryMenu(false);
+      setShowSecondaryMenu(true);
       localSaveShowSecondaryMenu(true);
     } else {
-      homeDispatch({ field: 'showSecondaryMenu', value: false });
+      setShowSecondaryMenu(false);
       localSaveShowSecondaryMenu(false);
     }
   };
@@ -68,7 +63,7 @@ export const Navbar: FC<Props> = ({
         <IconPlus
           className="cursor-pointer hover:text-neutral-500 dark:hover:text-neutral-400
           text-black dark:text-white"
-          onClick={onNewConversation}
+          onClick={newConversation}
         />
       </div>
       <SecondaryMenuOpener
@@ -78,4 +73,4 @@ export const Navbar: FC<Props> = ({
       />
     </nav>
   );
-};
+}

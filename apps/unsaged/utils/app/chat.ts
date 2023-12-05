@@ -3,7 +3,7 @@ import { SavedSettings } from '@/types/settings';
 
 import { getStream } from '../server/ai_vendors/stream';
 import { getTokenCount } from '../server/ai_vendors/token-count';
-import { getSavedSettingValue } from './storage/local/settings';
+import { storageGetSavedSettingValue } from './storage/local/settings';
 
 export async function sendChatRequest(
   conversation: Conversation,
@@ -13,9 +13,9 @@ export async function sendChatRequest(
   stream: ReadableStream | null;
   controller: AbortController | null;
 }> {
-  const apiKey: string | undefined = getSavedSettingValue(
+  const apiKey: string | undefined = storageGetSavedSettingValue(
     savedSettings,
-    `${conversation.model.vendor.toLowerCase()}.api_key`,
+    `${conversation.model.vendor.toLowerCase()}.key`,
   );
 
   const { error: tokenCountError, count } = await getTokenCount(

@@ -1,10 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { PossibleAiModels } from '@/types/ai-models';
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import {
   Select,
   SelectContent,
@@ -12,13 +12,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/common/ui/select';
-import HomeContext from '@/components/home/home.context';
+
+import { useConversations } from '@/providers/conversations';
+import { useSystemPrompts } from '@/providers/system_prompts';
 
 export const SystemPromptSelect = () => {
-  const {
-    state: { selectedConversation, systemPrompts, builtInSystemPrompts },
-    handleUpdateConversation,
-  } = useContext(HomeContext);
+  const { systemPrompts, builtInSystemPrompts } = useSystemPrompts();
+
+  const { selectedConversation, updateConversation } = useConversations();
 
   const [availableSystemPrompts, setAvailableSystemPrompts] = useState<
     SystemPrompt[]
@@ -105,7 +106,7 @@ export const SystemPromptSelect = () => {
       systemPrompts.filter((prompt) => prompt.id === value)[0] || null;
 
     selectedConversation &&
-      handleUpdateConversation(selectedConversation, {
+      updateConversation(selectedConversation, {
         key: 'systemPrompt',
         value: systemPrompt,
       });

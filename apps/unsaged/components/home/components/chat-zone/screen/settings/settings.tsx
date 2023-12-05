@@ -1,15 +1,15 @@
 import { IconX } from '@tabler/icons-react';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import { setSavedSetting } from '@/utils/app/storage/local/settings';
-
 import { SettingComponent } from './components/setting-component';
-import HomeContext from '@/components/home/home.context';
 
 import SettingsContext from './settings.context';
 import { SettingsInitialState, initialState } from './settings.state';
+
+import { useDisplay } from '@/providers/display';
+import { useSettings } from '@/providers/settings';
 
 export const Settings = () => {
   const settingsContextValue = useCreateReducer<SettingsInitialState>({
@@ -21,10 +21,9 @@ export const Settings = () => {
     dispatch: settingsDispatch,
   } = settingsContextValue;
 
-  const {
-    state: { user, settings },
-    dispatch: homeDispatch,
-  } = useContext(HomeContext);
+  const { settings } = useSettings();
+
+  const { setDisplay } = useDisplay();
 
   useEffect(() => {
     // fetchFiles(searchQuery);
@@ -32,13 +31,6 @@ export const Settings = () => {
 
   const doSearch = (query: string) =>
     settingsDispatch({ field: 'searchQuery', value: query });
-
-  const handleSave = (settingId: string, value: any) => {
-    console.log('handleSave', settingId, value);
-
-    const newSavedSettings = setSavedSetting(user!, settingId, value);
-    homeDispatch({ field: 'savedSettings', value: newSavedSettings });
-  };
 
   const handleSelect = (settingId: string) => {
     settingsDispatch({
@@ -48,7 +40,7 @@ export const Settings = () => {
   };
 
   const handleClose = () => {
-    homeDispatch({ field: 'display', value: 'chat' });
+    setDisplay('chat');
   };
 
   return (
@@ -56,7 +48,6 @@ export const Settings = () => {
       value={{
         ...settingsContextValue,
         handleSelect,
-        handleSave,
       }}
     >
       <div className="relative flex-1 overflow-scroll bg-theme-light dark:bg-theme-dark">

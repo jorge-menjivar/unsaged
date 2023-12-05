@@ -1,7 +1,7 @@
 import { Conversation, Message } from './chat';
 import { FolderInterface } from './folder';
-import { Template } from './prompt';
 import { SystemPrompt } from './system-prompt';
+import { Template } from './templates';
 
 export type SupportedExportFormats = UnsagedExportFormatV1;
 export type LatestExportFormat = UnsagedExportFormatV1;

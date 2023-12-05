@@ -5,7 +5,7 @@ import { useCreateReducer } from '@/hooks/useCreateReducer';
 import ActivityBar from './components/activity-bar/activity-bar';
 import { Conversations } from './components/menu/components/screens/conversations/conversations';
 import SystemPrompts from './components/menu/components/screens/prompts/system-prompts';
-import Prompts from './components/menu/components/screens/templates/prompts';
+import Templates from './components/menu/components/screens/templates/prompts';
 import Menu from './components/menu/menu';
 
 import PrimaryMenuContext from './primary-menu.context';
@@ -24,7 +24,7 @@ export const PrimaryMenu = () => {
 
   const screens = [
     <Conversations key={0} />,
-    <Prompts key={1} />,
+    <Templates key={1} />,
     <SystemPrompts key={2} />,
   ];
 

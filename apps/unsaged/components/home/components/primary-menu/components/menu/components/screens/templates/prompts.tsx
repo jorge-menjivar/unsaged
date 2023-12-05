@@ -1,82 +1,35 @@
-import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
-import { useContext, useEffect, useState } from 'react';
+import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
-import {
-  storageCreatePrompt,
-  storageDeletePrompt,
-  storageUpdatePrompt,
-} from '@/utils/app/storage/prompt';
-
-import { Template } from '@/types/prompt';
-
-import { PromptFolders } from './components/folders';
+import { TemplateFolders } from './components/folders';
 import { PromptList } from './components/template-list';
-import { PrimaryButton } from '@/components/common/Buttons/PrimaryButton';
-import { SecondaryButton } from '@/components/common/Buttons/SecondaryButton';
 import Search from '@/components/common/Search';
-import HomeContext from '@/components/home/home.context';
+import { Button } from '@/components/common/ui/button';
 
 import PromptsContext from './prompts.context';
 import { PromptsInitialState, initialState } from './prompts.state';
 
-import { v4 as uuidv4 } from 'uuid';
+import { useFolders } from '@/providers/folders';
+import { useTemplates } from '@/providers/templates';
 
-const Prompts = () => {
-  const { t } = useTranslation('promptbar');
+const Templates = () => {
+  const { t } = useTranslation('templates-bar');
+
+  const { templates, createTemplate, updateTemplate } = useTemplates();
+
+  const { createFolder } = useFolders();
 
   const promptBarContextValue = useCreateReducer<PromptsInitialState>({
     initialState,
   });
 
   const {
-    state: { prompts, database, user },
-    dispatch: homeDispatch,
-    handleCreateFolder,
-  } = useContext(HomeContext);
-
-  const {
     state: { searchTerm, filteredPrompts },
     dispatch: promptDispatch,
   } = promptBarContextValue;
-
-  const handleCreatePrompt = () => {
-    const newPrompt: Template = {
-      id: uuidv4(),
-      name: `Template ${prompts.length + 1}`,
-      description: '',
-      content: '',
-      models: [],
-      folderId: null,
-    };
-
-    const updatedPrompts = storageCreatePrompt(
-      database!,
-      user!,
-      newPrompt,
-      prompts,
-    );
-
-    homeDispatch({ field: 'prompts', value: updatedPrompts });
-  };
-
-  const handleDeletePrompt = (prompt: Template) => {
-    const updatedPrompts = storageDeletePrompt(
-      database!,
-      user!,
-      prompt.id,
-      prompts,
-    );
-    homeDispatch({ field: 'prompts', value: updatedPrompts });
-  };
-
-  const handleUpdatePrompt = (prompt: Template) => {
-    const updated = storageUpdatePrompt(database!, user!, prompt, prompts);
-
-    homeDispatch({ field: 'prompts', value: updated.all });
-  };
 
   const handleDrop = (e: any) => {
     if (e.dataTransfer) {
@@ -87,7 +40,7 @@ const Prompts = () => {
         folderId: e.target.dataset.folderId,
       };
 
-      handleUpdatePrompt(updatedPrompt);
+      updateTemplate(updatedPrompt);
 
       e.target.style.background = 'none';
     }
@@ -97,7 +50,7 @@ const Prompts = () => {
     if (searchTerm) {
       promptDispatch({
         field: 'filteredPrompts',
-        value: prompts.filter((prompt) => {
+        value: templates.filter((prompt) => {
           const searchable =
             prompt.name.toLowerCase() +
             ' ' +
@@ -108,9 +61,9 @@ const Prompts = () => {
         }),
       });
     } else {
-      promptDispatch({ field: 'filteredPrompts', value: prompts });
+      promptDispatch({ field: 'filteredPrompts', value: templates });
     }
-  }, [searchTerm, prompts, promptDispatch]);
+  }, [searchTerm, templates, promptDispatch]);
 
   const allowDrop = (e: any) => {
     e.preventDefault();
@@ -127,30 +80,28 @@ const Prompts = () => {
   const doSearch = (term: string) =>
     promptDispatch({ field: 'searchTerm', value: term });
 
-  const createFolder = () => handleCreateFolder(t('New folder'), 'prompt');
-
   return (
     <PromptsContext.Provider
       value={{
         ...promptBarContextValue,
-        handleCreatePrompt,
-        handleDeletePrompt,
-        handleUpdatePrompt,
       }}
     >
       <div className="flex items-center gap-x-2">
-        <PrimaryButton
+        <Button
           onClick={() => {
-            handleCreatePrompt();
+            createTemplate();
             doSearch('');
           }}
         >
           {t('New message template')}
-        </PrimaryButton>
+        </Button>
 
-        <SecondaryButton onClick={createFolder}>
+        <Button
+          variant="secondary"
+          onClick={() => createFolder(t('New folder'), 'prompt')}
+        >
           <IconFolderPlus size={16} />
-        </SecondaryButton>
+        </Button>
       </div>
       <Search
         placeholder={t('Search...') || ''}
@@ -164,7 +115,7 @@ const Prompts = () => {
             className="flex border-b pb-2
           border-theme-button-border-light dark:border-theme-button-border-dark"
           >
-            <PromptFolders />
+            <TemplateFolders />
           </div>
         )}
 
@@ -177,7 +128,7 @@ const Prompts = () => {
             onDragLeave={removeHighlight}
           >
             <PromptList
-              prompts={filteredPrompts.filter((prompt) => !prompt.folderId)}
+              templates={filteredPrompts.filter((prompt) => !prompt.folderId)}
             />
           </div>
         ) : (
@@ -191,4 +142,4 @@ const Prompts = () => {
   );
 };
 
-export default Prompts;
+export default Templates;

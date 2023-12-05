@@ -2,32 +2,33 @@ import { useContext } from 'react';
 
 import { FolderInterface } from '@/types/folder';
 
-import Folder from '@/components/common/Folder';
-import HomeContext from '@/components/home/home.context';
+import Folder from '@/components/common/folder';
 
 import PromptsContext from '../prompts.context';
-import { PromptComponent } from './template-component';
+import { TemplateComponent } from './template-component';
 
-export const PromptFolders = () => {
-  const {
-    state: { folders },
-  } = useContext(HomeContext);
+import { useFolders } from '@/providers/folders';
+import { useTemplates } from '@/providers/templates';
+
+export const TemplateFolders = () => {
+  const { folders } = useFolders();
+
+  const { updateTemplate } = useTemplates();
 
   const {
     state: { searchTerm, filteredPrompts },
-    handleUpdatePrompt,
   } = useContext(PromptsContext);
 
   const handleDrop = (e: any, folder: FolderInterface) => {
     if (e.dataTransfer) {
-      const prompt = JSON.parse(e.dataTransfer.getData('prompt'));
+      const template = JSON.parse(e.dataTransfer.getData('prompt'));
 
-      const updatedPrompt = {
-        ...prompt,
+      const updatedTemplate = {
+        ...template,
         folderId: folder.id,
       };
 
-      handleUpdatePrompt(updatedPrompt);
+      updateTemplate(updatedTemplate);
     }
   };
 
@@ -41,7 +42,7 @@ export const PromptFolders = () => {
               key={index}
               className="ml-5 gap-2 border-l border-theme-button-border-light dark:border-theme-button-border-dark pl-2"
             >
-              <PromptComponent prompt={prompt} />
+              <TemplateComponent template={prompt} />
             </div>
           );
         }
