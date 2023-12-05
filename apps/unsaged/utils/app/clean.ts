@@ -1,7 +1,7 @@
 import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { FolderInterface } from '@/types/folder';
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
 import { OPENAI_API_TYPE } from './const';
 import { getModelDefaults } from './settings/model-defaults';

@@ -8,8 +8,8 @@ import {
   UnsagedExportFormatV1,
 } from '@/types/export';
 import { FolderInterface } from '@/types/folder';
-import { Template } from '@/types/prompt';
 import { SystemPrompt } from '@/types/system-prompt';
+import { Template } from '@/types/templates';
 
 import { cleanFolders, cleanMessageTemplates } from '../clean';
 import {

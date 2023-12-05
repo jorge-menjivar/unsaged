@@ -1,4 +1,4 @@
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
 export async function localCreateTemplate(newTemplate: Template) {
   try {

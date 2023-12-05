@@ -1,5 +1,5 @@
 import { SupaDatabase } from '../types/supabase';
-import { Template } from '@/types/prompt';
+import { Template } from '@/types/templates';
 
 import { SupabaseClient } from '@supabase/supabase-js';
 

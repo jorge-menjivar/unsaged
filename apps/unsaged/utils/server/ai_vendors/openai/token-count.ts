@@ -10,7 +10,7 @@ export async function countTokensOpenAI(
   systemPrompt: string,
   messages: Message[],
 ) {
-  const tokenCount = await invoke('count_tokens_openai', {
+  const tokenCount: number = await invoke('count_tokens_openai', {
     model_name: model.id,
     system_prompt: systemPrompt,
     messages,
@@ -18,5 +18,5 @@ export async function countTokensOpenAI(
 
   debug('tokenCount', tokenCount);
 
-  return { count: tokenCount };
+  return { count: tokenCount, error: undefined };
 }

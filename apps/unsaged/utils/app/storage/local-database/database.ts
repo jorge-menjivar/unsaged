@@ -3,8 +3,8 @@ import { User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 import { FolderInterface } from '@/types/folder';
-import { Template } from '@/types/prompt';
 import { SystemPrompt } from '@/types/system-prompt';
+import { Template } from '@/types/templates';
 
 import {
   localCreateConversation,
