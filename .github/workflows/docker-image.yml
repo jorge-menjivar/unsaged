@@ -99,7 +99,7 @@ jobs:
           file: ./apps/unsaged/Dockerfile
           push: true
           tags: bpvarsity/unsaged:latest
-          no-cache: false # This flag disables the use of cache
+          no-cache: true # This flag disables the use of cache
 
       - name: Build and push Docker image with version (No Cache)
         if: startsWith(github.ref, 'refs/tags/')
@@ -109,4 +109,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: bpvarsity/unsaged:${{ github.ref_name }}
-          no-cache: false # This flag disables the use of cache
+          no-cache: true # This flag disables the use of cache
