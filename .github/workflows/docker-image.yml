@@ -60,6 +60,7 @@ jobs:
         run: |
           cd apps/unsaged
           pnpm install
+          pnpm update
           cd ../../
           
       - name: Set up Docker Buildx
