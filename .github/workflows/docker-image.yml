@@ -11,7 +11,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    container: ghcr.io/coollabsio/coolify-helper:latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -52,7 +51,12 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      
+
+
+      # Install pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm
+        
       - name: Install dependencies for unsaged app
         run: |
           cd apps/unsaged
