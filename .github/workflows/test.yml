@@ -1,0 +1,114 @@
+name: Build, Test and Release
+
+on: 
+  push:
+    branches:
+      - desktop-app
+  pull_request:
+    branches: 
+      - desktop-app
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v3
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        
+    - uses: actions/cache@v2
+      with:
+        path: |
+          apps/unsaged/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/apps/unsaged/package-lock.json') }}
+            
+    - name: Install dependencies
+      run: |
+        cd apps/unsaged
+        npm install
+        
+    - name: Lint Source Code
+      run: | 
+        cd apps/unsaged
+        npm run lint
+
+    - name: Run Tests
+      run: |
+        cd apps/unsaged
+        npm run test
+        
+  build:
+
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    
+    - uses: actions/checkout@v3
+
+    - uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        override: true
+
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        
+    - uses: actions/cache@v2
+      with:
+        path: |
+          apps/unsaged/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/apps/unsaged/package-lock.json') }}
+
+    - name: Install dependencies  
+      run: |
+        cd apps/unsaged
+        npm install
+    
+    - name: Build Tauri App
+      run: | 
+        cd apps/unsaged
+        npm run tauri build
+        
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+
+    - uses: actions/checkout@v3
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset  
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./apps/unsaged/src-tauri/target/release/bundle/nsis/unsaged_0.1.0_x64-setup.exe
+        asset_name: unsaged_0.1.0_x64-setup.exe
+        asset_content_type: application/octet-stream
