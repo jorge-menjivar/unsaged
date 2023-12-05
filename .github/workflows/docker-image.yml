@@ -17,38 +17,16 @@ jobs:
 
       - name: Create .env.local file with dummy values
         run: |
-          echo "NEXT_PUBLIC_DEFAULT_MODEL='dummy-model'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_TITLE='Dummy Title'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DESCRIPTION='Dummy Description'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT='Dummy Prompt'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT='Dummy Ollama Prompt'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TEMPERATURE='0.0'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_P='0.0'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_K='0'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_REPEAT_PENALTY='0.0'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEFAULT_OLLAMA_SEED='0'" >> ./apps/unsaged/.env.local
           echo "NEXTAUTH_SECRET='dummy_nextauth_secret'" >> ./apps/unsaged/.env.local
           echo "NEXTAUTH_URL='https://dummyurl.test'" >> ./apps/unsaged/.env.local
-          echo "NEXT_PUBLIC_DEBUG_MODE='false'" >> ./apps/unsaged/.env.local
+          echo "NEXT_PUBLIC_DEBUG_MODE='true'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_SUPABASE_ANON_KEY='dummy_supabase_anon_key'" >> ./apps/unsaged/.env.local
-          echo "AUTH0_CLIENT_ID='dummy_auth0_client_id'" >> ./apps/unsaged/.env.local
-          echo "AUTH0_CLIENT_SECRET='dummy_auth0_client_secret'" >> ./apps/unsaged/.env.local
-          echo "AUTH0_ISSUER='https://dummyissuer.auth0.com'" >> ./apps/unsaged/.env.local
-          echo "GOOGLE_CLIENT_ID='dummy_google_client_id'" >> ./apps/unsaged/.env.local
-          echo "GOOGLE_CLIENT_SECRET='dummy_google_client_secret'" >> ./apps/unsaged/.env.local
           echo "NEXT_PUBLIC_SUPABASE_URL='https://dummy.supabase.co'" >> ./apps/unsaged/.env.local
           echo "SUPABASE_JWT_SECRET='dummy_supabase_jwt_secret'" >> ./apps/unsaged/.env.local
           echo "SUPABASE_SERVICE_ROLE_KEY='dummy_supabase_service_role_key'" >> ./apps/unsaged/.env.local
         env:
-          OPENAI_API_KEY: 'dummy_openai_api_key'
-          ANTHROPIC_API_KEY: 'dummy_anthropic_api_key'
-          PALM_API_KEY: 'dummy_palm_api_key'
           NEXTAUTH_SECRET: 'dummy_nextauth_secret'
           NEXT_PUBLIC_SUPABASE_ANON_KEY: 'dummy_supabase_anon_key'
-          AUTH0_CLIENT_ID: 'dummy_auth0_client_id'
-          AUTH0_CLIENT_SECRET: 'dummy_auth0_client_secret'
-          GOOGLE_CLIENT_ID: 'dummy_google_client_id'
-          GOOGLE_CLIENT_SECRET: 'dummy_google_client_secret'
           SUPABASE_JWT_SECRET: 'dummy_supabase_jwt_secret'
           SUPABASE_SERVICE_ROLE_KEY: 'dummy_supabase_service_role_key'
       
