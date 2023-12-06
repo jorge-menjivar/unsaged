@@ -13,7 +13,7 @@ COPY apps/ apps/
 COPY packages/ packages/
 
 # Copy the .env.local file from the host to the specified path in the Docker container
-COPY ./apps/unsaged/.env.local /unsaged/apps/unsaged/.env.local
+COPY ./apps/web/.env.local /unsaged/apps/web/.env.local
 
 # ---- Dependencies ----
 FROM base AS dependencies
@@ -25,7 +25,7 @@ RUN pnpm install --frozen-lockfile
 FROM dependencies AS build
 
 # Change working directory to the app directory
-WORKDIR /unsaged/apps/unsaged
+WORKDIR /unsaged/apps/web
 
 # Build the app
 RUN pnpm run build
@@ -38,15 +38,15 @@ WORKDIR /unsaged
 COPY --from=dependencies /unsaged/node_modules ./node_modules
 
 # Copy the built next files from the build stage
-COPY --from=build /unsaged/apps/unsaged/.next ./apps/unsaged/.next
-COPY --from=build /unsaged/apps/unsaged/public ./apps/unsaged/public
-COPY --from=build /unsaged/apps/unsaged/next.config.js ./apps/unsaged/next.config.js
-COPY --from=build /unsaged/apps/unsaged/next-i18next.config.js ./apps/unsaged/next-i18next.config.js
-COPY --from=build /unsaged/apps/unsaged/package.json ./apps/unsaged/package.json
+COPY --from=build /unsaged/apps/web/.next ./apps/web/.next
+COPY --from=build /unsaged/apps/web/public ./apps/web/public
+COPY --from=build /unsaged/apps/web/next.config.js ./apps/web/next.config.js
+COPY --from=build /unsaged/apps/web/next-i18next.config.js ./apps/web/next-i18next.config.js
+COPY --from=build /unsaged/apps/web/package.json ./apps/web/package.json
 
 # Expose the port the app will run on
 EXPOSE 3000
 
 # Set the working directory to the built app and start it
-WORKDIR /unsaged/apps/unsaged
+WORKDIR /unsaged/apps/web
 CMD ["pnpm", "start"]

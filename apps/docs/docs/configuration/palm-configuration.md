@@ -8,7 +8,7 @@ sidebar_position: 8
 
 To give everyone using your instance of unSAGED access to Google's PaLM 2 models like Bard, set the following environment variables:
 
-```sh title="apps/unsaged/.env.local"
+```sh title="apps/web/.env.local"
 PALM_API_KEY=your_palm_api_key
 ```
 
