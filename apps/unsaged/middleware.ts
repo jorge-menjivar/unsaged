@@ -7,9 +7,9 @@ import { NextRequest } from 'next/server';
 
 export const locales = ["en", "de"] as const;
 
-const publicPages = [
-  '/',
-];
+// const publicPages = [
+//   '/signin',
+// ];
 
 const getSecret = () => {
   return dockerEnvVarFix(process.env.NEXTAUTH_SECRET);
@@ -55,23 +55,26 @@ const authMiddleware = withAuth(
         }
       },
     },
+    pages: {
+      signIn: "/signin",
+    },
     secret: getSecret(),
   });
 
 export default function middleware(req: NextRequest) {
-  const publicPathnameRegex = RegExp(
-    `^(/(${locales.join('|')}))?(${publicPages
-      .flatMap((p) => (p === '/' ? ['', '/'] : p))
-      .join('|')})/?$`,
-    'i'
-  );
-  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
+  // const publicPathnameRegex = RegExp(
+  //   `^(/(${locales.join('|')}))?(${publicPages
+  //     .flatMap((p) => (p === '/' ? ['', '/'] : p))
+  //     .join('|')})/?$`,
+  //   'i'
+  // );
+  // const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
 
-  if (isPublicPage) {
-    return intlMiddleware(req);
-  } else {
-    return (authMiddleware as any)(req);
-  }
+  // if (isPublicPage) {
+  //   return intlMiddleware(req);
+  // }
+
+  return (authMiddleware as any)(req);
 }
 
 export const config = {
