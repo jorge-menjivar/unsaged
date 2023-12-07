@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -36,11 +36,9 @@ export const RepeatPenaltySlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            "Positive values penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim. Also known as 'frequency penalty'. Defaults to model provider configuration.",
-          )}
+          tip={t('repeatPenaltyDescription')}
         >
-          {t('Repeat Penalty')}
+          {t('repeatPenalty')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.repeat_penalty !== undefined}

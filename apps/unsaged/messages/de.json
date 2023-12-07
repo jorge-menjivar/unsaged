@@ -7,7 +7,13 @@
   "submit": "Absenden",
   "sureQ": "Bist du sicher?",
   "clearConversations": "Alle Konversationen löschen",
-
+  "newSystemPrompt": "Neue Systemaufforderung",
+  "name": "Name",
+  "prompt": "Prompt",
+  "systemPrompt": "Systemaufforderung",
+  "systemPromptDescription": "The system prompt to use when sending a message",
+  "model": "Modell",
+  "models": "Modelle",
   "chat": {
     "newConversation": "Neue Konversation",
     "newFolder": "Neuer Ordner",
@@ -19,39 +25,30 @@
     "regenerateResponse": "Antwort erneut generieren",
     "startTyping": "Start typing, type / to select a template...",
     "error": "Entschuldigung, es ist ein Fehler aufgetreten.",
-
-    "OpenAI API Key Required": "OpenAI API-Schlüssel erforderlich",
-    "Please set your OpenAI API key in the bottom left of the sidebar.": "Bitte trage deinen OpenAI API-Schlüssel in der linken unteren Ecke der Seitenleiste ein.",
-    "Stop Generating": "Generieren stoppen",
-    "Prompt limit is {{maxLength}} characters": "Das Eingabelimit liegt bei {{maxLength}} Zeichen",
-    "System Prompt": "Systemaufforderung",
-    "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.": "Du bist ChatGPT, ein großes Sprachmodell, das von OpenAI trainiert wurde. Befolge die Anweisungen des Benutzers sorgfältig. Antworte in Markdown-Format.",
-    "Enter a prompt": "Gib eine Anweisung ein",
-    "Regenerate response": "Antwort erneut generieren",
-    "Sorry, there was an error.": "Entschuldigung, es ist ein Fehler aufgetreten.",
-    "Model": "Modell",
-    "Conversation": "Konversation",
-    "OR": "ODER",
-    "Loading...": "Laden...",
-    "Type a message...": "Schreibe eine Nachricht...",
-    "Error fetching models.": "Fehler beim Abrufen der Sprachmodelle.",
-    "AI": "KI",
-    "You": "Du",
-    "Cancel": "Cancel",
-    "Save & Submit": "Save & Submit",
-    "Make sure your OpenAI API key is set in the bottom left of the sidebar.": "Stelle sicher, dass dein OpenAI API-Schlüssel in der unteren linken Ecke der Seitenleiste eingetragen ist.",
-    "If you completed this step, OpenAI may be experiencing issues.": "Wenn dies der Fall ist, könnte OpenAI möglicherweise momentan Probleme haben.",
-    "click if using a .env.local file": "click if using a .env.local file",
-    "Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.": "Das Nachrichtenlimit beträgt {{maxLength}} Zeichen. Du hast bereits {{valueLength}} Zeichen eingegeben.",
-    "Please enter a message": "Bitte gib eine Nachricht ein",
-    "unSAGED is an advanced chat kit for interacting with AI models.": "unSAGED ist ein fortschrittliches Chatbot-Toolkit für OpenAI's Chat-Modelle, das darauf abzielt, die Benutzeroberfläche und Funktionalität von ChatGPT nachzuahmen.",
-    "Are you sure you want to clear all messages?": "Bist du sicher, dass du alle Nachrichten löschen möchtest?",
-    "Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.": "Höhere Werte wie 0,8 machen die Ausgabe zufälliger, während niedrigere Werte wie 0,2 sie fokussierter und deterministischer machen werden."
+    "repeatPenalty": "Repeat Penalty",
+    "repeatPenaltyDescription": "Positive values penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim. Also known as 'frequency penalty'. Defaults to model provider configuration.",
+    "presencePenalty": "Repeat Penalty",
+    "presencePenaltyDescription": "Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics. Defaults to model provider configuration.",
+    "maxTokens": "Max Tokens",
+    "maxTokensDescription": "The maximum number of tokens to generate. The higher the number, the longer the AI will take to generate a response.",
+    "seed": "Seed",
+    "seedDescription": "The seed used to generate the response. The same seed will always generate the same response.",
+    "stop": "Stop",
+    "stopDescription": "Comma-separated list of tokens to stop generation on. The AI will stop generating tokens once it encounters any of these tokens.",
+    "temperature": "Temperature",
+    "temperatureDescription": "Higher values will make the output more random, while lower values will make it more focused and deterministic.",
+    "precise": "Precise",
+    "neutral": "Neutral",
+    "creative": "Creative",
+    "topK": "Top K",
+    "topKDescription": "The number of highest probability vocabulary tokens to keep for top-k-filtering. Between 1 and infinity. Defaults to model provider configuration.",
+    "topP": "Top P",
+    "topPDescription": "The cumulative probability of parameter highest probability tokens to use for nucleus sampling, between 0 and 1. Defaults to model provider configuration."
   },
   "markdown": {
-    "Copy code": "Code kopieren",
-    "Copied!": "Kopiert!",
-    "Enter file name": "Dateinamen eingeben"
+    "enterFileName": "Dateinamen eingeben",
+    "copied": "Kopiert!",
+    "copyCode": "Code kopieren"
   },
   "promptbar": {
     "newFolder": "Neuer Ordner",
@@ -60,32 +57,15 @@
     "description": "Beschreibung",
     "prompt": "Prompt",
     "promptContent": "Prompt content. Use {{}} to denote a variable. Ex: {{name}} is a {{adjective}} {{noun}}",
-    "save": "Speichern",
-
-    "New prompt": "New prompt",
-    "New folder": "New folder",
-    "No prompts.": "No prompts.",
-    "Search prompts...": "Search prompts...",
-    "Name": "Name",
-    "Description": "Description",
-    "A description for your prompt.": "A description for your prompt.",
-    "Prompt": "Prompt",
-    "Prompt content. Use {{}} to denote a variable. Ex: {{name}} is a {{adjective}} {{noun}}": "Prompt content. Use {{}} to denote a variable. Ex: {{name}} is a {{adjective}} {{noun}}",
-    "Save": "Save"
-  },
-  "settings": {
-    "Dark mode": "Dark Mode",
-    "Light mode": "Light Mode"
+    "save": "Speichern"
   },
   "sidebar": {
-    "New folder": "Neuer Ordner",
-    "New chat": "Neue Konversation",
-    "No conversations.": "Keine Konversationen.",
-    "Search conversations...": "Konversationen suchen...",
-    "OpenAI API Key": "OpenAI API-Schlüssel",
-    "Import data": "Konversationen importieren",
-    "Are you sure?": "Bist du sicher?",
-    "Clear conversations": "Konversationen löschen",
-    "Export data": "Konversationen exportieren"
+    "importData": "Import Data",
+    "exportData": "Export Data"
+  },
+  "error": {
+    "fetchingModels": "Fehler beim Abrufen der Sprachmodelle.",
+    "keyMissing": "Stelle sicher, dass dein {{vendor}} Schlüssel in der unteren linken Ecke der Seitenleiste eingetragen ist.",
+    "vendorIssue": "Wenn dies der Fall ist, könnte {{vendor}} möglicherweise momentan Probleme haben."
   }
 }

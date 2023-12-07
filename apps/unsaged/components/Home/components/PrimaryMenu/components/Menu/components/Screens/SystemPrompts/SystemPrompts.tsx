@@ -26,7 +26,7 @@ import { SystemPromptsInitialState, initialState } from './SystemPrompts.state';
 import { v4 as uuidv4 } from 'uuid';
 
 const SystemPrompts = () => {
-  const t = useTranslations('systemPrompts');
+  const t = useTranslations();
 
   const systemPromptsContextValue = useCreateReducer<SystemPromptsInitialState>(
     {
@@ -55,7 +55,7 @@ const SystemPrompts = () => {
   const handleCreateSystemPrompt = async () => {
     const newSystemPrompt: SystemPrompt = {
       id: uuidv4(),
-      name: `${t('New System Prompt')}`,
+      name: `${t('newSystemPrompt')}`,
       content: '',
       folderId: null,
       models: [],
@@ -216,7 +216,7 @@ const SystemPrompts = () => {
         </SecondaryButton>
       </div>
       <Search
-        placeholder={t('Search...') || ''}
+        placeholder={`${t('search')}...`}
         searchTerm={searchTerm}
         onSearch={doSearch}
       />
@@ -248,7 +248,7 @@ const SystemPrompts = () => {
         ) : (
           <div className="mt-8 select-none text-center text-black dark:text-white opacity-50">
             <IconMistOff className="mx-auto mb-3" />
-            <span className="text-[14px] leading-normal">{t('No data.')}</span>
+            <span className="text-[14px] leading-normal">{t('noData')}.</span>
           </div>
         )}
       </div>

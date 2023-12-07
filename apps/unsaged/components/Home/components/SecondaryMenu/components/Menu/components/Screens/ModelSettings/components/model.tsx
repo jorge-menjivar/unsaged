@@ -43,12 +43,12 @@ export const ModelSelect = () => {
         value: selectedModel,
       });
   };
-  const t = useTranslations('modelSettings');
+  const t = useTranslations();
 
   return (
     <div className="flex flex-col mt-4">
       <PrimaryLabel tip={t('The model used for this conversation')}>
-        {t('Model')}
+        {t('model')}
       </PrimaryLabel>
 
       <Select

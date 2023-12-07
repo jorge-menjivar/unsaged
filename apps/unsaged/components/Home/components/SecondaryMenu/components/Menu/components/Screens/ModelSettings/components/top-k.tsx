@@ -35,11 +35,9 @@ export const TopKInput = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The number of highest probability vocabulary tokens to keep for top-k-filtering. Between 1 and infinity. Defaults to model provider configuration.',
-          )}
+          tip={t('topKDescription')}
         >
-          {t('Top K')}
+          {t('topK')}
         </PrimaryLabel>
         <Input
           type="number"

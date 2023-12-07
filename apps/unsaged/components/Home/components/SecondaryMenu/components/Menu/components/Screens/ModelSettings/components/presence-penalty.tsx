@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -36,11 +36,9 @@ export const PresencePenaltySlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            "Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics. Defaults to model provider configuration.",
-          )}
+          tip={t('presencePenaltyDescription')}
         >
-          {t('Presence Penalty')}
+          {t('presencePenalty')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.presence_penalty !== undefined}

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
@@ -54,11 +54,9 @@ export const StopInput = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'Comma-separated list of tokens to stop generation on. The AI will stop generating tokens once it encounters any of these tokens.',
-          )}
+          tip={t('stopDescription')}
         >
-          {t('Stop')}
+          {t('stop')}
         </PrimaryLabel>
         <Input
           type="text"

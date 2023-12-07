@@ -29,7 +29,7 @@ export const ConversationsSettings = () => {
       <Import onImport={handleImportConversations} />
 
       {/* <SidebarButton
-        text={t('Export data')}
+        text={t('exportData')}
         icon={<IconFileExport size={18} />}
         onClick={() => handleExportData(database!)}
       /> */}

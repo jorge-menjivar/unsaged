@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { ErrorMessage } from '@/types/error';
 
 const useErrorService = () => {
-  const t = useTranslations('chat');
+  const t = useTranslations('error');
 
   return {
     getModelsError: useMemo(
@@ -13,17 +13,13 @@ const useErrorService = () => {
         return !error
           ? null
           : ({
-            title: t('Error fetching models.'),
+            title: t('fetchingModels'),
             code: error.status || 'unknown',
             messageLines: error.statusText
               ? [error.statusText]
               : [
-                t(
-                  'Make sure your OpenAI API key is set in the bottom left of the sidebar.',
-                ),
-                t(
-                  'If you completed this step, OpenAI may be experiencing issues.',
-                ),
+                t('keyMissing', { vendor: 'OpenAI API' }),
+                t('vendorIssue', { vendor: 'OpenAI' }),
               ],
           } as ErrorMessage);
       },

@@ -111,11 +111,11 @@ export const SystemPromptSelect = () => {
       });
   };
 
-  const t = useTranslations('modelSettings');
+  const t = useTranslations();
   return (
     <div className="flex flex-col mt-4">
-      <PrimaryLabel tip={t('The system prompt to use when sending a message')}>
-        {t('System Prompt')}
+      <PrimaryLabel tip={t('systemPromptDescription')}>
+        {t('systemPrompt')}
       </PrimaryLabel>
       <Select value={currentSystemPromptId || ''} onValueChange={handleChange}>
         <SelectTrigger className="w-full">

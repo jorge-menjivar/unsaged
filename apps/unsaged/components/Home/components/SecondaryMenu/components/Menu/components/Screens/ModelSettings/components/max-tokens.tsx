@@ -48,11 +48,9 @@ export const MaxTokensSlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The maximum number of tokens to generate. The higher the number, the longer the AI will take to generate a response.',
-          )}
+          tip={t('maxTokensDescription')}
         >
-          {t('Max Tokens')}
+          {t('maxTokens')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.max_tokens !== undefined}

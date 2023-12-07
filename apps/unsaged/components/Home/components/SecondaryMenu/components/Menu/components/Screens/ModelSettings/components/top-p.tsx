@@ -38,11 +38,9 @@ export const TopPSlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The cumulative probability of parameter highest probability tokens to use for nucleus sampling, between 0 and 1. Defaults to model provider configuration.',
-          )}
+          tip={t('topPDescription')}
         >
-          {t('Top P')}
+          {t('topP')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.top_p !== undefined}

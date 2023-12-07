@@ -39,7 +39,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
       true,
     )}${fileExtension}`;
     const fileName = window.prompt(
-      t('Enter file name') || '',
+      t('enterFileName'),
       suggestedFileName,
     );
 
@@ -72,7 +72,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
             onClick={copyToClipboard}
           >
             {isCopied ? <IconCheck size={18} /> : <IconClipboard size={18} />}
-            {isCopied ? t('Copied!') : t('Copy code')}
+            {isCopied ? t('copied') : t('copyCode')}
           </button>
           <button
             className="flex items-center rounded bg-none p-1 text-xs text-white dark:text-white"
