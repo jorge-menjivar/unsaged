@@ -15,7 +15,7 @@ const config: PlaywrightTestConfig = {
         }
     ],
     webServer: {
-        command: `PORT=${PORT} pnpm start`,
+        command: `pnpm start`,
         port: PORT,
         reuseExistingServer: true
     }
