@@ -27,7 +27,7 @@ const Search: FC<Props> = ({ placeholder, searchTerm, onSearch }) => {
         bg-theme-primary-menu-light dark:bg-theme-primary-menu-dark px-4 py-3 sm:py-2 pr-10
         text-[14px] leading-3 text-black dark:text-white"
         type="text"
-        placeholder={t(placeholder) || ''}
+        placeholder={t(placeholder)}
         value={searchTerm}
         onChange={handleSearchChange}
       />

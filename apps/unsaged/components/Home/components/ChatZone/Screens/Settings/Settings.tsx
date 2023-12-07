@@ -1,13 +1,10 @@
-import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
-
-import { useTranslations } from 'next-intl';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
 import {
   setSavedSetting,
-  setSavedSettings,
 } from '@/utils/app/storage/local/settings';
 
 import { Setting, SettingsSection } from '@/types/settings';
@@ -19,8 +16,6 @@ import SettingsContext from './Settings.context';
 import { SettingsInitialState, initialState } from './Settings.state';
 
 export const Settings = () => {
-  const t = useTranslations('settings');
-
   const settingsContextValue = useCreateReducer<SettingsInitialState>({
     initialState,
   });

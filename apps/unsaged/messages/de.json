@@ -1,5 +1,25 @@
 {
+  "search": "Suche",
+  "noData": "Keine Daten",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "saveSubmit": "Speichern & Absenden",
+  "submit": "Absenden",
+  "sureQ": "Bist du sicher?",
+  "clearConversations": "Alle Konversationen löschen",
+
   "chat": {
+    "newConversation": "Neue Konversation",
+    "newFolder": "Neuer Ordner",
+    "search": "Suche",
+    "noData": "Keine Daten",
+    "enterMessage": "Bitte gib eine Nachricht ein",
+    "messageLimit": "Das Nachrichtenlimit beträgt {{maxLength}} Zeichen. Du hast bereits {{valueLength}} Zeichen eingegeben.",
+    "stopGenerating": "Generieren stoppen",
+    "regenerateResponse": "Antwort erneut generieren",
+    "startTyping": "Start typing, type / to select a template...",
+    "error": "Entschuldigung, es ist ein Fehler aufgetreten.",
+
     "OpenAI API Key Required": "OpenAI API-Schlüssel erforderlich",
     "Please set your OpenAI API key in the bottom left of the sidebar.": "Bitte trage deinen OpenAI API-Schlüssel in der linken unteren Ecke der Seitenleiste ein.",
     "Stop Generating": "Generieren stoppen",
@@ -34,6 +54,14 @@
     "Enter file name": "Dateinamen eingeben"
   },
   "promptbar": {
+    "newFolder": "Neuer Ordner",
+    "newMessageTemplate": "Neue Nachrichten Vorlage",
+    "name": "Name",
+    "description": "Beschreibung",
+    "prompt": "Prompt",
+    "promptContent": "Prompt content. Use {{}} to denote a variable. Ex: {{name}} is a {{adjective}} {{noun}}",
+    "save": "Speichern",
+
     "New prompt": "New prompt",
     "New folder": "New folder",
     "No prompts.": "No prompts.",

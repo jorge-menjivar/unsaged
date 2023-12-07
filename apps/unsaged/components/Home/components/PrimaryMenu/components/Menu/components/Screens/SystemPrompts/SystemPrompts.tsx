@@ -191,7 +191,7 @@ const SystemPrompts = () => {
     promptDispatch({ field: 'searchTerm', value: term });
 
   const createFolder = () =>
-    handleCreateFolder(t('New folder'), 'system_prompt');
+    handleCreateFolder(t('newFolder'), 'system_prompt');
 
   return (
     <SystemPromptsContext.Provider

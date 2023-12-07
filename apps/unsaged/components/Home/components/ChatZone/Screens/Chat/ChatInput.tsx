@@ -74,8 +74,7 @@ export const ChatInput = ({
 
     if (maxLength && value.length > maxLength) {
       alert(
-        t(
-          `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
+        t('messageLimit',
           { maxLength, valueLength: value.length },
         ),
       );
@@ -94,7 +93,7 @@ export const ChatInput = ({
     }
 
     if (!content) {
-      alert(t('Please enter a message'));
+      alert(t('enterMessage'));
       return;
     }
 
@@ -239,9 +238,8 @@ export const ChatInput = ({
     if (textareaRef && textareaRef.current) {
       textareaRef.current.style.height = 'inherit';
       textareaRef.current.style.height = `${textareaRef.current?.scrollHeight}px`;
-      textareaRef.current.style.overflow = `${
-        textareaRef?.current?.scrollHeight > 400 ? 'auto' : 'hidden'
-      }`;
+      textareaRef.current.style.overflow = `${textareaRef?.current?.scrollHeight > 400 ? 'auto' : 'hidden'
+        }`;
     }
   }, [content, textareaRef]);
 
@@ -281,7 +279,7 @@ export const ChatInput = ({
             dark:bg-theme-dark dark:text-white md:mt-2"
               onClick={handleStopConversation}
             >
-              <IconPlayerStop size={16} /> {t('Stop Generating')}
+              <IconPlayerStop size={16} /> {t('stopGenerating')}
             </button>
           )}
 
@@ -295,7 +293,7 @@ export const ChatInput = ({
               dark:bg-theme-dark dark:text-white md:mt-2"
                 onClick={handleRegenerate}
               >
-                <IconRepeat size={16} /> {t('Regenerate response')}
+                <IconRepeat size={16} /> {t('regenerateResponse')}
               </button>
             )}
 
@@ -327,14 +325,13 @@ export const ChatInput = ({
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
-              overflow: `${
-                textareaRef.current && textareaRef.current.scrollHeight > 400
-                  ? 'auto'
-                  : 'hidden'
-              }`,
+              overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400
+                ? 'auto'
+                : 'hidden'
+                }`,
             }}
             placeholder={
-              t('Start typing, type / to select a template...') || ''
+              t('startTyping')
             }
             value={content}
             rows={1}

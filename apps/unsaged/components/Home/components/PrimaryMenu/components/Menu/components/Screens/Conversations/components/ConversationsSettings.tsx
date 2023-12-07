@@ -1,18 +1,12 @@
-import { IconFileExport, IconLogout, IconSettings } from '@tabler/icons-react';
 import { useContext } from 'react';
-
-import { useTranslations } from 'next-intl';
 
 import { Import } from '@/components/Home/components/Settings/Import';
 import HomeContext from '@/components/Home/home.context';
-import { SidebarButton } from '@/components/common/Sidebar/SidebarButton';
 
 import ConversationsContext from '../Conversations.context';
 import { ClearConversations } from './ClearConversations';
 
 export const ConversationsSettings = () => {
-  const t = useTranslations('sidebar');
-
   const {
     state: { database, conversations },
   } = useContext(HomeContext);
