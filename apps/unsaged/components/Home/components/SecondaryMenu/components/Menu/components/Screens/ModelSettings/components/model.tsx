@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { AiModel } from '@/types/ai-models';
 
@@ -43,7 +43,7 @@ export const ModelSelect = () => {
         value: selectedModel,
       });
   };
-  const { t } = useTranslation('modelSettings');
+  const t = useTranslations('modelSettings');
 
   return (
     <div className="flex flex-col mt-4">

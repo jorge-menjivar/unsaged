@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { PossibleAiModels } from '@/types/ai-models';
 
@@ -10,7 +10,7 @@ import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
 
 export const MaxTokensSlider = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,

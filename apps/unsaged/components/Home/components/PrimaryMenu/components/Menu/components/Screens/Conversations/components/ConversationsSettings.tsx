@@ -1,7 +1,7 @@
 import { IconFileExport, IconLogout, IconSettings } from '@tabler/icons-react';
 import { useContext } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { Import } from '@/components/Home/components/Settings/Import';
 import HomeContext from '@/components/Home/home.context';
@@ -11,7 +11,7 @@ import ConversationsContext from '../Conversations.context';
 import { ClearConversations } from './ClearConversations';
 
 export const ConversationsSettings = () => {
-  const { t } = useTranslation('sidebar');
+  const t = useTranslations('sidebar');
 
   const {
     state: { database, conversations },

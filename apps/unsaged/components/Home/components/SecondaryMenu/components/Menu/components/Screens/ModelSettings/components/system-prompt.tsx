@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { PossibleAiModels } from '@/types/ai-models';
 import { SystemPrompt } from '@/types/system-prompt';
@@ -111,7 +111,7 @@ export const SystemPromptSelect = () => {
       });
   };
 
-  const { t } = useTranslation('modelSettings');
+  const t = useTranslations('modelSettings');
   return (
     <div className="flex flex-col mt-4">
       <PrimaryLabel tip={t('The system prompt to use when sending a message')}>

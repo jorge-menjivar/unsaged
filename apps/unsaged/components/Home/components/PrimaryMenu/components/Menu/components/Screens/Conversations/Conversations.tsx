@@ -1,7 +1,7 @@
 import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
@@ -42,7 +42,7 @@ import { ConversationsInitialState, initialState } from './Conversations.state';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Conversations = () => {
-  const { t } = useTranslation('conversations');
+  const t = useTranslations('conversations');
 
   const conversationsContextValue = useCreateReducer<ConversationsInitialState>(
     {

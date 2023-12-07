@@ -1,6 +1,6 @@
 import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
@@ -26,7 +26,7 @@ import { SystemPromptsInitialState, initialState } from './SystemPrompts.state';
 import { v4 as uuidv4 } from 'uuid';
 
 const SystemPrompts = () => {
-  const { t } = useTranslation('systemPrompts');
+  const t = useTranslations('systemPrompts');
 
   const systemPromptsContextValue = useCreateReducer<SystemPromptsInitialState>(
     {

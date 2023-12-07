@@ -1,8 +1,7 @@
-const { i18n } = require('./next-i18next.config');
+const withNextIntl = require('next-intl/plugin')();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  i18n,
   reactStrictMode: true,
   webpack(config, { isServer, dev }) {
     config.experiments = {
@@ -15,4 +14,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

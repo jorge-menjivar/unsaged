@@ -14,7 +14,7 @@ import {
   useState,
 } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { Conversation, Message } from '@/types/chat';
 import { Prompt } from '@/types/prompt';
@@ -44,7 +44,7 @@ export const ChatInput = ({
   textareaRef,
   showScrollDownButton,
 }: Props) => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
 
   const {
     state: { selectedConversation, messageIsStreaming, prompts },

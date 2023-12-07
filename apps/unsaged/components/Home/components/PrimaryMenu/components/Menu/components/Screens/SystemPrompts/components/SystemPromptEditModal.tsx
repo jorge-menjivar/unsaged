@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { SystemPrompt } from '@/types/system-prompt';
 
@@ -24,7 +24,7 @@ interface Props {
 
 export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
   const { handleUpdateSystemPrompt } = useContext(SystemPromptsContext);
-  const { t } = useTranslation('systemPrompt');
+  const t = useTranslations('systemPrompt');
 
   const [name, setName] = useState(systemPrompt.name);
   const [content, setContent] = useState(systemPrompt.content);

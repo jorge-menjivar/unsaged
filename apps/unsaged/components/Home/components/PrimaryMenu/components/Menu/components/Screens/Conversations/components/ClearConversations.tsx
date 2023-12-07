@@ -1,7 +1,7 @@
 import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
 import { FC, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { SidebarButton } from '@/components/common/Sidebar/SidebarButton';
 
@@ -12,7 +12,7 @@ interface Props {
 export const ClearConversations: FC<Props> = ({ onClearConversations }) => {
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
 
-  const { t } = useTranslation('sidebar');
+  const t = useTranslations('sidebar');
 
   const handleClearConversations = () => {
     onClearConversations();

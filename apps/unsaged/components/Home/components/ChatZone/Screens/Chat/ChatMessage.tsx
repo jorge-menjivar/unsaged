@@ -8,7 +8,7 @@ import {
 } from '@tabler/icons-react';
 import { FC, memo, useContext, useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { storageDeleteMessages } from '@/utils/app/storage/messages';
 
@@ -35,7 +35,7 @@ export interface Props {
 
 export const ChatMessage: FC<Props> = memo(
   ({ message, messageIndex, onEdit }) => {
-    const { t } = useTranslation('chat');
+    const t = useTranslations('chat');
 
     const {
       state: {
