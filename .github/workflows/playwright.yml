@@ -13,14 +13,13 @@ jobs:
           version: 8.10.5
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --prefer-offline --frozen-lockfile
       - name: Install Playwright Browsers
-        run: pnpx playwright install --with-deps
+        run: pnpx playwright install chromium
       - name: Run Playwright tests
-        run: pnpm test
+        run: pnpm ci
       - uses: actions/upload-artifact@v3
         if: always()
         with:

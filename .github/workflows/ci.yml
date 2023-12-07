@@ -20,11 +20,8 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: 18
           cache: 'pnpm'
-
       - name: Install dependencies
-        run: pnpm install
-
+        run: pnpm install --prefer-offline --frozen-lockfile
       - name: Build
         run: pnpm build
