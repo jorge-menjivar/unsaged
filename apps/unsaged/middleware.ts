@@ -55,9 +55,6 @@ const authMiddleware = withAuth(
         }
       },
     },
-    pages: {
-      signIn: "/signin",
-    },
     secret: getSecret(),
   });
 
