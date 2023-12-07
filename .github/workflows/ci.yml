@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [18, 20]
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -21,6 +24,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
+          node-version: ${{ matrix.version }}
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --prefer-offline --frozen-lockfile
