@@ -19,7 +19,7 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpx playwright install chromium
       - name: Run Playwright tests
-        run: pnpm ci
+        run: pnpm run ci
       - uses: actions/upload-artifact@v3
         if: always()
         with:
