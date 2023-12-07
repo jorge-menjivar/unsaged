@@ -4,8 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: Build and Test
-    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -23,5 +21,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --prefer-offline --frozen-lockfile
-      - name: Build
-        run: pnpm build
+      - run: pnpx playwright install chromium
+      - run: pnpm run ci
+        env:
+          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
