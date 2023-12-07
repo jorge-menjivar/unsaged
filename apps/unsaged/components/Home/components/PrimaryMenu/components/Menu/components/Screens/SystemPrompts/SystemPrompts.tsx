@@ -216,7 +216,6 @@ const SystemPrompts = () => {
         </SecondaryButton>
       </div>
       <Search
-        placeholder={`${t('search')}...`}
         searchTerm={searchTerm}
         onSearch={doSearch}
       />

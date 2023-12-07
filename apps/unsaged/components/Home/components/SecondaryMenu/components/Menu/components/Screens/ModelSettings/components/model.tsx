@@ -47,7 +47,7 @@ export const ModelSelect = () => {
 
   return (
     <div className="flex flex-col mt-4">
-      <PrimaryLabel tip={t('The model used for this conversation')}>
+      <PrimaryLabel tip={t('modelDescription')}>
         {t('model')}
       </PrimaryLabel>
 

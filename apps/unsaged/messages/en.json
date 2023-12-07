@@ -13,6 +13,7 @@
   "systemPrompt": "System prompt",
   "systemPromptDescription": "The system prompt to use when sending a message",
   "model": "Model",
+  "modelDescription": "The model used for this conversation",
   "models": "Models",
   "chat": {
     "newConversation": "New conversation",

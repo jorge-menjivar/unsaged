@@ -5,7 +5,7 @@ import { get } from '@vercel/edge-config';
 import { dockerEnvVarFix } from './utils/app/docker/envFix';
 import { NextRequest } from 'next/server';
 
-export const locales = ["en", "de"] as const;
+export const locales = ["en", "de", "ar", "bn", "ca", "es", "fi", "fr", "he", "id", "it", "ja", "ko", "pl", "pt", "ro", "ru", "si", "sv", "te", "tr", "vi", "zh"] as const;
 
 // const publicPages = [
 //   '/signin',

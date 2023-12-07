@@ -13,11 +13,11 @@
   "systemPrompt": "Systemaufforderung",
   "systemPromptDescription": "The system prompt to use when sending a message",
   "model": "Modell",
-  "modelDescription": "The model used for this conversation",
   "models": "Modelle",
   "chat": {
     "newConversation": "Neue Konversation",
     "newFolder": "Neuer Ordner",
+    "search": "Suche",
     "noData": "Keine Daten",
     "enterMessage": "Bitte gib eine Nachricht ein",
     "messageLimit": "Das Nachrichtenlimit beträgt {{maxLength}} Zeichen. Du hast bereits {{valueLength}} Zeichen eingegeben.",
