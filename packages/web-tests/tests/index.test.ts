@@ -1,6 +1,6 @@
-import { test as it, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
-it('handles i18n routing', async ({ page }) => {
+test('handles i18n routing', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveURL('/en');
 
@@ -16,7 +16,7 @@ it('handles i18n routing', async ({ page }) => {
     page.getByRole('heading', { name: 'next-intl example' });
 });
 
-it('handles not found pages', async ({ page }) => {
+test('handles not found pages', async ({ page }) => {
     await page.goto('/unknown');
     page.getByRole('heading', { name: 'Page not found' });
 
@@ -24,7 +24,7 @@ it('handles not found pages', async ({ page }) => {
     page.getByRole('heading', { name: 'Seite nicht gefunden' });
 });
 
-it("handles not found pages for routes that don't match the middleware", async ({
+test("handles not found pages for routes that don't match the middleware", async ({
     page
 }) => {
     await page.goto('/test.png');
@@ -33,7 +33,7 @@ it("handles not found pages for routes that don't match the middleware", async (
     page.getByRole('heading', { name: 'This page could not be found.' });
 });
 
-it('sets caching headers', async ({ request }) => {
+test('sets caching headers', async ({ request }) => {
     for (const pathname of ['/en', '/de']) {
         expect((await request.get(pathname)).headers()['cache-control']).toBe(
             's-maxage=31536000, stale-while-revalidate'
@@ -41,7 +41,7 @@ it('sets caching headers', async ({ request }) => {
     }
 });
 
-it('can be used to configure metadata', async ({ page }) => {
+test('can be used to configure metadata', async ({ page }) => {
     await page.goto('/en');
     await expect(page).toHaveTitle('next-intl example');
 
@@ -49,7 +49,7 @@ it('can be used to configure metadata', async ({ page }) => {
     await expect(page).toHaveTitle('next-intl Beispiel');
 });
 
-it('can be used to localize the page', async ({ page }) => {
+test('can be used to localize the page', async ({ page }) => {
     await page.goto('/en');
     page.getByRole('heading', { name: 'next-intl example' });
 
@@ -57,7 +57,7 @@ it('can be used to localize the page', async ({ page }) => {
     page.getByRole('heading', { name: 'next-intl Beispiel' });
 });
 
-it('sets a cookie', async ({ page }) => {
+test('sets a cookie', async ({ page }) => {
     const response = await page.goto('/en');
     const value = await response?.headerValue('set-cookie');
     expect(value).toContain('NEXT_LOCALE=en;');
@@ -67,7 +67,7 @@ it('sets a cookie', async ({ page }) => {
     expect(value).toContain('Expires=');
 });
 
-it('serves a robots.txt', async ({ page }) => {
+test('serves a robots.txt', async ({ page }) => {
     const response = await page.goto('/robots.txt');
     const body = await response?.body();
     expect(body?.toString()).toEqual('User-Agent: *\nAllow: *\n');

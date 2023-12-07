@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -59,7 +60,6 @@
   },
   "devDependencies": {
     "@mozilla/readability": "^0.4.4",
-    "@playwright/test": "^1.40.1",
     "@tailwindcss/typography": "^0.5.10",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/js-yaml": "^4.0.9",
