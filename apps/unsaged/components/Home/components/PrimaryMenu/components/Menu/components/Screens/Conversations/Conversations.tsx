@@ -177,13 +177,13 @@ export const Conversations = () => {
         updatedConversations[updatedConversations.length - 1].id,
       );
     } else {
-      let model = models[0];
+      let model = models[0] || 'gpt-3.5-turbo';
 
       if (DEFAULT_MODEL) {
         model = PossibleAiModels[DEFAULT_MODEL];
       }
 
-      const modelDefaults = getModelDefaults(model);
+      const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 
       const newConversation: Conversation = {
         id: uuidv4(),

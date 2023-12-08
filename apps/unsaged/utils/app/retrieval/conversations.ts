@@ -89,13 +89,13 @@ export const useConversations = (
   const autogenerateConversation = useCallback(async () => {
     if (!database || !user) return;
 
-    let model = models[0];
+    let model = models[0] || PossibleAiModels['gpt-3.5-turbo'];
 
     if (DEFAULT_MODEL) {
       model = PossibleAiModels[DEFAULT_MODEL];
     }
 
-    const modelDefaults = getModelDefaults(model);
+    const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 
     const newConversation: Conversation = {
       id: uuidv4(),
@@ -104,7 +104,7 @@ export const useConversations = (
       systemPrompt: null,
       folderId: null,
       timestamp: new Date().toISOString(),
-      params: modelDefaults,
+      params: modelDefaults || {},
     };
 
     const updatedConversations = storageCreateConversation(
