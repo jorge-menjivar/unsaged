@@ -27,6 +27,26 @@ export default function NextIntlProvider({
             }}
             now={now}
             timeZone={timeZone}
+            formats={{
+                dateTime: {
+                    short: {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    }
+                },
+                number: {
+                    precise: {
+                        maximumFractionDigits: 5
+                    }
+                },
+                list: {
+                    enumeration: {
+                        style: 'long',
+                        type: 'conjunction'
+                    }
+                }
+            }}
         >
             {children}
         </NextIntlClientProvider>
