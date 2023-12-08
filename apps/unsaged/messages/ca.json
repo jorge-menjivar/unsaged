@@ -1,30 +1,32 @@
 {
-  "search": "Suche",
-  "noData": "Keine Daten",
-  "cancel": "Abbrechen",
-  "save": "Speichern",
-  "saveSubmit": "Speichern & Absenden",
-  "submit": "Absenden",
-  "sureQ": "Bist du sicher?",
-  "clearConversations": "Alle Konversationen löschen",
-  "newSystemPrompt": "Neue Systemaufforderung",
+  "search": "Search",
+  "loading": "Carregant",
+  "noData": "No data",
+  "cancel": "Cancel·lar",
+  "save": "guardar",
+  "saveSubmit": "Guardar i enviar",
+  "submit": "enviar",
+  "sureQ": "Are you sure?",
+  "clearConversations": "Clear conversations",
+  "newSystemPrompt": "New system prompt",
   "name": "Name",
   "prompt": "Prompt",
-  "systemPrompt": "Systemaufforderung",
+  "systemPrompt": "System prompt",
   "systemPromptDescription": "The system prompt to use when sending a message",
-  "model": "Modell",
-  "models": "Modelle",
+  "model": "Model",
+  "modelDescription": "The model used for this conversation",
+  "models": "Models",
   "chat": {
-    "newConversation": "Neue Konversation",
-    "newFolder": "Neuer Ordner",
-    "search": "Suche",
-    "noData": "Keine Daten",
-    "enterMessage": "Bitte gib eine Nachricht ein",
-    "messageLimit": "Das Nachrichtenlimit beträgt {{maxLength}} Zeichen. Du hast bereits {{valueLength}} Zeichen eingegeben.",
-    "stopGenerating": "Generieren stoppen",
-    "regenerateResponse": "Antwort erneut generieren",
+    "newConversation": "New conversation",
+    "newFolder": "New folder",
+    "search": "Search",
+    "noData": "No data",
+    "enterMessage": "Please enter am message",
+    "messageLimit": "El límit del missatge és de {{maxLength}} caràcters",
+    "stopGenerating": "Stop generating",
+    "regenerateResponse": "Regenerate response",
     "startTyping": "Start typing, type / to select a template...",
-    "error": "Entschuldigung, es ist ein Fehler aufgetreten.",
+    "error": "Sorry, there was an error.",
     "repeatPenalty": "Repeat Penalty",
     "repeatPenaltyDescription": "Positive values penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim. Also known as 'frequency penalty'. Defaults to model provider configuration.",
     "presencePenalty": "Repeat Penalty",
@@ -46,26 +48,26 @@
     "topPDescription": "The cumulative probability of parameter highest probability tokens to use for nucleus sampling, between 0 and 1. Defaults to model provider configuration."
   },
   "markdown": {
-    "enterFileName": "Dateinamen eingeben",
-    "copied": "Kopiert!",
-    "copyCode": "Code kopieren"
+    "enterFileName": "Enter file name",
+    "copied": "Copied!",
+    "copyCode": "Copy Code"
   },
   "promptbar": {
-    "newFolder": "Neuer Ordner",
-    "newMessageTemplate": "Neue Nachrichten Vorlage",
+    "newFolder": "New folder",
+    "newMessageTemplate": "New message template",
     "name": "Name",
-    "description": "Beschreibung",
+    "description": "Description",
     "prompt": "Prompt",
     "promptContent": "Prompt content. Use {{}} to denote a variable. Ex: {{name}} is a {{adjective}} {{noun}}",
-    "save": "Speichern"
+    "save": "Save"
   },
   "sidebar": {
     "importData": "Import Data",
     "exportData": "Export Data"
   },
   "error": {
-    "fetchingModels": "Fehler beim Abrufen der Sprachmodelle.",
-    "keyMissing": "Stelle sicher, dass dein {{vendor}} Schlüssel in der unteren linken Ecke der Seitenleiste eingetragen ist.",
-    "vendorIssue": "Wenn dies der Fall ist, könnte {{vendor}} möglicherweise momentan Probleme haben."
+    "fetchingModels": "Error fetching models.",
+    "keyMissing": "Make sure your {{vendor}} key is set in the bottom left of the sidebar.",
+    "vendorIssue": "If you completed this step, {{vendor}} may be experiencing issues."
   }
 }
