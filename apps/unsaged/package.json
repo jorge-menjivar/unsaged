@@ -10,7 +10,8 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "test": "playwright test",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "local:pull": "localazy download -k localazy.keys.json"
   },
   "dependencies": {
     "@auth/supabase-adapter": "^0.1.11",
@@ -59,6 +60,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@localazy/cli": "^1.7.5",
     "@mozilla/readability": "^0.4.4",
     "@tailwindcss/typography": "^0.5.10",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",

@@ -11,7 +11,7 @@
     "newConversation": "Neue Konversation",
     "newFolder": "Neuer Ordner",
     "noData": "Keine Daten",
-    "precise": "Precise",
+    "precise": "Präzise",
     "presencePenalty": "Repeat Penalty",
     "presencePenaltyDescription": "Positive Werte bestrafen neue Tokens, je nachdem, ob sie bisher im Text vorkommen, und erhöhen so die Wahrscheinlichkeit, dass das Modell über neue Themen spricht. Die Standardeinstellung ist die Konfiguration des Model-Anbieters.",
     "regenerateResponse": "Antwort erneut generieren",

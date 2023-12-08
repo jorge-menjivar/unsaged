@@ -2,7 +2,7 @@
   "cancel": "Cancel",
   "chat": {
     "creative": "Creative",
-    "enterMessage": "Please enter am message",
+    "enterMessage": "Please enter a message",
     "error": "Sorry, there was an error.",
     "maxTokens": "Max Tokens",
     "maxTokensDescription": "The maximum number of tokens to generate. The higher the number, the longer the AI will take to generate a response.",

@@ -58,6 +58,9 @@
     "dev:test": {
       "cache": false
     },
+    "local:pull": {
+      "outputs": []
+    },
     "e2e:test": {
       "dependsOn": ["^build"]
     },
