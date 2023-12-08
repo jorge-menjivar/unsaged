@@ -12,7 +12,7 @@ git clone https://github.com/jorge-menjivar/unSAGED.git
 
 ## Generate Supabase Tables
 
-Run the [Generation Script](https://github.com/jorge-menjivar/unSAGED/apps/unsaged/db/GenerationScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
+Run the [Generation Script](https://github.com/jorge-menjivar/unSAGED/apps/web/db/GenerationScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
 
 This will do the following:
 
@@ -29,18 +29,18 @@ More information [here](https://authjs.dev/reference/adapter/supabase#expose-the
 
 Then copy the output and save it for the next step.
 
-## Switch to the `apps/unsaged` directory
+## Switch to the `apps/web` directory
 
-The `apps/unsaged` directory contains the unSAGED app. All following commands should be run from this directory.
+The `apps/web` directory contains the unSAGED app. All following commands should be run from this directory.
 
 ```sh
-cd apps/unsaged
+cd apps/web
 ```
 
 ## Set Environment Variables
 
-The `.env.local` file is the main configuration file for unSAGED. It should be located in the `apps/unsaged` directory of the project.
-Create the `apps/unsaged/.env.local` file to set your environment variables.
+The `.env.local` file is the main configuration file for unSAGED. It should be located in the `apps/web` directory of the project.
+Create the `apps/web/.env.local` file to set your environment variables.
 
 ### Set Auth Secret
 
@@ -52,7 +52,7 @@ openssl rand -base64 32
 
 Set the `NEXTAUTH_SECRET` environment variable to the secret you just created.
 
-```sh title="apps/unsaged/.env.local"
+```sh title="apps/web/.env.local"
 NEXTAUTH_SECRET=my_secret
 ```
 
@@ -60,7 +60,7 @@ See [Auth.js Documentation](https://next-auth.js.org/configuration/options#nexta
 
 ### Set Supabase Variables
 
-```sh title="apps/unsaged/.env.local"
+```sh title="apps/web/.env.local"
 NEXT_PUBLIC_SUPABASE_URL="https://xxxxxxxxxxxxxxxx.supabase.co"
 NEXT_PUBLIC_SUPABASE_ANON_KEY=supabase_anon_key
 SUPABASE_JWT_SECRET=supabase_jwt_secret
@@ -96,6 +96,6 @@ To run in production, you will need to set the following environment variable.
 
 See [Auth.js Documentation](https://next-auth.js.org/configuration/options#nextauth_url) for more information.
 
-```sh title="apps/unsaged/.env.local"
+```sh title="apps/web/.env.local"
 NEXTAUTH_URL=https://yourdomain.com
 ```

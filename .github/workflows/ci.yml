@@ -1,6 +1,9 @@
 name: CI
  
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize]
  
 jobs:
   build:
@@ -33,4 +36,3 @@ jobs:
  
       - name: Build
         run: pnpm build
- 
