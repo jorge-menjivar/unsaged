@@ -12,9 +12,6 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/ apps/
 COPY packages/ packages/
 
-# Copy the .env.local file from the host to the specified path in the Docker container
-COPY ./apps/unsaged/.env.local /unsaged/apps/unsaged/.env.local
-
 # ---- Dependencies ----
 FROM base AS dependencies
 
@@ -41,7 +38,6 @@ COPY --from=dependencies /unsaged/node_modules ./node_modules
 COPY --from=build /unsaged/apps/unsaged/.next ./apps/unsaged/.next
 COPY --from=build /unsaged/apps/unsaged/public ./apps/unsaged/public
 COPY --from=build /unsaged/apps/unsaged/next.config.js ./apps/unsaged/next.config.js
-COPY --from=build /unsaged/apps/unsaged/next-i18next.config.js ./apps/unsaged/i18n.ts
 COPY --from=build /unsaged/apps/unsaged/package.json ./apps/unsaged/package.json
 
 # Expose the port the app will run on
