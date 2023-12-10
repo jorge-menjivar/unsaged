@@ -21,7 +21,7 @@
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/auth-helpers-nextjs": "^0.8.7",
     "@supabase/supabase-js": "^2.38.5",
     "@tabler/icons-react": "^2.42.0",
     "@vercel/analytics": "^1.1.1",
