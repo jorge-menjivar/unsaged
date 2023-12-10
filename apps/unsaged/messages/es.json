@@ -32,6 +32,7 @@
     "topPDescription": "La probabilidad acumulada de los símbolos de mayor probabilidad de los parámetros que se utilizarán para el muestreo del núcleo, entre 0 y 1. De forma predeterminada, es la configuración del proveedor de modelos."
   },
   "clearConversations": "Borrar todas las conversaciones",
+  "default": "Por defecto",
   "error": {
     "fetchingModels": "Error al buscar modelos.",
     "keyMissing": "Asegúrate de que {{vendor}} la clave esté en la parte inferior izquierda de la barra lateral.",
@@ -62,6 +63,7 @@
   "save": "Guardar",
   "saveSubmit": "Guardar y enviar",
   "search": "Buscar",
+  "settings": "Ajustes",
   "sidebar": {
     "exportData": "Exportar datos",
     "importData": "Importar datos"

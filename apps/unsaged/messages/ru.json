@@ -32,6 +32,7 @@
     "topPDescription": "The cumulative probability of parameter highest probability tokens to use for nucleus sampling, between 0 and 1. Defaults to model provider configuration."
   },
   "clearConversations": "Clear conversations",
+  "default": "Default",
   "error": {
     "fetchingModels": "Error fetching models.",
     "keyMissing": "Make sure your {{vendor}} key is set in the bottom left of the sidebar.",
@@ -62,6 +63,7 @@
   "save": "Save",
   "saveSubmit": "Save & Submit",
   "search": "Search",
+  "settings": "Settings",
   "sidebar": {
     "exportData": "Export Data",
     "importData": "Import Data"

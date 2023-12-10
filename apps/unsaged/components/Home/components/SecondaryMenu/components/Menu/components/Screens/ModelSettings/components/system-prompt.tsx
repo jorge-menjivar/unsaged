@@ -125,7 +125,7 @@ export const SystemPromptSelect = () => {
           {availableSystemPrompts.map((prompt) => (
             <SelectItem key={prompt.id} value={prompt.id}>
               {prompt.id === defaultSystemPromptId
-                ? `Default (${prompt.name})`
+                ? `${t('default')} (${prompt.name})`
                 : prompt.name}
             </SelectItem>
           ))}

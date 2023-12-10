@@ -209,7 +209,7 @@ const SystemPrompts = () => {
             doSearch('');
           }}
         >
-          {t('New system prompt')}
+          {t('newSystemPrompt')}
         </PrimaryButton>
         <SecondaryButton onClick={createFolder}>
           <IconFolderPlus size={16} />

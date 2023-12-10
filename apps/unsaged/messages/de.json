@@ -32,6 +32,7 @@
     "topPDescription": "Die kumulative Wahrscheinlichkeit, dass Tokens mit der höchsten Wahrscheinlichkeit von Parametern für die Kernprobenahme verwendet werden, zwischen 0 und 1. Die Standardeinstellung ist die Konfiguration des Model-Anbieters."
   },
   "clearConversations": "Alle Konversationen löschen",
+  "default": "Standard",
   "error": {
     "fetchingModels": "Fehler beim Abrufen der Sprachmodelle.",
     "keyMissing": "Stelle sicher, dass dein {{vendor}} Schlüssel in der unteren linken Ecke der Seitenleiste eingetragen ist.",
@@ -54,7 +55,7 @@
     "description": "Beschreibung",
     "name": "Name",
     "newFolder": "Neuer Ordner",
-    "newMessageTemplate": "Neue Nachrichten Vorlage",
+    "newMessageTemplate": "Neue Vorlage",
     "prompt": "Prompt",
     "promptContent": "Prompt Inhalt. {{}} werden verwendet, um eine Variable zu bezeichnen. Beispiel: {{name}} ist ein {{adjective}} {{noun}}",
     "save": "Speichern"
@@ -62,6 +63,7 @@
   "save": "Speichern",
   "saveSubmit": "Speichern & Absenden",
   "search": "Suche",
+  "settings": "Einstellungen",
   "sidebar": {
     "exportData": "Daten exportieren",
     "importData": "Daten importieren"

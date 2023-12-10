@@ -67,8 +67,10 @@ import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslations } from 'next-intl';
 
 const Home = () => {
+  const t = useTranslations('chat');
   const [debugLogPrinted, setDebugLogPrinted] = useState(false);
 
   const contextValue = useCreateReducer<HomeInitialState>({
@@ -268,7 +270,7 @@ const Home = () => {
 
       const newConversation: Conversation = {
         id: uuidv4(),
-        name: 'New Conversation',
+        name: t('newConversation'),
         model: model,
         systemPrompt: null,
         folderId: null,

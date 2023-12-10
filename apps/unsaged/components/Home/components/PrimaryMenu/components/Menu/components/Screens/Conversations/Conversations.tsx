@@ -126,7 +126,7 @@ export const Conversations = () => {
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: 'New Conversation',
+      name: t('newConversation'),
       model: model,
       systemPrompt: null,
       folderId: null,
@@ -187,7 +187,7 @@ export const Conversations = () => {
 
       const newConversation: Conversation = {
         id: uuidv4(),
-        name: 'New Conversation',
+        name: t('newConversation'),
         model: model,
         systemPrompt: null,
         folderId: null,
