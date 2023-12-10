@@ -79,8 +79,8 @@ importers:
   apps/unsaged:
     dependencies:
       '@auth/supabase-adapter':
-        specifier: ^0.1.9
-        version: 0.1.9(@supabase/supabase-js@2.38.5)(nodemailer@6.9.7)
+        specifier: ^0.1.11
+        version: 0.1.11(@supabase/supabase-js@2.38.5)(nodemailer@6.9.7)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
@@ -463,8 +463,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.20
     dev: false
 
-  /@auth/core@0.18.3(nodemailer@6.9.7):
-    resolution: {integrity: sha512-YXQWxi3pKxngt+2vo3dq8+wDANlUH8nhQgX6EVdd3Enfe3vweBtHqzaWrtWzQnVb8wdGxdhxaoOlYroEBE+/yw==}
+  /@auth/core@0.18.5(nodemailer@6.9.7):
+    resolution: {integrity: sha512-Ql8YobXp57mbXqHNaaroIAgBopKaxWI+3Tlu1rGcXW5KPzXdfTqijZ4HOuZvWKqmhbMWQ9xS9r8uG4fMonZYwg==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -472,7 +472,8 @@ packages:
         optional: true
     dependencies:
       '@panva/hkdf': 1.1.1
-      cookie: 0.5.0
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
       jose: 5.1.1
       nodemailer: 6.9.7
       oauth4webapi: 2.4.0
@@ -480,12 +481,12 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/supabase-adapter@0.1.9(@supabase/supabase-js@2.38.5)(nodemailer@6.9.7):
-    resolution: {integrity: sha512-OqPOVzvfhcqrn87NONAloBBfe4hJcczTT7PT6LcqKUwcL2ePmH8i4kyqXpXxHHjnUY8Azm74jGoTUwg4cJP0jw==}
+  /@auth/supabase-adapter@0.1.11(@supabase/supabase-js@2.38.5)(nodemailer@6.9.7):
+    resolution: {integrity: sha512-glyFfslsaKVi6gRPAgWPg42I/NSf2D9eaE35zBkVMynZQnhQwWCfK17Hx1CyzBH8F5Q68Vl2IIvQnpzpPi6UGg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.5
     dependencies:
-      '@auth/core': 0.18.3(nodemailer@6.9.7)
+      '@auth/core': 0.18.5(nodemailer@6.9.7)
       '@supabase/supabase-js': 2.38.5
     transitivePeerDependencies:
       - nodemailer
@@ -4366,6 +4367,10 @@ packages:
       '@types/node': 20.9.4
     dev: false
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
+
   /@types/d3-scale-chromatic@3.0.3:
     resolution: {integrity: sha512-laXM4+1o5ImZv3RpFAsTRn3TEkzqkytiOY0Dz0sq5cnd1dtNlk6sHLon4OvqaiJb28T0S/TdsBI3Sjsy+keJrw==}
     dev: false
@@ -6016,6 +6021,11 @@ packages:
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
     dev: false
 
