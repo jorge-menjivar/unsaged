@@ -1,6 +1,6 @@
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { Prompt } from '@/types/prompt';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
-  const { t } = useTranslation('promptbar');
+  const t = useTranslations('promptbar');
   const [name, setName] = useState(prompt.name);
   const [description, setDescription] = useState(prompt.description);
   const [content, setContent] = useState(prompt.content);
@@ -69,7 +69,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             role="dialog"
           >
             <div className="text-sm font-bold text-black dark:text-neutral-200">
-              {t('Name')}
+              {t('name')}
             </div>
             <input
               ref={nameInputRef}
@@ -80,7 +80,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {t('Description')}
+              {t('description')}
             </div>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
@@ -92,16 +92,12 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
-              {t('Prompt')}
+              {t('prompt')}
             </div>
             <textarea
               className="mt-2 mb-4 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               style={{ resize: 'none' }}
-              placeholder={
-                t(
-                  'Prompt content. Use {{}} to denote a variable. Ex: {{name}} is a {{adjective}} {{noun}}',
-                ) || ''
-              }
+              placeholder={t('promptContent')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={10}
@@ -120,7 +116,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
                 onClose();
               }}
             >
-              {t('Save')}
+              {t('save')}
             </PrimaryButton>
           </div>
         </div>

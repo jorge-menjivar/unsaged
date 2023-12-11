@@ -1,6 +1,6 @@
 import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
@@ -25,7 +25,7 @@ import { PromptsInitialState, initialState } from './Prompts.state';
 import { v4 as uuidv4 } from 'uuid';
 
 const Prompts = () => {
-  const { t } = useTranslation('promptbar');
+  const t = useTranslations('promptbar');
 
   const promptBarContextValue = useCreateReducer<PromptsInitialState>({
     initialState,
@@ -127,7 +127,7 @@ const Prompts = () => {
   const doSearch = (term: string) =>
     promptDispatch({ field: 'searchTerm', value: term });
 
-  const createFolder = () => handleCreateFolder(t('New folder'), 'prompt');
+  const createFolder = () => handleCreateFolder(t('newFolder'), 'prompt');
 
   return (
     <PromptsContext.Provider
@@ -145,7 +145,7 @@ const Prompts = () => {
             doSearch('');
           }}
         >
-          {t('New message template')}
+          {t('newMessageTemplate')}
         </PrimaryButton>
 
         <SecondaryButton onClick={createFolder}>
@@ -153,7 +153,6 @@ const Prompts = () => {
         </SecondaryButton>
       </div>
       <Search
-        placeholder={t('Search...') || ''}
         searchTerm={searchTerm}
         onSearch={doSearch}
       />

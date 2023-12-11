@@ -55,3 +55,6 @@ next-env.d.ts
 
 # ide
 .vscode/
+
+# Localazy
+localazy.keys.json

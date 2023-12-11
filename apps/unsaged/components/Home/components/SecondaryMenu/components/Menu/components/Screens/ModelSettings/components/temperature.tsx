@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { getModelDefaults } from '@/utils/app/settings/model-defaults';
 
@@ -10,7 +10,7 @@ import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
 
 export const TemperatureSlider = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -39,11 +39,9 @@ export const TemperatureSlider = () => {
     <div className="flex flex-col">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'Higher values will make the output more random, while lower values will make it more focused and deterministic.',
-          )}
+          tip={t('temperatureDescription')}
         >
-          {t('Temperature')}
+          {t('temperature')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.temperature !== undefined}
@@ -75,13 +73,13 @@ export const TemperatureSlider = () => {
 
       <ul className="w mt-2 pb-8 flex justify-between px-[24px] text-neutral-900 dark:text-neutral-100">
         <li className="flex justify-center">
-          <span className="absolute">{t('Precise')}</span>
+          <span className="absolute">{t('precise')}</span>
         </li>
         <li className="flex justify-center">
-          <span className="absolute">{t('Neutral')}</span>
+          <span className="absolute">{t('neutral')}</span>
         </li>
         <li className="flex justify-center">
-          <span className="absolute">{t('Creative')}</span>
+          <span className="absolute">{t('creative')}</span>
         </li>
       </ul>
     </div>

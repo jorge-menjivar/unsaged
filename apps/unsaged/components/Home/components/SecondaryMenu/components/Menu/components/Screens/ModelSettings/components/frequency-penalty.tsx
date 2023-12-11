@@ -1,6 +1,6 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
@@ -8,7 +8,7 @@ import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
 
 export const RepeatPenaltySlider = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -36,11 +36,9 @@ export const RepeatPenaltySlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            "Positive values penalize new tokens based on their existing frequency in the text so far. Decreases the model's likelihood to repeat the same line verbatim. Also known as 'frequency penalty'. Defaults to model provider configuration.",
-          )}
+          tip={t('repeatPenaltyDescription')}
         >
-          {t('Repeat Penalty')}
+          {t('repeatPenalty')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.repeat_penalty !== undefined}

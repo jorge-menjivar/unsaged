@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { AiModel } from '@/types/ai-models';
 
@@ -43,12 +43,12 @@ export const ModelSelect = () => {
         value: selectedModel,
       });
   };
-  const { t } = useTranslation('modelSettings');
+  const t = useTranslations();
 
   return (
     <div className="flex flex-col mt-4">
-      <PrimaryLabel tip={t('The model used for this conversation')}>
-        {t('Model')}
+      <PrimaryLabel tip={t('modelDescription')}>
+        {t('model')}
       </PrimaryLabel>
 
       <Select

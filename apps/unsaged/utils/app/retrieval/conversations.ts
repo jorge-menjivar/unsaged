@@ -21,6 +21,7 @@ import {
 } from '../storage/selectedConversation';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslations } from 'next-intl';
 
 export const useConversations = (
   homeDispatch: Dispatch<ActionType<HomeInitialState>>,
@@ -31,6 +32,7 @@ export const useConversations = (
   models: AiModel[],
   modelsLoaded: boolean,
 ) => {
+  const t = useTranslations('chat');
   const [conversationsLoaded, setConversationsLoaded] = useState(false);
 
   const fetchModels = useCallback(async () => {
@@ -99,7 +101,7 @@ export const useConversations = (
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: 'New Conversation',
+      name: t('newConversation'),
       model: model,
       systemPrompt: null,
       folderId: null,

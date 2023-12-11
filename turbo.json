@@ -47,12 +47,25 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "build/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**"]
     },
     "dev": {
-      "cache": false,
-      "persistent": true
+      "cache": false
     },
-    "lint": {}
+    "lint": {
+      "outputs": []
+    },
+    "dev:test": {
+      "cache": false
+    },
+    "local:pull": {
+      "outputs": []
+    },
+    "e2e:test": {
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
+    }
   }
 }

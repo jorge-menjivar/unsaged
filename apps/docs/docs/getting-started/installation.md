@@ -86,7 +86,7 @@ npm run dev
 When running in docker set the following environment variable:
 
 ```sh
-docker build -t unsaged . --rm
+docker build -t unsaged -f apps/unsaged/Dockerfile . --rm
 docker run --env-file=.env.local -p 127.0.0.1:3000:3000 --name unsaged unsaged
 ```
 

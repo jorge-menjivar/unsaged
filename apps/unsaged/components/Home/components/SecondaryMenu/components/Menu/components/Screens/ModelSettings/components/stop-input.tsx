@@ -1,13 +1,13 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Input } from '@/components/common/ui/input';
 
 export const StopInput = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -54,11 +54,9 @@ export const StopInput = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'Comma-separated list of tokens to stop generation on. The AI will stop generating tokens once it encounters any of these tokens.',
-          )}
+          tip={t('stopDescription')}
         >
-          {t('Stop')}
+          {t('stop')}
         </PrimaryLabel>
         <Input
           type="text"

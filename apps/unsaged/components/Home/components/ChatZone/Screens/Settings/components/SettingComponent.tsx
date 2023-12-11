@@ -7,6 +7,7 @@ import { Setting, SettingsSection } from '@/types/settings';
 import HomeContext from '@/components/Home/home.context';
 
 import SettingsContext from '../Settings.context';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   section: SettingsSection;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const SettingComponent = ({ section, setting, isSelected }: Props) => {
+  const t = useTranslations();
   const [value, setValue] = useState('');
 
   const {
@@ -65,7 +67,7 @@ export const SettingComponent = ({ section, setting, isSelected }: Props) => {
           >
             {setting.choices!.map((choice, index) => (
               <option key={index} value={choice.value}>
-                {choice.default ? `Default(${choice.name})` : choice.name}
+                {choice.default ? `${t('default')} (${choice.name})` : choice.name}
               </option>
             ))}
           </select>
@@ -75,17 +77,16 @@ export const SettingComponent = ({ section, setting, isSelected }: Props) => {
   }
   return (
     <div
-      className={`block w-full p-4 pt-2 border ${
-        isSelected
-          ? `
+      className={`block w-full p-4 pt-2 border ${isSelected
+        ? `
             bg-theme-setting-selected-light dark:bg-theme-setting-selected-dark
             border-[#005cc5]
             `
-          : `
+        : `
             bg-theme-light dark:bg-theme-dark border-transparent
             hover:bg-theme-setting-hover-light dark:hover:bg-theme-setting-hover-dark
             `
-      } 
+        } 
        `}
       onClick={() => handleSelect(section, setting)}
     >
