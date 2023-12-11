@@ -12,6 +12,9 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/ apps/
 COPY packages/ packages/
 
+# Copy the .env.local file from the host to the specified path in the Docker container
+COPY ./apps/unsaged/.env.local /unsaged/apps/unsaged/.env.local
+
 # ---- Dependencies ----
 FROM base AS dependencies
 
