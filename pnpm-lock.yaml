@@ -251,8 +251,8 @@ importers:
         specifier: ^9.0.7
         version: 9.0.7
       '@vitest/coverage-c8':
-        specifier: ^0.29.8
-        version: 0.29.8(vitest@1.0.4)
+        specifier: ^0.33.0
+        version: 0.33.0(vitest@1.0.4)
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.16(postcss@8.4.31)
@@ -461,7 +461,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
-    dev: false
 
   /@auth/core@0.18.5(nodemailer@6.9.7):
     resolution: {integrity: sha512-Ql8YobXp57mbXqHNaaroIAgBopKaxWI+3Tlu1rGcXW5KPzXdfTqijZ4HOuZvWKqmhbMWQ9xS9r8uG4fMonZYwg==}
@@ -4892,13 +4891,15 @@ packages:
       '@vercel/edge-config-fs': 0.1.0
     dev: false
 
-  /@vitest/coverage-c8@0.29.8(vitest@1.0.4):
-    resolution: {integrity: sha512-y+sEMQMctWokjnSqm3FCQEYFkjLrYaznsxEZHxcx8z2aftpYg3A5tvI1S5himfdEFo7o+OeHzh40bPSWZHW4oQ==}
+  /@vitest/coverage-c8@0.33.0(vitest@1.0.4):
+    resolution: {integrity: sha512-DaF1zJz4dcOZS4k/neiQJokmOWqsGXwhthfmUdPGorXIQHjdPvV6JQSYhQDI41MyI8c+IieQUdIDs5XAMHtDDw==}
     deprecated: v8 coverage is moved to @vitest/coverage-v8 package
     peerDependencies:
-      vitest: '>=0.29.0 <1'
+      vitest: '>=0.30.0 <1'
     dependencies:
+      '@ampproject/remapping': 2.2.1
       c8: 7.14.0
+      magic-string: 0.30.5
       picocolors: 1.0.0
       std-env: 3.5.0
       vitest: 1.0.4(@types/node@20.9.4)(jsdom@21.1.2)
