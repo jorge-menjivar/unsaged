@@ -1,14 +1,15 @@
 import { Conversation, Message } from '@/types/chat';
 import { SavedSettings } from '@/types/settings';
 
-import { getStream } from '../server/ai_vendors/stream';
-import { getTokenCount } from '../server/ai_vendors/token-count';
+import { getStream } from './ai_vendors/stream';
+import { getTokenCount } from './ai_vendors/token-count';
 import { storageGetSavedSettingValue } from './storage/local/settings';
 
 export async function sendChatRequest(
   conversation: Conversation,
   messages: Message[],
   savedSettings: SavedSettings,
+  assistantMessageId: string,
 ): Promise<{
   stream: ReadableStream | null;
   controller: AbortController | null;
@@ -40,6 +41,7 @@ export async function sendChatRequest(
     messages,
     count!,
     controller,
+    assistantMessageId,
   );
 
   if (error) {

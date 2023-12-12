@@ -8,7 +8,7 @@ import { SystemPrompt } from '@/types/system-prompt';
 
 import { SidebarButton } from '@/components/common/side-bar/side-bar-button';
 
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 
 interface Props {
   onImport: (

@@ -16,7 +16,7 @@ import {
 } from './system-prompts.state';
 
 import { useFolders } from '@/providers/folders';
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 
 const SystemPrompts = () => {
   const { t } = useTranslation('systemPrompts');

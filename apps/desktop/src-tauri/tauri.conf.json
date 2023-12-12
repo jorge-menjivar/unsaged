@@ -15,11 +15,15 @@
       "all": false,
       "shell": {
         "open": true
+      },
+      "http": {
+        "all": true,
+        "request": true
       }
     },
     "bundle": {
       "active": true,
-      "category": "DeveloperTool",
+      "category": "Productivity",
       "copyright": "",
       "deb": {
         "depends": []
@@ -51,7 +55,7 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": ""
     },
     "updater": {
       "active": false

@@ -8,7 +8,7 @@ import SystemPromptsContext from '../system-prompts.context';
 import { SystemPromptComponent } from './prompt-component';
 
 import { useFolders } from '@/providers/folders';
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 
 export const SystemPromptFolders = () => {
   const { folders } = useFolders();

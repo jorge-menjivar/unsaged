@@ -19,7 +19,7 @@ import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
 import SystemPromptsContext from '../system-prompts.context';
 import { SystemPromptEditModal } from './system-prompt-edit-modal';
 
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 
 interface Props {
   systemPrompt: SystemPrompt;

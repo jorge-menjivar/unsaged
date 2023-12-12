@@ -16,7 +16,7 @@ import { PrimaryLabel } from '@/components/common/ui/primary-label';
 
 import { ChipList } from './models-list';
 
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 
 interface Props {
   systemPrompt: SystemPrompt;

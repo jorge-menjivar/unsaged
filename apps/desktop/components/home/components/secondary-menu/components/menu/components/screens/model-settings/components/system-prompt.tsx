@@ -14,7 +14,7 @@ import {
 } from '@/components/common/ui/select';
 
 import { useConversations } from '@/providers/conversations';
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 
 export const SystemPromptSelect = () => {
   const { systemPrompts, builtInSystemPrompts } = useSystemPrompts();

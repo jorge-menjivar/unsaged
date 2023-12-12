@@ -17,7 +17,7 @@ import { useDatabase } from '@/providers/database';
 import { FoldersProvider } from '@/providers/folders';
 import { MessagesProvider } from '@/providers/messages';
 import { ModelsProvider } from '@/providers/models';
-import { SystemPromptsProvider } from '@/providers/system_prompts';
+import { SystemPromptsProvider } from '@/providers/system-prompts';
 import { TemplatesProvider } from '@/providers/templates';
 
 const Home = () => {

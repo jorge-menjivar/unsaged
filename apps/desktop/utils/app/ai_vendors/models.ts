@@ -8,6 +8,8 @@ import { getAvailablePalm2Models } from './google/models';
 import { getAvailableOllamaModels } from './ollama/models';
 import { getAvailableOpenAIModels } from './openai/models';
 
+import { invoke } from '@tauri-apps/api/tauri';
+
 export async function getModels(
   savedSettings: SavedSettings,
   openai_key?: string,
@@ -43,6 +45,7 @@ export async function getModels(
       const { data: ollamaModels } = await getAvailableOllamaModels(
         savedSettings,
       );
+
       models.push(...(ollamaModels as AiModel[]));
     } catch (error) {
       console.error(error);

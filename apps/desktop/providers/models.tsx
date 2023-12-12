@@ -7,9 +7,9 @@ import React, {
   useState,
 } from 'react';
 
+import { getModels } from '@/utils/app/ai_vendors/models';
 import { storageGetSavedSettingValue } from '@/utils/app/storage/local/settings';
 import { debug, error } from '@/utils/logging';
-import { getModels } from '@/utils/server/ai_vendors/models';
 
 import { AiModel } from '@/types/ai-models';
 

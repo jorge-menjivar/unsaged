@@ -18,9 +18,8 @@ export function debug(...args: any[]) {
       message: args.join(' '),
       level: 'DEBUG',
     });
-  } else {
-    console.log(...args);
   }
+  console.log(...args);
 }
 
 export function info(...args: any[]) {
@@ -30,9 +29,8 @@ export function info(...args: any[]) {
       message: args.join(' '),
       level: 'INFO',
     });
-  } else {
-    console.info(...args);
   }
+  console.info(...args);
 }
 
 export function warn(...args: any[]) {
@@ -42,9 +40,8 @@ export function warn(...args: any[]) {
       message: args.join(' '),
       level: 'WARN',
     });
-  } else {
-    console.warn(...args);
   }
+  console.warn(...args);
 }
 
 export function error(...args: any[]) {
@@ -54,9 +51,8 @@ export function error(...args: any[]) {
       message: args.join(' '),
       level: 'ERROR',
     });
-  } else {
-    console.error(...args);
   }
+  console.error(...args);
 }
 
 export function trace(...args: any[]) {
@@ -66,7 +62,6 @@ export function trace(...args: any[]) {
       message: args.join(' '),
       level: 'TRACE',
     });
-  } else {
-    console.trace(...args);
   }
+  console.trace(...args);
 }

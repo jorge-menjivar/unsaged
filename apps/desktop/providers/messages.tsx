@@ -18,9 +18,9 @@ import {
   storageDeleteMessages,
   storageGetMessages,
 } from '@/utils/app/storage/messages';
-import { error } from '@/utils/logging';
+import { debug, error } from '@/utils/logging';
 
-import { User } from '@/types/auth';
+import { Session, User } from '@/types/auth';
 import { Conversation, Message } from '@/types/chat';
 import { Database } from '@/types/database';
 import { SavedSettings } from '@/types/settings';
@@ -31,8 +31,9 @@ import { useConversations } from './conversations';
 import { useDatabase } from './database';
 import { useDisplay } from './display';
 import { useSettings } from './settings';
-import { useSystemPrompts } from './system_prompts';
+import { useSystemPrompts } from './system-prompts';
 
+import { emit, listen } from '@tauri-apps/api/event';
 import { v4 as uuidv4 } from 'uuid';
 
 export const MessagesContext = createContext<{
@@ -63,7 +64,11 @@ export const MessagesProvider = ({
   children: React.ReactNode;
 }) => {
   const { session } = useAuth();
+  const liveSession = useRef<Session | null>(null);
+
   const { database } = useDatabase();
+  const liveDatabase = useRef<Database | null>(null);
+
   const { setMessageIsStreaming } = useDisplay();
   const { builtInSystemPrompts } = useSystemPrompts();
   const { savedSettings } = useSettings();
@@ -72,10 +77,25 @@ export const MessagesProvider = ({
     useConversations();
 
   const [messages, setMessages] = useState<Message[]>([]);
+  const liveMessages = useRef<Message[]>([]);
+
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const isInitialized = useRef(false);
   const stopConversationRef = useRef<boolean>(false);
 
+  const isMessageReceiverInitialized = useRef(false);
+
+  useEffect(() => {
+    liveSession.current = session;
+  }, [session]);
+
+  useEffect(() => {
+    liveDatabase.current = database;
+  }, [database]);
+
+  useEffect(() => {
+    liveMessages.current = messages;
+  }, [messages]);
   const fetchMessages = useCallback(async () => {
     if (isInitialized.current || !database || !session) {
       return;
@@ -115,10 +135,23 @@ export const MessagesProvider = ({
       systemPrompt: customPrompt,
     };
 
+    const assistantMessageId = uuidv4();
+
+    const assistantMessage: Message = {
+      id: assistantMessageId,
+      role: 'assistant',
+      content: '',
+      timestamp: new Date().toISOString(),
+      conversationId: selectedConversation.id,
+    };
+
+    setMessages([...messages, assistantMessage]);
+
     const { stream, controller } = await sendChatRequest(
       promptInjectedConversation,
       messages,
       savedSettings,
+      assistantMessageId,
     );
 
     if (!stream || !controller) {
@@ -129,80 +162,112 @@ export const MessagesProvider = ({
     return { stream, controller };
   }
 
-  async function messageReceiver(
-    user: User,
-    database: Database,
-    stream: ReadableStream,
-    controller: AbortController,
-    conversation: Conversation,
-    messages: Message[],
-    stopConversationRef: MutableRefObject<boolean>,
-  ) {
-    const reader = stream.getReader();
+  const messageReceiver = useCallback(() => {
+    if (isMessageReceiverInitialized.current) return;
 
-    let done = false;
-    let text = '';
+    isMessageReceiverInitialized.current = true;
 
-    const assistantMessageId = uuidv4();
-    const responseMessage: Message = {
-      id: assistantMessageId,
-      role: 'assistant',
-      content: '',
-      timestamp: new Date().toISOString(),
-      conversationId: conversation.id,
-    };
+    listen('completion-stream', (event: any) => {
+      const { id, text } = event.payload;
 
-    const updatedMessages = [...messages, responseMessage];
-    setMessages(updatedMessages);
-    const length = updatedMessages.length;
+      setMessages((messages) =>
+        messages.map((message) => {
+          if (message.id === id) {
+            return { ...message, content: message.content + text };
+          }
+          return message;
+        }),
+      );
+    });
 
-    while (!done) {
-      try {
-        if (stopConversationRef.current === true) {
-          controller.abort();
-          done = true;
-          break;
-        }
-        const { value, done: doneReading } = await reader.read();
+    listen('post-message', (event: any) => {
+      if (!liveDatabase.current || !liveSession.current) return;
 
-        done = doneReading;
+      const { id } = event.payload;
 
-        if (value) {
-          const decodedValue = new TextDecoder('utf-8').decode(value);
+      const message = liveMessages.current.find((message) => message.id === id);
 
-          text += decodedValue;
+      if (!message) return;
 
-          setMessages((messages) => {
-            const updatedMessages = [...messages];
-            messages[length - 1].content = text;
-            return updatedMessages;
-          });
-        }
-      } catch (e) {
-        error(e);
-        done = true;
-        break;
-      }
-    }
+      storageCreateMessage(
+        liveDatabase.current,
+        liveSession.current.user!,
+        message,
+        liveMessages.current.filter((message) => message.id !== id),
+      );
 
-    stopConversationRef.current = false;
+      setMessageIsStreaming(false);
+    });
 
-    updatedMessages.pop();
+    // const reader = stream.getReader();
 
-    responseMessage.content = text;
+    // let done = false;
+    // let text = '';
 
-    setMessageIsStreaming(false);
+    // const assistantMessageId = uuidv4();
+    // const responseMessage: Message = {
+    //   id: assistantMessageId,
+    //   role: 'assistant',
+    //   content: '',
+    //   timestamp: new Date().toISOString(),
+    //   conversationId: conversation.id,
+    // };
 
-    // Saving the response message
-    const finalUpdatedMessages = storageCreateMessage(
-      database,
-      user,
-      responseMessage,
-      messages,
-    );
+    // const updatedMessages = [...messages, responseMessage];
+    // setMessages(updatedMessages);
+    // const length = updatedMessages.length;
 
-    setMessages(finalUpdatedMessages);
-  }
+    // while (!done) {
+    //   try {
+    //     if (stopConversationRef.current === true) {
+    //       controller.abort();
+    //       done = true;
+    //       break;
+    //     }
+    //     const { value, done: doneReading } = await reader.read();
+
+    //     done = doneReading;
+
+    //     if (value) {
+    //       const decodedValue = new TextDecoder('utf-8').decode(value);
+
+    //       text += decodedValue;
+
+    //       setMessages((messages) => {
+    //         const updatedMessages = [...messages];
+    //         messages[length - 1].content = text;
+    //         return updatedMessages;
+    //       });
+    //     }
+    //   } catch (e) {
+    //     error(e);
+    //     done = true;
+    //     break;
+    //   }
+    // }
+
+    // stopConversationRef.current = false;
+
+    // updatedMessages.pop();
+
+    // responseMessage.content = text;
+
+    // setMessageIsStreaming(false);
+
+    // // Saving the response message
+    // const finalUpdatedMessages = storageCreateMessage(
+    //   database,
+    //   user,
+    //   responseMessage,
+    //   messages,
+    // );
+
+    // setMessages(finalUpdatedMessages);
+  }, [database, session, messages]);
+
+  useEffect(() => {
+    messageReceiver();
+  }, [database, session]);
 
   async function editMessage(updatedMessage: Message, index: number) {
     if (!database || !session || !selectedConversation || !savedSettings)
@@ -283,16 +348,6 @@ export const MessagesProvider = ({
     if (!stream || !controller) {
       return;
     }
-
-    await messageReceiver(
-      session.user!,
-      database,
-      stream,
-      controller,
-      updatedConversation,
-      updatedMessages,
-      stopConversationRef,
-    );
   }
 
   async function regenerateMessage() {
@@ -349,16 +404,6 @@ export const MessagesProvider = ({
       error('Failed to send message');
       return;
     }
-
-    await messageReceiver(
-      session.user!,
-      database,
-      stream,
-      controller,
-      selectedConversation,
-      updatedMessages,
-      stopConversationRef,
-    );
   }
 
   async function sendMessage(newMessage: Message) {
@@ -416,16 +461,6 @@ export const MessagesProvider = ({
       if (!stream || !controller) {
         return;
       }
-
-      await messageReceiver(
-        session.user!,
-        database,
-        stream,
-        controller,
-        updatedConversation,
-        updatedMessages,
-        stopConversationRef,
-      );
     }
   }
 
@@ -469,7 +504,10 @@ export const MessagesProvider = ({
   };
 
   const stopStreaming = () => {
+    debug('in stopStreaming');
+    emit('stop-streaming', {});
     stopConversationRef.current = true;
+    setMessageIsStreaming(false);
   };
 
   const contextValue = {

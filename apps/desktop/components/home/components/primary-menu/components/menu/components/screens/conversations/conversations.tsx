@@ -26,7 +26,7 @@ import { useDatabase } from '@/providers/database';
 import { useFolders } from '@/providers/folders';
 import { useMessages } from '@/providers/messages';
 import { useModels } from '@/providers/models';
-import { useSystemPrompts } from '@/providers/system_prompts';
+import { useSystemPrompts } from '@/providers/system-prompts';
 import { useTemplates } from '@/providers/templates';
 
 export const Conversations = () => {

@@ -4,12 +4,15 @@ import {
   OLLAMA_BASIC_USER,
   OLLAMA_HOST,
 } from '@/utils/app/const';
+import { debug } from '@/utils/logging';
 
 import {
   GetAvailableModelsResponse,
   PossibleAiModels,
 } from '@/types/ai-models';
 import { SavedSettings } from '@/types/settings';
+
+import { invoke } from '@tauri-apps/api/tauri';
 
 export const config = {
   runtime: 'edge',
@@ -19,36 +22,15 @@ export async function getAvailableOllamaModels(
   savedSettings: SavedSettings,
 ): Promise<GetAvailableModelsResponse> {
   try {
-    let base_url = OLLAMA_HOST;
-    if (savedSettings['ollama.url']) {
-      base_url = savedSettings['ollama.url'];
-    }
-    if (base_url == '') {
-      return { data: [] };
-    }
-    const url = `${base_url}/api/tags`;
+    const payload = {
+      saved_settings: savedSettings,
+    };
 
-    const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...(OLLAMA_BASIC_USER &&
-          OLLAMA_BASIC_PWD && {
-            Authorization: `Basic ${Buffer.from(
-              OLLAMA_BASIC_USER + ':' + OLLAMA_BASIC_PWD,
-            ).toString('base64')}`,
-          }),
-      },
-    });
+    const raw_models = (await invoke('get_ollama_models', payload)) as any[];
 
-    if (response.status !== 200) {
-      const error = await response.text();
-      console.error('Error fetching Ollama models', response.status, error);
-      return { data: [] };
-    }
+    debug('Ollama models:', raw_models);
 
-    const json = await response.json();
-
-    const models = json.models.map((ollamaModel: any) => {
+    const models = raw_models.map((ollamaModel: any) => {
       const model_name = ollamaModel.name;
 
       if (!PossibleAiModels[model_name]) {

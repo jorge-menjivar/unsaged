@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
 import { DEFAULT_TITLE } from '@/utils/app/const';
-import { throttle } from 'utils/data/throttle';
 import { debug } from '@/utils/logging';
 
 import { Message } from '@/types/chat';
@@ -19,6 +18,7 @@ import { MemoizedChatMessage } from './memoized-chat-message';
 import { useConversations } from '@/providers/conversations';
 import { useMessages } from '@/providers/messages';
 import { useModels } from '@/providers/models';
+import { throttle } from 'utils/data/throttle';
 
 export const Chat = memo(() => {
   const { models } = useModels();
