@@ -1,14 +1,13 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Input } from '@/components/common/ui/input';
-import { Switch } from '@/components/common/ui/switch';
 
 export const SeedInput = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -36,11 +35,9 @@ export const SeedInput = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The seed used to generate the response. The same seed will always generate the same response.',
-          )}
+          tip={t('seedDescription')}
         >
-          {t('Seed')}
+          {t('seed')}
         </PrimaryLabel>
         <Input
           type="number"

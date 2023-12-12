@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Input } from '@/components/common/ui/input';
 
 export const TopKInput = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -35,11 +35,9 @@ export const TopKInput = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The number of highest probability vocabulary tokens to keep for top-k-filtering. Between 1 and infinity. Defaults to model provider configuration.',
-          )}
+          tip={t('topKDescription')}
         >
-          {t('Top K')}
+          {t('topK')}
         </PrimaryLabel>
         <Input
           type="number"

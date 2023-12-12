@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { PossibleAiModels } from '@/types/ai-models';
 
@@ -10,7 +10,7 @@ import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
 
 export const MaxTokensSlider = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -48,11 +48,9 @@ export const MaxTokensSlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The maximum number of tokens to generate. The higher the number, the longer the AI will take to generate a response.',
-          )}
+          tip={t('maxTokensDescription')}
         >
-          {t('Max Tokens')}
+          {t('maxTokens')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.max_tokens !== undefined}

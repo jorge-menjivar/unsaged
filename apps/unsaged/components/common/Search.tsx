@@ -1,15 +1,15 @@
 import { IconX } from '@tabler/icons-react';
 import { FC } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 interface Props {
-  placeholder: string;
+  placeholder?: string;
   searchTerm: string;
   onSearch: (searchTerm: string) => void;
 }
-const Search: FC<Props> = ({ placeholder, searchTerm, onSearch }) => {
-  const { t } = useTranslation('sidebar');
+const Search: FC<Props> = ({ placeholder = 'search', searchTerm, onSearch }) => {
+  const t = useTranslations();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(e.target.value);
@@ -27,7 +27,7 @@ const Search: FC<Props> = ({ placeholder, searchTerm, onSearch }) => {
         bg-theme-primary-menu-light dark:bg-theme-primary-menu-dark px-4 py-3 sm:py-2 pr-10
         text-[14px] leading-3 text-black dark:text-white"
         type="text"
-        placeholder={t(placeholder) || ''}
+        placeholder={`${t(placeholder)}...`}
         value={searchTerm}
         onChange={handleSearchChange}
       />

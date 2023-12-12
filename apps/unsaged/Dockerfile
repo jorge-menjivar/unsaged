@@ -41,7 +41,6 @@ COPY --from=dependencies /unsaged/node_modules ./node_modules
 COPY --from=build /unsaged/apps/unsaged/.next ./apps/unsaged/.next
 COPY --from=build /unsaged/apps/unsaged/public ./apps/unsaged/public
 COPY --from=build /unsaged/apps/unsaged/next.config.js ./apps/unsaged/next.config.js
-COPY --from=build /unsaged/apps/unsaged/next-i18next.config.js ./apps/unsaged/next-i18next.config.js
 COPY --from=build /unsaged/apps/unsaged/package.json ./apps/unsaged/package.json
 
 # Expose the port the app will run on

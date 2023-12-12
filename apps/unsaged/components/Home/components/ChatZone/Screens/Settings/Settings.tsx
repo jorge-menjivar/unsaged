@@ -1,13 +1,10 @@
-import { IconDeviceFloppy, IconX } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
-
-import { useTranslation } from 'next-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
 import {
   setSavedSetting,
-  setSavedSettings,
 } from '@/utils/app/storage/local/settings';
 
 import { Setting, SettingsSection } from '@/types/settings';
@@ -17,10 +14,10 @@ import HomeContext from '@/components/Home/home.context';
 
 import SettingsContext from './Settings.context';
 import { SettingsInitialState, initialState } from './Settings.state';
+import { useTranslations } from 'next-intl';
 
 export const Settings = () => {
-  const { t } = useTranslation('settings');
-
+  const t = useTranslations();
   const settingsContextValue = useCreateReducer<SettingsInitialState>({
     initialState,
   });
@@ -90,7 +87,7 @@ export const Settings = () => {
             <div className="w-full">
               <div className="block">
                 <h1 className="text-3xl font-bold text-center text-black dark:text-white">
-                  Settings
+                  {t('settings')}
                 </h1>
                 {settings &&
                   Object.values(settings).map((section, index) => (

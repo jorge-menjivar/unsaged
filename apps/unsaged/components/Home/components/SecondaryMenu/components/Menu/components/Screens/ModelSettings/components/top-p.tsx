@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { PossibleAiModels } from '@/types/ai-models';
 
@@ -10,7 +10,7 @@ import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
 
 export const TopPSlider = () => {
-  const { t } = useTranslation('chat');
+  const t = useTranslations('chat');
   const {
     state: { selectedConversation },
     handleUpdateConversationParams,
@@ -38,11 +38,9 @@ export const TopPSlider = () => {
     <div className="flex flex-col mt-4">
       <div className="flex justify-between items-center">
         <PrimaryLabel
-          tip={t(
-            'The cumulative probability of parameter highest probability tokens to use for nucleus sampling, between 0 and 1. Defaults to model provider configuration.',
-          )}
+          tip={t('topPDescription')}
         >
-          {t('Top P')}
+          {t('topP')}
         </PrimaryLabel>
         <Switch
           checked={selectedConversation?.params.top_p !== undefined}

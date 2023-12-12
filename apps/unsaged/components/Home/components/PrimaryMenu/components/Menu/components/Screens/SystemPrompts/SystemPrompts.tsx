@@ -1,6 +1,6 @@
 import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
@@ -26,7 +26,7 @@ import { SystemPromptsInitialState, initialState } from './SystemPrompts.state';
 import { v4 as uuidv4 } from 'uuid';
 
 const SystemPrompts = () => {
-  const { t } = useTranslation('systemPrompts');
+  const t = useTranslations();
 
   const systemPromptsContextValue = useCreateReducer<SystemPromptsInitialState>(
     {
@@ -55,7 +55,7 @@ const SystemPrompts = () => {
   const handleCreateSystemPrompt = async () => {
     const newSystemPrompt: SystemPrompt = {
       id: uuidv4(),
-      name: `${t('New System Prompt')}`,
+      name: `${t('newSystemPrompt')}`,
       content: '',
       folderId: null,
       models: [],
@@ -191,7 +191,7 @@ const SystemPrompts = () => {
     promptDispatch({ field: 'searchTerm', value: term });
 
   const createFolder = () =>
-    handleCreateFolder(t('New folder'), 'system_prompt');
+    handleCreateFolder(t('newFolder'), 'system_prompt');
 
   return (
     <SystemPromptsContext.Provider
@@ -209,14 +209,13 @@ const SystemPrompts = () => {
             doSearch('');
           }}
         >
-          {t('New system prompt')}
+          {t('newSystemPrompt')}
         </PrimaryButton>
         <SecondaryButton onClick={createFolder}>
           <IconFolderPlus size={16} />
         </SecondaryButton>
       </div>
       <Search
-        placeholder={t('Search...') || ''}
         searchTerm={searchTerm}
         onSearch={doSearch}
       />
@@ -248,7 +247,7 @@ const SystemPrompts = () => {
         ) : (
           <div className="mt-8 select-none text-center text-black dark:text-white opacity-50">
             <IconMistOff className="mx-auto mb-3" />
-            <span className="text-[14px] leading-normal">{t('No data.')}</span>
+            <span className="text-[14px] leading-normal">{t('noData')}.</span>
           </div>
         )}
       </div>

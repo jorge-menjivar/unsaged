@@ -1,18 +1,12 @@
-import { IconFileExport, IconLogout, IconSettings } from '@tabler/icons-react';
 import { useContext } from 'react';
-
-import { useTranslation } from 'next-i18next';
 
 import { Import } from '@/components/Home/components/Settings/Import';
 import HomeContext from '@/components/Home/home.context';
-import { SidebarButton } from '@/components/common/Sidebar/SidebarButton';
 
 import ConversationsContext from '../Conversations.context';
 import { ClearConversations } from './ClearConversations';
 
 export const ConversationsSettings = () => {
-  const { t } = useTranslation('sidebar');
-
   const {
     state: { database, conversations },
   } = useContext(HomeContext);
@@ -35,7 +29,7 @@ export const ConversationsSettings = () => {
       <Import onImport={handleImportConversations} />
 
       {/* <SidebarButton
-        text={t('Export data')}
+        text={t('exportData')}
         icon={<IconFileExport size={18} />}
         onClick={() => handleExportData(database!)}
       /> */}

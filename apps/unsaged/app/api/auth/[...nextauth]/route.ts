@@ -17,9 +17,9 @@ const authOptions: NextAuthOptions = {
   // Supabase adapter is only enabled if JWT secret is specified
   adapter: SUPABASE_JWT_SECRET
     ? SupabaseAdapter({
-        url: SUPABASE_URL,
-        secret: SUPABASE_SERVICE_ROLE_KEY,
-      })
+      url: SUPABASE_URL,
+      secret: SUPABASE_SERVICE_ROLE_KEY,
+    })
     : undefined,
   callbacks: {
     async session({ session, token }) {

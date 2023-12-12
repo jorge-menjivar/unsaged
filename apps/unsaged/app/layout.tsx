@@ -1,42 +1,12 @@
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/utils/app/const';
+import { ReactNode } from 'react';
 
-import { Analytics } from '@vercel/analytics/react';
-import { AxiomWebVitals } from 'next-axiom';
-
-import { Metadata } from 'next';
-
-import { ThemeProvider } from '@/components/common/ui/theme-provider';
-
-import '@/styles/globals.css';
-
-export const metadata: Metadata = {
-  title: DEFAULT_TITLE,
-  description: DEFAULT_DESCRIPTION,
-  viewport:
-    'height=device-height, width=device-width, initial-scale=1, user-scalable=no',
+type Props = {
+    children: ReactNode;
 };
 
-export default function RootLayout({
-  // Layouts must accept a children prop.
-  // This will be populated with nested layouts or pages
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <Analytics />
-      <AxiomWebVitals />
-      <body className="absolute inset-0 overflow-hidden overscroll-none h-full w-full">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+// Even though this component is just passing its children through, the presence
+// of this file fixes an issue in Next.js 13.3.0 where link clicks that switch
+// the locale would otherwise be ignored.
+export default function RootLayout({ children }: Props) {
+    return children;
 }

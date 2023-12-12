@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { SystemPrompt } from '@/types/system-prompt';
 
@@ -24,7 +24,7 @@ interface Props {
 
 export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
   const { handleUpdateSystemPrompt } = useContext(SystemPromptsContext);
-  const { t } = useTranslation('systemPrompt');
+  const t = useTranslations();
 
   const [name, setName] = useState(systemPrompt.name);
   const [content, setContent] = useState(systemPrompt.content);
@@ -104,7 +104,7 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
             role="dialog"
           >
             <label className="mb-2 text-left text-neutral-900 dark:text-neutral-200">
-              {t('Name')}
+              {t('name')}
             </label>
             <input
               ref={nameInputRef}
@@ -115,7 +115,7 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
             />
 
             <label className="mb-2 text-left text-neutral-900 dark:text-neutral-200">
-              {t('Prompt')}
+              {t('prompt')}
             </label>
             <textarea
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
@@ -129,7 +129,7 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
             <PrimaryLabel
               tip={'The models to make this system prompt available for.'}
             >
-              {t('Models')}
+              {t('models')}
             </PrimaryLabel>
             <ChipList
               selectedModels={models}
@@ -142,7 +142,7 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
                   onClose();
                 }}
               >
-                {t('Cancel')}
+                {t('cancel')}
               </PrimaryButton>
               <PrimaryButton
                 onClick={() => {
@@ -157,7 +157,7 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
                   onClose();
                 }}
               >
-                {t('Save')}
+                {t('save')}
               </PrimaryButton>
             </div>
           </div>

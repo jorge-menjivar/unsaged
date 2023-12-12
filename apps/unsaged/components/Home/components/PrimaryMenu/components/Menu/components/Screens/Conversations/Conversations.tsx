@@ -1,7 +1,7 @@
 import { IconFolderPlus, IconMistOff } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
 
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
 
@@ -42,7 +42,7 @@ import { ConversationsInitialState, initialState } from './Conversations.state';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Conversations = () => {
-  const { t } = useTranslation('conversations');
+  const t = useTranslations('chat');
 
   const conversationsContextValue = useCreateReducer<ConversationsInitialState>(
     {
@@ -126,7 +126,7 @@ export const Conversations = () => {
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: 'New Conversation',
+      name: t('newConversation'),
       model: model,
       systemPrompt: null,
       folderId: null,
@@ -187,7 +187,7 @@ export const Conversations = () => {
 
       const newConversation: Conversation = {
         id: uuidv4(),
-        name: 'New Conversation',
+        name: t('newConversation'),
         model: model,
         systemPrompt: null,
         folderId: null,
@@ -258,7 +258,7 @@ export const Conversations = () => {
   const doSearch = (term: string) =>
     chatDispatch({ field: 'searchTerm', value: term });
 
-  const createFolder = () => handleCreateFolder(t('New folder'), 'chat');
+  const createFolder = () => handleCreateFolder(t('newFolder'), 'chat');
 
   const allowDrop = (e: any) => {
     e.preventDefault();
@@ -289,7 +289,7 @@ export const Conversations = () => {
             doSearch('');
           }}
         >
-          {t('New conversation')}
+          {t('newConversation')}
         </PrimaryButton>
 
         <SecondaryButton onClick={createFolder}>
@@ -297,7 +297,6 @@ export const Conversations = () => {
         </SecondaryButton>
       </div>
       <Search
-        placeholder={t('Search...') || ''}
         searchTerm={searchTerm}
         onSearch={doSearch}
       />
@@ -325,7 +324,7 @@ export const Conversations = () => {
         ) : (
           <div className="mt-8 select-none text-center text-black dark:text-white opacity-50">
             <IconMistOff className="mx-auto mb-3" />
-            <span className="text-[14px] leading-normal">{t('No data.')}</span>
+            <span className="text-[14px] leading-normal">{t('noData')}.</span>
           </div>
         )}
       </div>
