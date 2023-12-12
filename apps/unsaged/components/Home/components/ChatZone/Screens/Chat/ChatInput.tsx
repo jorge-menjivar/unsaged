@@ -77,13 +77,12 @@ export const ChatInput = ({
       if (maxLength && value.length > maxLength) {
         alert(
           t(
-            `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
+            `messageLimit`,
             { maxLength, valueLength: value.length },
           ),
         );
         return;
       }
-        t('messageLimit',
     }
 
     setContent(value);
@@ -330,11 +329,10 @@ export const ChatInput = ({
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
-              overflow: `${
-                textareaRef.current && textareaRef.current.scrollHeight > 400
+              overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400
                   ? 'auto'
                   : 'hidden'
-              }`,
+                }`,
             }}
             placeholder={
               t('startTyping')
