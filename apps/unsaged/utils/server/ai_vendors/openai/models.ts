@@ -3,7 +3,6 @@ import {
   OPENAI_API_KEY,
   OPENAI_API_TYPE,
   OPENAI_API_URL,
-  OPENAI_API_VERSION,
 } from '@/utils/app/const';
 
 import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
