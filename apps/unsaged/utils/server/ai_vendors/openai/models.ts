@@ -6,7 +6,7 @@ import {
 } from '@/utils/app/const';
 
 import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
-import { getOpenAiApi } from './client';
+import { getOpenAiClient } from './client';
 
 export const config = {
   runtime: 'edge',
@@ -36,7 +36,7 @@ export async function getAvailableOpenAIModels(key: string): Promise<GetAvailabl
     const json = await res.json();
     responseData = json.data;
   } else {
-    const openai = await getOpenAiApi(key);
+    const openai = await getOpenAiClient(key);
 
     const list = await openai.models.list();
     responseData = list.data;
