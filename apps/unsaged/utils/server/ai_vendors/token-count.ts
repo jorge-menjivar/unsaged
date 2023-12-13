@@ -11,7 +11,7 @@ export async function getTokenCount(
   systemPrompt: string,
   messages: Message[],
 ) {
-  if (model.vendor === 'OpenAI') {
+  if (model.vendor === 'OpenAI' || model.vendor === 'Azure') {
     return countTokensOpenAI(model, systemPrompt, messages);
   } else if (model.vendor === 'Anthropic') {
     return countTokensAnthropic(model, systemPrompt, messages);

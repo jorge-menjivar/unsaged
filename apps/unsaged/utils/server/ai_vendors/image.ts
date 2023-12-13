@@ -8,7 +8,7 @@ export async function getImage(
   apiKey: string | undefined,
   prompt: string,
 ) {
-  if (model.vendor === 'OpenAI') {
+  if (model.vendor === 'OpenAI' || model.vendor === 'Azure') {
     return imageOpenAI(
       model,
       params,

@@ -35,6 +35,17 @@ const openAiSupportedParameters = [
   possibleParameters['seed'],
 ];
 
+const azureSupportedParameters = [
+  possibleParameters['system_prompt'],
+  possibleParameters['temperature'],
+  possibleParameters['max_tokens'],
+  possibleParameters['top_p'],
+  possibleParameters['repeat_penalty'],
+  possibleParameters['presence_penalty'],
+  possibleParameters['stop'],
+  possibleParameters['seed'],
+];
+
 const claudeSupportedParameters = [
   possibleParameters['system_prompt'],
   possibleParameters['temperature'],
@@ -79,6 +90,8 @@ export const ModelSettings = () => {
     switch (model.vendor) {
       case 'OpenAI':
         return openAiSupportedParameters;
+      case 'Azure':
+        return azureSupportedParameters;
       case 'Anthropic':
         return claudeSupportedParameters;
       case 'Google':

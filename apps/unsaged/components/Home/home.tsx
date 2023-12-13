@@ -297,6 +297,7 @@ const Home = () => {
     const vendors: AiModel['vendor'][] = [
       'Anthropic',
       'OpenAI',
+      'Azure',
       'Google',
       'Ollama',
     ];
@@ -323,6 +324,15 @@ const Home = () => {
           content: DEFAULT_OPENAI_SYSTEM_PROMPT,
           folderId: null,
           models: models.filter((m) => m.vendor === 'OpenAI').map((m) => m.id),
+        };
+        newSystemPrompts.push(systemPrompt);
+      } else if (vendor === 'Azure') {
+        systemPrompt = {
+          id: systemPromptId,
+          name: `${vendor} Built-In`,
+          content: DEFAULT_OPENAI_SYSTEM_PROMPT,
+          folderId: null,
+          models: models.filter((m) => m.vendor === 'Azure').map((m) => m.id),
         };
         newSystemPrompts.push(systemPrompt);
       } else if (vendor === 'Google') {

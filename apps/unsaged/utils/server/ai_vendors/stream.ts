@@ -14,7 +14,7 @@ export async function getStream(
   messages: Message[],
   tokenCount: number,
 ) {
-  if (model.vendor === 'OpenAI') {
+  if (model.vendor === 'OpenAI' || model.vendor === 'Azure') {
     return streamOpenAI(
       model,
       systemPrompt,

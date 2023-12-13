@@ -42,10 +42,12 @@ export async function getAvailableOpenAIModels(key: string): Promise<GetAvailabl
     responseData = list.data;
   }
 
+  console.log(responseData);
+
   const models: (AiModel | null)[] = responseData
     .map((openaiModel: any) => {
       const model_name =
-        OPENAI_API_TYPE === 'azure' ? openaiModel.model : openaiModel.id;
+        OPENAI_API_TYPE === 'azure' ? openaiModel.model + '-az' : openaiModel.id;
 
       if (!PossibleAiModels[model_name]) {
         if (DEBUG_MODE)

@@ -3,11 +3,11 @@ export type AiModel = {
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
-  vendor: 'OpenAI' | 'Anthropic' | 'Google' | 'Ollama';
+  vendor: 'OpenAI' | 'Azure' | 'Anthropic' | 'Google' | 'Ollama';
   type: 'text';
 } | {
   id: string;
-  vendor: 'OpenAI';
+  vendor: 'OpenAI' | 'Azure';
   type: 'image';
 }
 
@@ -37,14 +37,6 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     maxLength: 48000,
     tokenLimit: 16000,
     requestLimit: 12000,
-    vendor: 'OpenAI',
-    type: 'text',
-  },
-  'gpt-35-az': {
-    id: 'gpt-35-az',
-    maxLength: 12000,
-    tokenLimit: 4000,
-    requestLimit: 3000,
     vendor: 'OpenAI',
     type: 'text',
   },
@@ -85,21 +77,42 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
   //
   // Azure
   //
-  'gpt-35-turbo': {
+  'gpt-35-az': {
     id: 'will get from azure',
     maxLength: 12000,
     tokenLimit: 4000,
     requestLimit: 3000,
-    vendor: 'OpenAI',
+    vendor: 'Azure',
     type: 'text',
   },
-  'gpt-35-turbo-16k': {
+  'gpt-35-turbo-az': {
+    id: 'will get from azure',
+    maxLength: 12000,
+    tokenLimit: 4000,
+    requestLimit: 3000,
+    vendor: 'Azure',
+    type: 'text',
+  },
+  'gpt-35-turbo-16k-az': {
     id: 'will get from azure',
     maxLength: 48000,
     tokenLimit: 16000,
     requestLimit: 12000,
-    vendor: 'OpenAI',
+    vendor: 'Azure',
     type: 'text',
+  },
+  'gpt-4-az': {
+    id: 'gpt-4',
+    maxLength: 24000,
+    tokenLimit: 4000,
+    requestLimit: 6000,
+    vendor: 'Azure',
+    type: 'text',
+  },
+  'dall-e-3-az': {
+    id: 'will get from azure',
+    vendor: 'Azure',
+    type: 'image',
   },
   //
   // Anthropic
