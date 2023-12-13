@@ -1,44 +1,49 @@
-import { getSession } from 'next-auth/react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { Database } from '@/types/supabase.types';
 
-import { Session, User } from '@/types/auth';
+// Initialize your Supabase client once here
+const supabaseClient = createClientComponentClient();
 
-export const getClientSession = async () => {
-  const authjsSession = await getSession();
+export async function getClientSession() {
+  try {
+    const {
+      data: { session },
+    } = await supabaseClient.auth.getSession();
 
-  if (authjsSession) {
-    let user: User | undefined = undefined;
-    if (authjsSession.user) {
-      user = {
-        email: authjsSession?.user?.email,
-        name: authjsSession?.user?.name,
-        image: authjsSession?.user?.image,
-      };
-    }
-
-    const session: Session = {
-      user: user,
-      expires: authjsSession.expires,
-      customAccessToken: authjsSession.customAccessToken,
+    const sessionData = {
+      user: session?.user?.email || '',
+      expires: session?.expires_at || '',
+      customAccessToken: session?.access_token || '',
     };
 
-    return session;
+    return sessionData;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
+}
 
-  return null;
-};
+export async function getUser() {
+  try {
+    const {
+      data: { session },
+    } = await supabaseClient.auth.getSession();
 
-export const getUser = async () => {
-  const session = await getClientSession();
+    const user = session?.user
+      ? {
+          email: session.user.email || 'default_user',
+          image: session.user.user_metadata?.avatar_url || '',
+          name: session.user.user_metadata?.full_name || 'Default User',
+        }
+      : {
+          email: 'default_user',
+          image: '',
+          name: 'Default User',
+        };
 
-  let user = session?.user;
-
-  if (!user) {
-    user = {
-      email: 'default_user',
-      image: null,
-      name: 'Default User',
-    };
+    return user;
+  } catch (error) {
+    console.error(error);
+    return null;
   }
-
-  return user;
-};
+}

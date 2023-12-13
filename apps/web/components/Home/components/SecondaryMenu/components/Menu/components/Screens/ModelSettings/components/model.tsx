@@ -22,14 +22,15 @@ export const ModelSelect = () => {
   const [sortedModels, setSortedModels] = useState<AiModel[]>(models);
 
   useEffect(() => {
-    const _sorted = models.sort((a, b) => {
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
-
-      return 0;
-    });
-
-    setSortedModels(_sorted);
+    if (Array.isArray(models)) {
+      const _sorted = models.sort((a, b) => {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+      });
+  
+      setSortedModels(_sorted);
+    }
   }, [models]);
 
   const handleChange = (value: string) => {
@@ -60,7 +61,7 @@ export const ModelSelect = () => {
         </SelectTrigger>
 
         <SelectContent>
-          {sortedModels.map((model) => (
+          {Array.isArray(sortedModels) && sortedModels.map((model) => (
             <SelectItem key={model.id} value={model.id}>
               {model.id} - {model.vendor}
             </SelectItem>

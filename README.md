@@ -31,7 +31,7 @@ Follow the installation instructions in the [Getting Started](https://unsaged.co
 - **Multi-User Support**: Easily switch between users and manage their respective conversations.
 - **Cloud Sync**: Synchronize your conversations across different devices seamlessly with Supabase.
 - **System Prompts**: Personalize your conversation context and the AI's personality with system prompts.
-- **Message Templates**: Speed up message generation with support for variable templates.
+- **Message Templates**: Speed up message generation with support for variable templates. 
 
 ## 🤖 Supported AI Models
 
