@@ -42,8 +42,6 @@ export async function getAvailableOpenAIModels(key: string): Promise<GetAvailabl
     responseData = list.data;
   }
 
-  console.log(responseData);
-
   const models: (AiModel | null)[] = responseData
     .map((openaiModel: any) => {
       const model_name =
