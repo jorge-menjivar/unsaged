@@ -7,7 +7,7 @@ import { Message } from '@/types/chat';
 
 import OpenAI from 'openai';
 import { OpenAIStream } from 'ai';
-import { getOpenAi } from './openai';
+import { getOpenAiApi } from './openai';
 import { ChatCompletionCreateParamsStreaming } from 'openai/resources';
 
 export async function streamOpenAI(
@@ -30,7 +30,7 @@ export async function streamOpenAI(
     return { error: 'Chat Stream is only available for model type text' };
   }
 
-  const openai = await getOpenAi(apiKey);
+  const openai = await getOpenAiApi(apiKey, model.id);
 
   let messagesToSend: any[] = [];
 
@@ -91,8 +91,8 @@ export async function streamOpenAI(
 
     return { stream: stream };
   }).catch((err) => {
+    console.error(err.status, err);
     if (err instanceof OpenAI.APIError) {
-      console.error(err.status, err.error);
       return { error: err.error };
     } else {
       throw err;

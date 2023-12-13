@@ -4,7 +4,7 @@ import {
 
 import { AiModel, ModelParams } from '@/types/ai-models';
 
-import { getOpenAi } from './openai';
+import { getOpenAiApi } from './openai';
 import { ImageGenerateParams } from 'openai/resources';
 import OpenAI from 'openai';
 
@@ -26,7 +26,7 @@ export async function imageOpenAI(
         }
     }
 
-    const openai = await getOpenAi(apiKey);
+    const openai = await getOpenAiApi(apiKey, model.id);
 
     const body: ImageGenerateParams = {
         model: model.id,

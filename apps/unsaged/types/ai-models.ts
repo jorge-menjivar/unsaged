@@ -11,7 +11,7 @@ export type AiModel = {
   type: 'image';
 }
 
-export interface GetAvailableOpenAIModelResponse {
+export interface GetAvailableAIModelResponse {
   error?: any;
   data: any[];
 }
