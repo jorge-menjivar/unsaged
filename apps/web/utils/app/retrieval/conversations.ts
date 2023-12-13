@@ -43,6 +43,8 @@ export const useConversations = (
           models,
         );
 
+        console.log('conversations', _conversations);
+
         if (_conversations) {
           const cleanedConversations = cleanConversationHistory(_conversations);
 

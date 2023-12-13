@@ -42,17 +42,12 @@ export function printEnvVariables() {
 
   const SUPABASE_URL = dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_URL);
 
-  const SUPABASE_SERVICE_ROLE_KEY = dockerEnvVarFix(
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
-  );
   const SUPABASE_ANON_KEY = dockerEnvVarFix(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
-
   const DEFAULT_MODEL = dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_MODEL);
 
-  console.log('SUPABASE_SERVICE_ROLE_KEY', SUPABASE_SERVICE_ROLE_KEY);
   console.log('NEXT_PUBLIC_SUPABASE_URL', SUPABASE_URL);
   console.log('NEXT_PUBLIC_SUPABASE_ANON_KEY', SUPABASE_ANON_KEY);
 

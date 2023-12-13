@@ -1,12 +1,23 @@
-'use client'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { Database } from '@/types/supabase.types'
-import { NEXT_PUBLIC_SITE_URL } from '@/utils/app/const';
+'use client';
+
+import { Auth } from '@supabase/auth-ui-react';
+
+import {
+  NEXT_PUBLIC_SITE_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_URL,
+} from '@/utils/app/const';
+
+import { Database } from '@/types/supabase.types';
+
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function AuthForm() {
-  const supabase = createBrowserSupabaseClient<Database>()
+  const supabase = createBrowserClient<Database>(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+  );
 
   return (
     <Auth
@@ -28,5 +39,5 @@ export default function AuthForm() {
       providers={['google']}
       redirectTo={`${NEXT_PUBLIC_SITE_URL}/auth/callback`} // Use the environment variable in the URL
     />
-  )
+  );
 }

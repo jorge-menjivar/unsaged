@@ -23,17 +23,16 @@ export const OLLAMA_ENABLED = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_OLLAMA_ENABLED,
 );
 
+export const NEXT_PUBLIC_SITE_URL =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_SITE_URL) || 'http://localhost:3000';
 
-export const NEXT_PUBLIC_SITE_URL = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_SITE_URL) || "https://localhost:3000";
+export const DEFAULT_TITLE =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || 'unsaged';
 
+export const DEFAULT_DESCRIPTION =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
+  'Open source chat kit engineered for seamless interaction with AI models';
 
-export const DEFAULT_TITLE = dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || "unsaged";
-
-export const DEFAULT_DESCRIPTION = dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
-  "Open source chat kit engineered for seamless interaction with AI models";
-
-  
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
   "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
@@ -158,9 +157,6 @@ export const OLLAMA_BASIC_PWD =
 export const SUPABASE_URL =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_URL) ||
   'SUPABASE_URL missing';
-
-export const SUPABASE_SERVICE_ROLE_KEY =
-  dockerEnvVarFix(process.env.SUPABASE_SERVICE_ROLE_KEY) || '';
 
 export const SUPABASE_ANON_KEY =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || '';

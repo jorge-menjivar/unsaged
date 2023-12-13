@@ -6,9 +6,11 @@ import {
 } from '@tabler/icons-react';
 import { useContext } from 'react';
 
-
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '@/utils/app/const';
 import { localSaveShowPrimaryMenu } from '@/utils/app/storage/local/ui-state';
 import { deleteSelectedConversationId } from '@/utils/app/storage/selectedConversation';
+
+import type { Database } from '@/types/database';
 
 import { ActivityBarButton } from './components/ActivityBarButton';
 import { ActivityBarTab } from './components/ActivityBarTab';
@@ -16,10 +18,12 @@ import HomeContext from '@/components/Home/home.context';
 
 import PrimaryMenuContext from '../../PrimaryMenu.context';
 
-import type { Database } from '@/types/database'
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/navigation'
-const supabase = createBrowserSupabaseClient<Database>()
+import { createBrowserClient } from '@supabase/ssr';
+
+const supabase = createBrowserClient<Database>(
+  SUPABASE_URL!,
+  SUPABASE_ANON_KEY!,
+);
 
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const {
@@ -49,11 +53,11 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
     if (database!.name !== 'local') {
       await deleteSelectedConversationId(user!);
     }
-  
-    await supabase.auth.signOut()
+
+    await supabase.auth.signOut();
     window.location.replace('/');
   };
-  
+
   const handleShowSettings = () => {
     if (display !== 'settings') {
       homeDispatch({ field: 'display', value: 'settings' });

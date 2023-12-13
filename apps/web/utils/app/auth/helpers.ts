@@ -1,19 +1,20 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/types/supabase.types';
 
-// Initialize your Supabase client once here
-const supabaseClient = createClientComponentClient();
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '../const';
+
+import { createBrowserClient } from '@supabase/ssr';
+
+const supabase = createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export async function getClientSession() {
   try {
     const {
       data: { session },
-    } = await supabaseClient.auth.getSession();
+    } = await supabase.auth.getSession();
 
     const sessionData = {
       user: session?.user?.email || '',
       expires: session?.expires_at || '',
-      customAccessToken: session?.access_token || '',
     };
 
     return sessionData;
@@ -27,7 +28,7 @@ export async function getUser() {
   try {
     const {
       data: { session },
-    } = await supabaseClient.auth.getSession();
+    } = await supabase.auth.getSession();
 
     const user = session?.user
       ? {
