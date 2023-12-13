@@ -6,7 +6,7 @@ import {
 } from '@/utils/app/const';
 
 import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
-import { getOpenAiApi } from './openai';
+import { getOpenAiApi } from './client';
 
 export const config = {
   runtime: 'edge',

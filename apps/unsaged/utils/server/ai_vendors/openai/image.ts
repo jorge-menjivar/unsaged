@@ -4,7 +4,7 @@ import {
 
 import { AiModel, ModelParams } from '@/types/ai-models';
 
-import { getOpenAiApi } from './openai';
+import { getOpenAiApi } from './client';
 import { ImageGenerateParams } from 'openai/resources';
 import OpenAI from 'openai';
 

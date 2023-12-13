@@ -1,18 +1,13 @@
 import {
   ANTHROPIC_API_KEY,
-  ANTHROPIC_API_URL,
-  ANTHROPIC_API_VERSION,
 } from '@/utils/app/const';
 
 import { AiModel, ModelParams } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
-import {
-  ParsedEvent,
-  ReconnectInterval,
-  createParser,
-} from 'eventsource-parser';
 import { AnthropicStream } from 'ai';
+import { getAnthropicClient } from './client';
+import { CompletionCreateParamsStreaming } from '@anthropic-ai/sdk/resources';
 
 export async function streamAnthropic(
   model: AiModel,
@@ -34,6 +29,8 @@ export async function streamAnthropic(
     return { error: 'Chat Stream is only available for model type text' };
   }
 
+  const anthropic = getAnthropicClient(apiKey);
+
   let prompt = systemPrompt;
 
   let parsedMessages = '';
@@ -47,9 +44,7 @@ export async function streamAnthropic(
 
   prompt += '\n\nAssistant:';
 
-  let url = `${ANTHROPIC_API_URL}/complete`;
-
-  const body: { [key: string]: any } = {
+  const body: CompletionCreateParamsStreaming = {
     prompt: prompt,
     model: model.id,
     max_tokens_to_sample: model.tokenLimit - tokenCount,
@@ -58,51 +53,28 @@ export async function streamAnthropic(
   };
 
   if (params.max_tokens) {
-    body['max_tokens_to_sample'] = params.max_tokens;
+    body.max_tokens_to_sample = params.max_tokens;
   }
 
   if (params.temperature) {
-    body['temperature'] = params.temperature;
+    body.temperature = params.temperature;
   }
 
-  // Only supports one stop token
   if (params.stop) {
-    body['stop_sequences'] = params.stop[0];
+    body.stop_sequences = params.stop;
   }
 
   if (params.top_k) {
-    body['top_k'] = params.top_k;
+    body.top_k = params.top_k;
   }
 
   if (params.top_p) {
-    body['top_p'] = params.top_p;
+    body.top_p = params.top_p;
   }
 
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      'anthropic-version': ANTHROPIC_API_VERSION,
-      'x-api-key': apiKey,
-    },
-    method: 'POST',
-    body: JSON.stringify(body),
-  });
+  const response = await anthropic.completions.create(body);
 
-  const decoder = new TextDecoder();
-
-  if (res.status !== 200) {
-    const result = await res.json();
-    if (result.error) {
-      return { error: result.error };
-    } else {
-      throw new Error(
-        `Anthropic API returned an error: ${decoder.decode(result?.value) || result.statusText
-        }`,
-      );
-    }
-  }
-
-  const stream = AnthropicStream(res);
+  const stream = AnthropicStream(response);
 
   return { stream: stream };
 }

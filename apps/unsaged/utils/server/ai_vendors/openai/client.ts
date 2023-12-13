@@ -7,7 +7,7 @@ import {
     OPENAI_ORGANIZATION,
 } from '@/utils/app/const';
 
-export function getOpenAiApi(apiKey: string, modelId?: string) {
+export function getOpenAiClient(apiKey: string, modelId?: string) {
     if (OPENAI_API_TYPE === 'azure' && !modelId)
         console.error('ModelId for Azure Deployment is not defined!')
 

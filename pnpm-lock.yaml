@@ -78,6 +78,9 @@ importers:
 
   apps/unsaged:
     dependencies:
+      '@anthropic-ai/sdk':
+        specifier: ^0.10.2
+        version: 0.10.2(encoding@0.1.13)
       '@auth/supabase-adapter':
         specifier: ^0.1.11
         version: 0.1.11(@supabase/supabase-js@2.39.0)(nodemailer@6.9.7)
@@ -480,6 +483,22 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
+
+  /@anthropic-ai/sdk@0.10.2(encoding@0.1.13):
+    resolution: {integrity: sha512-ranlsLhft0njz4s0YdKxUtbouoPPTIlnmpBxUNZfmKplF6GCNIomC9YjHf4GJNJyrUHrsikl10GnvPVU6LK+WA==}
+    dependencies:
+      '@types/node': 18.19.3
+      '@types/node-fetch': 2.6.9
+      abort-controller: 3.0.0
+      agentkeepalive: 4.5.0
+      digest-fetch: 1.3.0
+      form-data-encoder: 1.7.2
+      formdata-node: 4.4.1
+      node-fetch: 2.7.0(encoding@0.1.13)
+      web-streams-polyfill: 3.2.1
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@auth/core@0.18.5(nodemailer@6.9.7):
     resolution: {integrity: sha512-Ql8YobXp57mbXqHNaaroIAgBopKaxWI+3Tlu1rGcXW5KPzXdfTqijZ4HOuZvWKqmhbMWQ9xS9r8uG4fMonZYwg==}
