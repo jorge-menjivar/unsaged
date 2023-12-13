@@ -104,7 +104,7 @@ export const OPENAI_API_TYPE =
   dockerEnvVarFix(process.env.OPENAI_API_TYPE) || 'openai';
 
 export const OPENAI_API_VERSION =
-  dockerEnvVarFix(process.env.OPENAI_API_VERSION) || '2023-07-01-preview';
+  dockerEnvVarFix(process.env.OPENAI_API_VERSION) || '2023-12-01-preview';
 
 export const OPENAI_ORGANIZATION =
   dockerEnvVarFix(process.env.OPENAI_ORGANIZATION) || '';
