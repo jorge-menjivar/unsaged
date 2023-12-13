@@ -17,7 +17,7 @@ export async function countTokensGoogle(
       tokenCount += text.length / 4;
     }
 
-    if (tokenCount > model.requestLimit) {
+    if (model.type == 'text' && tokenCount > model.requestLimit) {
       return { error: 'Token limit exceeded' };
     }
   }

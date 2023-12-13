@@ -5,6 +5,7 @@ import { SavedSetting } from '@/types/settings';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import { sendChatRequest } from '../../chat';
+import { sendImageRequest } from '../../image';
 
 export async function messageSender(
   builtInSystemPrompts: SystemPrompt[],
@@ -12,7 +13,7 @@ export async function messageSender(
   messages: Message[],
   savedSettings: SavedSetting[],
   dispatch: React.Dispatch<any>,
-) {
+): Promise<{ data: null; controller: null; } | { data: ReadableStream<Uint8Array>; controller: AbortController; }> {
   let customPrompt = selectedConversation.systemPrompt;
 
   if (!selectedConversation.systemPrompt) {
@@ -27,25 +28,50 @@ export async function messageSender(
     systemPrompt: customPrompt,
   };
 
-  const { response, controller } = await sendChatRequest(
-    promptInjectedConversation,
-    messages,
-    savedSettings,
-  );
+  const model = selectedConversation.model;
+  if (model.type == 'text') {
+    const { response, controller } = await sendChatRequest(
+      promptInjectedConversation,
+      messages,
+      savedSettings,
+    );
 
-  if (!response.ok) {
+    if (!response.ok) {
+      dispatch({ field: 'loading', value: false });
+      dispatch({ field: 'messageIsStreaming', value: false });
+      toast.error(response.statusText);
+      return { data: null, controller: null };
+    }
+    const data = response.body;
+    if (!data) {
+      dispatch({ field: 'loading', value: false });
+      dispatch({ field: 'messageIsStreaming', value: false });
+      return { data: null, controller: null };
+    }
+
     dispatch({ field: 'loading', value: false });
-    dispatch({ field: 'messageIsStreaming', value: false });
+    return { data, controller };
+  } else {
+    const messagesToSend = messages.filter(m => m.role === 'user').map(m => m.content);
+    const prompt = messagesToSend.join(' ');
+
+    const { response, controller } = await sendImageRequest(
+      promptInjectedConversation,
+      prompt,
+      savedSettings,
+    );
+
+    if (response.ok) {
+      const data = response.body;
+      if (data) {
+        dispatch({ field: 'loading', value: false });
+        return { data, controller };
+      }
+    }
+
     toast.error(response.statusText);
-    return { data: null, controller: null };
-  }
-  const data = response.body;
-  if (!data) {
-    dispatch({ field: 'loading', value: false });
-    dispatch({ field: 'messageIsStreaming', value: false });
-    return { data: null, controller: null };
-  }
 
-  dispatch({ field: 'loading', value: false });
-  return { data, controller };
+    dispatch({ field: 'loading', value: false });
+    return { data: null, controller: null };
+  }
 }

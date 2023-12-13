@@ -10,7 +10,7 @@ export async function streamPaLM2(
   apiKey: string | undefined,
   messages: Message[],
   tokenCount: number,
-) {
+): Promise<{ error?: any, stream?: any }> {
   if (!apiKey) {
     if (!PALM_API_KEY) {
       return { error: 'Missing API key' };

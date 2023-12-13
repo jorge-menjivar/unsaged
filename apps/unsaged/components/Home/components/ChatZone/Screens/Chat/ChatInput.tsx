@@ -70,15 +70,19 @@ export const ChatInput = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    const maxLength = selectedConversation?.model.maxLength;
 
-    if (maxLength && value.length > maxLength) {
-      alert(
-        t('messageLimit',
-          { maxLength, valueLength: value.length },
-        ),
-      );
-      return;
+    if (selectedConversation?.model.type == 'text') {
+      const maxLength = selectedConversation?.model.maxLength;
+
+      if (maxLength && value.length > maxLength) {
+        alert(
+          t(
+            `messageLimit`,
+            { maxLength, valueLength: value.length },
+          ),
+        );
+        return;
+      }
     }
 
     setContent(value);
@@ -326,8 +330,8 @@ export const ChatInput = ({
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
               overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400
-                ? 'auto'
-                : 'hidden'
+                  ? 'auto'
+                  : 'hidden'
                 }`,
             }}
             placeholder={

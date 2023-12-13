@@ -33,7 +33,11 @@ export const MaxTokensSlider = () => {
 
     const model = PossibleAiModels[selectedConversation?.model?.id];
 
-    return model?.tokenLimit ?? 128000;
+    if (model.type == 'text') {
+      return model?.tokenLimit ?? 128000;
+    } else {
+      return 0;
+    }
   }, [selectedConversation?.model?.id]);
 
   const [value, setValue] = useState<number[]>([

@@ -1,12 +1,17 @@
-export interface AiModel {
+export type AiModel = {
   id: string;
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
   vendor: 'OpenAI' | 'Anthropic' | 'Google' | 'Ollama';
+  type: 'text';
+} | {
+  id: string;
+  vendor: 'OpenAI';
+  type: 'image';
 }
 
-export interface GetAvailableOpenAIModelResponse {
+export interface GetAvailableAIModelResponse {
   error?: any;
   data: any[];
 }
@@ -25,6 +30,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   'gpt-3.5-turbo-16k': {
     id: 'gpt-3.5-turbo-16k',
@@ -32,6 +38,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 16000,
     requestLimit: 12000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   'gpt-35-az': {
     id: 'gpt-35-az',
@@ -39,6 +46,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   'gpt-4': {
     id: 'gpt-4',
@@ -46,6 +54,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 8000,
     requestLimit: 6000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   'gpt-4-32k': {
     id: 'gpt-4-32k',
@@ -53,6 +62,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 32000,
     requestLimit: 30000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   'gpt-4-1106-preview': {
     id: 'gpt-4-1106-preview',
@@ -60,6 +70,17 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 128000,
     requestLimit: 120000,
     vendor: 'OpenAI',
+    type: 'text',
+  },
+  'dall-e-3': {
+    id: 'dall-e-3',
+    vendor: 'OpenAI',
+    type: 'image',
+  },
+  'dall-e-2': {
+    id: 'dall-e-2',
+    vendor: 'OpenAI',
+    type: 'image',
   },
   //
   // Azure
@@ -70,6 +91,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   'gpt-35-turbo-16k': {
     id: 'will get from azure',
@@ -77,6 +99,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 16000,
     requestLimit: 12000,
     vendor: 'OpenAI',
+    type: 'text',
   },
   //
   // Anthropic
@@ -87,6 +110,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 100000,
     requestLimit: 98000,
     vendor: 'Anthropic',
+    type: 'text',
   },
   'claude-2': {
     id: 'claude-2',
@@ -94,6 +118,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 100000,
     requestLimit: 98000,
     vendor: 'Anthropic',
+    type: 'text',
   },
   //
   // Google
@@ -104,6 +129,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Google',
+    type: 'text',
   },
   //
   // Ollama
@@ -114,6 +140,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'llama2:7b': {
     id: 'llama2:7b',
@@ -121,6 +148,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'llama2:13b': {
     id: 'llama2:13b',
@@ -128,6 +156,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'llama2:70b': {
     id: 'llama2:70b',
@@ -135,6 +164,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'codellama:latest': {
     id: 'codellama:latest',
@@ -142,6 +172,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'codellama:7b': {
     id: 'codellama:7b',
@@ -149,6 +180,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'codellama:13b': {
     id: 'codellama:13b',
@@ -156,6 +188,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'codellama:34b': {
     id: 'codellama:34b',
@@ -163,6 +196,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'wizardcoder:latest': {
     id: 'wizardcoder:latest',
@@ -170,6 +204,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'wizardcoder:7b-python': {
     id: 'wizardcoder:7b-python',
@@ -177,6 +212,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'wizardcoder:13b-python': {
     id: 'wizardcoder:13b-python',
@@ -184,6 +220,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'wizardcoder:34b-python': {
     id: 'wizardcoder:34b-python',
@@ -191,6 +228,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'phind-codellama:latest': {
     id: 'phind-codellama:latest',
@@ -198,6 +236,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'phind-codellama:34b': {
     id: 'phind-codellama:34b',
@@ -205,6 +244,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'phind-codellama:34b-v2': {
     id: 'phind-codellama:34b-v2',
@@ -212,6 +252,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'phind-codellama:34b-python': {
     id: 'phind-codellama:34b-python',
@@ -219,6 +260,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'mistral:latest': {
     id: 'mistral:latest',
@@ -226,6 +268,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'mistral-openorca:latest': {
     id: 'mistral-openorca:latest',
@@ -233,6 +276,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'openchat:latest': {
     id: 'openchat:latest',
@@ -240,6 +284,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'neural-chat:latest': {
     id: 'neural-chat:latest',
@@ -247,6 +292,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'goliath:latest': {
     id: 'goliath:latest',
@@ -254,6 +300,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'vicuna:latest': {
     id: 'vicuna:latest',
@@ -261,6 +308,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'orca-mini:latest': {
     id: 'orca-mini:latest',
@@ -268,6 +316,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'llama2-uncensored:latest': {
     id: 'llama2-uncensored:latest',
@@ -275,6 +324,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'yarn-mistral:7b-128k': {
     id: 'yarn-mistral:7b-128k',
@@ -282,6 +332,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'deepseek-coder:latest': {
     id: 'deepseek-coder:latest',
@@ -289,6 +340,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'deepseek-coder:6.7b': {
     id: 'deepseek-coder:6.7b',
@@ -296,6 +348,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'deepseek-coder:33b': {
     id: 'deepseek-coder:33b',
@@ -303,6 +356,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   //
   // Ollama - Custom Models
@@ -313,6 +367,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'wizardcoder13b_python_2080:latest': {
     id: 'wizardcoder13b_python_2080:latest',
@@ -320,6 +375,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'phindcodellama-34b-_2080:latest': {
     id: 'phindcodellama-34b-_2080:latest',
@@ -327,6 +383,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
   'phind-codellama:34bv2-vram2080': {
     id: 'phind-codellama:34bv2-vram2080',
@@ -334,6 +391,7 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
+    type: 'text',
   },
 };
 
@@ -346,4 +404,9 @@ export interface ModelParams {
   stop?: string[];
   max_tokens?: number;
   seed?: number;
+  n?: number | null;
+  quality?: 'standard' | 'hd';
+  response_format?: 'url' | 'b64_json' | null;
+  size?: '256x256' | '512x512' | '1024x1024' | '1792x1024' | '1024x1792' | null;
+  style?: 'vivid' | 'natural' | null;
 }

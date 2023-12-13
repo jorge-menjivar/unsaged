@@ -2,6 +2,7 @@ import { getStream } from '@/utils/server/ai_vendors/stream';
 import { getTokenCount } from '@/utils/server/ai_vendors/token-count';
 
 import { ChatBody } from '@/types/chat';
+import { StreamingTextResponse } from 'ai';
 
 export const runtime = 'edge';
 
@@ -47,9 +48,7 @@ const handler = async (req: Request): Promise<Response> => {
     });
   }
 
-  return new Response(stream, {
-    headers: { 'Content-Type': 'text/event-stream; charset=utf-8' },
-  });
+  return new StreamingTextResponse(stream);
 };
 
 export { handler as GET, handler as POST };

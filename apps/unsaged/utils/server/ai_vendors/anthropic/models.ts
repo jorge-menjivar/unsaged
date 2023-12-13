@@ -1,10 +1,10 @@
-import { AiModel, GetAvailableOpenAIModelResponse, PossibleAiModels } from '@/types/ai-models';
+import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableAnthropicModels(key: string): Promise<GetAvailableOpenAIModelResponse> {
+export async function getAvailableAnthropicModels(key: string): Promise<GetAvailableAIModelResponse> {
   if (!key) {
     return { data: [] };
   }
