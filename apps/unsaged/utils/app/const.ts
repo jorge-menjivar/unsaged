@@ -121,12 +121,6 @@ export const ANTHROPIC_API_KEY =
 export const ANTHROPIC_API_VERSION =
   dockerEnvVarFix(process.env.ANTHROPIC_API_VERSION) || '2023-06-01';
 
-export const REPLICATE_API_URL =
-  dockerEnvVarFix(process.env.REPLICATE_API_URL || 'https://api.replicate.com/v1')
-
-export const REPLICATE_API_TOKEN =
-  dockerEnvVarFix(process.env.REPLICATE_API_TOKEN || '')
-
 export const PALM_API_URL =
   dockerEnvVarFix(process.env.PALM_API_URL) ||
   'https://generativelanguage.googleapis.com/v1beta2';

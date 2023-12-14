@@ -91,11 +91,7 @@ export const useConversations = (
   const autogenerateConversation = useCallback(async () => {
     if (!database || !user) return;
 
-    let model = models[0] || PossibleAiModels['gpt-3.5-turbo'];
-
-    if (DEFAULT_MODEL) {
-      model = PossibleAiModels[DEFAULT_MODEL];
-    }
+    let model = PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0] || PossibleAiModels[0];
 
     const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 

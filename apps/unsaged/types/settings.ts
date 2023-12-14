@@ -110,19 +110,6 @@ export const SystemSettings: SettingsSection[] = [
     ],
   },
   {
-    id: 'replicate',
-    name: 'Replicate',
-    settings: [
-      {
-        id: 'api_key',
-        name: 'API Token',
-        description: 'The API token to use for Replicate models.',
-        type: 'string',
-        storage: 'local',
-      },
-    ],
-  },
-  {
     id: 'google',
     name: 'Google',
     settings: [

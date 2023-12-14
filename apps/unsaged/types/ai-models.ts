@@ -1,12 +1,14 @@
 export type AiModel = {
   id: string;
+  name: string;
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
-  vendor: 'OpenAI' | 'Azure' | 'Anthropic' | 'Google' | 'Ollama' | 'Replicate';
+  vendor: 'OpenAI' | 'Azure' | 'Anthropic' | 'Google' | 'Ollama';
   type: 'text';
 } | {
   id: string;
+  name: string;
   vendor: 'OpenAI' | 'Azure';
   type: 'image';
 }
@@ -20,9 +22,6 @@ export type OpenAiClientOptions = {
   vendor: 'azure',
   apiUrl: string;
   apiVersion: string;
-} | {
-  vendor: 'fireworks',
-  apiUrl: string;
 }
 
 export interface GetAvailableAIModelResponse {
@@ -30,117 +29,127 @@ export interface GetAvailableAIModelResponse {
   data: any[];
 }
 
-export interface PossibleAiModelsInterface {
-  [modelId: string]: AiModel;
-}
-
-export const PossibleAiModels: PossibleAiModelsInterface = {
+export const PossibleAiModels: AiModel[] = [
   //
   // OpenAI
   //
-  'gpt-3.5-turbo': {
+  {
     id: 'gpt-3.5-turbo',
+    name: 'gpt-3.5-turbo',
     maxLength: 12000,
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'OpenAI',
     type: 'text',
   },
-  'gpt-3.5-turbo-16k': {
+  {
     id: 'gpt-3.5-turbo-16k',
+    name: 'gpt-3.5-turbo-16k',
     maxLength: 48000,
     tokenLimit: 16000,
     requestLimit: 12000,
     vendor: 'OpenAI',
     type: 'text',
   },
-  'gpt-4': {
+  {
     id: 'gpt-4',
+    name: 'gpt-4',
     maxLength: 24000,
     tokenLimit: 8000,
     requestLimit: 6000,
     vendor: 'OpenAI',
     type: 'text',
   },
-  'gpt-4-32k': {
+  {
     id: 'gpt-4-32k',
+    name: 'gpt-4-32k',
     maxLength: 96000,
     tokenLimit: 32000,
     requestLimit: 30000,
     vendor: 'OpenAI',
     type: 'text',
   },
-  'gpt-4-1106-preview': {
+  {
     id: 'gpt-4-1106-preview',
+    name: 'gpt-4-1106-preview',
     maxLength: 500000,
     tokenLimit: 128000,
     requestLimit: 120000,
     vendor: 'OpenAI',
     type: 'text',
   },
-  'dall-e-3': {
+  {
     id: 'dall-e-3',
+    name: 'dall-e-3',
     vendor: 'OpenAI',
     type: 'image',
   },
-  'dall-e-2': {
+  {
     id: 'dall-e-2',
+    name: 'dall-e-2',
     vendor: 'OpenAI',
     type: 'image',
   },
   //
   // Azure
   //
-  'gpt-35-az': {
+  {
     id: 'will get from azure',
+    name: 'gpt-35',
     maxLength: 12000,
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'Azure',
     type: 'text',
   },
-  'gpt-35-turbo-az': {
+  {
     id: 'will get from azure',
+    name: 'gpt-35-turbo',
     maxLength: 12000,
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'Azure',
     type: 'text',
   },
-  'gpt-35-turbo-16k-az': {
+  {
     id: 'will get from azure',
+    name: 'gpt-35-turbo-16k',
     maxLength: 48000,
     tokenLimit: 16000,
     requestLimit: 12000,
     vendor: 'Azure',
     type: 'text',
   },
-  'gpt-4-az': {
-    id: 'gpt-4',
+  {
+    id: 'will get from azure',
+    name: 'gpt-4',
     maxLength: 24000,
     tokenLimit: 4000,
     requestLimit: 6000,
     vendor: 'Azure',
     type: 'text',
   },
-  'dall-e-3-az': {
+  {
     id: 'will get from azure',
+    name: 'dall-e-3',
     vendor: 'Azure',
     type: 'image',
   },
   //
   // Anthropic
   //
-  'claude-instant-1': {
+  {
     id: 'claude-instant-1',
+    name: 'claude-instant-1',
     maxLength: 400000,
     tokenLimit: 100000,
     requestLimit: 98000,
     vendor: 'Anthropic',
     type: 'text',
   },
-  'claude-2': {
+  {
     id: 'claude-2',
+    name: 'claude-2',
     maxLength: 400000,
     tokenLimit: 100000,
     requestLimit: 98000,
@@ -150,8 +159,9 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
   //
   // Google
   //
-  bard: {
+  {
     id: 'bard',
+    name: 'bard',
     maxLength: 12000,
     tokenLimit: 4096,
     requestLimit: 3000,
@@ -161,224 +171,252 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
   //
   // Ollama
   //
-  'llama2:latest': {
+  {
     id: 'llama2:latest',
+    name: 'llama2:latest',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'llama2:7b': {
+  {
     id: 'llama2:7b',
+    name: 'llama2:7b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'llama2:13b': {
+  {
     id: 'llama2:13b',
+    name: 'llama2:13b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'llama2:70b': {
+  {
     id: 'llama2:70b',
+    name: 'llama2:70b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'codellama:latest': {
+  {
     id: 'codellama:latest',
+    name: 'codellama:latest',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'codellama:7b': {
+  {
     id: 'codellama:7b',
+    name: 'codellama:7b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'codellama:13b': {
+  {
     id: 'codellama:13b',
+    name: 'codellama:13b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'codellama:34b': {
+  {
     id: 'codellama:34b',
+    name: 'codellama:34b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'wizardcoder:latest': {
+  {
     id: 'wizardcoder:latest',
+    name: 'wizardcoder:latest',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'wizardcoder:7b-python': {
+  {
     id: 'wizardcoder:7b-python',
+    name: 'wizardcoder:7b-python',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'wizardcoder:13b-python': {
+  {
     id: 'wizardcoder:13b-python',
+    name: 'wizardcoder:13b-python',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'wizardcoder:34b-python': {
+  {
     id: 'wizardcoder:34b-python',
+    name: 'wizardcoder:34b-python',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'phind-codellama:latest': {
+  {
     id: 'phind-codellama:latest',
+    name: 'phind-codellama:latest',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'phind-codellama:34b': {
+  {
     id: 'phind-codellama:34b',
+    name: 'phind-codellama:34b',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'phind-codellama:34b-v2': {
+  {
     id: 'phind-codellama:34b-v2',
+    name: 'phind-codellama:34b-v2',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'phind-codellama:34b-python': {
+  {
     id: 'phind-codellama:34b-python',
+    name: 'phind-codellama:34b-python',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'mistral:latest': {
+  {
     id: 'mistral:latest',
+    name: 'mistral:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'mistral-openorca:latest': {
+  {
     id: 'mistral-openorca:latest',
+    name: 'mistral-openorca:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'openchat:latest': {
+  {
     id: 'openchat:latest',
+    name: 'openchat:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'neural-chat:latest': {
+  {
     id: 'neural-chat:latest',
+    name: 'neural-chat:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'goliath:latest': {
+  {
     id: 'goliath:latest',
+    name: 'goliath:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'vicuna:latest': {
+  {
     id: 'vicuna:latest',
+    name: 'vicuna:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'orca-mini:latest': {
+  {
     id: 'orca-mini:latest',
+    name: 'orca-mini:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'llama2-uncensored:latest': {
+  {
     id: 'llama2-uncensored:latest',
+    name: 'llama2-uncensored:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'yarn-mistral:7b-128k': {
+  {
     id: 'yarn-mistral:7b-128k',
+    name: 'yarn-mistral:7b-128k',
     maxLength: 128000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'deepseek-coder:latest': {
+  {
     id: 'deepseek-coder:latest',
+    name: 'deepseek-coder:latest',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'deepseek-coder:6.7b': {
+  {
     id: 'deepseek-coder:6.7b',
+    name: 'deepseek-coder:6.7b',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'deepseek-coder:33b': {
+  {
     id: 'deepseek-coder:33b',
+    name: 'deepseek-coder:33b',
     maxLength: 16000,
     tokenLimit: 4096,
     requestLimit: 3000,
@@ -388,39 +426,43 @@ export const PossibleAiModels: PossibleAiModelsInterface = {
   //
   // Ollama - Custom Models
   //
-  'llama2_13B_2080:latest': {
+  {
     id: 'llama2_13B_2080:latest',
+    name: 'llama2_13B_2080:latest',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'wizardcoder13b_python_2080:latest': {
+  {
     id: 'wizardcoder13b_python_2080:latest',
+    name: 'wizardcoder13b_python_2080:latest',
     maxLength: 32000,
     tokenLimit: 4000,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'phindcodellama-34b-_2080:latest': {
+  {
     id: 'phindcodellama-34b-_2080:latest',
+    name: 'phindcodellama-34b-_2080:latest',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-  'phind-codellama:34bv2-vram2080': {
+  {
     id: 'phind-codellama:34bv2-vram2080',
+    name: 'phind-codellama:34bv2-vram2080',
     maxLength: 32000,
     tokenLimit: 4096,
     requestLimit: 3000,
     vendor: 'Ollama',
     type: 'text',
   },
-};
+];
 
 export interface ModelParams {
   temperature?: number;

@@ -9,10 +9,7 @@ export async function getAvailableAnthropicModels(key: string): Promise<GetAvail
     return { data: [] };
   }
 
-  const models: AiModel[] = [
-    PossibleAiModels['claude-instant-1'],
-    PossibleAiModels['claude-2'],
-  ];
+  const models: AiModel[] = PossibleAiModels.filter(m => m.vendor === 'Anthropic');
 
   return { data: models };
 }

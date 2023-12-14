@@ -4,7 +4,6 @@ import { Message } from '@/types/chat';
 import { countTokensAnthropic } from './anthropic/token-count';
 import { countTokensGoogle } from './google/token-count';
 import { countTokensOllama } from './ollama/token-count';
-import { countTokensReplicate } from './replicate/token-count';
 import { countTokensOpenAI } from './openai-token-count';
 
 export async function getTokenCount(
@@ -19,8 +18,6 @@ export async function getTokenCount(
       return countTokensOpenAI(model, systemPrompt, messages);
     case 'Anthropic':
       return countTokensAnthropic(model, systemPrompt, messages);
-    case 'Replicate':
-      return countTokensReplicate(model, systemPrompt, messages);
     case 'Google':
       return countTokensGoogle(model, systemPrompt, messages);
     case 'Ollama':

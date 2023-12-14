@@ -116,11 +116,7 @@ export const Conversations = () => {
     homeDispatch({ field: 'folders', value: updatedFolders });
     storageUpdateFolders(database, user, updatedFolders);
 
-    let model = models[0];
-
-    if (DEFAULT_MODEL) {
-      model = PossibleAiModels[DEFAULT_MODEL];
-    }
+    let model = PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0];
 
     const modelDefaults = getModelDefaults(model);
 
@@ -177,11 +173,7 @@ export const Conversations = () => {
         updatedConversations[updatedConversations.length - 1].id,
       );
     } else {
-      let model = models[0] || 'gpt-3.5-turbo';
-
-      if (DEFAULT_MODEL) {
-        model = PossibleAiModels[DEFAULT_MODEL];
-      }
+      let model = PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0] || 'gpt-3.5-turbo';
 
       const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 

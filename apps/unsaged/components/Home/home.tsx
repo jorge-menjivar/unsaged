@@ -261,10 +261,7 @@ const Home = () => {
     if (savedSettings && settings) {
       const lastConversation = conversations[conversations.length - 1];
 
-      let model = lastConversation?.model || models[0];
-      if (DEFAULT_MODEL) {
-        model = PossibleAiModels[DEFAULT_MODEL];
-      }
+      let model = lastConversation?.model || PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0];
 
       const modelDefaults = getModelDefaults(model);
 

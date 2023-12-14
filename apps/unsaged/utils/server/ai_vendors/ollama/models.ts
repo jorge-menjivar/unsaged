@@ -33,15 +33,14 @@ export async function getAvailableOllamaModels(): Promise<GetAvailableAIModelRes
 
     const models = json.models.map((ollamaModel: any) => {
       const model_name = ollamaModel.name;
+      const model = PossibleAiModels.find(m => m.name === model_name);
 
-      if (!PossibleAiModels[model_name]) {
+      if (!model) {
         if (DEBUG_MODE)
           console.warn('Ollama model not implemented:', model_name);
 
         return null;
       }
-
-      const model = PossibleAiModels[model_name];
 
       return model;
     });

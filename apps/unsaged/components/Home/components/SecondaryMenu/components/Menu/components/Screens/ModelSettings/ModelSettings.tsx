@@ -55,10 +55,6 @@ const anthropicSupportedParameters = [
   possibleParameters['stop'],
 ];
 
-const replicateSupportedParameters = [
-  possibleParameters['system_prompt'],
-];
-
 const bardSupportedParameters = [
   possibleParameters['system_prompt'],
   possibleParameters['temperature'],
@@ -98,8 +94,6 @@ export const ModelSettings = () => {
         return azureSupportedParameters;
       case 'Anthropic':
         return anthropicSupportedParameters;
-      case 'Replicate':
-        return replicateSupportedParameters;
       case 'Google':
         return bardSupportedParameters;
       case 'Ollama':

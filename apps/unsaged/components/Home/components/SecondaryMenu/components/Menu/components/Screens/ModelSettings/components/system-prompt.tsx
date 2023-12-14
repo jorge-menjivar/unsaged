@@ -41,11 +41,6 @@ export const SystemPromptSelect = () => {
   const getDefaultSystemPrompt = useCallback(() => {
     let model = selectedConversation!.model;
 
-    if (!model || model.vendor === undefined) {
-      selectedConversation!.model = PossibleAiModels['gpt-3.5-turbo'];
-      model = selectedConversation!.model;
-    }
-
     // const sectionId = model.vendor.toLocaleLowerCase();
     // const settingId = `${model.id}_default_system_prompt`;
 

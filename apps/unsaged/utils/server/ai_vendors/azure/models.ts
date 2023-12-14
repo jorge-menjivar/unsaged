@@ -37,16 +37,16 @@ export async function getAvailableAzureModels(apiKey: string): Promise<GetAvaila
 
   const models: (AiModel | null)[] = json.data
     .map((openaiModel: any) => {
-      const model_name = openaiModel.model + '-az';
+      const model_name = openaiModel.model;
+      const model = PossibleAiModels.find(m => m.name === model_name);
 
-      if (!PossibleAiModels[model_name]) {
+      if (!model) {
         if (DEBUG_MODE)
           console.warn('Azure model not implemented:', model_name);
 
         return null;
       }
 
-      const model = PossibleAiModels[model_name];
       model.id = openaiModel.id;
 
       return model;

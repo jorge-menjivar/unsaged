@@ -31,9 +31,9 @@ export const MaxTokensSlider = () => {
       return 128000;
     }
 
-    const model = PossibleAiModels[selectedConversation?.model?.id];
+    const model = PossibleAiModels.find(m => m.id == selectedConversation?.model?.id);
 
-    if (model.type == 'text') {
+    if (model?.type == 'text') {
       return model?.tokenLimit ?? 128000;
     } else {
       return 0;

@@ -98,10 +98,7 @@ export const cleanConversationHistory = (
   for (const conversation of conversations) {
     try {
       if (!conversation.model) {
-        conversation.model =
-          OPENAI_API_TYPE === 'azure'
-            ? PossibleAiModels['gpt-35-turbo']
-            : PossibleAiModels['gpt-3.5-turbo'];
+        conversation.model = PossibleAiModels[0];
       }
 
       const modelDefaults = getModelDefaults(conversation.model);

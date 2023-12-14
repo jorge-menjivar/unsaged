@@ -5,7 +5,6 @@ import { streamAnthropic } from './anthropic/stream';
 import { streamPaLM2 } from './google/stream';
 import { streamOllama } from './ollama/stream';
 import { streamOpenAI } from './openai/stream';
-import { streamReplicate } from './replicate/stream';
 import { streamAzure } from './azure/stream';
 
 export async function getStream(
@@ -37,15 +36,6 @@ export async function getStream(
       );
     case 'Anthropic':
       return streamAnthropic(
-        model,
-        systemPrompt,
-        params,
-        apiKey,
-        messages,
-        tokenCount,
-      );
-    case 'Replicate':
-      return streamReplicate(
         model,
         systemPrompt,
         params,

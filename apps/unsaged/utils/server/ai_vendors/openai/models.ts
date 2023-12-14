@@ -26,15 +26,14 @@ export async function getAvailableOpenAIModels(apiKey: string): Promise<GetAvail
   const models: (AiModel | null)[] = list.data
     .map((openaiModel: any) => {
       const model_name = openaiModel.id;
+      const model = PossibleAiModels.find(m => m.name === model_name);
 
-      if (!PossibleAiModels[model_name]) {
+      if (!model) {
         if (DEBUG_MODE)
           console.warn('OpenAI model not implemented:', model_name);
 
         return null;
       }
-
-      const model = PossibleAiModels[model_name];
 
       return model;
     });

@@ -9,7 +9,7 @@ export async function getAvailablePalm2Models(key: string): Promise<GetAvailable
     return { data: [] };
   }
 
-  const models: AiModel[] = [PossibleAiModels['bard']];
+  const models: AiModel[] = PossibleAiModels.filter(m => m.vendor === 'Google');
 
   return { data: models };
 }

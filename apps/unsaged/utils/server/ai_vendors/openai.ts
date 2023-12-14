@@ -20,9 +20,6 @@ export function getOpenAiClient(apiKey: string, options?: OpenAiClientOptions) {
             baseURL: `${options.apiUrl}/openai/deployments/${options.modelId}`,
             defaultQuery: { 'api-version': options.apiVersion },
         }),
-        ...(options?.vendor === 'fireworks' && {
-            baseURL: options.apiUrl,
-        }),
     };
 
     return new OpenAI(configuration);
