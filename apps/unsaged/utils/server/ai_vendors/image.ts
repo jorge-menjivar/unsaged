@@ -1,6 +1,7 @@
 import { AiModel, ModelParams } from '@/types/ai-models';
 
 import { imageOpenAI } from './openai/image';
+import { imageAzure } from './azure/image';
 
 export async function getImage(
   model: AiModel,
@@ -8,13 +9,22 @@ export async function getImage(
   apiKey: string | undefined,
   prompt: string,
 ) {
-  if (model.vendor === 'OpenAI' || model.vendor === 'Azure') {
-    return imageOpenAI(
-      model,
-      params,
-      apiKey,
-      prompt
-    );
+  switch (model.vendor) {
+    case 'OpenAI':
+      return imageOpenAI(
+        model,
+        params,
+        apiKey,
+        prompt
+      );
+    case 'Azure':
+      return imageAzure(
+        model,
+        params,
+        apiKey,
+        prompt
+      );
+    default:
+      return { error: 'Unknown vendor' };
   }
-  return { error: 'Unknown vendor' };
 }

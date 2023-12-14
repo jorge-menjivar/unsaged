@@ -29,7 +29,7 @@ export async function streamAnthropic(
     return { error: 'Chat Stream is only available for model type text' };
   }
 
-  const anthropic = getAnthropicClient(apiKey);
+  const client = getAnthropicClient(apiKey);
 
   let prompt = systemPrompt;
 
@@ -72,7 +72,7 @@ export async function streamAnthropic(
     body.top_p = params.top_p;
   }
 
-  const response = await anthropic.completions.create(body);
+  const response = await client.completions.create(body);
 
   const stream = AnthropicStream(response);
 

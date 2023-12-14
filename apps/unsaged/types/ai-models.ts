@@ -3,12 +3,26 @@ export type AiModel = {
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
-  vendor: 'OpenAI' | 'Azure' | 'Anthropic' | 'Google' | 'Ollama';
+  vendor: 'OpenAI' | 'Azure' | 'Anthropic' | 'Google' | 'Ollama' | 'Replicate';
   type: 'text';
 } | {
   id: string;
   vendor: 'OpenAI' | 'Azure';
   type: 'image';
+}
+
+export type OpenAiClientOptions = {
+  vendor: 'openai',
+  apiUrl: string;
+  organisation: string;
+} | {
+  modelId?: string;
+  vendor: 'azure',
+  apiUrl: string;
+  apiVersion: string;
+} | {
+  vendor: 'fireworks',
+  apiUrl: string;
 }
 
 export interface GetAvailableAIModelResponse {

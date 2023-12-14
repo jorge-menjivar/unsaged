@@ -1,5 +1,5 @@
 import {
-  OPENAI_API_KEY,
+  AZURE_OPENAI_API_KEY,
 } from '@/utils/app/const';
 
 import { AiModel, ModelParams } from '@/types/ai-models';
@@ -10,7 +10,7 @@ import { OpenAIStream } from 'ai';
 import { ChatCompletionCreateParamsStreaming } from 'openai/resources';
 import { getClient } from './client';
 
-export async function streamOpenAI(
+export async function streamAzure(
   model: AiModel,
   systemPrompt: string,
   params: ModelParams,
@@ -19,10 +19,10 @@ export async function streamOpenAI(
   tokenCount: number,
 ): Promise<{ error?: any, stream?: any }> {
   if (!apiKey) {
-    if (!OPENAI_API_KEY) {
+    if (!AZURE_OPENAI_API_KEY) {
       return { error: 'Missing API key' };
     } else {
-      apiKey = OPENAI_API_KEY;
+      apiKey = AZURE_OPENAI_API_KEY;
     }
   }
 
@@ -30,7 +30,7 @@ export async function streamOpenAI(
     return { error: 'Chat Stream is only available for model type text' };
   }
 
-  const client = await getClient(apiKey);
+  const client = await getClient(apiKey, model.id);
 
   let messagesToSend: any[] = [];
 

@@ -1,51 +1,31 @@
 import {
   DEBUG_MODE,
   OPENAI_API_KEY,
-  OPENAI_API_TYPE,
-  OPENAI_API_URL,
 } from '@/utils/app/const';
 
 import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
-import { getOpenAiClient } from './client';
+import { getClient } from './client';
 
 export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOpenAIModels(key: string): Promise<GetAvailableAIModelResponse> {
-  if (!key) {
-    return { data: [] };
-  }
-
-  let responseData = null;
-  if (OPENAI_API_TYPE === 'azure') {
-    let url = `${OPENAI_API_URL}/openai/deployments?api-version=2023-03-15-preview`;
-
-    const res = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        'api-key': `${key ? key : OPENAI_API_KEY}`,
-      },
-    });
-
-    if (res.status !== 200) {
-      console.error('Error fetching OpenAi models', res.status, res.body);
-      return { error: res.status, data: [] };
+export async function getAvailableOpenAIModels(apiKey: string): Promise<GetAvailableAIModelResponse> {
+  if (!apiKey) {
+    if (!OPENAI_API_KEY) {
+      return { data: [] };
+    } else {
+      apiKey = OPENAI_API_KEY;
     }
-
-    const json = await res.json();
-    responseData = json.data;
-  } else {
-    const openai = await getOpenAiClient(key);
-
-    const list = await openai.models.list();
-    responseData = list.data;
   }
 
-  const models: (AiModel | null)[] = responseData
+  const client = await getClient(apiKey);
+
+  const list = await client.models.list();
+
+  const models: (AiModel | null)[] = list.data
     .map((openaiModel: any) => {
-      const model_name =
-        OPENAI_API_TYPE === 'azure' ? openaiModel.model + '-az' : openaiModel.id;
+      const model_name = openaiModel.id;
 
       if (!PossibleAiModels[model_name]) {
         if (DEBUG_MODE)
@@ -55,10 +35,6 @@ export async function getAvailableOpenAIModels(key: string): Promise<GetAvailabl
       }
 
       const model = PossibleAiModels[model_name];
-
-      if (OPENAI_API_TYPE === 'azure') {
-        model.id = openaiModel.id;
-      }
 
       return model;
     });

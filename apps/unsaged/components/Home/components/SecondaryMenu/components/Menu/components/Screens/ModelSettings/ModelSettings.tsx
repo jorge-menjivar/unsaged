@@ -46,13 +46,17 @@ const azureSupportedParameters = [
   possibleParameters['seed'],
 ];
 
-const claudeSupportedParameters = [
+const anthropicSupportedParameters = [
   possibleParameters['system_prompt'],
   possibleParameters['temperature'],
   possibleParameters['max_tokens'],
   possibleParameters['top_p'],
   possibleParameters['top_k'],
   possibleParameters['stop'],
+];
+
+const replicateSupportedParameters = [
+  possibleParameters['system_prompt'],
 ];
 
 const bardSupportedParameters = [
@@ -93,7 +97,9 @@ export const ModelSettings = () => {
       case 'Azure':
         return azureSupportedParameters;
       case 'Anthropic':
-        return claudeSupportedParameters;
+        return anthropicSupportedParameters;
+      case 'Replicate':
+        return replicateSupportedParameters;
       case 'Google':
         return bardSupportedParameters;
       case 'Ollama':

@@ -92,22 +92,24 @@ export const DEFAULT_OLLAMA_SEED = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_SEED,
 );
 
-export const AZURE_DEPLOYMENT_ID =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID) || '';
+export const OPENAI_API_KEY = dockerEnvVarFix(process.env.OPENAI_API_KEY) || '';
+
+export const OPENAI_ORGANIZATION =
+  dockerEnvVarFix(process.env.OPENAI_ORGANIZATION) || '';
 
 export const OPENAI_API_URL =
-  dockerEnvVarFix(process.env.OPENAI_API_URL) || 'https://api.openai.com/v1';
-
-export const OPENAI_API_KEY = dockerEnvVarFix(process.env.OPENAI_API_KEY) || '';
+  dockerEnvVarFix(process.env.OPENAI_API_URL) || '';
 
 export const OPENAI_API_TYPE =
   dockerEnvVarFix(process.env.OPENAI_API_TYPE) || 'openai';
 
-export const OPENAI_API_VERSION =
-  dockerEnvVarFix(process.env.OPENAI_API_VERSION) || '2023-12-01-preview';
+export const AZURE_OPENAI_API_KEY = dockerEnvVarFix(process.env.AZURE_OPENAI_API_KEY) || '';
 
-export const OPENAI_ORGANIZATION =
-  dockerEnvVarFix(process.env.OPENAI_ORGANIZATION) || '';
+export const AZURE_OPENAI_API_URL =
+  dockerEnvVarFix(process.env.AZURE_OPENAI_API_URL) || '';
+
+export const AZURE_OPENAI_API_VERSION =
+  dockerEnvVarFix(process.env.AZURE_OPENAI_API_VERSION) || '2023-12-01-preview';
 
 export const ANTHROPIC_API_URL =
   dockerEnvVarFix(process.env.ANTHROPIC_API_URL) ||
@@ -118,6 +120,12 @@ export const ANTHROPIC_API_KEY =
 
 export const ANTHROPIC_API_VERSION =
   dockerEnvVarFix(process.env.ANTHROPIC_API_VERSION) || '2023-06-01';
+
+export const REPLICATE_API_URL =
+  dockerEnvVarFix(process.env.REPLICATE_API_URL || 'https://api.replicate.com/v1')
+
+export const REPLICATE_API_TOKEN =
+  dockerEnvVarFix(process.env.REPLICATE_API_TOKEN || '')
 
 export const PALM_API_URL =
   dockerEnvVarFix(process.env.PALM_API_URL) ||

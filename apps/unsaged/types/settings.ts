@@ -74,32 +74,26 @@ export const SystemSettings: SettingsSection[] = [
         type: 'string',
         storage: 'local',
       },
-      // {
-      //   id: 'gpt-3.5-turbo_default_system_prompt',
-      //   name: 'GPT-3.5 Default System Prompt',
-      //   description: 'The default system prompt to use for GPT-3.5.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'gpt-4_default_system_prompt',
-      //   name: 'GPT-4 Default System Prompt',
-      //   description: 'The default system prompt to use for GPT-4.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
+    ],
+  },
+  {
+    id: 'azure',
+    name: 'Azure',
+    settings: [
+      {
+        id: 'api_key',
+        name: 'API Key',
+        description: 'The API key to use for Azure models.',
+        type: 'string',
+        storage: 'local',
+      },
+      {
+        id: 'api_url',
+        name: 'API Deployment Url',
+        description: 'The API deployment url to use for Azure models.',
+        type: 'string',
+        storage: 'local',
+      },
     ],
   },
   {
@@ -113,59 +107,19 @@ export const SystemSettings: SettingsSection[] = [
         type: 'string',
         storage: 'local',
       },
-      // {
-      //   id: 'claude-v1_default_system_prompt',
-      //   name: 'Claude V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-v1-100k_default_system_prompt',
-      //   name: 'Claude V1 100k Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1_default_system_prompt',
-      //   name: 'Claude Instant V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude Instant V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1-100k_default_system_prompt',
-      //   name: 'Claude Instant V1 100k Default System Prompt',
-      //   description:
-      //     'The default system prompt to use for Claude Instant V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
+    ],
+  },
+  {
+    id: 'replicate',
+    name: 'Replicate',
+    settings: [
+      {
+        id: 'api_key',
+        name: 'API Token',
+        description: 'The API token to use for Replicate models.',
+        type: 'string',
+        storage: 'local',
+      },
     ],
   },
   {
@@ -179,59 +133,6 @@ export const SystemSettings: SettingsSection[] = [
         type: 'string',
         storage: 'local',
       },
-      // {
-      //   id: 'claude-v1_default_system_prompt',
-      //   name: 'Claude V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-v1-100k_default_system_prompt',
-      //   name: 'Claude V1 100k Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1_default_system_prompt',
-      //   name: 'Claude Instant V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude Instant V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1-100k_default_system_prompt',
-      //   name: 'Claude Instant V1 100k Default System Prompt',
-      //   description:
-      //     'The default system prompt to use for Claude Instant V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
     ],
   },
 ];

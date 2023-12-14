@@ -1,14 +1,14 @@
 import {
-    OPENAI_API_KEY,
+    AZURE_OPENAI_API_KEY,
 } from '@/utils/app/const';
 
 import { AiModel, ModelParams } from '@/types/ai-models';
 
-import { getClient } from './client';
 import { ImageGenerateParams } from 'openai/resources';
 import OpenAI from 'openai';
+import { getClient } from './client';
 
-export async function imageOpenAI(
+export async function imageAzure(
     model: AiModel,
     params: ModelParams,
     apiKey: string | undefined,
@@ -19,14 +19,14 @@ export async function imageOpenAI(
     }
 
     if (!apiKey) {
-        if (!OPENAI_API_KEY) {
+        if (!AZURE_OPENAI_API_KEY) {
             return { error: 'Missing API key' };
         } else {
-            apiKey = OPENAI_API_KEY;
+            apiKey = AZURE_OPENAI_API_KEY;
         }
     }
 
-    const client = await getClient(apiKey);
+    const client = await getClient(apiKey, model.id);
 
     const body: ImageGenerateParams = {
         model: model.id,
