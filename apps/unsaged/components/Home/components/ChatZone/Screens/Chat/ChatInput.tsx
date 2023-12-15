@@ -26,6 +26,7 @@ import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
 
 import { v4 as uuidv4 } from 'uuid';
+import { Textarea } from '@/components/common/ui/textarea';
 
 interface Props {
   onSend: (message: Message) => void;
@@ -321,7 +322,7 @@ export const ChatInput = ({
         dark:from-[#40414F] dark:via-[#4d3f55] dark:to-[#40414F]
         bg-175% animate-bg-pan-slow"
         >
-          <textarea
+          <Textarea
             ref={textareaRef}
             className="m-0 min-h-[38px] w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-2
              text-black dark:text-white md:py-3 md:pl-3"
@@ -330,8 +331,8 @@ export const ChatInput = ({
               bottom: `${textareaRef?.current?.scrollHeight}px`,
               maxHeight: '400px',
               overflow: `${textareaRef.current && textareaRef.current.scrollHeight > 400
-                  ? 'auto'
-                  : 'hidden'
+                ? 'auto'
+                : 'hidden'
                 }`,
             }}
             placeholder={
