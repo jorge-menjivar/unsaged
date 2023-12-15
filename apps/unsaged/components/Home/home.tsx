@@ -81,7 +81,6 @@ const Home = () => {
     state: {
       builtInSystemPrompts,
       database,
-      display,
       lightMode,
       folders,
       conversations,
@@ -145,11 +144,6 @@ const Home = () => {
     dispatch({
       field: 'selectedConversation',
       value: conversation,
-    });
-
-    dispatch({
-      field: 'display',
-      value: 'chat',
     });
 
     saveSelectedConversationId(user, conversation.id);
