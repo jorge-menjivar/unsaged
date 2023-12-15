@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.NEXT_PUBLIC_TAURI ? 'export' : 'standalone',
+  output: "export",
   distDir: './out',
   reactStrictMode: true,
   webpack(config, { isServer, dev }) {

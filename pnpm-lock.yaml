@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@tauri-apps/cli':
-        specifier: ^1.5.6
-        version: 1.5.6
     devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^4.3.0
@@ -4633,6 +4629,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-darwin-x64@1.5.6:
@@ -4641,6 +4638,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-linux-arm-gnueabihf@1.5.6:
@@ -4649,6 +4647,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-linux-arm64-gnu@1.5.6:
@@ -4657,6 +4656,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-linux-arm64-musl@1.5.6:
@@ -4665,6 +4665,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-linux-x64-gnu@1.5.6:
@@ -4673,6 +4674,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-linux-x64-musl@1.5.6:
@@ -4681,6 +4683,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-win32-arm64-msvc@1.5.6:
@@ -4689,6 +4692,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-win32-ia32-msvc@1.5.6:
@@ -4697,6 +4701,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli-win32-x64-msvc@1.5.6:
@@ -4705,6 +4710,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@tauri-apps/cli@1.5.6:
@@ -4722,6 +4728,7 @@ packages:
       '@tauri-apps/cli-win32-arm64-msvc': 1.5.6
       '@tauri-apps/cli-win32-ia32-msvc': 1.5.6
       '@tauri-apps/cli-win32-x64-msvc': 1.5.6
+    dev: true
 
   /@theguild/remark-mermaid@0.0.5(react@18.2.0):
     resolution: {integrity: sha512-e+ZIyJkEv9jabI4m7q29wZtZv+2iwPGsXJ2d46Zi7e+QcFudiyuqhLhHG/3gX3ZEB+hxTch+fpItyMS8jwbIcw==}
