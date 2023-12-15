@@ -1,4 +1,4 @@
-import toast from 'react-hot-toast';
+import { useToast } from '@/components/common/ui/use-toast';
 
 import { Conversation, Message } from '@/types/chat';
 import { SavedSetting } from '@/types/settings';
@@ -14,6 +14,8 @@ export async function messageSender(
   savedSettings: SavedSetting[],
   dispatch: React.Dispatch<any>,
 ): Promise<{ data: null; controller: null; } | { data: ReadableStream<Uint8Array>; controller: AbortController; }> {
+  const { toast } = useToast()
+
   let customPrompt = selectedConversation.systemPrompt;
 
   if (!selectedConversation.systemPrompt) {
@@ -39,7 +41,7 @@ export async function messageSender(
     if (!response.ok) {
       dispatch({ field: 'loading', value: false });
       dispatch({ field: 'messageIsStreaming', value: false });
-      toast.error(response.statusText);
+      toast({ variant: "destructive", description: response.statusText });
       return { data: null, controller: null };
     }
     const data = response.body;
@@ -69,7 +71,7 @@ export async function messageSender(
       }
     }
 
-    toast.error(response.statusText);
+    toast({ variant: "destructive", description: response.statusText });
 
     dispatch({ field: 'loading', value: false });
     return { data: null, controller: null };

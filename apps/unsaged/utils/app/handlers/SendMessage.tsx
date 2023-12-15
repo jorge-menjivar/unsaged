@@ -1,5 +1,4 @@
 import { Dispatch, MutableRefObject } from 'react';
-import toast from 'react-hot-toast';
 
 import { storageCreateMessage } from '@/utils/app/storage/message';
 

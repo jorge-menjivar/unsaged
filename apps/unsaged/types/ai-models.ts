@@ -1,6 +1,8 @@
 export type AiModel = {
   id: string;
   name: string;
+  description?: string;
+  strengths?: string;
   maxLength: number; // maximum length of a message
   tokenLimit: number;
   requestLimit: number;
@@ -9,9 +11,13 @@ export type AiModel = {
 } | {
   id: string;
   name: string;
+  description?: string;
+  strengths?: string;
   vendor: 'OpenAI' | 'Azure';
   type: 'image';
 }
+
+export const vendors = ['OpenAI', 'Anthropic', 'Google', 'Ollama'];
 
 export type OpenAiClientOptions = {
   vendor: 'openai',
