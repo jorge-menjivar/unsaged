@@ -18,6 +18,7 @@ import {
   AccordionTrigger,
 } from "@/components/common/ui/accordion"
 import { useTranslations } from 'next-intl';
+import { ADVANCED_SETTINGS_OPEN, SHOW_ADVANCED_SETTINGS } from '@/utils/app/const';
 
 
 const possibleParameters = {
@@ -122,19 +123,21 @@ export const ModelSettings = () => {
           return <ParameterComponent key={index} />;
         }
       })}
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>{t('advancedSettings')}</AccordionTrigger>
-          <AccordionContent>
-            {supportedParameters.filter(p => p.advanced).map((parameter, index) => {
-              if (parameter.modelType === model?.type) {
-                const ParameterComponent = parameter.component;
-                return <ParameterComponent key={index} />;
-              }
-            })}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      {SHOW_ADVANCED_SETTINGS &&
+        <Accordion type="single" collapsible defaultValue={ADVANCED_SETTINGS_OPEN ? 'item-1' : 'item-0'}>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>{t('advancedSettings')}</AccordionTrigger>
+            <AccordionContent>
+              {supportedParameters.filter(p => p.advanced).map((parameter, index) => {
+                if (parameter.modelType === model?.type) {
+                  const ParameterComponent = parameter.component;
+                  return <ParameterComponent key={index} />;
+                }
+              })}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      }
     </div>
   );
 };

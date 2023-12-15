@@ -12,6 +12,10 @@ export const DEFAULT_TITLE = dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || "
 export const DEFAULT_DESCRIPTION = dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
   "Open source chat kit engineered for seamless interaction with AI models";
 
+export const ADVANCED_SETTINGS_OPEN = dockerEnvVarFix(process.env.NEXT_PUBLIC_ADVANCED_SETTINGS_OPEN) === 'false' ? false : true;
+export const SHOW_ADVANCED_SETTINGS = dockerEnvVarFix(process.env.NEXT_PUBLIC_SHOW_ADVANCED_SETTINGS) === 'false' ? false : true;
+export const ALLOW_LOCAL_API_SETTINGS = dockerEnvVarFix(process.env.NEXT_PUBLIC_ALLOW_LOCAL_API_SETTINGS) === 'false' ? false : true;
+
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
   "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";

@@ -1,3 +1,5 @@
+import { ALLOW_LOCAL_API_SETTINGS } from "@/utils/app/const";
+
 export interface SettingChoice {
   name: string;
   value: string;
@@ -25,6 +27,7 @@ export interface HttpOnlyCookie {
 export interface SettingsSection {
   id: string;
   name: string;
+  enabled?: boolean;
   settings: Setting[];
 }
 
@@ -66,6 +69,7 @@ export const SystemSettings: SettingsSection[] = [
   {
     id: 'openai',
     name: 'OpenAI',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',
@@ -79,6 +83,7 @@ export const SystemSettings: SettingsSection[] = [
   {
     id: 'azure',
     name: 'Azure',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',
@@ -99,6 +104,7 @@ export const SystemSettings: SettingsSection[] = [
   {
     id: 'anthropic',
     name: 'Anthropic',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',
@@ -112,6 +118,7 @@ export const SystemSettings: SettingsSection[] = [
   {
     id: 'google',
     name: 'Google',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',

@@ -88,7 +88,7 @@ export const SettingsDialog = () => {
         >
           <div className="grid gap-4 py-4">
             {settings &&
-              Object.values(settings).map((section, index) => (
+              Object.values(settings).filter(s => s.enabled || s.enabled === undefined).map((section, index) => (
                 <SettingsSectionComponent
                   isSelected={selectedSection?.id === section.id}
                   key={index}
