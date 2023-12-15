@@ -20,5 +20,8 @@
     "turbo": "^1.11.2"
   },
   "packageManager": "pnpm@8.10.5",
-  "name": "monorepo"
+  "name": "monorepo",
+  "dependencies": {
+    "@tauri-apps/cli": "^1.5.6"
+  }
 }
