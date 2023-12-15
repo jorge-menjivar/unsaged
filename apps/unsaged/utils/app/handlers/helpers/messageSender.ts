@@ -1,4 +1,4 @@
-import { useToast } from '@/components/common/ui/use-toast';
+import { toast } from '@/components/common/ui/use-toast';
 
 import { Conversation, Message } from '@/types/chat';
 import { SavedSetting } from '@/types/settings';
@@ -14,8 +14,6 @@ export async function messageSender(
   savedSettings: SavedSetting[],
   dispatch: React.Dispatch<any>,
 ): Promise<{ data: null; controller: null; } | { data: ReadableStream<Uint8Array>; controller: AbortController; }> {
-  const { toast } = useToast()
-
   let customPrompt = selectedConversation.systemPrompt;
 
   if (!selectedConversation.systemPrompt) {
