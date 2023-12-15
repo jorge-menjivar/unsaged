@@ -11,7 +11,6 @@
     "neutral": "Neutro",
     "newConversation": "Nueva conversación",
     "newFolder": "Nueva carpeta",
-    "noData": "No hay datos",
     "precise": "Preciso",
     "presencePenalty": "Penalización por Repetición",
     "presencePenaltyDescription": "Los valores positivos penalizan los nuevos tokens en función de si aparecen en el texto hasta el momento, lo que aumenta la probabilidad de que el modelo hable sobre nuevos temas. De forma predeterminada, es la configuración del proveedor de modelos.",

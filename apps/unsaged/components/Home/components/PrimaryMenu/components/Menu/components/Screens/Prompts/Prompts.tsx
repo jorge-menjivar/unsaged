@@ -25,7 +25,7 @@ import { PromptsInitialState, initialState } from './Prompts.state';
 import { v4 as uuidv4 } from 'uuid';
 
 const Prompts = () => {
-  const t = useTranslations('promptbar');
+  const t = useTranslations();
 
   const promptBarContextValue = useCreateReducer<PromptsInitialState>({
     initialState,
@@ -145,7 +145,7 @@ const Prompts = () => {
             doSearch('');
           }}
         >
-          {t('newMessageTemplate')}
+          {t('promptbar.newMessageTemplate')}
         </PrimaryButton>
 
         <SecondaryButton onClick={createFolder}>
@@ -182,7 +182,7 @@ const Prompts = () => {
         ) : (
           <div className="mt-8 select-none text-center text-black dark:text-white opacity-50">
             <IconMistOff className="mx-auto mb-3" />
-            <span className="text-[14px] leading-normal">{t('No data.')}</span>
+            <span className="text-[14px] leading-normal">{t('noData')}</span>
           </div>
         )}
       </div>

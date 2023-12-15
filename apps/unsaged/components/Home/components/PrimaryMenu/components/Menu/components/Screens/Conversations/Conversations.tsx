@@ -42,7 +42,7 @@ import { ConversationsInitialState, initialState } from './Conversations.state';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Conversations = () => {
-  const t = useTranslations('chat');
+  const t = useTranslations();
 
   const conversationsContextValue = useCreateReducer<ConversationsInitialState>(
     {
@@ -122,7 +122,7 @@ export const Conversations = () => {
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: t('newConversation'),
+      name: t('chat.newConversation'),
       model: model,
       systemPrompt: null,
       folderId: null,
@@ -179,7 +179,7 @@ export const Conversations = () => {
 
       const newConversation: Conversation = {
         id: uuidv4(),
-        name: t('newConversation'),
+        name: t('chat.newConversation'),
         model: model,
         systemPrompt: null,
         folderId: null,
@@ -250,7 +250,7 @@ export const Conversations = () => {
   const doSearch = (term: string) =>
     chatDispatch({ field: 'searchTerm', value: term });
 
-  const createFolder = () => handleCreateFolder(t('newFolder'), 'chat');
+  const createFolder = () => handleCreateFolder(t('chat.newFolder'), 'chat');
 
   const allowDrop = (e: any) => {
     e.preventDefault();
@@ -281,7 +281,7 @@ export const Conversations = () => {
             doSearch('');
           }}
         >
-          {t('newConversation')}
+          {t('chat.newConversation')}
         </PrimaryButton>
 
         <SecondaryButton onClick={createFolder}>
