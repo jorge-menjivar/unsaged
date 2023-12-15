@@ -15,6 +15,9 @@ jobs:
         version: [18]
         pnpm: [latest]
     runs-on: ${{ matrix.platform }}
+    defaults:
+      run:
+        working-directory: ./apps/desktop
 
     steps:
       - name: Check out code
@@ -26,7 +29,7 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: './apps/desktop/src-tauri -> target'
+          workspaces: './src-tauri -> target'
 
       - name: Install dependencies (macOS only)
         if: matrix.platform == 'macos'
@@ -60,7 +63,6 @@ jobs:
           tagName: app-v__VERSION__-arm64 # the action automatically replaces \_\_VERSION\_\_ with the app version
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
-          projectPath: ./apps/desktop
           releaseDraft: true
           prerelease: false
           args: --target universal-apple-darwin
@@ -74,7 +76,6 @@ jobs:
           tagName: app-v__VERSION__-x86_64.AppImage # the action automatically replaces \_\_VERSION\_\_ with the app version
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
-          projectPath: ./apps/desktop
           releaseDraft: true
           prerelease: false
 
@@ -87,6 +88,5 @@ jobs:
           tagName: app-v__VERSION__-x86_64.AppImage # the action automatically replaces \_\_VERSION\_\_ with the app version
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
-          projectPath: ./apps/desktop
           releaseDraft: true
           prerelease: false
