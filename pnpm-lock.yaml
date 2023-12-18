@@ -218,8 +218,8 @@ importers:
         specifier: ^1.7.5
         version: 1.7.5(encoding@0.1.13)
       '@mozilla/readability':
-        specifier: ^0.4.4
-        version: 0.4.4
+        specifier: ^0.5.0
+        version: 0.5.0
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@3.3.6)
@@ -3176,8 +3176,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mozilla/readability@0.4.4:
-    resolution: {integrity: sha512-MCgZyANpJ6msfvVMi6+A0UAsvZj//4OHREYUB9f2087uXHVoU+H+SWhuihvb1beKpM323bReQPRio0WNk2+V6g==}
+  /@mozilla/readability@0.5.0:
+    resolution: {integrity: sha512-Z+CZ3QaosfFaTqvhQsIktyGrjFjSC0Fa4EMph4mqKnWhmyoGICsV/8QK+8HpXut6zV7zwfWwqDmEjtk1Qf6EgQ==}
     engines: {node: '>=14.0.0'}
     dev: true
 
