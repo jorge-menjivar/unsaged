@@ -10,13 +10,6 @@ sidebar_position: 1
 git clone https://github.com/jorge-menjivar/unSAGED.git
 ```
 
-## Install Dependencies
-
-```sh
-npm install -g pnpm
-pnpm install
-```
-
 ## Generate Supabase Tables
 
 Run the [Generation Script](https://github.com/jorge-menjivar/unsaged/blob/dev/apps/unsaged/db/GenerationScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
@@ -74,12 +67,18 @@ SUPABASE_JWT_SECRET=supabase_jwt_secret
 SUPABASE_SERVICE_ROLE_KEY=supabase_service_role_key
 ```
 
+## Install Dependencies
+
+```sh
+npm i
+```
+
 ## Run App
 
 ### Run Locally
 
 ```sh
-pnpm run dev
+npm run dev
 ```
 
 ### Run in Docker
