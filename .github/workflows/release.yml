@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos, fedora, windows-latest]
+        platform: [macos-lastest, fedora, windows-latest]
         version: [18]
         pnpm: [latest]
     runs-on: ${{ matrix.platform }}
@@ -27,7 +27,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install dependencies (macOS only)
-        if: matrix.platform == 'macos'
+        if: matrix.platform == 'macos-latest'
         run: |
           rustup target add aarch64-apple-darwin
           rustup target add x86_64-apple-darwin
@@ -44,7 +44,7 @@ jobs:
         run: pnpm install --prefer-offline --frozen-lockfile
 
       - name: Build macOS App
-        if: matrix.platform == 'macos'
+        if: matrix.platform == 'macos-latest'
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -55,8 +55,8 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          tagName: app-v__VERSION__-arm64 # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
+          tagName: app-v__VERSION__-build # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'App v__VERSION__ build'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
@@ -68,8 +68,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__-x86_64.AppImage # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
+          tagName: app-v__VERSION__-build # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'App v__VERSION__ build'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
@@ -80,8 +80,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__-x86_64.AppImage # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
+          tagName: app-v__VERSION__-build # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'App v__VERSION__ build'
           releaseBody: 'See the assets to download this version and install.'
           distPath: ./out
           releaseDraft: true
