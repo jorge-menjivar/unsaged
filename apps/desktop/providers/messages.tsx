@@ -121,12 +121,17 @@ export const MessagesProvider = ({
     stream: ReadableStream | null;
     controller: AbortController | null;
   }> {
+    if (selectedConversation.model === null) {
+      error('No model selected');
+      return { stream: null, controller: null };
+    }
+
     let customPrompt = selectedConversation.systemPrompt;
 
     if (!selectedConversation.systemPrompt) {
       customPrompt = builtInSystemPrompts.filter(
         (prompt) =>
-          prompt.name === `${selectedConversation.model.vendor} Built-In`,
+          prompt.name === `${selectedConversation.model!.vendor} Built-In`,
       )[0];
     }
 

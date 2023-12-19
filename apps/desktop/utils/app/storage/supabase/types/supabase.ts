@@ -13,7 +13,7 @@ export interface SupaDatabase {
         Row: {
           folder_id: string | null;
           id: string;
-          model_id: string;
+          model_id: string | null;
           name: string;
           params: Json;
           system_prompt_id: string | null;
@@ -24,7 +24,7 @@ export interface SupaDatabase {
         Insert: {
           folder_id?: string | null;
           id?: string;
-          model_id: string;
+          model_id?: string | null;
           name: string;
           params?: Json;
           system_prompt_id?: string | null;
@@ -35,7 +35,7 @@ export interface SupaDatabase {
         Update: {
           folder_id?: string | null;
           id?: string;
-          model_id?: string;
+          model_id?: string | null;
           name?: string;
           params?: Json;
           system_prompt_id?: string | null;
@@ -233,3 +233,91 @@ export interface SupaDatabase {
     };
   };
 }
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (SupaDatabase['public']['Tables'] & SupaDatabase['public']['Views'])
+    | { schema: keyof SupaDatabase },
+  TableName extends PublicTableNameOrOptions extends {
+    schema: keyof SupaDatabase;
+  }
+    ? keyof (SupaDatabase[PublicTableNameOrOptions['schema']]['Tables'] &
+        SupaDatabase[PublicTableNameOrOptions['schema']]['Views'])
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof SupaDatabase }
+  ? (SupaDatabase[PublicTableNameOrOptions['schema']]['Tables'] &
+      SupaDatabase[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (SupaDatabase['public']['Tables'] &
+      SupaDatabase['public']['Views'])
+  ? (SupaDatabase['public']['Tables'] &
+      SupaDatabase['public']['Views'])[PublicTableNameOrOptions] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : never;
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends
+    | keyof SupaDatabase['public']['Tables']
+    | { schema: keyof SupaDatabase },
+  TableName extends PublicTableNameOrOptions extends {
+    schema: keyof SupaDatabase;
+  }
+    ? keyof SupaDatabase[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof SupaDatabase }
+  ? SupaDatabase[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof SupaDatabase['public']['Tables']
+  ? SupaDatabase['public']['Tables'][PublicTableNameOrOptions] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : never;
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends
+    | keyof SupaDatabase['public']['Tables']
+    | { schema: keyof SupaDatabase },
+  TableName extends PublicTableNameOrOptions extends {
+    schema: keyof SupaDatabase;
+  }
+    ? keyof SupaDatabase[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof SupaDatabase }
+  ? SupaDatabase[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof SupaDatabase['public']['Tables']
+  ? SupaDatabase['public']['Tables'][PublicTableNameOrOptions] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : never;
+
+export type Enums<
+  PublicEnumNameOrOptions extends
+    | keyof SupaDatabase['public']['Enums']
+    | { schema: keyof SupaDatabase },
+  EnumName extends PublicEnumNameOrOptions extends {
+    schema: keyof SupaDatabase;
+  }
+    ? keyof SupaDatabase[PublicEnumNameOrOptions['schema']]['Enums']
+    : never = never,
+> = PublicEnumNameOrOptions extends { schema: keyof SupaDatabase }
+  ? SupaDatabase[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof SupaDatabase['public']['Enums']
+  ? SupaDatabase['public']['Enums'][PublicEnumNameOrOptions]
+  : never;

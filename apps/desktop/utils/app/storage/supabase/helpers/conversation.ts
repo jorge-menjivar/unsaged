@@ -11,7 +11,7 @@ export const supaCreateConversation = async (
     {
       id: newConversation.id,
       name: newConversation.name,
-      model_id: newConversation.model.id,
+      model_id: newConversation.model?.id,
       system_prompt_id: newConversation.systemPrompt?.id,
       folder_id: newConversation.folderId,
       timestamp: newConversation.timestamp,
@@ -38,7 +38,7 @@ export const supaUpdateConversation = async (
     {
       id: updatedConversation.id,
       name: updatedConversation.name,
-      model_id: updatedConversation.model.id,
+      model_id: updatedConversation.model?.id,
       system_prompt_id: updatedConversation.systemPrompt?.id,
       folder_id: updatedConversation.folderId,
       timestamp: updatedConversation.timestamp,

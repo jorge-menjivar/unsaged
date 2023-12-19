@@ -70,7 +70,7 @@ export const supaUpdateConversations = async (
       .upsert({
         id: conversation.id,
         name: conversation.name,
-        model_id: conversation.model.id,
+        model_id: conversation.model?.id,
         system_prompt_id: conversation.systemPrompt?.id || null,
         folder_id: conversation.folderId,
         timestamp: conversation.timestamp,

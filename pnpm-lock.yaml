@@ -229,8 +229,8 @@ importers:
         specifier: ^0.2.8
         version: 0.2.8(@trivago/prettier-plugin-sort-imports@4.3.0)(prettier@2.8.8)
       supabase:
-        specifier: ^1.113.2
-        version: 1.113.2
+        specifier: ^1.123.4
+        version: 1.123.4
       tailwindcss:
         specifier: ^3.3.5
         version: 3.3.5
@@ -15057,6 +15057,20 @@ packages:
 
   /supabase@1.113.2:
     resolution: {integrity: sha512-l0MO+MsXzONZHEadHT7IGcT511nRk+vTbnHAvF4DlGhsuQyI39F6dZVljlU4g2mUPJl9q6Cwz8n8WOZ+BhtqvA==}
+    engines: {npm: '>=8'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      bin-links: 4.0.3
+      https-proxy-agent: 7.0.2
+      node-fetch: 3.3.2
+      tar: 6.2.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /supabase@1.123.4:
+    resolution: {integrity: sha512-HFQOU+n73Ah9sYbja7tdjuqT6QNDzkKXfLCCIbD9GdggbTvGZa3D+0hJPADL4y0vAfsoB5tlx3WBXswnbWIXiw==}
     engines: {npm: '>=8'}
     hasBin: true
     requiresBuild: true

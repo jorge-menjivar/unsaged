@@ -81,7 +81,7 @@
     "prettier": "^2.8.8",
     "prettier-eslint": "^16.1.2",
     "prettier-plugin-tailwindcss": "^0.2.8",
-    "supabase": "^1.113.2",
+    "supabase": "^1.123.4",
     "tailwindcss": "^3.3.5",
     "tsconfig": "workspace:*",
     "typescript": "^5.2.2"
