@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-lastest, fedora, windows-latest]
+        platform: [macos-latest, fedora, windows-latest]
         version: [18]
         pnpm: [latest]
     runs-on: ${{ matrix.platform }}
