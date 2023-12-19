@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { PossibleAiModels } from '@/types/ai-models';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import { PrimaryLabel } from '@/components/common/ui/primary-label';
@@ -27,9 +26,9 @@ export const SystemPromptSelect = () => {
   const [defaultSystemPromptId, setDefaultSystemPromptId] = useState<
     string | null
   >(null);
-  const [currentSystemPromptId, setCurrentSystemPromptId] = useState<string>(
-    selectedConversation!.model?.vendor,
-  );
+  const [currentSystemPromptId, setCurrentSystemPromptId] = useState<
+    string | null
+  >(selectedConversation!.model?.vendor || null);
 
   useEffect(() => {
     if (selectedConversation && selectedConversation.systemPrompt) {
@@ -40,28 +39,20 @@ export const SystemPromptSelect = () => {
   }, [selectedConversation, defaultSystemPromptId]);
 
   const getDefaultSystemPrompt = useCallback(() => {
-    let model = selectedConversation!.model;
-
-    if (!model || model.vendor === undefined) {
-      selectedConversation!.model = PossibleAiModels['gpt-3.5-turbo'];
-      model = selectedConversation!.model;
+    if (
+      !selectedConversation ||
+      !selectedConversation.model ||
+      !selectedConversation.model.id
+    ) {
+      return;
     }
-
-    // const sectionId = model.vendor.toLocaleLowerCase();
-    // const settingId = `${model.id}_default_system_prompt`;
-
-    // let systemPromptId = getSavedSettingValue(
-    //   savedSettings,
-    //   sectionId,
-    //   settingId,
-    //   settings,
-    // );
 
     let systemPromptId = null;
 
     if (!systemPromptId && builtInSystemPrompts.length > 0) {
       systemPromptId = builtInSystemPrompts.filter(
-        (prompt) => prompt.name === `${model?.vendor} Built-In`,
+        (prompt) =>
+          prompt.name === `${selectedConversation.model!.vendor} Built-In`,
       )[0].id;
     }
 
@@ -74,6 +65,10 @@ export const SystemPromptSelect = () => {
 
   const getAvailableSystemPrompts = useCallback(() => {
     const model = selectedConversation!.model;
+
+    if (!model) {
+      return;
+    }
 
     const availablePrompts = systemPrompts.filter((prompt) =>
       prompt.models.includes(model.id),

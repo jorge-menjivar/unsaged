@@ -9,7 +9,7 @@ import React, {
 
 import { useTheme } from 'next-themes';
 
-import { getSettings } from '@/utils/app/settings/getSettings';
+import { getSettings } from '@/utils/app/settings/settings';
 import {
   storageGetSavedSettingValue,
   storageGetSavedSettings,
@@ -17,6 +17,7 @@ import {
 } from '@/utils/app/storage/local/settings';
 import { debug, error } from '@/utils/logging';
 
+import { AiModel } from '@/types/ai-models';
 import { SavedSettings, Settings } from '@/types/settings';
 
 import { useAuth } from './auth';
@@ -25,10 +26,12 @@ export const SettingsContext = createContext<{
   settings: Settings | null;
   savedSettings: SavedSettings | null;
   saveSetting: (settingId: string, value: any) => void;
+  updateSettingsModels: (models: AiModel[]) => void;
 }>({
   settings: null,
   savedSettings: null,
   saveSetting: () => {},
+  updateSettingsModels: () => {},
 });
 
 export const SettingsProvider = ({
@@ -64,11 +67,7 @@ export const SettingsProvider = ({
 
     setSavedSettings(_savedSettings);
 
-    const lightMode = storageGetSavedSettingValue(
-      _savedSettings,
-      'app.theme',
-      _settings,
-    );
+    const lightMode = storageGetSavedSettingValue(_savedSettings, 'app.theme');
 
     setTheme(lightMode);
   }, [session, setTheme]);
@@ -76,6 +75,12 @@ export const SettingsProvider = ({
   useEffect(() => {
     initializeSettings();
   }, [initializeSettings]);
+
+  function updateSettingsModels(models: AiModel[]) {
+    const _settings = getSettings(models);
+
+    setSettings(_settings);
+  }
 
   async function saveSetting(settingId: string, value: any) {
     if (!session || !settings) return;
@@ -92,7 +97,12 @@ export const SettingsProvider = ({
     setSavedSettings(newSavedSettings);
   }
 
-  const contextValue = { settings, savedSettings, saveSetting };
+  const contextValue = {
+    settings,
+    savedSettings,
+    saveSetting,
+    updateSettingsModels,
+  };
 
   return (
     <SettingsContext.Provider value={contextValue}>

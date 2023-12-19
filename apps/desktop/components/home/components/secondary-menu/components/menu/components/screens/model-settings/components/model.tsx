@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DEFAULT_MODEL } from '@/utils/app/const';
+import { debug } from '@/utils/logging';
 
 import { AiModel } from '@/types/ai-models';
 
@@ -25,8 +26,14 @@ export const ModelSelect = () => {
 
   useEffect(() => {
     const _sorted = models.sort((a, b) => {
-      if (a.id < b.id) return -1;
-      if (a.id > b.id) return 1;
+      const parsedModelNameA =
+        (a.name ? `${a.name} - ` : '') + `${a.id} - ${a.vendor}`;
+
+      const parsedModelNameB =
+        (b.name ? `${b.name} - ` : '') + `${b.id} - ${b.vendor}`;
+
+      if (parsedModelNameA < parsedModelNameB) return -1;
+      if (parsedModelNameA > parsedModelNameB) return 1;
 
       return 0;
     });
@@ -35,9 +42,28 @@ export const ModelSelect = () => {
   }, [models]);
 
   const handleChange = (value: string) => {
-    const model_id = value;
+    debug('Model select value', value);
 
-    const selectedModel = models.find((m) => m.id === model_id);
+    const splits = value.split('%');
+
+    const model_name = splits[0];
+    const model_id = splits[1];
+    const model_vendor = splits[2];
+    debug('name', model_name);
+
+    const selectedModel = models.find((m) => {
+      if (m.id === model_id && m.vendor === model_vendor) {
+        if (model_name !== '') {
+          return m.name === model_name;
+        } else {
+          return true;
+        }
+      }
+
+      return false;
+    });
+
+    debug('Selected model', selectedModel);
 
     selectedConversation &&
       updateConversation(selectedConversation, {
@@ -54,7 +80,13 @@ export const ModelSelect = () => {
       </PrimaryLabel>
 
       <Select
-        value={selectedConversation?.model?.id || DEFAULT_MODEL}
+        value={
+          (selectedConversation?.model?.name || '') +
+            '%' +
+            selectedConversation?.model?.id +
+            '%' +
+            selectedConversation?.model?.vendor || DEFAULT_MODEL
+        }
         onValueChange={handleChange}
       >
         <SelectTrigger className="w-full">
@@ -63,8 +95,11 @@ export const ModelSelect = () => {
 
         <SelectContent>
           {sortedModels.map((model) => (
-            <SelectItem key={model.id} value={model.id}>
-              {model.id} - {model.vendor}
+            <SelectItem
+              key={(model.name || '') + '%' + model.id + '%' + model.vendor}
+              value={(model.name || '') + '%' + model.id + '%' + model.vendor}
+            >
+              {model.name && `${model.name} - `} {model.id} - {model.vendor}
             </SelectItem>
           ))}
         </SelectContent>

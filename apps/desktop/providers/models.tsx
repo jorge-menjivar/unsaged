@@ -8,8 +8,7 @@ import React, {
 } from 'react';
 
 import { getModels } from '@/utils/app/ai_vendors/models';
-import { storageGetSavedSettingValue } from '@/utils/app/storage/local/settings';
-import { debug, error } from '@/utils/logging';
+import { error } from '@/utils/logging';
 
 import { AiModel } from '@/types/ai-models';
 
@@ -26,7 +25,7 @@ export const ModelsProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [models, setModels] = useState<AiModel[]>([]);
 
-  const { savedSettings } = useSettings();
+  const { savedSettings, updateSettingsModels } = useSettings();
 
   const fetchModels = useCallback(async () => {
     if (!savedSettings) {
@@ -35,26 +34,9 @@ export const ModelsProvider = ({ children }: { children: React.ReactNode }) => {
 
     isInitialized.current = true;
 
-    const openAiApiKey = storageGetSavedSettingValue(
-      savedSettings,
-      'openai.key',
-    );
+    const models = await getModels(savedSettings);
 
-    debug('openAiApiKey', openAiApiKey);
-
-    const anthropicApiKey = storageGetSavedSettingValue(
-      savedSettings,
-      'anthropic.key',
-    );
-
-    const palmApiKey = storageGetSavedSettingValue(savedSettings, 'google.key');
-
-    const models = await getModels(
-      savedSettings,
-      openAiApiKey,
-      anthropicApiKey,
-      palmApiKey,
-    );
+    updateSettingsModels(models);
 
     setModels(models);
   }, [savedSettings]);

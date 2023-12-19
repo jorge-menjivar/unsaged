@@ -20,7 +20,7 @@ export interface ChatBody {
 export interface Conversation {
   id: string;
   name: string;
-  model: AiModel;
+  model?: AiModel | null;
   systemPrompt: SystemPrompt | null;
   temperature?: number | null | undefined;
   folderId: string | null;

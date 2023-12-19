@@ -32,7 +32,7 @@ export function getDefaultedParams(
 }
 
 export function getModelDefaults(model: AiModel) {
-  if (model.vendor === 'OpenAI') {
+  if (model.vendor === 'OpenAI' || model.vendor === 'Azure') {
     const defaults: ModelParams = {};
     if (DEFAULT_OPENAI_TEMPERATURE) {
       defaults.temperature = parseFloat(DEFAULT_OPENAI_TEMPERATURE);

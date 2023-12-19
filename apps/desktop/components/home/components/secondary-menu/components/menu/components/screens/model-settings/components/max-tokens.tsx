@@ -2,18 +2,20 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { PossibleAiModels } from '@/types/ai-models';
+import { storageGetSavedSettingValue } from '@/utils/app/storage/local/settings';
 
 import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import { Slider } from '@/components/common/ui/slider';
 import { Switch } from '@/components/common/ui/switch';
 
 import { useConversations } from '@/providers/conversations';
+import { useSettings } from '@/providers/settings';
 
 export const MaxTokensSlider = () => {
   const { t } = useTranslation('chat');
 
   const { selectedConversation, updateConversationParams } = useConversations();
+  const { savedSettings } = useSettings();
 
   const handleChange = (value: number[] | undefined[]) => {
     const newValue = value[0];
@@ -27,12 +29,15 @@ export const MaxTokensSlider = () => {
 
   const modelTokenLimit = useMemo(() => {
     if (!selectedConversation?.model?.id) {
-      return 128000;
+      return 4096;
     }
 
-    const model = PossibleAiModels[selectedConversation?.model?.id];
+    const maxTokens = storageGetSavedSettingValue(
+      savedSettings!,
+      `model.${selectedConversation.model.id}.context_window_size`,
+    );
 
-    return model?.tokenLimit ?? 128000;
+    return maxTokens || 4096;
   }, [selectedConversation?.model?.id]);
 
   const [value, setValue] = useState<number[]>([

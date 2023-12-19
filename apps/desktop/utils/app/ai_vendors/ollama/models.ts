@@ -1,16 +1,9 @@
-import {
-  DEBUG_MODE,
-  OLLAMA_BASIC_PWD,
-  OLLAMA_BASIC_USER,
-  OLLAMA_HOST,
-} from '@/utils/app/const';
 import { debug } from '@/utils/logging';
 
-import {
-  GetAvailableModelsResponse,
-  PossibleAiModels,
-} from '@/types/ai-models';
-import { SavedSettings } from '@/types/settings';
+import { AiModel, GetAvailableModelsResponse } from '@/types/ai-models';
+import { DefaultValues, SavedSettings } from '@/types/settings';
+
+import { storageGetSavedSettingValue } from '../../storage/local/settings';
 
 import { invoke } from '@tauri-apps/api/tauri';
 
@@ -31,16 +24,17 @@ export async function getAvailableOllamaModels(
     debug('Ollama models:', raw_models);
 
     const models = raw_models.map((ollamaModel: any) => {
-      const model_name = ollamaModel.name;
+      const model_id = ollamaModel.name;
 
-      if (!PossibleAiModels[model_name]) {
-        if (DEBUG_MODE)
-          console.warn('Ollama model not implemented:', model_name);
-
-        return null;
-      }
-
-      const model = PossibleAiModels[model_name];
+      let model: AiModel = {
+        id: model_id,
+        tokenLimit:
+          storageGetSavedSettingValue(
+            savedSettings,
+            DefaultValues[`model.${model_id}.context_window_size`],
+          ) || 4096,
+        vendor: 'Ollama',
+      };
 
       return model;
     });

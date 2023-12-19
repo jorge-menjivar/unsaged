@@ -1,9 +1,8 @@
 #[derive(serde::Deserialize)]
 pub struct AiModel {
+    pub name: Option<String>,
     pub id: String,
-    pub max_length: u32,
     pub token_limit: u32,
-    pub request_limit: u32,
     pub vendor: String,
 }
 

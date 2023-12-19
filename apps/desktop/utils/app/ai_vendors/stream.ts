@@ -21,10 +21,9 @@ export async function getStream(
   const payload = {
     saved_settings: savedSettings,
     model: {
+      name: model.name,
       id: model.id,
-      max_length: model.maxLength,
       token_limit: model.tokenLimit,
-      request_limit: model.requestLimit,
       vendor: model.vendor,
     },
     system_prompt: systemPrompt,
@@ -45,6 +44,8 @@ export async function getStream(
 
   if (model.vendor === 'OpenAI') {
     await invoke('stream_openai', payload);
+  } else if (model.vendor === 'Azure') {
+    await invoke('stream_azure', payload);
   } else if (model.vendor === 'Anthropic') {
     await invoke('stream_anthropic', payload);
   } else if (model.vendor === 'Google') {

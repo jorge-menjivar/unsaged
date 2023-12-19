@@ -26,7 +26,6 @@ import {
 } from '@/utils/app/storage/local/selected-conversation';
 import { error } from '@/utils/logging';
 
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 
@@ -169,10 +168,7 @@ export const ConversationsProvider = ({
     if (!database || !session || !savedSettings || !settings) return;
     const lastConversation = conversations[conversations.length - 1];
 
-    let model = lastConversation?.model || models[0];
-    if (DEFAULT_MODEL) {
-      model = PossibleAiModels[DEFAULT_MODEL];
-    }
+    let model = lastConversation?.model || models[0] || null;
 
     const modelDefaults = getModelDefaults(model);
 
@@ -222,11 +218,7 @@ export const ConversationsProvider = ({
     await storageDeleteConversations(database, session.user!);
     deleteSelectedConversationId();
 
-    let model = models[0];
-
-    if (DEFAULT_MODEL) {
-      model = PossibleAiModels[DEFAULT_MODEL];
-    }
+    let model = models[0] || null;
 
     const modelDefaults = getModelDefaults(model);
 
@@ -274,13 +266,15 @@ export const ConversationsProvider = ({
         updatedConversations[updatedConversations.length - 1].id,
       );
     } else {
-      let model = models[0];
-
-      if (DEFAULT_MODEL) {
-        model = PossibleAiModels[DEFAULT_MODEL];
+      let model = null;
+      if (models.length > 0) {
+        model = models[0];
       }
 
-      const modelDefaults = getModelDefaults(model);
+      let modelDefaults = {};
+      if (model) {
+        modelDefaults = getModelDefaults(model);
+      }
 
       const newConversation: Conversation = {
         id: uuidv4(),

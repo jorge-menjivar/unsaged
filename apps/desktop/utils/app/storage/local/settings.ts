@@ -1,7 +1,7 @@
 import { debug, error } from '@/utils/logging';
 
 import { User } from '@/types/auth';
-import { SavedSettings, Settings } from '@/types/settings';
+import { DefaultValues, SavedSettings, Settings } from '@/types/settings';
 
 import { storageGetSecret, storageSetSecret } from './secret-storage';
 
@@ -44,43 +44,16 @@ const storageSetSavedSettings = (user: User, savedSettings: SavedSettings) => {
   localStorage.setItem(itemName, JSON.stringify(savedSettings));
 };
 
-export const getDefaultValue = (settings: Settings, settingId: string) => {
-  const setting = settings[settingId];
-
-  if (!setting) {
-    console.error(`Setting ${settingId} not found`);
-    return;
-  }
-
-  if (setting.type === 'choice') {
-    if (setting.choices) {
-      const defaultChoice = setting.choices.find((choice) => choice.default);
-      return defaultChoice?.value;
-    } else {
-      console.error(`Setting ${settingId} has no choices`);
-    }
-  } else {
-    return setting.defaultValue;
-  }
-};
-
 export const storageGetSavedSettingValue = (
   savedSettings: SavedSettings,
   settingId: string,
-  settings?: Settings,
 ) => {
   const savedSetting = savedSettings[settingId];
   if (savedSetting) {
-    console.log(`value of ${settingId} is ${savedSetting}`);
-
     return savedSetting;
   }
   // Return default value if available
-  else if (settings) {
-    return getDefaultValue(settings, settingId);
-  }
-
-  return;
+  return DefaultValues[settingId] || undefined;
 };
 
 export async function storageSetSavedSetting(

@@ -1,8 +1,4 @@
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
-
-import { OPENAI_API_TYPE } from '../const';
-import { getModelDefaults } from '../settings/model-defaults';
 
 export function getConversationsFromChatbotUIFile(
   chatbotUIConversations: any[],
@@ -16,27 +12,15 @@ export function getConversationsFromChatbotUIFile(
 
   for (const chatbotUIConversation of chatbotUIConversations) {
     try {
-      if (!chatbotUIConversation.model_id) {
-        chatbotUIConversation.model =
-          OPENAI_API_TYPE === 'azure'
-            ? PossibleAiModels['gpt-35-turbo']
-            : PossibleAiModels['gpt-3.5-turbo'];
-      }
-
-      const model = PossibleAiModels[chatbotUIConversation.model_id];
-
-      const modelDefaults = getModelDefaults(model);
-
       const cleanConversation: Conversation = {
         id: chatbotUIConversation.id,
         name: chatbotUIConversation.name,
-        model: chatbotUIConversation.model,
+        model: null,
         systemPrompt: chatbotUIConversation.systemPrompt || null,
         folderId: chatbotUIConversation.folderId || null,
         timestamp: chatbotUIConversation.timestamp || new Date().toISOString(),
         params: {
           temperature: chatbotUIConversation.temperature,
-          ...modelDefaults,
         },
       };
 

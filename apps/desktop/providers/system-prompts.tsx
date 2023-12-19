@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 import {
   DEFAULT_ANTHROPIC_SYSTEM_PROMPT,
+  DEFAULT_AZURE_SYSTEM_PROMPT,
   DEFAULT_OLLAMA_SYSTEM_PROMPT,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
   DEFAULT_PALM_SYSTEM_PROMPT,
@@ -91,6 +92,7 @@ export const SystemPromptsProvider = ({
 
   const generateBuiltInSystemPrompts = useCallback(() => {
     const vendors: AiModel['vendor'][] = [
+      'Azure',
       'Anthropic',
       'OpenAI',
       'Google',
@@ -101,6 +103,16 @@ export const SystemPromptsProvider = ({
     for (const vendor of vendors) {
       let systemPrompt: SystemPrompt;
       const systemPromptId = uuidv4();
+      if (vendor === 'Azure') {
+        systemPrompt = {
+          id: systemPromptId,
+          name: `${vendor} Built-In`,
+          content: DEFAULT_AZURE_SYSTEM_PROMPT,
+          folderId: null,
+          models: models.filter((m) => m.vendor === 'Azure').map((m) => m.id),
+        };
+        newSystemPrompts.push(systemPrompt);
+      }
       if (vendor === 'Anthropic') {
         systemPrompt = {
           id: systemPromptId,

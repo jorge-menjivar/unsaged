@@ -35,22 +35,6 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
-  const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      const updatedPrompt: SystemPrompt = {
-        id: systemPrompt.id,
-        name: name,
-        content: content,
-        folderId: systemPrompt.folderId,
-        models: models,
-      };
-      if (updatedPrompt.content !== '') {
-        updateSystemPrompt(updatedPrompt);
-        onClose();
-      }
-    }
-  };
-
   const handleSelectModel = (modelId: string) => {
     if (models.includes(modelId)) {
       // Remove model from list
@@ -85,12 +69,9 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
   }, []);
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-      onKeyDown={handleEnter}
-    >
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="fixed inset-0 z-10 overflow-hidden">
-        <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 overflow-hidden">
           <div
             className="hidden sm:inline-block sm:h-screen sm:align-middle"
             aria-hidden="true"
@@ -133,10 +114,12 @@ export const SystemPromptEditModal: FC<Props> = ({ systemPrompt, onClose }) => {
             >
               {t('Models')}
             </PrimaryLabel>
-            <ChipList
-              selectedModels={models}
-              handleSelectModel={handleSelectModel}
-            />
+            <div className="max-h-[100px] overflow-auto">
+              <ChipList
+                selectedModels={models}
+                handleSelectModel={handleSelectModel}
+              />
+            </div>
 
             <div className="flex space-x-4 mt-4">
               <Button

@@ -14,13 +14,20 @@ export async function sendChatRequest(
   stream: ReadableStream | null;
   controller: AbortController | null;
 }> {
+  const model = conversation.model;
+
+  if (!model) {
+    console.error('No model selected.');
+    return { stream: null, controller: null };
+  }
+
   const apiKey: string | undefined = storageGetSavedSettingValue(
     savedSettings,
-    `${conversation.model.vendor.toLowerCase()}.key`,
+    `${model.vendor.toLowerCase()}.key`,
   );
 
   const { error: tokenCountError, count } = await getTokenCount(
-    conversation.model,
+    model,
     conversation.systemPrompt!.content,
     messages,
   );
@@ -34,7 +41,7 @@ export async function sendChatRequest(
 
   const { stream, error } = await getStream(
     savedSettings,
-    conversation.model,
+    model,
     conversation.systemPrompt!.content,
     conversation.params,
     apiKey,

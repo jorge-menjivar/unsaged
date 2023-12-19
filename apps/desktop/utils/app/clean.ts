@@ -1,4 +1,3 @@
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { FolderInterface } from '@/types/folder';
 import { Template } from '@/types/templates';
@@ -13,16 +12,18 @@ export const cleanSelectedConversation = (conversation: Conversation) => {
 
   const model = conversation.model;
 
-  const modelDefaults = getModelDefaults(model);
+  if (model) {
+    const modelDefaults = getModelDefaults(model);
 
-  // Replaces undefined params with default params
-  updatedConversation = {
-    ...updatedConversation,
-    params: {
-      ...modelDefaults,
-      ...updatedConversation.params,
-    },
-  };
+    // Replaces undefined params with default params
+    updatedConversation = {
+      ...updatedConversation,
+      params: {
+        ...modelDefaults,
+        ...updatedConversation.params,
+      },
+    };
+  }
 
   if (!updatedConversation.folderId) {
     updatedConversation = {
@@ -97,14 +98,11 @@ export const cleanConversationHistory = (
 
   for (const conversation of conversations) {
     try {
-      if (!conversation.model) {
-        conversation.model =
-          OPENAI_API_TYPE === 'azure'
-            ? PossibleAiModels['gpt-35-turbo']
-            : PossibleAiModels['gpt-3.5-turbo'];
-      }
+      let modelDefaults = {};
 
-      const modelDefaults = getModelDefaults(conversation.model);
+      if (conversation.model) {
+        modelDefaults = getModelDefaults(conversation.model);
+      }
 
       const cleanConversation: Conversation = {
         id: conversation.id,

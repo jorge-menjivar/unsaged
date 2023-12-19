@@ -1,5 +1,3 @@
-import { OPENAI_API_KEY, OPENAI_API_URL } from '@/utils/app/const';
-
 import { AiModel, GetAvailableModelsResponse } from '@/types/ai-models';
 import { DefaultValues, SavedSettings } from '@/types/settings';
 
@@ -9,16 +7,17 @@ export const config = {
   runtime: 'edge',
 };
 
-export async function getAvailableOpenAIModels(
+export async function getAvailableAzureModels(
   savedSettings: SavedSettings,
-  key?: string,
+  azureUrl: string,
+  key: string,
 ): Promise<GetAvailableModelsResponse> {
-  let url = `${OPENAI_API_URL}/models`;
+  let completeUrl = `${azureUrl}/openai/deployments?api-version=2023-03-15-preview`;
 
-  const response = await fetch(url, {
+  const response = await fetch(completeUrl, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${key ? key : OPENAI_API_KEY}`,
+      'api-key': key,
     },
   });
 
@@ -34,8 +33,10 @@ export async function getAvailableOpenAIModels(
   const json = await response.json();
 
   const models: (AiModel | null)[] = json.data
-    .map((openaiModel: any) => {
-      const model_id: string = openaiModel.id;
+    .map((azureModel: any) => {
+      // Confusing, but the model name is the id
+      const model_name = azureModel.id;
+      const model_id = azureModel.model;
 
       const excludedModels = [
         'ada',
@@ -44,7 +45,6 @@ export async function getAvailableOpenAIModels(
         'curie',
         'dall-e',
         'davinci',
-        'gpt-3.5-turbo-instruct',
         'text',
         'tts',
         'whisper',
@@ -55,14 +55,15 @@ export async function getAvailableOpenAIModels(
         return null;
       }
 
-      let model: AiModel = {
+      const model: AiModel = {
+        name: model_name,
         id: model_id,
         tokenLimit:
           storageGetSavedSettingValue(
             savedSettings,
             DefaultValues[`model.${model_id}.context_window_size`],
           ) || 4096,
-        vendor: 'OpenAI',
+        vendor: 'Azure',
       };
 
       return model;

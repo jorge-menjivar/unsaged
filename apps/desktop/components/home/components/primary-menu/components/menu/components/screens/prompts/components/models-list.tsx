@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+
+import { AiModel } from '@/types/ai-models';
+
 import { Chip } from '@/components/common/ui/chip';
 
 import { useModels } from '@/providers/models';
@@ -12,9 +16,19 @@ export const ChipList = ({
 }) => {
   const { models } = useModels();
 
+  const [uniqueModels, setUniqueModels] = useState<AiModel[]>([]);
+
+  useEffect(() => {
+    const unique = models.filter(
+      (model, index, self) =>
+        index === self.findIndex((m) => m.id === model.id),
+    );
+    setUniqueModels(unique);
+  }, [models]);
+
   return (
     <div className="flex flex-wrap space-x-2">
-      {models.map((model) => (
+      {uniqueModels.map((model) => (
         <Chip
           key={model.id}
           id={model.id}

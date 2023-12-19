@@ -19,7 +19,7 @@ export async function countTokensOllama(
       tokenCount += text.length / 4;
     }
 
-    if (tokenCount > model.requestLimit) {
+    if (tokenCount > model.tokenLimit - 100) {
       return { error: 'Token limit exceeded' };
     }
   }

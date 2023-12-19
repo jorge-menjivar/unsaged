@@ -1,27 +1,25 @@
-import { debug } from '@/utils/logging';
-
 import { AiModel } from '@/types/ai-models';
 import { SavedSettings } from '@/types/settings';
 
+import { storageGetSavedSettingValue } from '../storage/local/settings';
 import { getAvailableAnthropicModels } from './anthropic/models';
+import { getAvailableAzureModels } from './azure/models';
 import { getAvailablePalm2Models } from './google/models';
 import { getAvailableOllamaModels } from './ollama/models';
 import { getAvailableOpenAIModels } from './openai/models';
 
-import { invoke } from '@tauri-apps/api/tauri';
-
-export async function getModels(
-  savedSettings: SavedSettings,
-  openai_key?: string,
-  anthropic_key?: string,
-  palm_key?: string,
-) {
+export async function getModels(savedSettings: SavedSettings) {
   try {
     const models: AiModel[] = [];
 
-    if (openai_key && openai_key !== '') {
+    const openAiApiKey = storageGetSavedSettingValue(
+      savedSettings,
+      'openai.key',
+    );
+
+    if (openAiApiKey && openAiApiKey !== '') {
       const { error: openaiError, data: openaiModels } =
-        await getAvailableOpenAIModels(openai_key);
+        await getAvailableOpenAIModels(savedSettings, openAiApiKey);
       if (openaiError) {
         console.error('Error getting OpenAI models');
       } else {
@@ -29,15 +27,38 @@ export async function getModels(
       }
     }
 
-    if (anthropic_key && anthropic_key !== '') {
+    const azureUrl = storageGetSavedSettingValue(savedSettings, 'azure.url');
+    const azureApiKey = storageGetSavedSettingValue(savedSettings, 'azure.key');
+    if (azureUrl && azureUrl !== '' && azureApiKey && azureApiKey !== '') {
+      const { error: azureError, data: azureModels } =
+        await getAvailableAzureModels(savedSettings, azureUrl, azureApiKey);
+      if (azureError) {
+        console.error('Error getting Azure models');
+      } else {
+        models.push(...(azureModels as AiModel[]));
+      }
+    }
+
+    const anthropicApiKey = storageGetSavedSettingValue(
+      savedSettings,
+      'anthropic.key',
+    );
+
+    if (anthropicApiKey && anthropicApiKey !== '') {
       const { data: anthropicModels } = await getAvailableAnthropicModels(
-        anthropic_key,
+        savedSettings,
+        anthropicApiKey,
       );
       models.push(...(anthropicModels as AiModel[]));
     }
 
-    if (palm_key && palm_key !== '') {
-      const { data: palm2Models } = await getAvailablePalm2Models(palm_key);
+    const palmApiKey = storageGetSavedSettingValue(savedSettings, 'google.key');
+
+    if (palmApiKey && palmApiKey !== '') {
+      const { data: palm2Models } = await getAvailablePalm2Models(
+        savedSettings,
+        palmApiKey,
+      );
       models.push(...(palm2Models as AiModel[]));
     }
 

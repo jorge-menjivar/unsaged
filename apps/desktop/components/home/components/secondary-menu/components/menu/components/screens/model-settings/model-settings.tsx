@@ -61,6 +61,8 @@ export const ModelSettings = () => {
     switch (model.vendor) {
       case 'OpenAI':
         return openAiSupportedParameters;
+      case 'Azure':
+        return openAiSupportedParameters;
       case 'Anthropic':
         return claudeSupportedParameters;
       case 'Google':

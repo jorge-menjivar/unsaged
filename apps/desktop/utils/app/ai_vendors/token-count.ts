@@ -4,7 +4,8 @@ import { Message } from '@/types/chat';
 import { countTokensAnthropic } from './anthropic/token-count';
 import { countTokensGoogle } from './google/token-count';
 import { countTokensOllama } from './ollama/token-count';
-import { countTokensOpenAI } from './openai/token-count';
+
+import { invoke } from '@tauri-apps/api/tauri';
 
 export async function getTokenCount(
   model: AiModel,
@@ -12,7 +13,19 @@ export async function getTokenCount(
   messages: Message[],
 ) {
   if (model.vendor === 'OpenAI') {
-    return countTokensOpenAI(model, systemPrompt, messages);
+    const tokenCount: number = await invoke('count_tokens_openai', {
+      model_name: model.id,
+      system_prompt: systemPrompt,
+      messages,
+    });
+    return { count: tokenCount, error: undefined };
+  } else if (model.vendor === 'Azure') {
+    const tokenCount: number = await invoke('count_tokens_azure', {
+      model_name: model.id,
+      system_prompt: systemPrompt,
+      messages,
+    });
+    return { count: tokenCount, error: undefined };
   } else if (model.vendor === 'Anthropic') {
     return countTokensAnthropic(model, systemPrompt, messages);
   } else if (model.vendor === 'Google') {
