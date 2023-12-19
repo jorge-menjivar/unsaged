@@ -40,8 +40,8 @@ use lib::services::ollama::stream::stream_ollama;
 use lib::services::openai::stream::stream_openai;
 use lib::token_counter::count_tokens_openai;
 use lib::utils::logging::rust_log;
-use std::sync::{Arc, Mutex};
-use tauri::{App, Manager, State};
+use std::sync::Mutex;
+use tauri::Manager;
 
 pub struct ControllerState(String);
 
