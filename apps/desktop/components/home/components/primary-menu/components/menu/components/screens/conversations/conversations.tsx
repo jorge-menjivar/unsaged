@@ -144,8 +144,9 @@ export const Conversations = () => {
         handleExportData,
       }}
     >
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 w-full">
         <Button
+          className="w-full"
           onClick={() => {
             newConversation();
             doSearch('');

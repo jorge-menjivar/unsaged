@@ -66,15 +66,17 @@ export const SettingsProvider = ({
     );
 
     setSavedSettings(_savedSettings);
-
-    const lightMode = storageGetSavedSettingValue(_savedSettings, 'app.theme');
-
-    setTheme(lightMode);
   }, [session, setTheme]);
 
   useEffect(() => {
     initializeSettings();
   }, [initializeSettings]);
+
+  useEffect(() => {
+    if (!savedSettings) return;
+    const lightMode = storageGetSavedSettingValue(savedSettings, 'app.theme');
+    setTheme(lightMode);
+  }, [savedSettings, setTheme]);
 
   function updateSettingsModels(models: AiModel[]) {
     const _settings = getSettings(models);

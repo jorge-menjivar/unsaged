@@ -19,6 +19,9 @@ import { useTranslation } from 'next-i18next';
 import { Message } from '@/types/chat';
 import { Template } from '@/types/templates';
 
+import { Button } from '@/components/common/ui/button';
+import { Textarea } from '@/components/common/ui/textarea';
+
 import ChatContext from './chat.context';
 import { TemplateListComponent } from './template-list';
 import { VariableModal } from './variable-modal';
@@ -247,60 +250,48 @@ export const ChatInput = ({
   return (
     <div className="absolute bottom-0 left-0 w-full border-transparent bg-gradient-to-b">
       <div
-        className="relative flex flex-col mb-2 mt-4 last:mb-2 md:mx-4 md:mt-[52px]
-      md:last:mb-6 lg:mx-auto md:max-w-2xl md:py-6 lg:max-w-full lg:px-0 2xl:max-w-5xl 3xl:max-w-6xl 4xl:max-w-7xl 5xl:max-w-[1920px] justify-center"
+        className="relative flex flex-col mb-2 last:mb-2 md:mx-4
+      md:last:mb-6 lg:mx-auto md:max-w-2xl md:pb-6 lg:max-w-full lg:px-0 2xl:max-w-5xl 3xl:max-w-6xl 4xl:max-w-7xl 5xl:max-w-[1920px] justify-center"
       >
         <div className="flex flex-row justify-center items-center">
           {messageIsStreaming && (
-            <button
-              className="relative top-0 left-0 right-0 mx-auto mb-3 flex w-fit
-            items-center gap-3 rounded border border-neutral-200 bg-theme-light
-            py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600
-            dark:bg-theme-dark dark:text-white md:mt-2"
+            <Button
+              className="absolute -translate-y-[30px] shadow-md"
+              variant={'secondary'}
               onClick={stopStreaming}
             >
               <IconPlayerStop size={16} /> {t('Stop Generating')}
-            </button>
+            </Button>
           )}
 
           {!messageIsStreaming &&
             selectedConversation &&
             selectedConversationMessages.length > 0 && (
-              <button
-                className="relative top-0 left-0 right-0 mx-auto mb-3 flex w-fit 
-              items-center gap-3 rounded border border-neutral-200 bg-theme-light
-              py-2 px-4 text-black hover:opacity-50 dark:border-neutral-600 
-              dark:bg-theme-dark dark:text-white md:mt-2"
+              <Button
+                className="absolute -translate-y-[30px] shadow-md"
+                variant={'secondary'}
                 onClick={regenerateMessage}
               >
-                <IconRepeat size={16} /> {t('Regenerate response')}
-              </button>
+                <IconRepeat size={16} className="mr-2" />{' '}
+                {t('Regenerate response')}
+              </Button>
             )}
 
           {showScrollDownButton && (
-            <div className="absolute right-0 mr-4">
-              <button
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-300 text-gray-800 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-neutral-200"
-                onClick={onScrollDownClick}
-              >
-                <IconArrowDown size={18} />
-              </button>
-            </div>
+            <Button
+              className="absolute -translate-y-[30px] -translate-x-9 right-0 px-2 shadow-md"
+              variant={'secondary'}
+              onClick={onScrollDownClick}
+            >
+              <IconArrowDown size={18} />
+            </Button>
           )}
         </div>
 
-        <div
-          className="relative mx-4 mb-4 flex flex-grow flex-col rounded-md border
-        border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:border-gray-900/50
-        dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]
-        bg-gradient-to-r from-white via-[#fdf4ff] to-white
-        dark:from-[#40414F] dark:via-[#4d3f55] dark:to-[#40414F]
-        bg-175% animate-bg-pan-slow"
-        >
-          <textarea
+        <div className="relative mx-4 mb-4 md:mb-0 flex flex-grow flex-col rounded-md shadow-md bg-white dark:bg-gray-700">
+          <Textarea
             ref={textareaRef}
-            className="m-0 min-h-[38px] w-full resize-none border-0 bg-transparent p-0 py-2 pr-8 pl-2
-             text-black dark:text-white md:py-3 md:pl-3"
+            className="m-0 min-h-[38px] w-full resize-none bg-transparent p-0 py-2 pr-8 pl-2 text-black dark:text-white md:py-3 md:pl-3"
             style={{
               resize: 'none',
               bottom: `${textareaRef?.current?.scrollHeight}px`,
@@ -322,8 +313,9 @@ export const ChatInput = ({
             onKeyDown={handleKeyDown}
           />
 
-          <button
-            className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
+          <Button
+            variant={'ghost'}
+            className="absolute right-2 top-1 rounded-sm p-2 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
             onClick={handleSend}
           >
             {messageIsStreaming ? (
@@ -331,10 +323,10 @@ export const ChatInput = ({
             ) : (
               <IconSend size={18} />
             )}
-          </button>
+          </Button>
 
           {showPromptList && filteredPrompts.length > 0 && (
-            <div className="absolute bottom-12 w-full">
+            <div className="absolute bottom-12 w-full bg-theme-light dark:bg-theme-dark overflow-hidden p-0 rounded-md">
               <TemplateListComponent
                 activePromptIndex={activePromptIndex}
                 templates={filteredPrompts}

@@ -86,8 +86,9 @@ const Templates = () => {
         ...promptBarContextValue,
       }}
     >
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 w-full">
         <Button
+          className="w-full"
           onClick={() => {
             createTemplate();
             doSearch('');

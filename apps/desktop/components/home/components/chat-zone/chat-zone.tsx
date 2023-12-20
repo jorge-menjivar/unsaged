@@ -17,7 +17,7 @@ export const ChatZone = () => {
   return (
     <ChatZoneContext.Provider value={chatBarContextValue}>
       <div
-        className={`relative sm:flex flex-1 ${
+        className={`relative sm:flex flex-1 w-full overflow-hidden ${
           showPrimaryMenu || showSecondaryMenu ? 'hidden' : 'flex'
         }`}
       >

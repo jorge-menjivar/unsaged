@@ -45,8 +45,7 @@ const Home = () => {
               <FoldersProvider>
                 <MessagesProvider>
                   <div
-                    className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full
-          text-black dark:text-white m-0 p-0 overflow-hidden`}
+                    className={`relative flex-col text-sm overflow-y-hidden h-full max-h-full w-full text-black dark:text-white m-0 p-0 overflow-hidden dark:dark`}
                   >
                     <div className="absolute top-0 z-50 w-full sm:hidden">
                       <Navbar />

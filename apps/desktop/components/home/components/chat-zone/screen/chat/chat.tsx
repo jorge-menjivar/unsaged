@@ -186,10 +186,7 @@ export const Chat = memo(() => {
 
   return (
     <ChatContext.Provider value={{ ...chatContextValue }}>
-      <div
-        className="relative flex-1 overflow-hidden bg-theme-light dark:bg-theme-dark
-      "
-      >
+      <div className="relative flex-1 overflow-hidden bg-theme-light dark:bg-theme-dark w-full">
         {models.length === 0 ? (
           <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[600px]">
             <div className="text-center text-4xl font-bold text-black dark:text-white">
