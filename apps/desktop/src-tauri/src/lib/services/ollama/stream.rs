@@ -1,6 +1,5 @@
 use std::sync::Mutex;
 
-use log::debug;
 use tauri::{Manager, State};
 use tokio_stream::StreamExt;
 
@@ -25,11 +24,17 @@ pub async fn stream_ollama<'a>(
     handle: tauri::AppHandle,
     state: State<'a, Mutex<ControllerState>>,
 ) -> Result<(), ()> {
-    let mut prompt = String::new();
+    let mut messages_to_send: Vec<serde_json::Value> = [serde_json::json!({
+        "role": "system",
+        "content": system_prompt,
+    })]
+    .to_vec();
 
     for message in messages.iter() {
-        prompt.push_str(&message.content);
-        prompt.push('\n');
+        messages_to_send.push(serde_json::json!({
+            "role": message.role,
+            "content": message.content,
+        }));
     }
 
     let mut base_url = "http://127.0.0.1:11434".to_string();
@@ -43,9 +48,8 @@ pub async fn stream_ollama<'a>(
 
     let mut body = serde_json::json!({
         "model": model.id,
-        "prompt": prompt,
+        "messages": messages_to_send,
         "options": {},
-        "system": system_prompt,
         "stream": true
     });
 
@@ -78,9 +82,7 @@ pub async fn stream_ollama<'a>(
         body["options"]["seed"] = serde_json::json!(seed);
     }
 
-    let url = format!("{}/api/generate", base_url);
-
-    debug!("URL: {}", url);
+    let url = format!("{}/api/chat", base_url);
 
     let client = reqwest::Client::new();
 
@@ -134,7 +136,10 @@ pub async fn stream_ollama<'a>(
                 let event = String::from_utf8(raw_event.to_vec()).unwrap();
 
                 let json_data: serde_json::Value = serde_json::from_str(&event).unwrap();
-                let text = json_data["response"].as_str();
+
+                // message is a serde_json::Value containing role and content
+                let message = json_data["message"].clone();
+                let text = message["content"].as_str();
 
                 match text {
                     Some(text) => {
