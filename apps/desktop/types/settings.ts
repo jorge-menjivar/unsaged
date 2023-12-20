@@ -48,6 +48,16 @@ export const SystemSettings: Settings = {
       },
     ],
   },
+  'app.supabase.url': {
+    name: 'Supabase URL',
+    description: 'The URL for the Supabase instance to use.',
+    type: 'string',
+  },
+  'app.supabase.key': {
+    name: 'Supabase Anonymous Key',
+    description: 'The anonymous key for the Supabase instance to use.',
+    type: 'string',
+  },
   'openai.key': {
     name: 'OpenAI API Key',
     description: 'The API key to use for OpenAI models.',
