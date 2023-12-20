@@ -85,11 +85,8 @@ pub async fn stream_google(
 
     let client = reqwest::Client::new();
 
-    debug!("Body: {:?}", body);
-
     let url = ("https://generativelanguage.googleapis.com/v1beta3/models/chat-bison-001:generateMessage?key=".to_owned() + &api_key.unwrap()).to_string();
 
-    debug!("URL: {}", url);
     let res = client
         .post(url)
         .header("Content-Type", "application/json")

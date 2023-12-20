@@ -8,7 +8,7 @@
 CREATE TABLE public.conversations (
 	id uuid NOT NULL DEFAULT uuid_generate_v4(),
 	"name" text NOT NULL,
-	model_id text NOT NULL,
+	model_id text NULL,
 	system_prompt_id uuid NULL,
 	temperature float4 NULL,
 	folder_id uuid NULL,

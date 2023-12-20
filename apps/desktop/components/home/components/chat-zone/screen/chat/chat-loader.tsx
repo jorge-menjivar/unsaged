@@ -10,11 +10,11 @@ export const ChatLoader: FC<Props> = () => {
       bg-gray-50 text-gray-800 dark:bg-[#444654] dark:text-gray-100"
       style={{ overflowWrap: 'anywhere' }}
     >
-      <div className="group relative m-auto flex p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
+      <div className="group relative m-auto flex p-4 text-base md:max-w-2xl md:py-6 lg:max-w-full lg:px-0 2xl:max-w-5xl 3xl:max-w-6xl 4xl:max-w-7xl 5xl:max-w-[1920px] justify-center">
         <div className="min-w-[40px] items-end">
           <IconRobot size={30} />
         </div>
-        <span className="animate-pulse cursor-default mt-1">▍</span>
+        <span className="animate-pulse cursor-default mt-[-20]">▍</span>
       </div>
     </div>
   );

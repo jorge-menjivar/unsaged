@@ -20,8 +20,8 @@ export const TemplateListComponent: FC<Props> = ({
   return (
     <ul
       ref={promptListRef}
-      className="z-10 p-0 max-h-52 w-full overflow-scroll
-      rounded border border-black/10
+      className="z-20 p-0 max-h-52 w-full overflow-auto rounded-md
+      border border-black/10
       shadow-[0_0_10px_rgba(0,0,0,0.10)]
       text-black dark:text-white dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]"
     >
@@ -30,7 +30,7 @@ export const TemplateListComponent: FC<Props> = ({
           key={prompt.id}
           className={`${
             index === activePromptIndex
-              ? 'bg-gray-200 dark:bg-[#202123] dark:text-white'
+              ? 'bg-gray-200 dark:bg-theme-hover-dark bg-theme-hover-light'
               : ''
           } px-3 py-2 text-sm text-black dark:text-white`}
           onClick={(e) => {
