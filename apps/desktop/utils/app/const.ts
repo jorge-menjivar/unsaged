@@ -131,7 +131,7 @@ export const PALM_API_URL =
   dockerEnvVarFix(process.env.PALM_API_URL) ||
   'https://generativelanguage.googleapis.com/v1beta2';
 
-export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
+export const GOOGLE_API_KEY = dockerEnvVarFix(process.env.GOOGLE_API_KEY) || '';
 
 export const OLLAMA_HOST =
   dockerEnvVarFix(process.env.OLLAMA_HOST) || 'http://127.0.0.1:11434';

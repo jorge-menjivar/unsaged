@@ -190,16 +190,20 @@ export const MessagesProvider = ({
 
       const { id } = event.payload;
 
-      const message = liveMessages.current.find((message) => message.id === id);
+      setMessages((messages) => {
+        const message = messages.find((message) => message.id === id);
 
-      if (!message) return;
+        if (!message) return messages;
 
-      storageCreateMessage(
-        liveDatabase.current,
-        liveSession.current.user!,
-        message,
-        liveMessages.current.filter((message) => message.id !== id),
-      );
+        storageCreateMessage(
+          liveDatabase.current!,
+          liveSession.current!.user!,
+          message,
+          messages.filter((message) => message.id !== id),
+        );
+
+        return messages;
+      });
 
       setMessageIsStreaming(false);
     });

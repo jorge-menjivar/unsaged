@@ -82,8 +82,8 @@ export const SystemSettings: Settings = {
     secret: true,
   },
   'google.key': {
-    name: 'PaLM 2 API Key',
-    description: 'The API key to use for PaLM 2 models.',
+    name: 'Google API Key',
+    description: 'The API key to use for Google models.',
     type: 'string',
     secret: true,
   },
