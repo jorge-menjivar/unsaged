@@ -3,8 +3,9 @@ import {
   OPENAI_API_KEY,
 } from '@/utils/app/const';
 
-import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
+import { AiModel, GetAvailableAIModelResponse } from '@/types/ai-models';
 import { getClient } from './client';
+import { getModelSettings } from '../models';
 
 export const config = {
   runtime: 'edge',
@@ -22,11 +23,12 @@ export async function getAvailableOpenAIModels(apiKey: string): Promise<GetAvail
   const client = await getClient(apiKey);
 
   const list = await client.models.list();
+  const { data: modelSettings } = await getModelSettings('OpenAI');
 
   const models: (AiModel | null)[] = list.data
     .map((openaiModel: any) => {
       const model_name = openaiModel.id;
-      const model = PossibleAiModels.find(m => m.name === model_name);
+      const model = modelSettings.find(m => m.name === model_name);
 
       if (!model) {
         if (DEBUG_MODE)

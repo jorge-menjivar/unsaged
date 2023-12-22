@@ -4,7 +4,8 @@ import {
   AZURE_OPENAI_API_KEY,
 } from '@/utils/app/const';
 
-import { AiModel, GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
+import { AiModel, GetAvailableAIModelResponse } from '@/types/ai-models';
+import { getModelSettings } from '../models';
 
 export const config = {
   runtime: 'edge',
@@ -34,11 +35,12 @@ export async function getAvailableAzureModels(apiKey: string): Promise<GetAvaila
   }
 
   const json = await res.json();
+  const { data: modelSettings } = await getModelSettings('Azure');
 
   const models: (AiModel | null)[] = json.data
     .map((openaiModel: any) => {
       const model_name = openaiModel.model;
-      const model = PossibleAiModels.find(m => m.name === model_name);
+      const model = modelSettings.find(m => m.name === model_name);
 
       if (!model) {
         if (DEBUG_MODE)
