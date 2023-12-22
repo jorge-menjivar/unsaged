@@ -20,7 +20,6 @@ export async function getModelSettings(vendor?: string): Promise<GetAvailableAIM
     }
 
     const json = await res.json();
-    console.log(json);
 
     const models: (AiModel | null)[] = json.filter((m: any) => m.params)
         .map((aiModel: any) => {
