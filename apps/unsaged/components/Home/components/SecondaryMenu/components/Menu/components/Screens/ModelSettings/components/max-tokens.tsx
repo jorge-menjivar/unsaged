@@ -2,8 +2,6 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { PossibleAiModels } from '@/types/ai-models';
-
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Slider } from '@/components/common/ui/slider';
@@ -12,7 +10,7 @@ import { Switch } from '@/components/common/ui/switch';
 export const MaxTokensSlider = () => {
   const t = useTranslations('chat');
   const {
-    state: { selectedConversation },
+    state: { selectedConversation, models },
     handleUpdateConversationParams,
   } = useContext(HomeContext);
 
@@ -31,7 +29,7 @@ export const MaxTokensSlider = () => {
       return 128000;
     }
 
-    const model = PossibleAiModels.find(m => m.id == selectedConversation?.model?.id);
+    const model = models.find(m => m.id == selectedConversation?.model?.id);
 
     if (model?.type == 'text') {
       return model?.tokenLimit ?? 128000;

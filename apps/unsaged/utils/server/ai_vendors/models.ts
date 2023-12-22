@@ -1,4 +1,4 @@
-import { AiModel, GetAvailableAIModelResponse, vendors } from '@/types/ai-models';
+import { AiModel, GetAvailableAIModelResponse, PossibleAiModelVendors } from '@/types/ai-models';
 import { AI_SERVICES_ENDPOINT_URL } from '@/utils/app/const';
 
 export const config = {
@@ -23,7 +23,7 @@ export async function getModelSettings(vendor?: string): Promise<GetAvailableAIM
 
     const models: (AiModel | null)[] = json.filter((m: any) => m.params)
         .map((aiModel: any) => {
-            if (vendors.indexOf(aiModel.vendor.name) >= 0) {
+            if (PossibleAiModelVendors.indexOf(aiModel.vendor.name) >= 0) {
                 const { maxLength, tokenLimit, requestLimit } = aiModel.params;
                 const model: AiModel = {
                     id: aiModel.name,

@@ -1,12 +1,12 @@
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
 
-import { OPENAI_API_TYPE } from './const';
 import { getModelDefaults } from './settings/model-defaults';
 
 import { v4 as uuidv4 } from 'uuid';
+import HomeContext from '@/components/Home/home.context';
+import { useContext } from 'react';
 
 export const cleanSelectedConversation = (conversation: Conversation) => {
   let updatedConversation = conversation;
@@ -88,6 +88,10 @@ export const cleanMessageTemplates = (importedPrompts: any[]): Prompt[] => {
 export const cleanConversationHistory = (
   conversations: Conversation[],
 ): Conversation[] => {
+  const {
+    state: { models },
+  } = useContext(HomeContext);
+
   if (!Array.isArray(conversations)) {
     console.warn('history is not an array. Returning an empty array.');
     return [];
@@ -98,7 +102,7 @@ export const cleanConversationHistory = (
   for (const conversation of conversations) {
     try {
       if (!conversation.model) {
-        conversation.model = PossibleAiModels[0];
+        conversation.model = models[0];
       }
 
       const modelDefaults = getModelDefaults(conversation.model);

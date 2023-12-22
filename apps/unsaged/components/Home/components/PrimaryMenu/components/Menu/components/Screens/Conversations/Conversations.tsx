@@ -22,7 +22,6 @@ import {
   saveSelectedConversationId,
 } from '@/utils/app/storage/selectedConversation';
 
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
 import { LatestExportFormat, SupportedExportFormats } from '@/types/export';
@@ -116,7 +115,7 @@ export const Conversations = () => {
     homeDispatch({ field: 'folders', value: updatedFolders });
     storageUpdateFolders(database, user, updatedFolders);
 
-    let model = PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0];
+    let model = models.find(m => m.id == DEFAULT_MODEL) || models[0];
 
     const modelDefaults = getModelDefaults(model);
 
@@ -173,7 +172,7 @@ export const Conversations = () => {
         updatedConversations[updatedConversations.length - 1].id,
       );
     } else {
-      let model = PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0] || 'gpt-3.5-turbo';
+      let model = models.find(m => m.id == DEFAULT_MODEL) || models[0];
 
       const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 

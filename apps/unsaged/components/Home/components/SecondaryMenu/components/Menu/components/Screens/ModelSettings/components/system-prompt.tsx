@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { PossibleAiModels } from '@/types/ai-models';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import HomeContext from '@/components/Home/home.context';

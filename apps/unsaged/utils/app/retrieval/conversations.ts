@@ -2,7 +2,7 @@ import { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import { ActionType } from '@/hooks/useCreateReducer';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
@@ -91,7 +91,7 @@ export const useConversations = (
   const autogenerateConversation = useCallback(async () => {
     if (!database || !user) return;
 
-    let model = PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0] || PossibleAiModels[0];
+    let model = models.find(m => m.id == DEFAULT_MODEL) || models[0];
 
     const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 

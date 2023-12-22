@@ -50,7 +50,7 @@ import {
 import { saveSelectedConversationId } from '@/utils/app/storage/selectedConversation';
 import { storageGetSystemPrompts } from '@/utils/app/storage/systemPrompts';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface } from '@/types/folder';
@@ -255,7 +255,7 @@ const Home = () => {
     if (savedSettings && settings) {
       const lastConversation = conversations[conversations.length - 1];
 
-      let model = lastConversation?.model || PossibleAiModels.find(m => m.id == DEFAULT_MODEL) || models[0];
+      let model = lastConversation?.model || models.find(m => m.id == DEFAULT_MODEL) || models[0];
 
       const modelDefaults = getModelDefaults(model);
 

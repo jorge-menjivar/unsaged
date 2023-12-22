@@ -2,8 +2,6 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { PossibleAiModels } from '@/types/ai-models';
-
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { Slider } from '@/components/common/ui/slider';
