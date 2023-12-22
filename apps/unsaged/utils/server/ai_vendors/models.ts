@@ -1,11 +1,12 @@
 import { AiModel, GetAvailableAIModelResponse, vendors } from '@/types/ai-models';
+import { AI_SERVICES_ENDPOINT_URL } from '@/utils/app/const';
 
 export const config = {
     runtime: 'edge',
 };
 
 export async function getModelSettings(vendor?: string): Promise<GetAvailableAIModelResponse> {
-    let url = `https://ai-services-web.vercel.app/api/models${vendor ? `?vendor=${vendor}` : ''}`;
+    let url = `${AI_SERVICES_ENDPOINT_URL}/api/models${vendor ? `?vendor=${vendor}` : ''}`;
 
     const res = await fetch(url, {
         headers: {
@@ -19,9 +20,9 @@ export async function getModelSettings(vendor?: string): Promise<GetAvailableAIM
     }
 
     const json = await res.json();
-    const responseData = json.data;
+    console.log(json);
 
-    const models: (AiModel | null)[] = responseData.filter((m: any) => m.params)
+    const models: (AiModel | null)[] = json.filter((m: any) => m.params)
         .map((aiModel: any) => {
             if (vendors.indexOf(aiModel.vendor.name) >= 0) {
                 const { maxLength, tokenLimit, requestLimit } = aiModel.params;
@@ -33,6 +34,8 @@ export async function getModelSettings(vendor?: string): Promise<GetAvailableAIM
                         tokenLimit: tokenLimit,
                         requestLimit: requestLimit,
                     }),
+                    description: aiModel.description,
+                    strengths: aiModel.strengths,
                     vendor: aiModel.vendor.name,
                     type: aiModel.type
                 }

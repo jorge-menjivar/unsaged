@@ -16,6 +16,9 @@ export const ADVANCED_SETTINGS_OPEN = dockerEnvVarFix(process.env.NEXT_PUBLIC_AD
 export const SHOW_ADVANCED_SETTINGS = dockerEnvVarFix(process.env.NEXT_PUBLIC_SHOW_ADVANCED_SETTINGS) === 'false' ? false : true;
 export const ALLOW_LOCAL_API_SETTINGS = dockerEnvVarFix(process.env.NEXT_PUBLIC_ALLOW_LOCAL_API_SETTINGS) === 'false' ? false : true;
 
+export const AI_SERVICES_ENDPOINT_URL =
+  dockerEnvVarFix(process.env.AI_SERVICES_ENDPOINT_URL) || 'https://ai-services-web.vercel.app';
+
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
   "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
