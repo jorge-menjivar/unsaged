@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev:test": "playwright test",
-    "e2e:test": "start-server-and-test \"(cd ../../apps/unsaged && pnpm run start)\" http://locahost:3000 \"playwright test\""
+    "e2e:test": "start-server-and-test \"(cd ../../apps/web && pnpm run start)\" http://locahost:3000 \"playwright test\""
   },
   "dependencies": {
     "start-server-and-test": "^1.14.0",
