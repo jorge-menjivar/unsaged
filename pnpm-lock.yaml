@@ -539,12 +539,18 @@ importers:
       '@types/react-dom':
         specifier: 18.2.14
         version: 18.2.14
-      eslint:
-        specifier: ^8.52.0
-        version: 8.55.0
       eslint-config-custom:
         specifier: workspace:*
         version: link:../eslint-config-custom
+      prettier:
+        specifier: ^2.8.8
+        version: 2.8.8
+      prettier-eslint:
+        specifier: ^16.1.2
+        version: 16.2.0
+      prettier-plugin-tailwindcss:
+        specifier: ^0.2.8
+        version: 0.2.8(@trivago/prettier-plugin-sort-imports@4.3.0)(prettier@2.8.8)
       react:
         specifier: ^18.2.0
         version: 18.2.0
