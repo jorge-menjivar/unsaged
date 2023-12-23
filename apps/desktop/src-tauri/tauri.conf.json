@@ -58,7 +58,15 @@
       "csp": ""
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+        "https://github.com/jorge-menjivar/unsaged/releases/tag/latest/latest.json"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEU5REJEODc4QzAwOTI1RUIKUldUckpRbkFlTmpiNlF4OUVGRXRMTGErY093UUFGcXcrYzdzV3FidGhxaTZnc3JuY1NrbHpkWWUK",
+      "windows": {
+        "installMode": "passive"
+      }
     },
     "windows": [
       {
