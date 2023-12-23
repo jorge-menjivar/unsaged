@@ -6,6 +6,13 @@ export async function localCreateMessage(newMessage: Message) {
     const messages = JSON.parse(
       localStorage.getItem(itemName) || '[]',
     ) as Message[];
+
+    // Check if message already exists
+    const message = messages.find((message) => message.id === newMessage.id);
+    if (message) {
+      return false;
+    }
+
     const updatedMessages = [...messages, newMessage];
     localStorage.setItem(itemName, JSON.stringify(updatedMessages));
     return true;
