@@ -59,20 +59,20 @@ export const DEFAULT_ANTHROPIC_TOP_K = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_K,
 );
 
-export const DEFAULT_PALM_SYSTEM_PROMPT =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT) ||
+export const DEFAULT_GOOGLE_SYSTEM_PROMPT =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_SYSTEM_PROMPT) ||
   "You are Bard, a large language model trained by Google. Follow the user's instructions carefully. Respond using markdown. Always specify the programming language you are using when making a markdown code block.";
 
-export const DEFAULT_PALM_TEMPERATURE = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_DEFAULT_PALM_TEMPERATURE,
+export const DEFAULT_GOOGLE_TEMPERATURE = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_TEMPERATURE,
 );
 
-export const DEFAULT_PALM_TOP_P = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_DEFAULT_PALM_TOP_P,
+export const DEFAULT_GOOGLE_TOP_P = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_P,
 );
 
-export const DEFAULT_PALM_TOP_K = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_DEFAULT_PALM_TOP_K,
+export const DEFAULT_GOOGLE_TOP_K = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_K,
 );
 
 export const DEFAULT_OLLAMA_SYSTEM_PROMPT =
@@ -128,11 +128,11 @@ export const ANTHROPIC_API_KEY =
 export const ANTHROPIC_API_VERSION =
   dockerEnvVarFix(process.env.ANTHROPIC_API_VERSION) || '2023-06-01';
 
-export const PALM_API_URL =
-  dockerEnvVarFix(process.env.PALM_API_URL) ||
+export const GOOGLE_API_URL =
+  dockerEnvVarFix(process.env.GOOGLE_API_URL) ||
   'https://generativelanguage.googleapis.com/v1beta2';
 
-export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
+export const GOOGLE_API_KEY = dockerEnvVarFix(process.env.GOOGLE_API_KEY) || '';
 
 export const OLLAMA_HOST = dockerEnvVarFix(process.env.OLLAMA_HOST) || '';
 

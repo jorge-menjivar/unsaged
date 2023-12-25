@@ -26,7 +26,7 @@ export async function getAvailableOllamaModels(): Promise<GetAvailableAIModelRes
 
     if (response.status !== 200) {
       const error = await response.text();
-      console.error('Error fetching OpenAI models', response.status, error);
+      console.error('Error fetching Ollama models', response.status, error);
       return { data: [] };
     }
 

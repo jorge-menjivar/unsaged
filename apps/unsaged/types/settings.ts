@@ -123,7 +123,7 @@ export const SystemSettings: SettingsSection[] = [
       {
         id: 'api_key',
         name: 'API Key',
-        description: 'The API key to use for PaLM 2 models.',
+        description: 'The API key to use for Google models.',
         type: 'string',
         storage: 'local',
       },

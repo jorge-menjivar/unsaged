@@ -2,7 +2,7 @@ import { AiModel, ModelParams } from '@/types/ai-models';
 import { Message } from '@/types/chat';
 
 import { streamAnthropic } from './anthropic/stream';
-import { streamPaLM2 } from './google/stream';
+import { streamGoogle } from './google/stream';
 import { streamOllama } from './ollama/stream';
 import { streamOpenAI } from './openai/stream';
 import { streamAzure } from './azure/stream';
@@ -44,7 +44,7 @@ export async function getStream(
         tokenCount,
       );
     case 'Google':
-      return streamPaLM2(
+      return streamGoogle(
         model,
         systemPrompt,
         params,

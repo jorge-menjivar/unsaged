@@ -12,9 +12,9 @@ import {
   DEFAULT_OPENAI_SEED,
   DEFAULT_OPENAI_TEMPERATURE,
   DEFAULT_OPENAI_TOP_P,
-  DEFAULT_PALM_TEMPERATURE,
-  DEFAULT_PALM_TOP_K,
-  DEFAULT_PALM_TOP_P,
+  DEFAULT_GOOGLE_TEMPERATURE,
+  DEFAULT_GOOGLE_TOP_K,
+  DEFAULT_GOOGLE_TOP_P,
 } from '../const';
 import { dockerEnvVarFix } from '../docker/envFix';
 
@@ -36,9 +36,9 @@ export function printEnvVariables() {
     process.env.ANTHROPIC_API_VERSION,
   );
 
-  const PALM_API_URL = dockerEnvVarFix(process.env.PALM_API_URL);
+  const GOOGLE_API_URL = dockerEnvVarFix(process.env.GOOGLE_API_URL);
 
-  const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY);
+  const GOOGLE_API_KEY = dockerEnvVarFix(process.env.GOOGLE_API_KEY);
 
   const SUPABASE_URL = dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_URL);
 
@@ -110,20 +110,20 @@ export function printEnvVariables() {
   console.log('NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_K', DEFAULT_ANTHROPIC_TOP_K);
 
   console.log(
-    '----------------------------------PaLM-------------------------------',
+    '----------------------------------GOOGLE-------------------------------',
   );
 
-  console.log('PALM_API_URL', PALM_API_URL);
-  console.log('PALM_API_KEY', PALM_API_KEY);
+  console.log('GOOGLE_API_URL', GOOGLE_API_URL);
+  console.log('GOOGLE_API_KEY', GOOGLE_API_KEY);
 
   console.log(
-    'NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT',
-    dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT),
+    'NEXT_PUBLIC_DEFAULT_GOOGLE_SYSTEM_PROMPT',
+    dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_SYSTEM_PROMPT),
   );
 
-  console.log('NEXT_PUBLIC_DEFAULT_PALM_TEMPERATURE', DEFAULT_PALM_TEMPERATURE);
-  console.log('NEXT_PUBLIC_DEFAULT_PALM_TOP_P', DEFAULT_PALM_TOP_P);
-  console.log('NEXT_PUBLIC_DEFAULT_PALM_TOP_K', DEFAULT_PALM_TOP_K);
+  console.log('NEXT_PUBLIC_DEFAULT_GOOGLE_TEMPERATURE', DEFAULT_GOOGLE_TEMPERATURE);
+  console.log('NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_P', DEFAULT_GOOGLE_TOP_P);
+  console.log('NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_K', DEFAULT_GOOGLE_TOP_K);
 
   console.log(
     '----------------------------------Ollama-------------------------------',

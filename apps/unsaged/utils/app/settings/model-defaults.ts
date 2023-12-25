@@ -14,9 +14,9 @@ import {
   DEFAULT_OPENAI_SEED,
   DEFAULT_OPENAI_TEMPERATURE,
   DEFAULT_OPENAI_TOP_P,
-  DEFAULT_PALM_TEMPERATURE,
-  DEFAULT_PALM_TOP_K,
-  DEFAULT_PALM_TOP_P,
+  DEFAULT_GOOGLE_TEMPERATURE,
+  DEFAULT_GOOGLE_TOP_K,
+  DEFAULT_GOOGLE_TOP_P,
 } from '../const';
 
 export function getDefaultedParams(
@@ -78,16 +78,16 @@ export function getModelDefaults(model: AiModel) {
   if (model.vendor === 'Google') {
     const defaults: ModelParams = {};
 
-    if (DEFAULT_PALM_TEMPERATURE) {
-      defaults.temperature = parseFloat(DEFAULT_PALM_TEMPERATURE);
+    if (DEFAULT_GOOGLE_TEMPERATURE) {
+      defaults.temperature = parseFloat(DEFAULT_GOOGLE_TEMPERATURE);
     }
 
-    if (DEFAULT_PALM_TOP_P) {
-      defaults.top_p = parseFloat(DEFAULT_PALM_TOP_P);
+    if (DEFAULT_GOOGLE_TOP_P) {
+      defaults.top_p = parseFloat(DEFAULT_GOOGLE_TOP_P);
     }
 
-    if (DEFAULT_PALM_TOP_K) {
-      defaults.top_k = parseFloat(DEFAULT_PALM_TOP_K);
+    if (DEFAULT_GOOGLE_TOP_K) {
+      defaults.top_k = parseFloat(DEFAULT_GOOGLE_TOP_K);
     }
 
     return defaults;

@@ -29,7 +29,7 @@ export const useModels = (
         'api_key',
       );
 
-      const palmApiKey = getSavedSettingValue(
+      const googleApiKey = getSavedSettingValue(
         savedSettings,
         'google',
         'api_key',
@@ -43,7 +43,7 @@ export const useModels = (
         body: JSON.stringify({
           openai_key: openAiApiKey,
           anthropic_key: anthropicApiKey,
-          palm_key: palmApiKey,
+          google_key: googleApiKey,
         }),
       });
 

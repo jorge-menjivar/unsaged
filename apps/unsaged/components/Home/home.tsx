@@ -11,7 +11,7 @@ import {
   DEFAULT_MODEL,
   DEFAULT_OLLAMA_SYSTEM_PROMPT,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
-  DEFAULT_PALM_SYSTEM_PROMPT,
+  DEFAULT_GOOGLE_SYSTEM_PROMPT,
 } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { useAuth } from '@/utils/app/retrieval/auth';
@@ -330,7 +330,7 @@ const Home = () => {
         systemPrompt = {
           id: systemPromptId,
           name: `${vendor} Built-In`,
-          content: DEFAULT_PALM_SYSTEM_PROMPT,
+          content: DEFAULT_GOOGLE_SYSTEM_PROMPT,
           folderId: null,
           models: models.filter((m) => m.vendor === 'Google').map((m) => m.id),
         };

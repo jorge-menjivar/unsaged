@@ -3,13 +3,13 @@ import {
   AZURE_OPENAI_API_KEY,
   DEBUG_MODE,
   OPENAI_API_KEY,
-  PALM_API_KEY,
+  GOOGLE_API_KEY,
 } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { AiModel } from '@/types/ai-models';
 
 import { getAvailableAnthropicModels } from '@/utils/server/ai_vendors/anthropic/models';
-import { getAvailablePalm2Models } from '@/utils/server/ai_vendors/google/models';
+import { getAvailableGoogleModels } from '@/utils/server/ai_vendors/google/models';
 import { getAvailableOllamaModels } from '@/utils/server/ai_vendors/ollama/models';
 import { getAvailableOpenAIModels } from '@/utils/server/ai_vendors/openai/models';
 import { getAvailableAzureModels } from '@/utils/server/ai_vendors/azure/models';
@@ -23,11 +23,11 @@ const handler = async (req: Request): Promise<Response> => {
       printEnvVariables();
     }
 
-    const { openai_key = OPENAI_API_KEY, azure_key = AZURE_OPENAI_API_KEY, anthropic_key = ANTHROPIC_API_KEY, palm_key = PALM_API_KEY } = (await req.json()) as {
+    const { openai_key = OPENAI_API_KEY, azure_key = AZURE_OPENAI_API_KEY, anthropic_key = ANTHROPIC_API_KEY, google_key = GOOGLE_API_KEY } = (await req.json()) as {
       openai_key: string;
       azure_key: string;
       anthropic_key: string;
-      palm_key: string;
+      google_key: string;
     };
 
     const models: AiModel[] = [];
@@ -57,9 +57,9 @@ const handler = async (req: Request): Promise<Response> => {
       models.push(...(anthropicModels as AiModel[]));
     }
 
-    if (palm_key && palm_key !== '') {
-      const { data: palm2Models } = await getAvailablePalm2Models(palm_key);
-      models.push(...(palm2Models as AiModel[]));
+    if (google_key && google_key !== '') {
+      const { data: googleModels } = await getAvailableGoogleModels(google_key);
+      models.push(...(googleModels as AiModel[]));
     }
 
     const { data: ollamaModels } = await getAvailableOllamaModels();
