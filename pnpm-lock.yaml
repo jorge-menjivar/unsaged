@@ -76,7 +76,7 @@ importers:
         specifier: ~5.3.3
         version: 5.3.3
 
-  apps/unsaged:
+  apps/web:
     dependencies:
       '@auth/supabase-adapter':
         specifier: ^0.1.11
@@ -314,7 +314,7 @@ importers:
         version: 1.15.5
       unsaged:
         specifier: workspace:*
-        version: link:../../apps/unsaged
+        version: link:../../apps/web
     devDependencies:
       '@playwright/test':
         specifier: ^1.27.0
@@ -556,7 +556,7 @@ packages:
     resolution: {integrity: sha512-oLcVCTeIFadUoArDTwpluncplrYBmTCCZZgXCbgNGvOBBiSDDK3eWO4b/+eOTli5tKv1lg+a5/NAXg+nTcei1w==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.17.0
+      '@babel/types': 7.23.5
       jsesc: 2.5.2
       source-map: 0.5.7
     dev: true
@@ -781,14 +781,6 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-
-  /@babel/parser@7.23.4:
-    resolution: {integrity: sha512-vf3Xna6UEprW+7t6EtOmFpHNAuxw3xqPZghy+brsnusscJRW5BMUzzHZc5ICjULee81WeUV2jjakG09MDglJXQ==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-    dependencies:
-      '@babel/types': 7.23.4
-    dev: true
 
   /@babel/parser@7.23.5:
     resolution: {integrity: sha512-hOOqoiNXrmGdFbhgCzu6GiURxUgM27Xwd/aPuu8RfHEZPBzL1Z54okAHAQjXfcQNwvrlkAmAp4SlRTZ45vlthQ==}
@@ -4490,7 +4482,7 @@ packages:
         optional: true
     dependencies:
       '@babel/generator': 7.17.7
-      '@babel/parser': 7.23.4
+      '@babel/parser': 7.23.5
       '@babel/traverse': 7.23.2
       '@babel/types': 7.17.0
       javascript-natural-sort: 0.7.1
