@@ -24,7 +24,7 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@supabase/auth-helpers-nextjs": "^0.6.1",
-    "@supabase/supabase-js": "^2.38.5",
+    "@supabase/supabase-js": "^2.39.1",
     "@tabler/icons-react": "^2.42.0",
     "@tauri-apps/api": "^1.5.1",
     "@vercel/analytics": "^1.1.1",
