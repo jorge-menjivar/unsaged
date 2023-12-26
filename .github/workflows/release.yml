@@ -1,0 +1,88 @@
+name: 'publish'
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, fedora, windows-latest]
+        version: [18]
+        pnpm: [latest]
+    runs-on: ${{ matrix.platform }}
+    defaults:
+      run:
+        working-directory: ./apps/desktop
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies (macOS only)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          rustup target add aarch64-apple-darwin
+          rustup target add x86_64-apple-darwin
+
+      - uses: pnpm/action-setup@v2.4.0
+        with:
+          version: ${{ matrix.pnpm }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.version }}
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --prefer-offline --frozen-lockfile
+
+      - name: Build macOS App
+        if: matrix.platform == 'macos-latest'
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        with:
+          tagName: v__VERSION__-build # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'App v__VERSION__ build'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true
+          prerelease: false
+          args: --target universal-apple-darwin
+
+      - name: Build Linux AppImage
+        if: matrix.platform == 'fedora'
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__-build # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'App v__VERSION__ build'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true
+          prerelease: false
+
+      - name: Build Windows App
+        if: matrix.platform == 'windows-latest'
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__-build # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'App v__VERSION__ build'
+          releaseBody: 'See the assets to download this version and install.'
+          distPath: ./out
+          releaseDraft: true
+          prerelease: false

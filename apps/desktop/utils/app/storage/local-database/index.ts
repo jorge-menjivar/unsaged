@@ -1,0 +1,1 @@
+export { LocalDatabase } from './database';
