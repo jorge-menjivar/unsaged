@@ -566,7 +566,7 @@ importers:
       start-server-and-test:
         specifier: ^1.14.0
         version: 1.15.5
-      unsaged:
+      web:
         specifier: workspace:*
         version: link:../../apps/web
     devDependencies:
