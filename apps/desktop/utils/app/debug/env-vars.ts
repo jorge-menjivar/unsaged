@@ -1,0 +1,150 @@
+import { debug } from '@/utils/logging';
+
+import {
+  DEFAULT_ANTHROPIC_TEMPERATURE,
+  DEFAULT_ANTHROPIC_TOP_K,
+  DEFAULT_ANTHROPIC_TOP_P,
+  DEFAULT_OLLAMA_REPEAT_PENALTY,
+  DEFAULT_OLLAMA_SEED,
+  DEFAULT_OLLAMA_TEMPERATURE,
+  DEFAULT_OLLAMA_TOP_K,
+  DEFAULT_OLLAMA_TOP_P,
+  DEFAULT_OPENAI_FREQUENCY_PENALTY,
+  DEFAULT_OPENAI_PRESENCE_PENALTY,
+  DEFAULT_OPENAI_SEED,
+  DEFAULT_OPENAI_TEMPERATURE,
+  DEFAULT_OPENAI_TOP_P,
+  DEFAULT_PALM_TEMPERATURE,
+  DEFAULT_PALM_TOP_K,
+  DEFAULT_PALM_TOP_P,
+} from '../const';
+import { dockerEnvVarFix } from '../docker/envFix';
+
+export function printEnvVariables() {
+  const OPENAI_API_URL = dockerEnvVarFix(process.env.OPENAI_API_URL);
+
+  const OPENAI_API_KEY = dockerEnvVarFix(process.env.OPENAI_API_KEY);
+
+  const OPENAI_API_TYPE = dockerEnvVarFix(process.env.OPENAI_API_TYPE);
+
+  const OPENAI_API_VERSION = dockerEnvVarFix(process.env.OPENAI_API_VERSION);
+
+  const OPENAI_ORGANIZATION = dockerEnvVarFix(process.env.OPENAI_ORGANIZATION);
+  const ANTHROPIC_API_URL = dockerEnvVarFix(process.env.ANTHROPIC_API_URL);
+
+  const ANTHROPIC_API_KEY = dockerEnvVarFix(process.env.ANTHROPIC_API_KEY);
+
+  const ANTHROPIC_API_VERSION = dockerEnvVarFix(
+    process.env.ANTHROPIC_API_VERSION,
+  );
+
+  const PALM_API_URL = dockerEnvVarFix(process.env.PALM_API_URL);
+
+  const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY);
+
+  const SUPABASE_URL = dockerEnvVarFix(process.env.NEXT_PUBLIC_SUPABASE_URL);
+
+  const SUPABASE_SERVICE_ROLE_KEY = dockerEnvVarFix(
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
+  );
+  const SUPABASE_ANON_KEY = dockerEnvVarFix(
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
+
+  const SUPABASE_JWT_SECRET = dockerEnvVarFix(process.env.SUPABASE_JWT_SECRET);
+
+  const DEFAULT_MODEL = dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_MODEL);
+
+  debug('SUPABASE_SERVICE_ROLE_KEY', SUPABASE_SERVICE_ROLE_KEY);
+  debug('SUPABASE_JWT_SECRET', SUPABASE_JWT_SECRET);
+  debug('NEXT_PUBLIC_SUPABASE_URL', SUPABASE_URL);
+  debug('NEXT_PUBLIC_SUPABASE_ANON_KEY', SUPABASE_ANON_KEY);
+
+  debug('NEXT_PUBLIC_DEFAULT_MODEL', DEFAULT_MODEL);
+
+  debug(
+    '----------------------------------OpenAI-------------------------------',
+  );
+
+  debug('OPENAI_API_URL', OPENAI_API_URL);
+  debug('OPENAI_API_KEY', OPENAI_API_KEY);
+  debug('OPENAI_API_TYPE', OPENAI_API_TYPE);
+  debug('OPENAI_API_VERSION', OPENAI_API_VERSION);
+  debug('OPENAI_ORGANIZATION', OPENAI_ORGANIZATION);
+
+  debug(
+    'NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT',
+    dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT),
+  );
+  debug('NEXT_PUBLIC_DEFAULT_OPENAI_TEMPERATURE', DEFAULT_OPENAI_TEMPERATURE);
+  debug('NEXT_PUBLIC_DEFAULT_OPENAI_TOP_P', DEFAULT_OPENAI_TOP_P);
+  debug(
+    'NEXT_PUBLIC_DEFAULT_OPENAI_PRESENCE_PENALTY',
+    DEFAULT_OPENAI_PRESENCE_PENALTY,
+  );
+  debug(
+    'NEXT_PUBLIC_DEFAULT_OPENAI_FREQUENCY_PENALTY',
+    DEFAULT_OPENAI_FREQUENCY_PENALTY,
+  );
+  debug('NEXT_PUBLIC_DEFAULT_OPENAI_SEED', DEFAULT_OPENAI_SEED);
+
+  debug(
+    '-------------------------------Anthropic-----------------------------',
+  );
+
+  debug('ANTHROPIC_API_URL', ANTHROPIC_API_URL);
+  debug('ANTHROPIC_API_KEY', ANTHROPIC_API_KEY);
+  debug('ANTHROPIC_API_VERSION', ANTHROPIC_API_VERSION);
+
+  debug(
+    'NEXT_PUBLIC_DEFAULT_ANTHROPIC_SYSTEM_PROMPT',
+    dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_SYSTEM_PROMPT),
+  );
+
+  debug(
+    'NEXT_PUBLIC_DEFAULT_ANTHROPIC_TEMPERATURE',
+    DEFAULT_ANTHROPIC_TEMPERATURE,
+  );
+  debug('NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_P', DEFAULT_ANTHROPIC_TOP_P);
+  debug('NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_K', DEFAULT_ANTHROPIC_TOP_K);
+
+  debug(
+    '----------------------------------PaLM-------------------------------',
+  );
+
+  debug('PALM_API_URL', PALM_API_URL);
+  debug('PALM_API_KEY', PALM_API_KEY);
+
+  debug(
+    'NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT',
+    dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT),
+  );
+
+  debug('NEXT_PUBLIC_DEFAULT_PALM_TEMPERATURE', DEFAULT_PALM_TEMPERATURE);
+  debug('NEXT_PUBLIC_DEFAULT_PALM_TOP_P', DEFAULT_PALM_TOP_P);
+  debug('NEXT_PUBLIC_DEFAULT_PALM_TOP_K', DEFAULT_PALM_TOP_K);
+
+  debug(
+    '----------------------------------Ollama-------------------------------',
+  );
+
+  debug('OLLAMA_HOST', process.env.OLLAMA_HOST);
+
+  debug(
+    'NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT',
+    dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT),
+  );
+
+  debug('NEXT_PUBLIC_DEFAULT_OLLAMA_TEMPERATURE', DEFAULT_OLLAMA_TEMPERATURE);
+
+  debug('NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_P', DEFAULT_OLLAMA_TOP_P);
+
+  debug('NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_K', DEFAULT_OLLAMA_TOP_K);
+
+  debug(
+    'NEXT_PUBLIC_DEFAULT_OLLAMA_REPEAT_PENALTY',
+    DEFAULT_OLLAMA_REPEAT_PENALTY,
+  );
+
+  debug('NEXT_PUBLIC_DEFAULT_OLLAMA_SEED', DEFAULT_OLLAMA_SEED);
+}

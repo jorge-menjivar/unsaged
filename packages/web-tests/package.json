@@ -5,14 +5,14 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev:test": "playwright test",
-    "e2e:test": "start-server-and-test \"(cd ../../apps/unsaged && pnpm run start)\" http://locahost:3000 \"playwright test\""
+    "e2e:test": "start-server-and-test \"(cd ../../apps/web && pnpm run start)\" http://locahost:3000 \"playwright test\""
   },
   "dependencies": {
     "start-server-and-test": "^1.14.0",
     "unsaged": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "@playwright/test": "^1.27.0",
     "tsconfig": "workspace:*"
   }

@@ -12,7 +12,7 @@ To give everyone using your instance of unSAGED access to self hosted models lik
 Use `127.0.0.1` instead of `localhost` if you are running locally.
 :::
 
-```sh title="apps/unsaged/.env.local"
+```sh title="apps/web/.env.local"
 OLLAMA_HOST="http://127.0.0.1:11434"
 ```
 
