@@ -12,7 +12,7 @@
     "unsaged": "workspace:*"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "@playwright/test": "^1.27.0",
     "tsconfig": "workspace:*"
   }
