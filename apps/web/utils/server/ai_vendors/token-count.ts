@@ -4,7 +4,7 @@ import { Message } from '@/types/chat';
 import { countTokensAnthropic } from './anthropic/token-count';
 import { countTokensGoogle } from './google/token-count';
 import { countTokensOllama } from './ollama/token-count';
-import { countTokensOpenAI } from './openai-token-count';
+import { countTokensOpenAI } from './openai/token-count';
 
 export async function getTokenCount(
   model: AiModel,

@@ -15,7 +15,7 @@ import {
 
 import { Conversation } from '@/types/chat';
 
-import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
+import SidebarActionButton from '@ui/components/ui/side-bar-action-button';
 
 import { useConversations } from '@/providers/conversations';
 import { useDisplay } from '@/providers/display';

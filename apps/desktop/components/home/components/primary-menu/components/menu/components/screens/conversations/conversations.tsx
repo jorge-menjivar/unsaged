@@ -15,7 +15,7 @@ import { ConversationList } from './components/conversation-list';
 import { ConversationsSettings } from './components/conversations-settings';
 import { ConversationsFolders } from './components/folders';
 import Search from '@/components/common/Search';
-import { Button } from '@/components/common/ui/button';
+import { Button } from '@ui/components/ui/button';
 
 import ConversationsContext from './conversations.context';
 import { ConversationsInitialState, initialState } from './conversations.state';

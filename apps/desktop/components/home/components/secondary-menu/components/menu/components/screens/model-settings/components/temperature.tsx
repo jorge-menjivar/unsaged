@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { PrimaryLabel } from '@/components/common/ui/primary-label';
-import { Slider } from '@/components/common/ui/slider';
-import { Switch } from '@/components/common/ui/switch';
+import { PrimaryLabel } from '@ui/components/ui/primary-label';
+import { Slider } from '@ui/components/ui/slider';
+import { Switch } from '@ui/components/ui/switch';
 
 import { useConversations } from '@/providers/conversations';
 

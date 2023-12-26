@@ -14,7 +14,7 @@ import {
 
 import { Template } from '@/types/templates';
 
-import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
+import SidebarActionButton from '@ui/components/ui/side-bar-action-button';
 
 import PromptsContext from '../prompts.context';
 import { PromptModal } from './template-modal';

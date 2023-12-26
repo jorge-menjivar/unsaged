@@ -5,7 +5,7 @@ import { AxiomWebVitals } from 'next-axiom';
 
 import { Metadata, Viewport } from 'next';
 
-import { ThemeProvider } from '@/components/common/ui/theme-provider';
+import { ThemeProvider } from '@ui/components/ui/theme-provider';
 
 import '@/styles/globals.css';
 import NextIntlProvider from './NextIntlProvider';

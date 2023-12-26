@@ -3,7 +3,7 @@ import { AxiomWebVitals } from 'next-axiom';
 
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/utils/app/const';
 
-import { ThemeProvider } from '@/components/common/ui/theme-provider';
+import { ThemeProvider } from '@ui/components/ui/theme-provider';
 
 import '@/styles/globals.css';
 

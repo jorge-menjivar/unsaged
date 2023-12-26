@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { PrimaryLabel } from '@/components/common/ui/primary-label';
+import { PrimaryLabel } from '@ui/components/ui/primary-label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/common/ui/select';
+} from '@ui/components/ui/select';
 
 import { useConversations } from '@/providers/conversations';
 import { useSystemPrompts } from '@/providers/system-prompts';

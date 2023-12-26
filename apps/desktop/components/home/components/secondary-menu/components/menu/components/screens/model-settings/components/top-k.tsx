@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
-import { Input } from '@/components/common/ui/input';
-import { PrimaryLabel } from '@/components/common/ui/primary-label';
+import { Input } from '@ui/components/ui/input';
+import { PrimaryLabel } from '@ui/components/ui/primary-label';
 
 import { useConversations } from '@/providers/conversations';
 

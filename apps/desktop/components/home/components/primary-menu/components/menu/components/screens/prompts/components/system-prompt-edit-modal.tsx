@@ -11,8 +11,8 @@ import { useTranslation } from 'next-i18next';
 
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { Button } from '@/components/common/ui/button';
-import { PrimaryLabel } from '@/components/common/ui/primary-label';
+import { Button } from '@ui/components/ui/button';
+import { PrimaryLabel } from '@ui/components/ui/primary-label';
 
 import { ChipList } from './models-list';
 

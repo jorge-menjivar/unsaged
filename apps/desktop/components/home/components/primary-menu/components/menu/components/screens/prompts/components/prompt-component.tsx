@@ -14,7 +14,7 @@ import {
 
 import { SystemPrompt } from '@/types/system-prompt';
 
-import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
+import SidebarActionButton from '@ui/components/ui/side-bar-action-button';
 
 import SystemPromptsContext from '../system-prompts.context';
 import { SystemPromptEditModal } from './system-prompt-edit-modal';

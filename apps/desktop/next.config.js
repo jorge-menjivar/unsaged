@@ -12,7 +12,7 @@ const nextConfig = {
 
     return config;
   },
-  transpilePackages: ["utils"]
+  transpilePackages: ["utils", "ui"]
 };
 
 module.exports = nextConfig;
