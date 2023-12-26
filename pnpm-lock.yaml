@@ -31,13 +31,13 @@ importers:
     dependencies:
       '@auth/supabase-adapter':
         specifier: ^0.1.9
-        version: 0.1.11(@supabase/supabase-js@2.39.0)(nodemailer@6.9.7)
+        version: 0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
       '@next-auth/supabase-adapter':
         specifier: ^0.2.1
-        version: 0.2.1(@supabase/supabase-js@2.39.0)(next-auth@4.24.5)
+        version: 0.2.1(@supabase/supabase-js@2.39.1)(next-auth@4.24.5)
       '@radix-ui/react-icons':
         specifier: ^1.3.0
         version: 1.3.0(react@18.2.0)
@@ -61,10 +61,10 @@ importers:
         version: 1.0.7(@types/react-dom@18.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
       '@supabase/auth-helpers-nextjs':
         specifier: ^0.6.1
-        version: 0.6.1(@supabase/supabase-js@2.39.0)
+        version: 0.6.1(@supabase/supabase-js@2.39.1)
       '@supabase/supabase-js':
-        specifier: ^2.38.5
-        version: 2.39.0
+        specifier: ^2.39.1
+        version: 2.39.1
       '@tabler/icons-react':
         specifier: ^2.42.0
         version: 2.44.0(react@18.2.0)
@@ -294,13 +294,13 @@ importers:
     dependencies:
       '@auth/supabase-adapter':
         specifier: ^0.1.11
-        version: 0.1.11(@supabase/supabase-js@2.39.0)(nodemailer@6.9.7)
+        version: 0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
       '@next-auth/supabase-adapter':
         specifier: ^0.2.1
-        version: 0.2.1(@supabase/supabase-js@2.39.0)(next-auth@4.24.5)
+        version: 0.2.1(@supabase/supabase-js@2.39.1)(next-auth@4.24.5)
       '@radix-ui/react-icons':
         specifier: ^1.3.0
         version: 1.3.0(react@18.2.0)
@@ -321,10 +321,10 @@ importers:
         version: 1.0.7(@types/react-dom@18.2.0)(@types/react@18.2.43)(react-dom@18.2.0)(react@18.2.0)
       '@supabase/auth-helpers-nextjs':
         specifier: ^0.8.7
-        version: 0.8.7(@supabase/supabase-js@2.39.0)
+        version: 0.8.7(@supabase/supabase-js@2.39.1)
       '@supabase/supabase-js':
-        specifier: ^2.38.5
-        version: 2.39.0
+        specifier: ^2.39.1
+        version: 2.39.1
       '@tabler/icons-react':
         specifier: ^2.44.0
         version: 2.44.0(react@18.2.0)
@@ -753,13 +753,13 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/supabase-adapter@0.1.11(@supabase/supabase-js@2.39.0)(nodemailer@6.9.7):
+  /@auth/supabase-adapter@0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7):
     resolution: {integrity: sha512-glyFfslsaKVi6gRPAgWPg42I/NSf2D9eaE35zBkVMynZQnhQwWCfK17Hx1CyzBH8F5Q68Vl2IIvQnpzpPi6UGg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.5
     dependencies:
       '@auth/core': 0.18.5(nodemailer@6.9.7)
-      '@supabase/supabase-js': 2.39.0
+      '@supabase/supabase-js': 2.39.1
     transitivePeerDependencies:
       - nodemailer
     dev: false
@@ -3548,13 +3548,13 @@ packages:
       '@napi-rs/simple-git-win32-x64-msvc': 0.1.9
     dev: false
 
-  /@next-auth/supabase-adapter@0.2.1(@supabase/supabase-js@2.39.0)(next-auth@4.24.5):
+  /@next-auth/supabase-adapter@0.2.1(@supabase/supabase-js@2.39.1)(next-auth@4.24.5):
     resolution: {integrity: sha512-BlIbBRd8QjdV84h/XH2QuuleZAFcmfRwT0pyvc9iqrVztxmjWOalNRvSA7xsbqsQq9mK16PMmNPRvsDEUAAgfQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.5
       next-auth: ^4.18.7
     dependencies:
-      '@supabase/supabase-js': 2.39.0
+      '@supabase/supabase-js': 2.39.1
       next-auth: 4.24.5(next@14.0.4)(nodemailer@6.9.7)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
@@ -4995,40 +4995,40 @@ packages:
       webpack-sources: 3.2.3
     dev: false
 
-  /@supabase/auth-helpers-nextjs@0.6.1(@supabase/supabase-js@2.39.0):
+  /@supabase/auth-helpers-nextjs@0.6.1(@supabase/supabase-js@2.39.1):
     resolution: {integrity: sha512-ffDAR4pW2Cosj/CuuGRAhzOFfHtqzdgax7zqRGGyq334gxxPplsmJFGaLPRJ3Z/4mTSIJHyFd6LYdHMN0a+5Bw==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.4
     dependencies:
-      '@supabase/auth-helpers-shared': 0.3.4(@supabase/supabase-js@2.39.0)
-      '@supabase/supabase-js': 2.39.0
+      '@supabase/auth-helpers-shared': 0.3.4(@supabase/supabase-js@2.39.1)
+      '@supabase/supabase-js': 2.39.1
     dev: false
 
-  /@supabase/auth-helpers-nextjs@0.8.7(@supabase/supabase-js@2.39.0):
+  /@supabase/auth-helpers-nextjs@0.8.7(@supabase/supabase-js@2.39.1):
     resolution: {integrity: sha512-iYdOjFo0GkRvha340l8JdCiBiyXQuG9v8jnq7qMJ/2fakrskRgHTCOt7ryWbip1T6BExcWKC8SoJrhCzPOxhhg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
-      '@supabase/auth-helpers-shared': 0.6.3(@supabase/supabase-js@2.39.0)
-      '@supabase/supabase-js': 2.39.0
+      '@supabase/auth-helpers-shared': 0.6.3(@supabase/supabase-js@2.39.1)
+      '@supabase/supabase-js': 2.39.1
       set-cookie-parser: 2.6.0
     dev: false
 
-  /@supabase/auth-helpers-shared@0.3.4(@supabase/supabase-js@2.39.0):
+  /@supabase/auth-helpers-shared@0.3.4(@supabase/supabase-js@2.39.1):
     resolution: {integrity: sha512-8I3D0SPHHexkFTSfPg0nZgJSVazWoB3tZDpT6IjRv6w89vDMUzO99Lit4H9anVLF4teW8c/nJJxawDNbDlgbgg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.4
     dependencies:
-      '@supabase/supabase-js': 2.39.0
+      '@supabase/supabase-js': 2.39.1
       jose: 4.15.4
     dev: false
 
-  /@supabase/auth-helpers-shared@0.6.3(@supabase/supabase-js@2.39.0):
+  /@supabase/auth-helpers-shared@0.6.3(@supabase/supabase-js@2.39.1):
     resolution: {integrity: sha512-xYQRLFeFkL4ZfwC7p9VKcarshj3FB2QJMgJPydvOY7J5czJe6xSG5/wM1z63RmAzGbCkKg+dzpq61oeSyWiGBQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
-      '@supabase/supabase-js': 2.39.0
+      '@supabase/supabase-js': 2.39.1
       jose: 4.15.4
     dev: false
 
@@ -5075,8 +5075,8 @@ packages:
       '@supabase/node-fetch': 2.6.15
     dev: false
 
-  /@supabase/supabase-js@2.39.0:
-    resolution: {integrity: sha512-cYfnwWRW5rYBbPT/BNIejtRT9ULdD9PnIExQV28PZpqcqm3PLwS4f3pY7WGB01Da63VYdvktZPKuYvreqsj/Zg==}
+  /@supabase/supabase-js@2.39.1:
+    resolution: {integrity: sha512-nz0aQPButJWjChX+bLXqvhHutfiOuiJwzibyJs0uhFrQ6JRDZZsl9+nX2jgyox2v2V+e4PEwbn/eaEOFVUr8iA==}
     dependencies:
       '@supabase/functions-js': 2.1.5
       '@supabase/gotrue-js': 2.60.1
