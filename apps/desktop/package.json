@@ -76,7 +76,7 @@
     "autoprefixer": "^10.4.16",
     "endent": "^2.1.0",
     "eslint-config-custom": "workspace:*",
-    "jsdom": "^21.1.2",
+    "jsdom": "^23.0.1",
     "postcss": "^8.4.31",
     "prettier": "^2.8.8",
     "prettier-eslint": "^16.1.2",
