@@ -86,7 +86,7 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
       {/* Settings buttons align to bottom */}
       <div className="flex flex-col items-center space-y-6">
         <ActivityBarButton>
-          <a href="https://github.com/jorge-menjivar/unSAGED" target="_blank">
+          <a href="https://github.com/jorge-menjivar/unsaged" target="_blank">
             <IconBrandGithub size={28} />
           </a>
         </ActivityBarButton>

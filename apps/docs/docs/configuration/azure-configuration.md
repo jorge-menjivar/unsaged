@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Azure Configuration
 
-To give everyone using your instance of unSAGED access to OpenAI models hosted on Azure set the following environment variables.
+To give everyone using your instance of unsaged access to OpenAI models hosted on Azure set the following environment variables.
 
 ## Global Access Configuration
 

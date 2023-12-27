@@ -7,7 +7,7 @@ sidebar_position: 1
 ## Clone the Repository
 
 ```sh
-git clone https://github.com/jorge-menjivar/unSAGED.git
+git clone https://github.com/jorge-menjivar/unsaged.git
 ```
 
 ## Install Dependencies
@@ -23,10 +23,10 @@ Run the [Generation Script](https://github.com/jorge-menjivar/unsaged/blob/dev/a
 
 This will do the following:
 
-- Create the tables required by unSAGED.
+- Create the tables required by unsaged.
 - Create the authentication schema and tables required by Auth.js.
-- Enable Row Level Security for the tables required by unSAGED.
-- Apply the Row Level Security policies required by unSAGED.
+- Enable Row Level Security for the tables required by unsaged.
+- Apply the Row Level Security policies required by unsaged.
 
 ## Expose the `next_auth` schema
 
@@ -38,7 +38,7 @@ Then copy the output and save it for the next step.
 
 ## Switch to the `apps/web` directory
 
-The `apps/web` directory contains the unSAGED app. All following commands should be run from this directory.
+The `apps/web` directory contains the unsaged app. All following commands should be run from this directory.
 
 ```sh
 cd apps/web
@@ -46,7 +46,7 @@ cd apps/web
 
 ## Set Environment Variables
 
-The `.env.local` file is the main configuration file for unSAGED. It should be located in the `apps/web` directory of the project.
+The `.env.local` file is the main configuration file for unsaged. It should be located in the `apps/web` directory of the project.
 Create the `apps/web/.env.local` file to set your environment variables.
 
 ### Set Auth Secret

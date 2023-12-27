@@ -7,7 +7,7 @@ export type SupportedExportFormats = UnsagedExportFormatV1;
 export type LatestExportFormat = UnsagedExportFormatV1;
 
 export interface UnsagedExportFormatV1 {
-  app: 'unSAGED';
+  app: 'unsaged';
   version: 1;
   conversations: Conversation[];
   messages: Message[];

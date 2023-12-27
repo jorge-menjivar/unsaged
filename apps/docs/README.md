@@ -1,4 +1,4 @@
-# unSAGED Documentation
+# unsaged Documentation
 
 The documentation site is built using [Docusaurus 3](https://docusaurus.io/).
 

@@ -4,15 +4,15 @@ sidebar_position: 1
 
 # Introduction
 
-## What is unSAGED?
+## What is unsaged?
 
-unSAGED is a free and open-source chat software engineered for seamless interaction with AI models. It can be used as a self-hosted replacement for ChatGPT, or as a powerful dashboard to build and test chatbots, virtual assistants, and more.
+unsaged is a free and open-source chat software engineered for seamless interaction with AI models. It can be used as a self-hosted replacement for ChatGPT, or as a powerful dashboard to build and test chatbots, virtual assistants, and more.
 
-unSAGED allows you to easily have conversations with different open-source and proprietary AI models from a variety of providers, all in one place. You can test the responses to the same conversation or prompts using the different AI models. It also allows you to manage multiple users and conversations, and synchronize them across different devices.
+unsaged allows you to easily have conversations with different open-source and proprietary AI models from a variety of providers, all in one place. You can test the responses to the same conversation or prompts using the different AI models. It also allows you to manage multiple users and conversations, and synchronize them across different devices.
 
 It is built on top of [Next.js](https://nextjs.org/), [React](https://reactjs.org/), and uses [Supabase](https://supabase.io/) as its primary database and [Auth.js](https://authjs.dev/) for authentication.
 
-You can see a live demo of unSAGED [here](https://app.unsaged.com). Just make sure not to put in personal information as your conversations will be stored in Postgres (Supabase) until you delete them.
+You can see a live demo of unsaged [here](https://app.unsaged.com). Just make sure not to put in personal information as your conversations will be stored in Postgres (Supabase) until you delete them.
 
 ## 🌟 Key Features
 
