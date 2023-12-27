@@ -15,7 +15,7 @@ export const useDatabase = (
   const fetchDatabase = useCallback(async () => {
     if (!database) {
       const _db = await getDatabase();
-      homeDispatch({ field: 'database', value: _db });
+      homeDispatch({ type: 'change', field: 'database', value: _db });
     }
   }, [database, homeDispatch]);
 

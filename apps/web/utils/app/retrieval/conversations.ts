@@ -56,17 +56,20 @@ export const useConversations = (
 
           if (selectedConversation) {
             homeDispatch({
+              type: 'change',
               field: 'selectedConversation',
               value: selectedConversation,
             });
           } else if (cleanedConversations.length > 0) {
             homeDispatch({
+              type: 'change',
               field: 'selectedConversation',
               value: cleanedConversations[0],
             });
           }
 
           homeDispatch({
+            type: 'change',
             field: 'conversations',
             value: cleanedConversations,
           });
@@ -112,10 +115,11 @@ export const useConversations = (
       [],
     );
     homeDispatch({
+      type: 'change',
       field: 'selectedConversation',
       value: newConversation,
     });
-    homeDispatch({ field: 'conversations', value: updatedConversations });
+    homeDispatch({ type: 'change', field: 'conversations', value: updatedConversations });
 
     saveSelectedConversationId(user, newConversation.id);
   }, [database, homeDispatch, models, user]);

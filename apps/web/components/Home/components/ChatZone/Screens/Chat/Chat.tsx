@@ -78,6 +78,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         (message) => message.conversationId === selectedConversation.id,
       );
       chatDispatch({
+        type: 'change',
         field: 'selectedConversationMessages',
         value: _conversationMessages,
       });

@@ -59,7 +59,7 @@ const Prompts = () => {
       prompts,
     );
 
-    homeDispatch({ field: 'prompts', value: updatedPrompts });
+    homeDispatch({ type: 'change', field: 'prompts', value: updatedPrompts });
   };
 
   const handleDeletePrompt = (prompt: Prompt) => {
@@ -69,13 +69,13 @@ const Prompts = () => {
       prompt.id,
       prompts,
     );
-    homeDispatch({ field: 'prompts', value: updatedPrompts });
+    homeDispatch({ type: 'change', field: 'prompts', value: updatedPrompts });
   };
 
   const handleUpdatePrompt = (prompt: Prompt) => {
     const updated = storageUpdatePrompt(database!, user!, prompt, prompts);
 
-    homeDispatch({ field: 'prompts', value: updated.all });
+    homeDispatch({ type: 'change', field: 'prompts', value: updated.all });
   };
 
   const handleDrop = (e: any) => {
@@ -96,6 +96,7 @@ const Prompts = () => {
   useEffect(() => {
     if (searchTerm) {
       promptDispatch({
+        type: 'change',
         field: 'filteredPrompts',
         value: prompts.filter((prompt) => {
           const searchable =
@@ -108,7 +109,7 @@ const Prompts = () => {
         }),
       });
     } else {
-      promptDispatch({ field: 'filteredPrompts', value: prompts });
+      promptDispatch({ type: 'change', field: 'filteredPrompts', value: prompts });
     }
   }, [searchTerm, prompts, promptDispatch]);
 
@@ -125,7 +126,7 @@ const Prompts = () => {
   };
 
   const doSearch = (term: string) =>
-    promptDispatch({ field: 'searchTerm', value: term });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   const createFolder = () => handleCreateFolder(t('newFolder'), 'prompt');
 

@@ -29,15 +29,15 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
-      homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: !showPrimaryMenu });
       localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
 
     if (!showPrimaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: !showPrimaryMenu });
       localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
-    primaryMenuDispatch({ field: 'selectedIndex', value: index });
+    primaryMenuDispatch({ type: 'change', field: 'selectedIndex', value: index });
   };
 
   const handleSignOut = () => {

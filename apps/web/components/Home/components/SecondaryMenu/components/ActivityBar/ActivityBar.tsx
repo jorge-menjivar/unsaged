@@ -20,15 +20,15 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
-      homeDispatch({ field: 'showSecondaryMenu', value: !showSecondaryMenu });
+      homeDispatch({ type: 'change', field: 'showSecondaryMenu', value: !showSecondaryMenu });
       localSaveShowSecondaryMenu(user!, !showSecondaryMenu);
     }
 
     if (!showSecondaryMenu) {
-      homeDispatch({ field: 'showSecondaryMenu', value: !showSecondaryMenu });
+      homeDispatch({ type: 'change', field: 'showSecondaryMenu', value: !showSecondaryMenu });
       localSaveShowSecondaryMenu(user!, !showSecondaryMenu);
     }
-    secondaryMenuDispatch({ field: 'selectedIndex', value: index });
+    secondaryMenuDispatch({ type: 'change', field: 'selectedIndex', value: index });
   };
 
   // VS Code Activity Bar with tabs at the top and setting button at the bottom

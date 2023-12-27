@@ -37,7 +37,7 @@ export const SystemPromptComponent = ({ systemPrompt }: Props) => {
 
   const handleUpdate = (systemPrompts: SystemPrompt) => {
     handleUpdateSystemPrompt(systemPrompt);
-    promptDispatch({ field: 'searchTerm', value: '' });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: '' });
   };
 
   const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -45,7 +45,7 @@ export const SystemPromptComponent = ({ systemPrompt }: Props) => {
 
     if (isDeleting) {
       handleDeleteSystemPrompt(systemPrompt.id);
-      promptDispatch({ field: 'searchTerm', value: '' });
+      promptDispatch({ type: 'change', field: 'searchTerm', value: '' });
     }
 
     setIsDeleting(false);

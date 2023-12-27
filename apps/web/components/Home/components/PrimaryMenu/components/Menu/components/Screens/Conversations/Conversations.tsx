@@ -84,20 +84,21 @@ export const Conversations = () => {
       systemPrompts,
       models,
     );
-    homeDispatch({ field: 'conversations', value: conversations });
+    homeDispatch({ type: 'change', field: 'conversations', value: conversations });
     homeDispatch({
+      type: 'change',
       field: 'selectedConversation',
       value: conversations[conversations.length - 1],
     });
-    homeDispatch({ field: 'messages', value: messages });
-    homeDispatch({ field: 'folders', value: folders });
-    homeDispatch({ field: 'prompts', value: message_templates });
-    homeDispatch({ field: 'systemPrompts', value: system_prompts });
+    homeDispatch({ type: 'change', field: 'messages', value: messages });
+    homeDispatch({ type: 'change', field: 'folders', value: folders });
+    homeDispatch({ type: 'change', field: 'prompts', value: message_templates });
+    homeDispatch({ type: 'change', field: 'systemPrompts', value: system_prompts });
   };
 
   const handleClearConversations = async () => {
     if (!database || !user) return;
-    homeDispatch({ field: 'conversations', value: [] });
+    homeDispatch({ type: 'change', field: 'conversations', value: [] });
 
     const deletedFolders = folders.filter((f) => f.type === 'chat');
 
@@ -112,7 +113,7 @@ export const Conversations = () => {
 
     const updatedFolders = folders.filter((f) => f.type !== 'chat');
 
-    homeDispatch({ field: 'folders', value: updatedFolders });
+    homeDispatch({ type: 'change', field: 'folders', value: updatedFolders });
     storageUpdateFolders(database, user, updatedFolders);
 
     let model = models.find(m => m.id == DEFAULT_MODEL) || models[0];
@@ -137,6 +138,7 @@ export const Conversations = () => {
     );
 
     homeDispatch({
+      type: 'change',
       field: 'selectedConversation',
       value: updatedConversations[updatedConversations.length - 1],
     });
@@ -146,7 +148,7 @@ export const Conversations = () => {
       updatedConversations[updatedConversations.length - 1].id,
     );
 
-    homeDispatch({ field: 'conversations', value: updatedConversations });
+    homeDispatch({ type: 'change', field: 'conversations', value: updatedConversations });
   };
 
   const handleDeleteConversation = (conversation: Conversation) => {
@@ -158,11 +160,12 @@ export const Conversations = () => {
       conversations,
     );
 
-    homeDispatch({ field: 'conversations', value: updatedConversations });
-    chatDispatch({ field: 'searchTerm', value: '' });
+    homeDispatch({ type: 'change', field: 'conversations', value: updatedConversations });
+    chatDispatch({ type: 'change', field: 'searchTerm', value: '' });
 
     if (updatedConversations.length > 0) {
       homeDispatch({
+        type: 'change',
         field: 'selectedConversation',
         value: updatedConversations[updatedConversations.length - 1],
       });
@@ -194,6 +197,7 @@ export const Conversations = () => {
       );
 
       homeDispatch({
+        type: 'change',
         field: 'selectedConversation',
         value: updatedConversations[updatedConversations.length - 1],
       });
@@ -203,21 +207,21 @@ export const Conversations = () => {
         updatedConversations[updatedConversations.length - 1].id,
       );
 
-      homeDispatch({ field: 'conversations', value: updatedConversations });
+      homeDispatch({ type: 'change', field: 'conversations', value: updatedConversations });
     }
 
     const updatedMessages = messages.filter(
       (message) => message.conversationId !== conversation.id,
     );
 
-    homeDispatch({ field: 'messages', value: updatedMessages });
+    homeDispatch({ type: 'change', field: 'messages', value: updatedMessages });
   };
 
   const handleDrop = (e: any) => {
     if (e.dataTransfer) {
       const conversation = JSON.parse(e.dataTransfer.getData('conversation'));
       handleUpdateConversation(conversation, { key: 'folderId', value: null });
-      chatDispatch({ field: 'searchTerm', value: '' });
+      chatDispatch({ type: 'change', field: 'searchTerm', value: '' });
       e.target.style.background = 'none';
     }
   };
@@ -225,6 +229,7 @@ export const Conversations = () => {
   useEffect(() => {
     if (searchTerm) {
       chatDispatch({
+        type: 'change',
         field: 'filteredConversations',
         value: conversations.filter((conversation) => {
           const conversationMessages = messages.filter(
@@ -240,6 +245,7 @@ export const Conversations = () => {
       });
     } else {
       chatDispatch({
+        type: 'change',
         field: 'filteredConversations',
         value: conversations,
       });
@@ -247,7 +253,7 @@ export const Conversations = () => {
   }, [searchTerm, conversations, chatDispatch, messages]);
 
   const doSearch = (term: string) =>
-    chatDispatch({ field: 'searchTerm', value: term });
+    chatDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   const createFolder = () => handleCreateFolder(t('chat.newFolder'), 'chat');
 

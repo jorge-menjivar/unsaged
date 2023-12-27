@@ -136,12 +136,13 @@ const Home = () => {
     const _selectedConversation = conversations.find(
       (c) => c.id === selectedConversation?.id,
     );
-    dispatch({ field: 'selectedConversation', value: _selectedConversation });
+    dispatch({ type: 'change', field: 'selectedConversation', value: _selectedConversation });
   }, [conversations, dispatch, selectedConversation?.id]);
 
   const handleSelectConversation = (conversation: Conversation) => {
     if (!database || !user) return;
     dispatch({
+      type: 'change',
       field: 'selectedConversation',
       value: conversation,
     });
@@ -165,14 +166,14 @@ const Home = () => {
       folders,
     );
 
-    dispatch({ field: 'folders', value: updatedFolders });
+    dispatch({ type: 'change', field: 'folders', value: updatedFolders });
   };
 
   const handleDeleteFolder = async (folderId: string) => {
     if (!database || !user) return;
 
     const updatedFolders = folders.filter((f) => f.id !== folderId);
-    dispatch({ field: 'folders', value: updatedFolders });
+    dispatch({ type: 'change', field: 'folders', value: updatedFolders });
 
     const updatedConversations: Conversation[] = conversations.map((c) => {
       if (c.folderId === folderId) {
@@ -185,7 +186,7 @@ const Home = () => {
       return c;
     });
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
 
     const updatedPrompts: Prompt[] = prompts.map((p) => {
       if (p.folderId === folderId) {
@@ -198,7 +199,7 @@ const Home = () => {
       return p;
     });
 
-    dispatch({ field: 'prompts', value: updatedPrompts });
+    dispatch({ type: 'change', field: 'prompts', value: updatedPrompts });
 
     await storageUpdateConversations(database, user, updatedConversations);
     await storageUpdatePrompts(database, user, updatedPrompts);
@@ -215,7 +216,7 @@ const Home = () => {
       folders,
     );
 
-    dispatch({ field: 'folders', value: updatedFolders });
+    dispatch({ type: 'change', field: 'folders', value: updatedFolders });
   };
 
   // CONVERSATION OPERATIONS  --------------------------------------------
@@ -275,12 +276,12 @@ const Home = () => {
         newConversation,
         conversations,
       );
-      dispatch({ field: 'selectedConversation', value: newConversation });
-      dispatch({ field: 'conversations', value: updatedConversations });
+      dispatch({ type: 'change', field: 'selectedConversation', value: newConversation });
+      dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
 
       saveSelectedConversationId(user, newConversation.id);
 
-      dispatch({ field: 'loading', value: false });
+      dispatch({ type: 'change', field: 'loading', value: false });
     }
   };
 
@@ -348,7 +349,7 @@ const Home = () => {
       }
     }
 
-    dispatch({ field: 'builtInSystemPrompts', value: newSystemPrompts });
+    dispatch({ type: 'change', field: 'builtInSystemPrompts', value: newSystemPrompts });
   }, [dispatch, models]);
 
   useEffect(() => {
@@ -375,7 +376,7 @@ const Home = () => {
       conversations,
     );
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
   };
 
   const handleUpdateConversationParams = (
@@ -399,7 +400,7 @@ const Home = () => {
       conversations,
     );
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
   };
 
   // ON LOAD --------------------------------------------
@@ -408,34 +409,34 @@ const Home = () => {
     if (!database || !user) return;
 
     if (window.innerWidth < 992) {
-      dispatch({ field: 'showPrimaryMenu', value: false });
+      dispatch({ type: 'change', field: 'showPrimaryMenu', value: false });
     }
 
     if (window.innerWidth < 1200) {
-      dispatch({ field: 'showSecondaryMenu', value: false });
+      dispatch({ type: 'change', field: 'showSecondaryMenu', value: false });
     }
 
     const showPrimaryMenu = localGetShowPrimaryMenu(user);
     console.log('showPrimaryMenu', showPrimaryMenu);
     if (showPrimaryMenu !== null) {
-      dispatch({ field: 'showPrimaryMenu', value: showPrimaryMenu });
+      dispatch({ type: 'change', field: 'showPrimaryMenu', value: showPrimaryMenu });
     }
 
     const showSecondaryMenu = localGetShowSecondaryMenu(user);
     console.log('showSecondaryMenu', showSecondaryMenu);
     if (showSecondaryMenu !== null) {
-      dispatch({ field: 'showSecondaryMenu', value: showSecondaryMenu });
+      dispatch({ type: 'change', field: 'showSecondaryMenu', value: showSecondaryMenu });
     }
 
     storageGetFolders(database, user).then((folders) => {
       if (folders) {
-        dispatch({ field: 'folders', value: folders });
+        dispatch({ type: 'change', field: 'folders', value: folders });
       }
     });
 
     storageGetPrompts(database, user).then((prompts) => {
       if (prompts) {
-        dispatch({ field: 'prompts', value: prompts });
+        dispatch({ type: 'change', field: 'prompts', value: prompts });
       }
     });
   }, [user, database, dispatch]);
@@ -446,7 +447,7 @@ const Home = () => {
     if (!database || !user) return;
 
     const settings = getSettings();
-    dispatch({ field: 'settings', value: settings });
+    dispatch({ type: 'change', field: 'settings', value: settings });
 
     storageGetSystemPrompts(database, user).then((systemPrompts) => {
       const choices: SettingChoice[] = systemPrompts.map((sp) => {
@@ -460,8 +461,8 @@ const Home = () => {
         choices,
       );
 
-      dispatch({ field: 'settings', value: newSettings });
-      dispatch({ field: 'systemPrompts', value: systemPrompts });
+      dispatch({ type: 'change', field: 'settings', value: newSettings });
+      dispatch({ type: 'change', field: 'systemPrompts', value: systemPrompts });
     });
   }, [dispatch, database, user]);
 
@@ -472,11 +473,13 @@ const Home = () => {
       const newSavedSettings = getSavedSettings(user);
 
       dispatch({
+        type: 'change',
         field: 'savedSettings',
         value: newSavedSettings,
       });
 
       dispatch({
+        type: 'change',
         field: 'settingsLoaded',
         value: true,
       });

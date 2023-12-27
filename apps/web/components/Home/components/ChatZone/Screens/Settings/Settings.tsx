@@ -39,7 +39,7 @@ export const SettingsDialog = () => {
   }, [searchQuery, settingsDispatch]);
 
   const doSearch = (query: string) =>
-    settingsDispatch({ field: 'searchQuery', value: query });
+    settingsDispatch({ type: 'change', field: 'searchQuery', value: query });
 
   const handleSave = (
     section: SettingsSection,
@@ -52,15 +52,17 @@ export const SettingsDialog = () => {
       setting.id,
       value,
     );
-    homeDispatch({ field: 'savedSettings', value: newSavedSettings });
+    homeDispatch({ type: 'change', field: 'savedSettings', value: newSavedSettings });
   };
 
   const handleSelect = (section: SettingsSection, setting: Setting) => {
     settingsDispatch({
+      type: 'change',
       field: 'selectedSection',
       value: section,
     });
     settingsDispatch({
+      type: 'change',
       field: 'selectedSetting',
       value: setting,
     });

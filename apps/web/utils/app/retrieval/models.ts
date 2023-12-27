@@ -49,8 +49,8 @@ export const useModels = (
 
       const models = await results.json();
 
-      homeDispatch({ field: 'models', value: models });
-      homeDispatch({ field: 'modelsLoaded', value: true });
+      homeDispatch({ type: 'change', field: 'models', value: models });
+      homeDispatch({ type: 'change', field: 'modelsLoaded', value: true });
     }
   }, [homeDispatch, models.length, savedSettings]);
 
