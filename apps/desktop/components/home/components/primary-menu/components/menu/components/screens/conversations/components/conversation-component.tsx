@@ -13,12 +13,15 @@ import {
   useState,
 } from 'react';
 
+import { debug } from '@/utils/logging';
+
 import { Conversation } from '@/types/chat';
 
 import SidebarActionButton from '@/components/common/ui/side-bar-action-button';
 
 import { useConversations } from '@/providers/conversations';
 import { useDisplay } from '@/providers/display';
+import { cn } from 'utils/app/utils';
 
 interface Props {
   conversation: Conversation;
@@ -26,6 +29,7 @@ interface Props {
 
 export const ConversationComponent = ({ conversation }: Props) => {
   const {
+    setSelectedConversation,
     selectedConversation,
     selectConversation,
     updateConversation,
@@ -45,12 +49,21 @@ export const ConversationComponent = ({ conversation }: Props) => {
     }
   };
 
-  const handleDragStart = (
-    e: DragEvent<HTMLButtonElement>,
-    conversation: Conversation,
-  ) => {
-    if (e.dataTransfer) {
-      e.dataTransfer.setData('conversation', JSON.stringify(conversation));
+  const handleDragStart = () => {
+    setSelectedConversation(conversation);
+  };
+
+  const handleDragEnter = (e: any) => {
+    e.target.style.background = '#343541';
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (selectedConversation) {
+      updateConversation(selectedConversation, {
+        key: 'folderId',
+        value: conversation.folderId,
+      });
+      e.target.style.background = '';
     }
   };
 
@@ -121,26 +134,25 @@ export const ConversationComponent = ({ conversation }: Props) => {
         </div>
       ) : (
         <button
-          className={`flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors
-          duration-200 text-black dark:text-white ${
-            messageIsStreaming ? 'disabled:cursor-not-allowed' : ''
-          }
-         ${
-           !(selectedConversation?.id === conversation.id)
-             ? 'hover:bg-theme-hover-light dark:hover:bg-theme-hover-dark'
-             : 'bg-theme-selected-light dark:bg-theme-selected-dark'
-         }
-          `}
+          className={cn(
+            'flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 text-black dark:text-white',
+            messageIsStreaming ? 'disabled:cursor-not-allowed' : '',
+            !(selectedConversation?.id === conversation.id)
+              ? 'hover:bg-theme-hover-light dark:hover:bg-theme-hover-dark'
+              : 'bg-theme-selected-light dark:bg-theme-selected-dark',
+          )}
           onClick={() => selectConversation(conversation)}
           disabled={messageIsStreaming}
           draggable="true"
-          onDragStart={(e) => handleDragStart(e, conversation)}
+          onDragStart={handleDragStart}
+          onDragEnter={handleDragEnter}
         >
           <IconMessage size={18} />
           <div
-            className={`relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 ${
-              selectedConversation?.id === conversation.id ? 'pr-12' : 'pr-1'
-            }`}
+            className={cn(
+              'relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pointer-events-none',
+              selectedConversation?.id === conversation.id ? 'pr-12' : 'pr-1',
+            )}
           >
             {conversation.name}
           </div>

@@ -22,8 +22,12 @@ const SystemPrompts = () => {
   const { t } = useTranslation('systemPrompts');
 
   const { createFolder } = useFolders();
-  const { systemPrompts, createSystemPrompt, updateSystemPrompt } =
-    useSystemPrompts();
+  const {
+    systemPrompts,
+    createSystemPrompt,
+    updateSystemPrompt,
+    selectedSystemPrompt,
+  } = useSystemPrompts();
 
   const systemPromptsContextValue = useCreateReducer<SystemPromptsInitialState>(
     {
@@ -74,6 +78,7 @@ const SystemPrompts = () => {
   }, [searchTerm, systemPrompts, promptDispatch]);
 
   const allowDrop = (e: any) => {
+    e.stopPropagation();
     e.preventDefault();
   };
 
@@ -87,6 +92,20 @@ const SystemPrompts = () => {
 
   const doSearch = (term: string) =>
     promptDispatch({ field: 'searchTerm', value: term });
+
+  const handleDragEnter = (e: any) => {
+    e.target.style.background = '#343541';
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (selectedSystemPrompt) {
+      updateSystemPrompt({
+        ...selectedSystemPrompt,
+        folderId: e.target.dataset.folderId,
+      });
+      e.target.style.background = '';
+    }
+  };
 
   return (
     <SystemPromptsContext.Provider
@@ -132,8 +151,7 @@ const SystemPrompts = () => {
             className="pt-2"
             onDrop={handleDrop}
             onDragOver={allowDrop}
-            onDragEnter={highlightDrop}
-            onDragLeave={removeHighlight}
+            onDragEnter={handleDragEnter}
           >
             <SystemPromptList
               systemPrompts={filteredSystemPrompts.filter(

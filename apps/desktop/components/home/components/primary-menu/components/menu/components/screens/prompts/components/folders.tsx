@@ -13,18 +13,16 @@ import { useSystemPrompts } from '@/providers/system-prompts';
 export const SystemPromptFolders = () => {
   const { folders } = useFolders();
 
-  const { updateSystemPrompt } = useSystemPrompts();
+  const { updateSystemPrompt, selectedSystemPrompt } = useSystemPrompts();
 
   const {
     state: { searchTerm, filteredSystemPrompts },
   } = useContext(SystemPromptsContext);
 
-  const handleDrop = (e: any, folder: FolderInterface) => {
-    if (e.dataTransfer) {
-      const prompt = JSON.parse(e.dataTransfer.getData('system_prompt'));
-
+  const handleHighlight = (folder: FolderInterface) => {
+    if (selectedSystemPrompt) {
       const updatedPrompt = {
-        ...prompt,
+        ...selectedSystemPrompt,
         folderId: folder.id,
       };
 
@@ -58,7 +56,7 @@ export const SystemPromptFolders = () => {
             key={index}
             searchTerm={searchTerm}
             currentFolder={folder}
-            handleDrop={handleDrop}
+            handleHighlight={handleHighlight}
             folderComponent={Folders(folder)}
           />
         ))}

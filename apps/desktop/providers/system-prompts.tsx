@@ -42,6 +42,8 @@ export const SystemPromptContext = createContext<{
   createSystemPrompt: () => void;
   updateSystemPrompt: (systemPrompt: SystemPrompt) => void;
   deleteSystemPrompt: (systemPromptId: string) => void;
+  selectedSystemPrompt: SystemPrompt | null;
+  setSelectedSystemPrompt: (systemPrompt: SystemPrompt) => void;
 }>({
   systemPrompts: [],
   setSystemPrompts: () => {},
@@ -49,6 +51,8 @@ export const SystemPromptContext = createContext<{
   createSystemPrompt: () => {},
   updateSystemPrompt: () => {},
   deleteSystemPrompt: () => {},
+  selectedSystemPrompt: null,
+  setSelectedSystemPrompt: () => {},
 });
 
 export const SystemPromptsProvider = ({
@@ -70,6 +74,9 @@ export const SystemPromptsProvider = ({
   const [builtInSystemPrompts, setBuiltInSystemPrompts] = useState<
     SystemPrompt[]
   >([]);
+
+  const [selectedSystemPrompt, setSelectedSystemPrompt] =
+    useState<SystemPrompt | null>(null);
 
   const fetchSystemPrompts = useCallback(async () => {
     if (isInitialized.current || !database || !session || !settings) {
@@ -244,6 +251,8 @@ export const SystemPromptsProvider = ({
     createSystemPrompt,
     updateSystemPrompt,
     deleteSystemPrompt,
+    selectedSystemPrompt,
+    setSelectedSystemPrompt,
   };
 
   return (

@@ -13,22 +13,18 @@ import { useTemplates } from '@/providers/templates';
 export const TemplateFolders = () => {
   const { folders } = useFolders();
 
-  const { updateTemplate } = useTemplates();
+  const { updateTemplate, selectedTemplate } = useTemplates();
 
   const {
     state: { searchTerm, filteredPrompts },
   } = useContext(PromptsContext);
 
-  const handleDrop = (e: any, folder: FolderInterface) => {
-    if (e.dataTransfer) {
-      const template = JSON.parse(e.dataTransfer.getData('prompt'));
-
-      const updatedTemplate = {
-        ...template,
+  const handleHighlight = (folder: FolderInterface) => {
+    if (selectedTemplate) {
+      updateTemplate({
+        ...selectedTemplate,
         folderId: folder.id,
-      };
-
-      updateTemplate(updatedTemplate);
+      });
     }
   };
 
@@ -58,7 +54,7 @@ export const TemplateFolders = () => {
             key={index}
             searchTerm={searchTerm}
             currentFolder={folder}
-            handleDrop={handleDrop}
+            handleHighlight={handleHighlight}
             folderComponent={Folders(folder)}
           />
         ))}

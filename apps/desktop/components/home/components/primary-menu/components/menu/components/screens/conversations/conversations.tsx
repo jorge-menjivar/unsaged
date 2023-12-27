@@ -36,6 +36,7 @@ export const Conversations = () => {
   const { models } = useModels();
   const {
     conversations,
+    selectedConversation,
     setConversations,
     setSelectedConversation,
     updateConversation,
@@ -88,15 +89,6 @@ export const Conversations = () => {
     setSystemPrompts(system_prompts);
   };
 
-  const handleDrop = (e: any) => {
-    if (e.dataTransfer) {
-      const conversation = JSON.parse(e.dataTransfer.getData('conversation'));
-      updateConversation(conversation, { key: 'folderId', value: null });
-      chatDispatch({ field: 'searchTerm', value: '' });
-      e.target.style.background = 'none';
-    }
-  };
-
   useEffect(() => {
     if (searchTerm) {
       chatDispatch({
@@ -125,15 +117,22 @@ export const Conversations = () => {
     chatDispatch({ field: 'searchTerm', value: term });
 
   const allowDrop = (e: any) => {
+    e.stopPropagation();
     e.preventDefault();
   };
 
-  const highlightDrop = (e: any) => {
+  const handleDragEnter = (e: any) => {
     e.target.style.background = '#343541';
-  };
+    e.stopPropagation();
+    e.preventDefault();
 
-  const removeHighlight = (e: any) => {
-    e.target.style.background = 'none';
+    if (selectedConversation) {
+      updateConversation(selectedConversation, {
+        key: 'folderId',
+        value: null,
+      });
+      e.target.style.background = '';
+    }
   };
 
   return (
@@ -185,10 +184,8 @@ export const Conversations = () => {
         {filteredConversations?.length > 0 ? (
           <div
             className="pt-2"
-            onDrop={handleDrop}
             onDragOver={allowDrop}
-            onDragEnter={highlightDrop}
-            onDragLeave={removeHighlight}
+            onDragEnter={handleDragEnter}
           >
             <ConversationList conversations={filteredConversations} />
           </div>
