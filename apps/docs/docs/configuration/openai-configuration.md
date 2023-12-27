@@ -6,7 +6,7 @@ sidebar_position: 5
 
 ## Global Access Configuration
 
-To give everyone using your instance of unSAGED access to OpenAI models like GPT-4, set the following environment variables:
+To give everyone using your instance of unsaged access to OpenAI models like GPT-4, set the following environment variables:
 
 ```sh title="apps/web/.env.local"
 OPENAI_API_KEY=your_openai_api_key

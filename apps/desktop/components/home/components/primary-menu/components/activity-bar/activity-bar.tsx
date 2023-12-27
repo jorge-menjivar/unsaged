@@ -89,7 +89,7 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
       <div className="flex flex-col items-center space-y-6">
         <ActivityBarButton
           onClick={() => {
-            const url = 'https://github.com/jorge-menjivar/unSAGED';
+            const url = 'https://github.com/jorge-menjivar/unsaged';
             if (TAURI) {
               open(url);
             } else {

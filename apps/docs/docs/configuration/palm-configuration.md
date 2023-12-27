@@ -6,7 +6,7 @@ sidebar_position: 8
 
 ## Global Access Configuration
 
-To give everyone using your instance of unSAGED access to Google's PaLM 2 models like Bard, set the following environment variables:
+To give everyone using your instance of unsaged access to Google's PaLM 2 models like Bard, set the following environment variables:
 
 ```sh title="apps/web/.env.local"
 PALM_API_KEY=your_palm_api_key

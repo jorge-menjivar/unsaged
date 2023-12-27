@@ -1,8 +1,8 @@
 # 📝 Contributing Guidelines
 
-**Welcome to unSAGED!** 🎉
+**Welcome to unsaged!** 🎉
 
-We're thrilled that you're considering contributing to our project. Your support is essential in maintaining and enhancing the quality of unSAGED.
+We're thrilled that you're considering contributing to our project. Your support is essential in maintaining and enhancing the quality of unsaged.
 
 Before you start, we highly recommend that you read through our contributing guidelines. This will ensure a smooth and effective collaboration. 📚
 

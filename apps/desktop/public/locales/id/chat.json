@@ -23,6 +23,6 @@
   "click if using a .env.local file": "klik jika menggunakan file .env.local",
   "Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.": "Batas karakter untuk pesan adalah {{maxLength}} karakter. Anda telah memasukkan {{valueLength}} karakter.",
   "Please enter a message": "Silakan masukkan sebuah pesan",
-  "unSAGED is an advanced chat kit for interacting with AI models.": "unSAGED adalah kit chatbot canggih untuk model obrolan OpenAI yang bertujuan meniru antarmuka dan fungsionalitas ChatGPT.",
+  "unsaged is an advanced chat kit for interacting with AI models.": "unsaged adalah kit chatbot canggih untuk model obrolan OpenAI yang bertujuan meniru antarmuka dan fungsionalitas ChatGPT.",
   "Are you sure you want to clear all messages?": "Apakah Anda yakin ingin menghapus semua pesan?"
 }

@@ -84,7 +84,7 @@ const Home = () => {
               width={256}
               height={256}
               src="/icon-256.svg"
-              alt="unSAGED Logo"
+              alt="unsaged Logo"
               priority
             />
           </div>
