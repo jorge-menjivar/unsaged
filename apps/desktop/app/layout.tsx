@@ -5,7 +5,7 @@ import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/utils/app/const';
 
 import { ThemeProvider } from '@ui/components/ui/theme-provider';
 
-import '@/styles/globals.css';
+import '@ui/styles/globals.css';
 
 export const metadata: Metadata = {
   title: DEFAULT_TITLE,
