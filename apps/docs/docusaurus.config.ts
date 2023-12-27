@@ -3,7 +3,7 @@ import type { Config } from '@docusaurus/types';
 import { themes as prismThemes } from 'prism-react-renderer';
 
 const config: Config = {
-  title: 'unSAGED',
+  title: 'unsaged',
   tagline: 'Advanced AI Chat Dashboard',
   favicon: 'img/favicon.ico',
 
@@ -16,7 +16,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'jorge-menjivar', // Usually your GitHub org/user name.
-  projectName: 'unSAGED', // Usually your repo name.
+  projectName: 'unsaged', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -37,7 +37,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/jorge-menjivar/unSAGED/tree/main/docs',
+          editUrl: 'https://github.com/jorge-menjivar/unsaged/tree/main/docs',
         },
         blog: {
           showReadingTime: true,
@@ -53,7 +53,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'unSAGED',
+      title: 'unsaged',
       logo: {
         alt: 'My Site Logo',
         src: 'img/icon-64.svg',
@@ -68,7 +68,7 @@ const config: Config = {
         },
         // { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/jorge-menjivar/unSAGED',
+          href: 'https://github.com/jorge-menjivar/unsaged',
           label: 'GitHub',
           position: 'right',
         },
@@ -78,7 +78,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'unSAGED Docs',
+          title: 'unsaged Docs',
           items: [
             {
               label: 'Introduction',
@@ -108,12 +108,12 @@ const config: Config = {
             // },
             {
               label: 'GitHub',
-              href: 'https://github.com/jorge-menjivar/unSAGED',
+              href: 'https://github.com/jorge-menjivar/unsaged',
             },
           ],
         },
       ],
-      copyright: `unSAGED © Jorge Menjivar ${new Date().getFullYear()}`,
+      copyright: `unsaged © Jorge Menjivar ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,

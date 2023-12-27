@@ -45,9 +45,9 @@ export function cleanData(data: any): LatestExportFormat {
     return data;
   }
   {
-    // Attempt to convert to unSAGED format
+    // Attempt to convert to unsaged format
     return {
-      app: 'unSAGED',
+      app: 'unsaged',
       version: 1,
       conversations: getConversationsFromChatbotUIFile(data.history),
       messages: getMessagesFromChatbotUIFile(data.history),
@@ -83,7 +83,7 @@ export const exportData = async (
   let prompts = await storageGetTemplates(database, user);
 
   const data = {
-    app: 'unSAGED',
+    app: 'unsaged',
     version: 1,
     conversations: conversations || [],
     messages: messages || [],
@@ -194,7 +194,7 @@ export const importData = async (
   );
 
   return {
-    app: 'unSAGED',
+    app: 'unsaged',
     version: 1,
     conversations: updatedConversations,
     messages: updatedMessages,

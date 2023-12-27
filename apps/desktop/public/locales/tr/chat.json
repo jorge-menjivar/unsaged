@@ -23,6 +23,6 @@
   "click if using a .env.local file": "Eğer .env.local dosyası kullanıyorsanız tıklayın",
   "Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.": "Mesaj sınırı {{maxLength}} karakterdir. {{valueLength}} karakter girdiniz.",
   "Please enter a message": "Lütfen bir mesaj girin",
-  "unSAGED is an advanced chat kit for interacting with AI models.": "unSAGED, ChatGPT'nin arayüz ve işlevselliğini taklit etmeyi amaçlayan OpenAI'in sohbet modelleri için gelişmiş bir sohbetbot kitidir.",
+  "unsaged is an advanced chat kit for interacting with AI models.": "unsaged, ChatGPT'nin arayüz ve işlevselliğini taklit etmeyi amaçlayan OpenAI'in sohbet modelleri için gelişmiş bir sohbetbot kitidir.",
   "Are you sure you want to clear all messages?": "Tüm mesajları temizlemek istediğinize emin misiniz?"
 }

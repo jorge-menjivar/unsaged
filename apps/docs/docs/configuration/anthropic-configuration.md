@@ -6,7 +6,7 @@ sidebar_position: 7
 
 ## Global Access Configuration
 
-To give everyone using your instance of unSAGED access to Anthropic models like Claude 2, set the following environment variables:
+To give everyone using your instance of unsaged access to Anthropic models like Claude 2, set the following environment variables:
 
 ```sh title="apps/web/.env.local"
 ANTHROPIC_API_KEY=your_anthropic_api_key

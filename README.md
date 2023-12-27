@@ -1,21 +1,21 @@
 <p align="center">
-    <img src="./apps/web/public/icon-256.svg" alt="unSAGED logo" width="200px">
+    <img src="./apps/web/public/icon-256.svg" alt="unsaged logo" width="200px">
 </p>
 
 [![Join our Discord](https://discordapp.com/api/guilds/1124558062171209771/widget.png?style=banner2)](https://discord.gg/rMH2acSEzq)
 
-# 🎉 Welcome to unSAGED
+# 🎉 Welcome to unsaged
 
-unSAGED is a cutting-edge chat kit engineered for seamless interaction with AI models. It allows you to easily have conversations with different AI models from a variety of providers, all in one place. It also allows you to manage multiple users and conversations, and synchronize them across different devices.
+unsaged is a cutting-edge chat kit engineered for seamless interaction with AI models. It allows you to easily have conversations with different AI models from a variety of providers, all in one place. It also allows you to manage multiple users and conversations, and synchronize them across different devices.
 Leveraging the power of Next.js and Supabase, it offers a user-friendly and robust interface for engaging with AI models from a variety of providers.
 
 You can use it live at [app.unsaged.com](https://app.unsaged.com). Just make sure not to put in personal information as your conversations will be stored in Postgres (Supabase) until you delete them.
 
-- [🎉 Welcome to unSAGED](#-welcome-to-unsaged)
+- [🎉 Welcome to unsaged](#-welcome-to-unsaged)
   - [🚧 Installation](#-installation)
   - [🌟 Key Features](#-key-features)
   - [🤖 Supported AI Models](#-supported-ai-models)
-  - [🚀 Upgrading unSAGED](#-upgrading-unsaged)
+  - [🚀 Upgrading unsaged](#-upgrading-unsaged)
   - [📝 License](#-license)
   - [🤝 How to Contribute](#-how-to-contribute)
   - [📸 Screenshots](#-screenshots)
@@ -57,18 +57,18 @@ Follow the installation instructions in the [Getting Started](https://unsaged.co
   - vicuna
   - deepseek-coder-1b, deepseek-coder-6.7b, deepseek-coder-33b
 
-## 🚀 Upgrading unSAGED
+## 🚀 Upgrading unsaged
 
-* On November 13th, 2023, we released a major update to unSAGED, which introduced more settings to the conversation. It requires that you update some database table columns. If you are upgrading from a version of unSAGED released before this date, you will need to run the [Upgrade Script](./apps/web/db/UpgradeScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
-* On November 16th, 2023, we released a major update to unSAGED, which converts this repo into monorepo to support the documentation website. It requires that you change a setting in your Vercel project, if you have one. If you do have one, you need to set `apps/web` as the [Root Directory](https://vercel.com/docs/deployments/configure-a-build#root-directory) in your Vercel project's settings.
+- On November 13th, 2023, we released a major update to unsaged, which introduced more settings to the conversation. It requires that you update some database table columns. If you are upgrading from a version of unsaged released before this date, you will need to run the [Upgrade Script](./apps/web/db/UpgradeScript.sql) in the [Supabase SQL editor](https://app.supabase.com/project/_/sql).
+- On November 16th, 2023, we released a major update to unsaged, which converts this repo into monorepo to support the documentation website. It requires that you change a setting in your Vercel project, if you have one. If you do have one, you need to set `apps/web` as the [Root Directory](https://vercel.com/docs/deployments/configure-a-build#root-directory) in your Vercel project's settings.
 
 ## 📝 License
 
-unSAGED is licensed under the Apache 2.0 License. For more information, please refer to the [LICENSE](./LICENSE) file in the repository.
+unsaged is licensed under the Apache 2.0 License. For more information, please refer to the [LICENSE](./LICENSE) file in the repository.
 
 ## 🤝 How to Contribute
 
-We welcome contributions to the unSAGED project! If you're interested in contributing, please take a look at our [CONTRIBUTING.md](./CONTRIBUTING.md) file for guidelines and details on the process.
+We welcome contributions to the unsaged project! If you're interested in contributing, please take a look at our [CONTRIBUTING.md](./CONTRIBUTING.md) file for guidelines and details on the process.
 
 ![Alt](https://repobeats.axiom.co/api/embed/2c05c0cd48aef8736ac7e34523691c1bfa08b835.svg 'Repobeats analytics image')
 
@@ -84,10 +84,10 @@ We welcome contributions to the unSAGED project! If you're interested in contrib
 
 ## 📚 Built With
 
-unSAGED was built using the following technologies:
+unsaged was built using the following technologies:
 
 - [Next.js](https://nextjs.org/): A React framework for production - it makes building static and dynamic React apps a breeze.
 - [Supabase](https://supabase.io/): An open-source Firebase alternative. We use it for its awesome database and authentication capabilities.
 - [Chatbot UI](https://github.com/mckaywrigley/chatbot-ui): A customizable and easy-to-use chat UI for web applications.
 
-We are grateful to the developers and communities behind these projects for their work that helped make unSAGED possible.
+We are grateful to the developers and communities behind these projects for their work that helped make unsaged possible.
