@@ -8,6 +8,8 @@ import {
 } from '@tabler/icons-react';
 import { KeyboardEvent, ReactElement, useEffect, useState } from 'react';
 
+import { debug } from '@/utils/logging';
+
 import { FolderInterface } from '@/types/folder';
 
 import SidebarActionButton from '../ui/side-bar-action-button';
@@ -17,14 +19,14 @@ import { useFolders } from '@/providers/folders';
 interface Props {
   currentFolder: FolderInterface;
   searchTerm: string;
-  handleDrop: (e: any, folder: FolderInterface) => void;
+  handleHighlight: (folder: FolderInterface) => void;
   folderComponent: (ReactElement | undefined)[];
 }
 
 const Folder = ({
   currentFolder,
   searchTerm,
-  handleDrop,
+  handleHighlight,
   folderComponent,
 }: Props) => {
   const { deleteFolder, updateFolder } = useFolders();
@@ -47,17 +49,21 @@ const Folder = ({
     setIsRenaming(false);
   };
 
-  const dropHandler = (e: any) => {
+  const highlightHandler = (e: any) => {
+    e.stopPropagation();
+    debug('highlightHandler');
+
     if (e.dataTransfer) {
       setIsOpen(true);
 
-      handleDrop(e, currentFolder);
+      handleHighlight(currentFolder);
 
-      e.target.style.background = 'none';
+      e.target.style.background = '';
     }
   };
 
   const allowDrop = (e: any) => {
+    e.stopPropagation();
     e.preventDefault();
   };
 
@@ -66,7 +72,7 @@ const Folder = ({
   };
 
   const removeHighlight = (e: any) => {
-    e.target.style.background = 'none';
+    e.target.style.background = '';
   };
 
   useEffect(() => {
@@ -112,9 +118,8 @@ const Folder = ({
             duration-200 hover:bg-theme-hover-light dark:hover:bg-theme-hover-dark
             text-black dark:text-white`}
             onClick={() => setIsOpen(!isOpen)}
-            onDrop={(e) => dropHandler(e)}
             onDragOver={allowDrop}
-            onDragEnter={highlightDrop}
+            onDragEnter={highlightHandler}
             onDragLeave={removeHighlight}
           >
             {isOpen ? (
@@ -123,7 +128,7 @@ const Folder = ({
               <IconCaretRight size={18} />
             )}
 
-            <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3">
+            <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis whitespace-nowrap break-all text-left text-[12.5px] leading-3 pointer-events-none">
               {currentFolder.name}
             </div>
           </button>

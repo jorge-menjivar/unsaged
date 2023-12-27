@@ -14,12 +14,12 @@ interface Props {
 export const ConversationsFolders = ({ searchTerm }: Props) => {
   const { folders } = useFolders();
 
-  const { conversations, updateConversation } = useConversations();
+  const { conversations, updateConversation, selectedConversation } =
+    useConversations();
 
-  const handleDrop = (e: any, folder: FolderInterface) => {
-    if (e.dataTransfer) {
-      const conversation = JSON.parse(e.dataTransfer.getData('conversation'));
-      updateConversation(conversation, {
+  const handleHighlight = (folder: FolderInterface) => {
+    if (selectedConversation) {
+      updateConversation(selectedConversation, {
         key: 'folderId',
         value: folder.id,
       });
@@ -56,7 +56,7 @@ export const ConversationsFolders = ({ searchTerm }: Props) => {
             key={index}
             searchTerm={searchTerm}
             currentFolder={folder}
-            handleDrop={handleDrop}
+            handleHighlight={handleHighlight}
             folderComponent={Folders(folder)}
           />
         ))}
