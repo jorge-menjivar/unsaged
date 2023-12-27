@@ -6,7 +6,7 @@ import { debug } from '@/utils/logging';
 
 import { AiModel } from '@/types/ai-models';
 
-import { PrimaryLabel } from '@ui/components/ui/primary-label';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import {
   Select,
   SelectContent,

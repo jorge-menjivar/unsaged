@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { SystemPrompt } from '@/types/system-prompt';
 
-import { PrimaryLabel } from '@ui/components/ui/primary-label';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import {
   Select,
   SelectContent,

@@ -49,6 +49,7 @@ const Templates = () => {
   useEffect(() => {
     if (searchTerm) {
       promptDispatch({
+        type: 'change',
         field: 'filteredPrompts',
         value: templates.filter((prompt) => {
           const searchable =
@@ -61,7 +62,7 @@ const Templates = () => {
         }),
       });
     } else {
-      promptDispatch({ field: 'filteredPrompts', value: templates });
+      promptDispatch({ type: 'change', field: 'filteredPrompts', value: templates });
     }
   }, [searchTerm, templates, promptDispatch]);
 
@@ -78,7 +79,7 @@ const Templates = () => {
   };
 
   const doSearch = (term: string) =>
-    promptDispatch({ field: 'searchTerm', value: term });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   return (
     <PromptsContext.Provider

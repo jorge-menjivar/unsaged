@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
 import { Input } from '@ui/components/ui/input';
-import { PrimaryLabel } from '@ui/components/ui/primary-label';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 
 import { useConversations } from '@/providers/conversations';
 

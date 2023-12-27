@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { AiModel } from '@/types/ai-models';
 
-import { Chip } from '@ui/components/ui/chip';
+import { Chip } from '@/components/common/ui/chip';
 
 import { useModels } from '@/providers/models';
 

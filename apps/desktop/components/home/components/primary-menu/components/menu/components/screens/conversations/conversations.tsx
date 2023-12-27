@@ -92,7 +92,7 @@ export const Conversations = () => {
     if (e.dataTransfer) {
       const conversation = JSON.parse(e.dataTransfer.getData('conversation'));
       updateConversation(conversation, { key: 'folderId', value: null });
-      chatDispatch({ field: 'searchTerm', value: '' });
+      chatDispatch({ type: 'change', field: 'searchTerm', value: '' });
       e.target.style.background = 'none';
     }
   };
@@ -100,6 +100,7 @@ export const Conversations = () => {
   useEffect(() => {
     if (searchTerm) {
       chatDispatch({
+        type: 'change',
         field: 'filteredConversations',
         value: conversations.filter((conversation) => {
           const conversationMessages = messages.filter(
@@ -115,6 +116,7 @@ export const Conversations = () => {
       });
     } else {
       chatDispatch({
+        type: 'change',
         field: 'filteredConversations',
         value: conversations,
       });
@@ -122,7 +124,7 @@ export const Conversations = () => {
   }, [searchTerm, conversations, chatDispatch, messages]);
 
   const doSearch = (term: string) =>
-    chatDispatch({ field: 'searchTerm', value: term });
+    chatDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   const allowDrop = (e: any) => {
     e.preventDefault();

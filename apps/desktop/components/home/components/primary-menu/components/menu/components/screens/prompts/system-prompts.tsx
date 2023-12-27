@@ -54,6 +54,7 @@ const SystemPrompts = () => {
   useEffect(() => {
     if (searchTerm) {
       promptDispatch({
+        type: 'change',
         field: 'filteredSystemPrompts',
         value: systemPrompts.filter((systemPrompt) => {
           const searchable =
@@ -67,6 +68,7 @@ const SystemPrompts = () => {
       });
     } else {
       promptDispatch({
+        type: 'change',
         field: 'filteredSystemPrompts',
         value: systemPrompts,
       });
@@ -86,7 +88,7 @@ const SystemPrompts = () => {
   };
 
   const doSearch = (term: string) =>
-    promptDispatch({ field: 'searchTerm', value: term });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   return (
     <SystemPromptsContext.Provider

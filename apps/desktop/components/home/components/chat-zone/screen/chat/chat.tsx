@@ -52,6 +52,7 @@ export const Chat = memo(() => {
     );
 
     chatDispatch({
+      type: 'change',
       field: 'selectedConversationMessages',
       value: _conversationMessages,
     });

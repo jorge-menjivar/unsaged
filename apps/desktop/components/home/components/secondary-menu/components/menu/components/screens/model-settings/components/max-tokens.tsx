@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next';
 
 import { storageGetSavedSettingValue } from '@/utils/app/storage/local/settings';
 
-import { PrimaryLabel } from '@ui/components/ui/primary-label';
+import { PrimaryLabel } from '@/components/common/ui/primary-label';
 import { Slider } from '@ui/components/ui/slider';
 import { Switch } from '@ui/components/ui/switch';
 

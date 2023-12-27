@@ -39,7 +39,7 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
       setShowPrimaryMenu(true);
       localSaveShowPrimaryMenu(!showPrimaryMenu);
     }
-    primaryMenuDispatch({ field: 'selectedIndex', value: index });
+    primaryMenuDispatch({ type: 'change', field: 'selectedIndex', value: index });
   };
 
   const handleSignOut = () => {

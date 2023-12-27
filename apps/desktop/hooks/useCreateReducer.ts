@@ -5,23 +5,23 @@ export type FieldNames<T> = {
   [K in keyof T]: T[K] extends string ? K : K;
 }[keyof T];
 
-// Returns the Action Type for the dispatch object to be used for typing in things like context
+// Define the Action type with type annotations
 export type ActionType<T> =
   | { type: 'reset' }
-  | { type?: 'change'; field: FieldNames<T>; value: any };
+  | { type: 'change'; field: FieldNames<T>; value: any };
 
 // Returns a typed dispatch and state
 export const useCreateReducer = <T>({ initialState }: { initialState: T }) => {
-  type Action =
-    | { type: 'reset' }
-    | { type?: 'change'; field: FieldNames<T>; value: any };
+  const reducer = (state: T, action: ActionType<T>) => {
+    if (action.type === 'change') {
+      return { ...state, [action.field]: action.value };
+    }
 
-  const reducer = (state: T, action: Action) => {
-    if (!action.type) return { ...state, [action.field]: action.value };
+    if (action.type === 'reset') {
+      return initialState;
+    }
 
-    if (action.type === 'reset') return initialState;
-
-    throw new Error();
+    throw new Error('Unsupported action type');
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
