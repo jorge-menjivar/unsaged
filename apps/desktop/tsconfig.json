@@ -1,7 +1,11 @@
 {
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "baseUrl": "."
   },
   "include": [
@@ -9,7 +13,8 @@
     "middleware.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "./out/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

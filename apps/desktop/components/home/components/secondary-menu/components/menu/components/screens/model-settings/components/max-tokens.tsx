@@ -38,7 +38,7 @@ export const MaxTokensSlider = () => {
     );
 
     return maxTokens || 4096;
-  }, [selectedConversation?.model?.id]);
+  }, [selectedConversation?.model?.id,savedSettings]);
 
   const [value, setValue] = useState<number[]>([
     selectedConversation?.params.max_tokens ?? modelTokenLimit,

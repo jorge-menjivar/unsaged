@@ -36,7 +36,7 @@ export const MaxTokensSlider = () => {
     } else {
       return 0;
     }
-  }, [selectedConversation?.model?.id]);
+  }, [selectedConversation?.model?.id, models]);
 
   const [value, setValue] = useState<number[]>([
     selectedConversation?.params.max_tokens ?? modelTokenLimit,
