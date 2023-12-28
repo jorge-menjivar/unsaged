@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "dev:tauri": "tauri dev",
     "dev": "next dev",
+    "build:tauri": "tauri build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
