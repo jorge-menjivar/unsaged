@@ -54,6 +54,15 @@ export const GOOGLE_CLIENT_ID =
 export const GOOGLE_CLIENT_SECRET =
   dockerEnvVarFix(process.env.GOOGLE_CLIENT_SECRET) || '';
 
+export const KEYCLOAK_ID =
+  dockerEnvVarFix(process.env.KEYCLOAK_ID) || '';
+
+export const KEYCLOAK_SECRET =
+  dockerEnvVarFix(process.env.KEYCLOAK_SECRET) || '';
+
+export const KEYCLOAK_ISSUER =
+  dockerEnvVarFix(process.env.KEYCLOAK_ISSUER) || '';
+
 export const OKTA_CLIENT_ID = dockerEnvVarFix(process.env.OKTA_CLIENT_ID) || '';
 
 export const OKTA_CLIENT_SECRET =
