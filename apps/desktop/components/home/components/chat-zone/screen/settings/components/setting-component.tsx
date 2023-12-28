@@ -2,14 +2,14 @@ import { useContext } from 'react';
 
 import { DefaultValues, Setting } from '@/types/settings';
 
-import { Input } from '@ui/components/ui/input';
+import { Input } from '@/components/common/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@ui/components/ui/select';
+} from '@/components/common/ui/select';
 
 import SettingsContext from '../settings.context';
 

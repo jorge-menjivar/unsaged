@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next';
 
 import { Template } from '@/types/templates';
 
-import { Button } from '@ui/components/ui/button';
+import { Button } from '@/components/common/ui/button';
 
 interface Props {
   template: Template;

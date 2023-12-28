@@ -1,4 +1,4 @@
-import { toast } from '@ui/components/ui/use-toast';
+import { toast } from '@/components/common/ui/use-toast';
 
 import { Conversation, Message } from '@/types/chat';
 import { SavedSetting } from '@/types/settings';

@@ -10,7 +10,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@ui/components/ui/card"
+} from "@/components/common/ui/card"
 
 interface Props {
   section: SettingsSection;

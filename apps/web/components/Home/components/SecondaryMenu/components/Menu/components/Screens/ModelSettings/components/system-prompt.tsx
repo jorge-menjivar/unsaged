@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@ui/components/ui/select';
+} from '@/components/common/ui/select';
 
 export const SystemPromptSelect = () => {
   const {

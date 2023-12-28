@@ -7,7 +7,7 @@ import { useCreateReducer } from '@/hooks/useCreateReducer';
 import { SystemPromptFolders } from './components/folders';
 import { SystemPromptList } from './components/system-prompt-list';
 import Search from '@/components/common/Search';
-import { Button } from '@ui/components/ui/button';
+import { Button } from '@/components/common/ui/button';
 
 import SystemPromptsContext from './system-prompts.context';
 import {

@@ -19,8 +19,8 @@ import { useTranslation } from 'next-i18next';
 import { Message } from '@/types/chat';
 import { Template } from '@/types/templates';
 
-import { Button } from '@ui/components/ui/button';
-import { Textarea } from '@ui/components/ui/textarea';
+import { Button } from '@/components/common/ui/button';
+import { Textarea } from '@/components/common/ui/textarea';
 
 import ChatContext from './chat.context';
 import { TemplateListComponent } from './template-list';

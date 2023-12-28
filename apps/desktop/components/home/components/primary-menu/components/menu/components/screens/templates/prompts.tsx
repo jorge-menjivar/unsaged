@@ -7,7 +7,7 @@ import { useCreateReducer } from '@/hooks/useCreateReducer';
 import { TemplateFolders } from './components/folders';
 import { PromptList } from './components/template-list';
 import Search from '@/components/common/Search';
-import { Button } from '@ui/components/ui/button';
+import { Button } from '@/components/common/ui/button';
 
 import PromptsContext from './prompts.context';
 import { PromptsInitialState, initialState } from './prompts.state';

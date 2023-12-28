@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
-import { Input } from '@ui/components/ui/input';
+import { Input } from '@/components/common/ui/input';
 
 export const TopKInput = () => {
   const t = useTranslations('chat');

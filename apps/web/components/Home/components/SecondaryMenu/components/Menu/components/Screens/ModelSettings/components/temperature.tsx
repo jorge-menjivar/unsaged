@@ -6,8 +6,8 @@ import { getModelDefaults } from '@/utils/app/settings/model-defaults';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
-import { Slider } from '@ui/components/ui/slider';
-import { Switch } from '@ui/components/ui/switch';
+import { Slider } from '@/components/common/ui/slider';
+import { Switch } from '@/components/common/ui/switch';
 
 export const TemperatureSlider = () => {
   const t = useTranslations('chat');

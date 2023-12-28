@@ -3,7 +3,7 @@ const withNextIntl = require('next-intl/plugin')();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["ui"],
+  transpilePackages: ["utils"],
   webpack(config, { isServer, dev }) {
     config.experiments = {
       topLevelAwait: true,
