@@ -18,7 +18,8 @@ import { useTemplates } from '@/providers/templates';
 const Templates = () => {
   const { t } = useTranslation('templates-bar');
 
-  const { templates, createTemplate, updateTemplate } = useTemplates();
+  const { templates, createTemplate, updateTemplate, selectedTemplate } =
+    useTemplates();
 
   const { createFolder } = useFolders();
 
@@ -70,14 +71,19 @@ const Templates = () => {
     e.preventDefault();
   };
 
-  const highlightDrop = (e: any) => {
+  const handleDragEnter = (e: any) => {
     e.target.style.background = '#343541';
-  };
+    e.stopPropagation();
+    e.preventDefault();
 
-  const removeHighlight = (e: any) => {
-    e.target.style.background = 'none';
+    if (selectedTemplate) {
+      updateTemplate({
+        ...selectedTemplate,
+        folderId: e.target.dataset.folderId,
+      });
+      e.target.style.background = '';
+    }
   };
-
   const doSearch = (term: string) =>
     promptDispatch({ type: 'change', field: 'searchTerm', value: term });
 
@@ -126,8 +132,7 @@ const Templates = () => {
             className="pt-2"
             onDrop={handleDrop}
             onDragOver={allowDrop}
-            onDragEnter={highlightDrop}
-            onDragLeave={removeHighlight}
+            onDragEnter={handleDragEnter}
           >
             <PromptList
               templates={filteredPrompts.filter((prompt) => !prompt.folderId)}

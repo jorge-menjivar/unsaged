@@ -28,12 +28,16 @@ export const TemplatesContext = createContext<{
   createTemplate: () => void;
   updateTemplate: (template: Template) => void;
   deleteTemplate: (template: Template) => void;
+  selectedTemplate: Template | null;
+  setSelectedTemplate: (template: Template) => void;
 }>({
   templates: [],
   setTemplates: () => {},
   createTemplate: () => {},
   updateTemplate: () => {},
   deleteTemplate: () => {},
+  selectedTemplate: null,
+  setSelectedTemplate: () => {},
 });
 
 export const TemplatesProvider = ({
@@ -45,6 +49,11 @@ export const TemplatesProvider = ({
   const { database } = useDatabase();
 
   const [templates, setTemplates] = useState<Template[]>([]);
+
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
+    null,
+  );
+
   const isInitialized = useRef(false);
 
   const fetchTemplates = useCallback(async () => {
@@ -109,6 +118,8 @@ export const TemplatesProvider = ({
     createTemplate,
     updateTemplate,
     deleteTemplate,
+    selectedTemplate,
+    setSelectedTemplate,
   };
   return (
     <TemplatesContext.Provider value={contextValue}>
