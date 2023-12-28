@@ -8,6 +8,7 @@ export type AuthProvider =
   | 'github'
   | 'gitlab'
   | 'google'
+  | 'keycloak'  
   | 'okta'
   | 'reddit'
   | 'salesforce'

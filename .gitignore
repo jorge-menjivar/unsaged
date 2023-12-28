@@ -4,6 +4,7 @@
 node_modules
 .pnp
 .pnp.js
+.pnpm-store/
 
 # testing
 coverage
@@ -58,3 +59,6 @@ next-env.d.ts
 
 # Localazy
 localazy.keys.json
+
+# bak
+*.bak

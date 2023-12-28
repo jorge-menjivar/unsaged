@@ -18,6 +18,9 @@ import {
   GITLAB_CLIENT_SECRET,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
+  KEYCLOAK_ID,
+  KEYCLOAK_SECRET,
+  KEYCLOAK_ISSUER,
   OKTA_CLIENT_ID,
   OKTA_CLIENT_SECRET,
   REDDIT_CLIENT_ID,
@@ -148,6 +151,18 @@ export async function getProviders() {
         clientSecret: GOOGLE_CLIENT_SECRET!,
         authorization: authorization,
         allowDangerousEmailAccountLinking: true,
+      }),
+    );
+  }
+  if (KEYCLOAK_ID) {
+    const provider = await import('next-auth/providers/keycloak');
+    const KeycloakProvider = provider.default;
+    providers.push(
+      KeycloakProvider({
+        clientId: KEYCLOAK_ID!,
+        clientSecret: KEYCLOAK_SECRET!,
+        issuer: KEYCLOAK_ISSUER,
+        allowDangerousEmailAccountLinking: true,/*necessary*/
       }),
     );
   }
