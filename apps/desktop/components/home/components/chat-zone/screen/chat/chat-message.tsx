@@ -13,8 +13,8 @@ import { useTranslation } from 'next-i18next';
 
 import { Message } from '@/types/chat';
 
-import { Button } from '@/components/common/ui/button';
-import { Textarea } from '@/components/common/ui/textarea';
+import { Button } from '@ui/components/ui/button';
+import { Textarea } from '@ui/components/ui/textarea';
 import { CodeBlock } from '@/components/markdown/code-block';
 
 import ChatContext from './chat.context';

@@ -13,7 +13,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/common/ui/select';
+} from '@ui/components/ui/select';
 
 import { useConversations } from '@/providers/conversations';
 import { useModels } from '@/providers/models';

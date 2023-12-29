@@ -3,7 +3,6 @@ const nextConfig = {
   output: "export",
   distDir: './out',
   reactStrictMode: true,
-  transpilePackages: ["utils"],
   webpack(config, { isServer, dev }) {
     config.experiments = {
       topLevelAwait: true,
@@ -13,6 +12,7 @@ const nextConfig = {
 
     return config;
   },
+  transpilePackages: ["utils", "ui"]
 };
 
 module.exports = nextConfig;

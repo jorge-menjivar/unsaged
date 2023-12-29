@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Toaster } from '@/components/common/ui/toaster';
+import { Toaster } from '@ui/components/ui/toaster';
 
 import { DEFAULT_TITLE } from '@/utils/app/const';
 
