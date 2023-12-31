@@ -8,8 +8,8 @@ import HomeContext from '@/components/Home/home.context';
 
 import SettingsContext from '../Settings.context';
 import { useTranslations } from 'next-intl';
-import { Input } from '@/components/common/ui/input';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/common/ui/select';
+import { Input } from '@ui/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@ui/components/ui/select';
 
 interface Props {
   section: SettingsSection;

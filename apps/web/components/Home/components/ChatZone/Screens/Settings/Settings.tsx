@@ -14,8 +14,8 @@ import HomeContext from '@/components/Home/home.context';
 import SettingsContext from './Settings.context';
 import { SettingsInitialState, initialState } from './Settings.state';
 import { useTranslations } from 'next-intl';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/common/ui/dialog';
-import { Button } from '@/components/common/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@ui/components/ui/dialog';
+import { Button } from '@ui/components/ui/button';
 import { IconSettings } from '@tabler/icons-react';
 
 export const SettingsDialog = () => {

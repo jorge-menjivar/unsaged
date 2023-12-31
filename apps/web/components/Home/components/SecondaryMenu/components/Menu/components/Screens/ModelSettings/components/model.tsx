@@ -6,12 +6,12 @@ import { AiModel } from '@/types/ai-models';
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/common/ui/hover-card';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/common/ui/popover';
-import { Button } from '@/components/common/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/common/ui/command';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@ui/components/ui/hover-card';
+import { Popover, PopoverContent, PopoverTrigger } from '@ui/components/ui/popover';
+import { Button } from '@ui/components/ui/button';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@ui/components/ui/command';
 import { useMutationObserver } from '@/components/common/hooks/use-mutation-observer';
-import { cn } from '@/lib/utils';
+import { cn } from '@ui/lib/utils';
 
 export const ModelSelect = () => {
   const t = useTranslations();

@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 
 import HomeContext from '@/components/Home/home.context';
 import { PrimaryLabel } from '@/components/common/Labels/PrimaryLabel';
-import { Slider } from '@/components/common/ui/slider';
-import { Switch } from '@/components/common/ui/switch';
+import { Slider } from '@ui/components/ui/slider';
+import { Switch } from '@ui/components/ui/switch';
 
 export const PresencePenaltySlider = () => {
   const t = useTranslations('chat');

@@ -26,7 +26,7 @@ import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Textarea } from '@/components/common/ui/textarea';
+import { Textarea } from '@ui/components/ui/textarea';
 
 interface Props {
   onSend: (message: Message) => void;

@@ -16,7 +16,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/common/ui/accordion"
+} from "@ui/components/ui/accordion"
 import { useTranslations } from 'next-intl';
 import { ADVANCED_SETTINGS_OPEN, SHOW_ADVANCED_SETTINGS } from '@/utils/app/const';
 
