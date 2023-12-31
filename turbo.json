@@ -15,27 +15,29 @@
     "NEXT_PUBLIC_DEFAULT_ANTHROPIC_TEMPERATURE",
     "NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_P",
     "NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_K",
-    "NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT",
-    "NEXT_PUBLIC_DEFAULT_PALM_TEMPERATURE",
-    "NEXT_PUBLIC_DEFAULT_PALM_TOP_P",
-    "NEXT_PUBLIC_DEFAULT_PALM_TOP_K",
+    "NEXT_PUBLIC_DEFAULT_GOOGLE_SYSTEM_PROMPT",
+    "NEXT_PUBLIC_DEFAULT_GOOGLE_TEMPERATURE",
+    "NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_P",
+    "NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_K",
     "NEXT_PUBLIC_DEFAULT_OLLAMA_SYSTEM_PROMPT",
     "NEXT_PUBLIC_DEFAULT_OLLAMA_TEMPERATURE",
     "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_P",
     "NEXT_PUBLIC_DEFAULT_OLLAMA_TOP_K",
     "NEXT_PUBLIC_DEFAULT_OLLAMA_REPEAT_PENALTY",
     "NEXT_PUBLIC_DEFAULT_OLLAMA_SEED",
-    "NEXT_PUBLIC_AZURE_DEPLOYMENT_ID",
     "OPENAI_API_URL",
     "OPENAI_API_KEY",
     "OPENAI_API_TYPE",
     "OPENAI_API_VERSION",
     "OPENAI_ORGANIZATION",
+    "AZURE_OPENAI_API_KEY",
+    "AZURE_OPENAI_API_URL",
+    "AZURE_OPENAI_API_VERSION",
     "ANTHROPIC_API_URL",
     "ANTHROPIC_API_KEY",
     "ANTHROPIC_API_VERSION",
-    "PALM_API_URL",
-    "PALM_API_KEY",
+    "GOOGLE_API_URL",
+    "GOOGLE_API_KEY",
     "OLLAMA_HOST",
     "OLLAMA_BASIC_USER",
     "OLLAMA_BASIC_PWD",
@@ -47,9 +49,16 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**", "out/**"]
+    },
+    "build:tauri": {
+      "dependsOn": ["^build"],
+      "outputs": ["out/**"]
     },
     "dev": {
+      "cache": false
+    },
+    "dev:tauri": {
       "cache": false
     },
     "lint": {

@@ -8,6 +8,8 @@ import HomeContext from '@/components/Home/home.context';
 
 import SettingsContext from '../Settings.context';
 import { useTranslations } from 'next-intl';
+import { Input } from '@ui/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@ui/components/ui/select';
 
 interface Props {
   section: SettingsSection;
@@ -42,11 +44,9 @@ export const SettingComponent = ({ section, setting, isSelected }: Props) => {
   if (setting.type === 'string') {
     component = (
       <div className="relative h-fit flex w-full flex-col gap-1">
-        <input
+        <Input
           type="text"
           value={value}
-          className={`w-full flex-1 rounded-sm border border-theme-border-light dark:border-theme-border-dark
-            bg-theme-light dark:bg-theme-dark px-2 py-1 text-[14px] leading-3 text-black dark:text-white`}
           onChange={(event) =>
             handleSave(section, setting, event.target.value as string)
           }
@@ -57,37 +57,30 @@ export const SettingComponent = ({ section, setting, isSelected }: Props) => {
     component = (
       <>
         <div className="w-1/2 p-0 m-0">
-          <select
-            className={`p-1 text-sm w-full bg-theme-light dark:bg-theme-select-dark cursor-pointer text-neutral-700
-          dark:text-neutral-200 border border-theme-border-light dark:border-theme-border-dark`}
+          <Select
             value={value}
-            onChange={(event) =>
-              handleSave(section, setting, event.target.value)
+            defaultValue={value}
+            onValueChange={(value) =>
+              handleSave(section, setting, value)
             }
           >
-            {setting.choices!.map((choice, index) => (
-              <option key={index} value={choice.value}>
-                {choice.default ? `${t('default')} (${choice.name})` : choice.name}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select" />
+            </SelectTrigger>
+            <SelectContent>
+              {setting.choices!.map((choice, index) => (
+                <SelectItem key={index} value={choice.value}>
+                  {choice.default ? `${t('default')} (${choice.name})` : choice.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </>
     );
   }
   return (
     <div
-      className={`block w-full p-4 pt-2 border ${isSelected
-        ? `
-            bg-theme-setting-selected-light dark:bg-theme-setting-selected-dark
-            border-[#005cc5]
-            `
-        : `
-            bg-theme-light dark:bg-theme-dark border-transparent
-            hover:bg-theme-setting-hover-light dark:hover:bg-theme-setting-hover-dark
-            `
-        } 
-       `}
       onClick={() => handleSelect(section, setting)}
     >
       <div className="ml-1 my-2 flex">
@@ -99,10 +92,10 @@ export const SettingComponent = ({ section, setting, isSelected }: Props) => {
           {setting.name}
         </div>
       </div>
+      {component}
       <p className="ml-1 mb-4 text-sm text-black dark:text-white">
         {setting.description}
       </p>
-      {component}
     </div>
   );
 };

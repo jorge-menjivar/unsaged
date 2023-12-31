@@ -15,7 +15,7 @@ import { ConversationList } from './components/conversation-list';
 import { ConversationsSettings } from './components/conversations-settings';
 import { ConversationsFolders } from './components/folders';
 import Search from '@/components/common/Search';
-import { Button } from '@/components/common/ui/button';
+import { Button } from '@ui/components/ui/button';
 
 import ConversationsContext from './conversations.context';
 import { ConversationsInitialState, initialState } from './conversations.state';
@@ -92,6 +92,7 @@ export const Conversations = () => {
   useEffect(() => {
     if (searchTerm) {
       chatDispatch({
+        type: 'change',
         field: 'filteredConversations',
         value: conversations.filter((conversation) => {
           const conversationMessages = messages.filter(
@@ -107,6 +108,7 @@ export const Conversations = () => {
       });
     } else {
       chatDispatch({
+        type: 'change',
         field: 'filteredConversations',
         value: conversations,
       });
@@ -114,7 +116,7 @@ export const Conversations = () => {
   }, [searchTerm, conversations, chatDispatch, messages]);
 
   const doSearch = (term: string) =>
-    chatDispatch({ field: 'searchTerm', value: term });
+    chatDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   const allowDrop = (e: any) => {
     e.stopPropagation();

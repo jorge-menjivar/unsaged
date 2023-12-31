@@ -1,19 +1,12 @@
 {
   "extends": "tsconfig/nextjs.json",
   "compilerOptions": {
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "isolatedModules": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    },
-    "strictNullChecks": true
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": "."
   },
   "include": [
     "next-env.d.ts",
@@ -23,5 +16,8 @@
     ".next/types/**/*.ts",
     "./out/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "src-tauri"]
+  "exclude": [
+    "node_modules",
+    "src-tauri"
+  ]
 }

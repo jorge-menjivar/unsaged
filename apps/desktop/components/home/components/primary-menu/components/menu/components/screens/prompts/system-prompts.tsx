@@ -7,7 +7,7 @@ import { useCreateReducer } from '@/hooks/useCreateReducer';
 import { SystemPromptFolders } from './components/folders';
 import { SystemPromptList } from './components/system-prompt-list';
 import Search from '@/components/common/Search';
-import { Button } from '@/components/common/ui/button';
+import { Button } from '@ui/components/ui/button';
 
 import SystemPromptsContext from './system-prompts.context';
 import {
@@ -58,6 +58,7 @@ const SystemPrompts = () => {
   useEffect(() => {
     if (searchTerm) {
       promptDispatch({
+        type: 'change',
         field: 'filteredSystemPrompts',
         value: systemPrompts.filter((systemPrompt) => {
           const searchable =
@@ -71,6 +72,7 @@ const SystemPrompts = () => {
       });
     } else {
       promptDispatch({
+        type: 'change',
         field: 'filteredSystemPrompts',
         value: systemPrompts,
       });
@@ -91,7 +93,7 @@ const SystemPrompts = () => {
   };
 
   const doSearch = (term: string) =>
-    promptDispatch({ field: 'searchTerm', value: term });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   const handleDragEnter = (e: any) => {
     e.target.style.background = '#343541';

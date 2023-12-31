@@ -11,14 +11,18 @@ export async function getTokenCount(
   systemPrompt: string,
   messages: Message[],
 ) {
-  if (model.vendor === 'OpenAI') {
-    return countTokensOpenAI(model, systemPrompt, messages);
-  } else if (model.vendor === 'Anthropic') {
-    return countTokensAnthropic(model, systemPrompt, messages);
-  } else if (model.vendor === 'Google') {
-    return countTokensGoogle(model, systemPrompt, messages);
-  } else if (model.vendor === 'Ollama') {
-    return countTokensOllama(model, systemPrompt, messages);
+  switch (model.vendor) {
+    case 'OpenAI':
+      return countTokensOpenAI(model, systemPrompt, messages);
+    case 'Azure':
+      return countTokensOpenAI(model, systemPrompt, messages);
+    case 'Anthropic':
+      return countTokensAnthropic(model, systemPrompt, messages);
+    case 'Google':
+      return countTokensGoogle(model, systemPrompt, messages);
+    case 'Ollama':
+      return countTokensOllama(model, systemPrompt, messages);
+    default:
+      return { error: 'Unknown vendor' };
   }
-  return { error: 'Unknown vendor' };
 }

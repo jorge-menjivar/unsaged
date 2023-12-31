@@ -7,8 +7,8 @@ import { Message } from '@/types/chat';
 
 import OpenAI from 'openai';
 import { OpenAIStream } from 'ai';
-import { getOpenAiApi } from './openai';
 import { ChatCompletionCreateParamsStreaming } from 'openai/resources';
+import { getClient } from './client';
 
 export async function streamOpenAI(
   model: AiModel,
@@ -30,7 +30,7 @@ export async function streamOpenAI(
     return { error: 'Chat Stream is only available for model type text' };
   }
 
-  const openai = await getOpenAiApi(apiKey, model.id);
+  const client = await getClient(apiKey);
 
   let messagesToSend: any[] = [];
 
@@ -86,7 +86,7 @@ export async function streamOpenAI(
     body.seed = params.seed;
   }
 
-  return openai.chat.completions.create(body).then((completions) => {
+  return client.chat.completions.create(body).then((completions) => {
     const stream = OpenAIStream(completions);
 
     return { stream: stream };

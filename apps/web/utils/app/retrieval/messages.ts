@@ -22,7 +22,7 @@ export const useMessages = (
       if (database && user) {
         const _messages = await storageGetMessages(database, user);
 
-        homeDispatch({ field: 'messages', value: _messages });
+        homeDispatch({ type: 'change', field: 'messages', value: _messages });
 
         setMessagesLoaded(true);
       }

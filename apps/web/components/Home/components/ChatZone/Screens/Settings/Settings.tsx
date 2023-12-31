@@ -1,4 +1,3 @@
-import { IconX } from '@tabler/icons-react';
 import { useContext, useEffect } from 'react';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
@@ -15,8 +14,11 @@ import HomeContext from '@/components/Home/home.context';
 import SettingsContext from './Settings.context';
 import { SettingsInitialState, initialState } from './Settings.state';
 import { useTranslations } from 'next-intl';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@ui/components/ui/dialog';
+import { Button } from '@ui/components/ui/button';
+import { IconSettings } from '@tabler/icons-react';
 
-export const Settings = () => {
+export const SettingsDialog = () => {
   const t = useTranslations();
   const settingsContextValue = useCreateReducer<SettingsInitialState>({
     initialState,
@@ -37,7 +39,7 @@ export const Settings = () => {
   }, [searchQuery, settingsDispatch]);
 
   const doSearch = (query: string) =>
-    settingsDispatch({ field: 'searchQuery', value: query });
+    settingsDispatch({ type: 'change', field: 'searchQuery', value: query });
 
   const handleSave = (
     section: SettingsSection,
@@ -50,70 +52,54 @@ export const Settings = () => {
       setting.id,
       value,
     );
-    homeDispatch({ field: 'savedSettings', value: newSavedSettings });
+    homeDispatch({ type: 'change', field: 'savedSettings', value: newSavedSettings });
   };
 
   const handleSelect = (section: SettingsSection, setting: Setting) => {
     settingsDispatch({
+      type: 'change',
       field: 'selectedSection',
       value: section,
     });
     settingsDispatch({
+      type: 'change',
       field: 'selectedSetting',
       value: setting,
     });
   };
 
-  const handleClose = () => {
-    homeDispatch({ field: 'display', value: 'chat' });
-  };
-
   return (
-    <SettingsContext.Provider
-      value={{
-        ...settingsContextValue,
-        handleSelect,
-        handleSave,
-      }}
-    >
-      <div className="relative flex-1 overflow-scroll bg-theme-light dark:bg-theme-dark">
-        <div className="max-h-full overflow-x-hidden"></div>
-        <div
-          className={`group md:px-4 bg-theme-light text-gray-800
-       dark:border-gray-900/50 dark:bg-theme-dark dark:text-gray-100'`}
-          style={{ overflowWrap: 'anywhere' }}
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">
+          <IconSettings size={28} />
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="lg:max-w-screen-lg overflow-y-scroll max-h-screen">
+        <DialogHeader>
+          <DialogTitle>
+            {t('settings')}
+          </DialogTitle>
+        </DialogHeader>
+        <SettingsContext.Provider
+          value={{
+            ...settingsContextValue,
+            handleSelect,
+            handleSave,
+          }}
         >
-          <div className="flex w-full p-4 text-base">
-            <div className="w-full">
-              <div className="block">
-                <h1 className="text-3xl font-bold text-center text-black dark:text-white">
-                  {t('settings')}
-                </h1>
-                {settings &&
-                  Object.values(settings).map((section, index) => (
-                    <SettingsSectionComponent
-                      isSelected={selectedSection?.id === section.id}
-                      key={index}
-                      section={section}
-                    />
-                  ))}
-              </div>
-            </div>
+          <div className="grid gap-4 py-4">
+            {settings &&
+              Object.values(settings).filter(s => s.enabled || s.enabled === undefined).map((section, index) => (
+                <SettingsSectionComponent
+                  isSelected={selectedSection?.id === section.id}
+                  key={index}
+                  section={section}
+                />
+              ))}
           </div>
-        </div>
-      </div>
-      <div>
-        <button
-          className="
-          absolute top-2 right-2 w-6 h-6 m-2 cursor-pointer rounded-sm
-          text-gray-700 dark:text-gray-100
-          hover:bg-theme-hover-dark dark:hover:bg-theme-hover-dark 
-          "
-          onClick={handleClose}
-        >
-          <IconX />
-        </button>
-      </div>
-    </SettingsContext.Provider>
+        </SettingsContext.Provider>
+      </DialogContent>
+    </Dialog>
   );
 };

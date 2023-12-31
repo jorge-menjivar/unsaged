@@ -1,6 +1,7 @@
 import { OLLAMA_HOST, OLLAMA_BASIC_USER, OLLAMA_BASIC_PWD, DEBUG_MODE } from '@/utils/app/const';
 
-import { GetAvailableAIModelResponse, PossibleAiModels } from '@/types/ai-models';
+import { GetAvailableAIModelResponse } from '@/types/ai-models';
+import { getModelSettings } from '../models';
 
 export const config = {
   runtime: 'edge',
@@ -25,23 +26,23 @@ export async function getAvailableOllamaModels(): Promise<GetAvailableAIModelRes
 
     if (response.status !== 200) {
       const error = await response.text();
-      console.error('Error fetching OpenAI models', response.status, error);
+      console.error('Error fetching Ollama models', response.status, error);
       return { data: [] };
     }
 
     const json = await response.json();
+    const { data: modelSettings } = await getModelSettings('Ollama');
 
     const models = json.models.map((ollamaModel: any) => {
       const model_name = ollamaModel.name;
+      const model = modelSettings.find(m => m.name === model_name);
 
-      if (!PossibleAiModels[model_name]) {
+      if (!model) {
         if (DEBUG_MODE)
           console.warn('Ollama model not implemented:', model_name);
 
         return null;
       }
-
-      const model = PossibleAiModels[model_name];
 
       return model;
     });

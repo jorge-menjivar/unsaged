@@ -11,17 +11,26 @@ import { TemperatureSlider } from './components/temperature';
 import { TopKInput } from './components/top-k';
 import { TopPSlider } from './components/top-p';
 import HomeContext from '@/components/Home/home.context';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@ui/components/ui/accordion"
+import { useTranslations } from 'next-intl';
+import { ADVANCED_SETTINGS_OPEN, SHOW_ADVANCED_SETTINGS } from '@/utils/app/const';
+
 
 const possibleParameters = {
-  'system_prompt': { modelType: 'text', component: SystemPromptSelect },
-  'temperature': { modelType: 'text', component: TemperatureSlider },
-  'max_tokens': { modelType: 'text', component: MaxTokensSlider },
-  'top_p': { modelType: 'text', component: TopPSlider },
-  'top_k': { modelType: 'text', component: TopKInput },
-  'repeat_penalty': { modelType: 'text', component: RepeatPenaltySlider },
-  'presence_penalty': { modelType: 'text', component: PresencePenaltySlider },
-  'stop': { modelType: 'text', component: StopInput },
-  'seed': { modelType: 'text', component: SeedInput },
+  'system_prompt': { modelType: 'text', component: SystemPromptSelect, advanced: false },
+  'temperature': { modelType: 'text', component: TemperatureSlider, advanced: true },
+  'max_tokens': { modelType: 'text', component: MaxTokensSlider, advanced: true },
+  'top_p': { modelType: 'text', component: TopPSlider, advanced: true },
+  'top_k': { modelType: 'text', component: TopKInput, advanced: true },
+  'repeat_penalty': { modelType: 'text', component: RepeatPenaltySlider, advanced: true },
+  'presence_penalty': { modelType: 'text', component: PresencePenaltySlider, advanced: true },
+  'stop': { modelType: 'text', component: StopInput, advanced: true },
+  'seed': { modelType: 'text', component: SeedInput, advanced: true },
 }
 
 const openAiSupportedParameters = [
@@ -35,7 +44,18 @@ const openAiSupportedParameters = [
   possibleParameters['seed'],
 ];
 
-const claudeSupportedParameters = [
+const azureSupportedParameters = [
+  possibleParameters['system_prompt'],
+  possibleParameters['temperature'],
+  possibleParameters['max_tokens'],
+  possibleParameters['top_p'],
+  possibleParameters['repeat_penalty'],
+  possibleParameters['presence_penalty'],
+  possibleParameters['stop'],
+  possibleParameters['seed'],
+];
+
+const anthropicSupportedParameters = [
   possibleParameters['system_prompt'],
   possibleParameters['temperature'],
   possibleParameters['max_tokens'],
@@ -65,6 +85,7 @@ const ollamaSupportedParameters = [
 ];
 
 export const ModelSettings = () => {
+  const t = useTranslations();
   const {
     state: { selectedConversation },
   } = useContext(HomeContext);
@@ -79,8 +100,10 @@ export const ModelSettings = () => {
     switch (model.vendor) {
       case 'OpenAI':
         return openAiSupportedParameters;
+      case 'Azure':
+        return azureSupportedParameters;
       case 'Anthropic':
-        return claudeSupportedParameters;
+        return anthropicSupportedParameters;
       case 'Google':
         return bardSupportedParameters;
       case 'Ollama':
@@ -94,12 +117,27 @@ export const ModelSettings = () => {
     <div className="pt-2 px-1 space-y-4">
       <ModelSelect />
 
-      {supportedParameters.map((parameter, index) => {
+      {supportedParameters.filter(p => !p.advanced).map((parameter, index) => {
         if (parameter.modelType === model?.type) {
           const ParameterComponent = parameter.component;
           return <ParameterComponent key={index} />;
         }
       })}
+      {SHOW_ADVANCED_SETTINGS &&
+        <Accordion type="single" collapsible defaultValue={ADVANCED_SETTINGS_OPEN ? 'item-1' : 'item-0'}>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>{t('advancedSettings')}</AccordionTrigger>
+            <AccordionContent>
+              {supportedParameters.filter(p => p.advanced).map((parameter, index) => {
+                if (parameter.modelType === model?.type) {
+                  const ParameterComponent = parameter.component;
+                  return <ParameterComponent key={index} />;
+                }
+              })}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      }
     </div>
   );
 };

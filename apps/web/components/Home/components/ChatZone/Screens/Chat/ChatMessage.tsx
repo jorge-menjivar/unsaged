@@ -117,7 +117,7 @@ export const ChatMessage: FC<Props> = memo(
         messagesToBeDeleted,
         messages,
       );
-      homeDispatch({ field: 'messages', value: updatedMessages });
+      homeDispatch({ type: 'change', field: 'messages', value: updatedMessages });
     };
 
     const handlePressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

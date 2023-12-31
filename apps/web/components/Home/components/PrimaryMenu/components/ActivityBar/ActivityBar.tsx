@@ -2,7 +2,6 @@ import {
   IconBrandDiscord,
   IconBrandGithub,
   IconLogout,
-  IconSettings,
 } from '@tabler/icons-react';
 import { signOut } from 'next-auth/react';
 import { useContext } from 'react';
@@ -15,10 +14,11 @@ import { ActivityBarTab } from './components/ActivityBarTab';
 import HomeContext from '@/components/Home/home.context';
 
 import PrimaryMenuContext from '../../PrimaryMenu.context';
+import { SettingsDialog } from '../../../ChatZone/Screens/Settings/Settings';
 
 const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
   const {
-    state: { user, database, showPrimaryMenu, display },
+    state: { user, database, showPrimaryMenu },
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
@@ -29,15 +29,15 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
 
   const handleSelect = (index: number) => {
     if (selectedIndex === index) {
-      homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: !showPrimaryMenu });
       localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
 
     if (!showPrimaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: !showPrimaryMenu });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: !showPrimaryMenu });
       localSaveShowPrimaryMenu(user!, !showPrimaryMenu);
     }
-    primaryMenuDispatch({ field: 'selectedIndex', value: index });
+    primaryMenuDispatch({ type: 'change', field: 'selectedIndex', value: index });
   };
 
   const handleSignOut = () => {
@@ -46,18 +46,6 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
     }
 
     signOut();
-  };
-
-  const handleShowSettings = () => {
-    if (display !== 'settings') {
-      homeDispatch({ field: 'display', value: 'settings' });
-    } else {
-      if (window.innerWidth < 640) {
-        homeDispatch({ field: 'showPrimaryMenu', value: false });
-      } else {
-        homeDispatch({ field: 'display', value: 'chat' });
-      }
-    }
   };
 
   // VS Code Activity Bar with tabs at the top and setting button at the bottom
@@ -98,8 +86,8 @@ const ActivityBar = ({ icons }: { icons: JSX.Element[] }) => {
         <ActivityBarButton handleClick={handleSignOut}>
           <IconLogout size={28} />
         </ActivityBarButton>
-        <ActivityBarButton handleClick={handleShowSettings}>
-          <IconSettings size={28} />
+        <ActivityBarButton>
+          <SettingsDialog />
         </ActivityBarButton>
       </div>
     </div>

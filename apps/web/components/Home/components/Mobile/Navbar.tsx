@@ -30,22 +30,22 @@ export const Navbar: FC<Props> = ({
 
   const handleShowPrimaryMenu = () => {
     if (!showPrimaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: true });
-      homeDispatch({ field: 'showSecondaryMenu', value: false });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: true });
+      homeDispatch({ type: 'change', field: 'showSecondaryMenu', value: false });
       localSaveShowPrimaryMenu(user!, true);
     } else {
-      homeDispatch({ field: 'showPrimaryMenu', value: false });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: false });
       localSaveShowPrimaryMenu(user!, false);
     }
   };
 
   const handleShowSecondaryMenu = () => {
     if (!showSecondaryMenu) {
-      homeDispatch({ field: 'showPrimaryMenu', value: false });
-      homeDispatch({ field: 'showSecondaryMenu', value: true });
+      homeDispatch({ type: 'change', field: 'showPrimaryMenu', value: false });
+      homeDispatch({ type: 'change', field: 'showSecondaryMenu', value: true });
       localSaveShowSecondaryMenu(user!, true);
     } else {
-      homeDispatch({ field: 'showSecondaryMenu', value: false });
+      homeDispatch({ type: 'change', field: 'showSecondaryMenu', value: false });
       localSaveShowSecondaryMenu(user!, false);
     }
   };

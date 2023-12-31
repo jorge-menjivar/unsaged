@@ -64,7 +64,7 @@ export const TemplateComponent = ({ template }: Props) => {
 
   const handleUpdate = (template: Template) => {
     updateTemplate(template);
-    promptDispatch({ field: 'searchTerm', value: '' });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: '' });
   };
 
   const handleDelete: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -72,7 +72,7 @@ export const TemplateComponent = ({ template }: Props) => {
 
     if (isDeleting) {
       deleteTemplate(template);
-      promptDispatch({ field: 'searchTerm', value: '' });
+      promptDispatch({ type: 'change', field: 'searchTerm', value: '' });
     }
 
     setIsDeleting(false);

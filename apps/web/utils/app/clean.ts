@@ -1,9 +1,7 @@
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation } from '@/types/chat';
 import { FolderInterface } from '@/types/folder';
 import { Prompt } from '@/types/prompt';
 
-import { OPENAI_API_TYPE } from './const';
 import { getModelDefaults } from './settings/model-defaults';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -97,13 +95,6 @@ export const cleanConversationHistory = (
 
   for (const conversation of conversations) {
     try {
-      if (!conversation.model) {
-        conversation.model =
-          OPENAI_API_TYPE === 'azure'
-            ? PossibleAiModels['gpt-35-turbo']
-            : PossibleAiModels['gpt-3.5-turbo'];
-      }
-
       const modelDefaults = getModelDefaults(conversation.model);
 
       const cleanConversation: Conversation = {

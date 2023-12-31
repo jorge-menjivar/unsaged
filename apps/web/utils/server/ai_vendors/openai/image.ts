@@ -4,7 +4,7 @@ import {
 
 import { AiModel, ModelParams } from '@/types/ai-models';
 
-import { getOpenAiApi } from './openai';
+import { getClient } from './client';
 import { ImageGenerateParams } from 'openai/resources';
 import OpenAI from 'openai';
 
@@ -26,7 +26,7 @@ export async function imageOpenAI(
         }
     }
 
-    const openai = await getOpenAiApi(apiKey, model.id);
+    const client = await getClient(apiKey);
 
     const body: ImageGenerateParams = {
         model: model.id,
@@ -41,7 +41,7 @@ export async function imageOpenAI(
         body.style = params.style || 'natural';
     }
 
-    return openai.images.generate(body).then(({ data }) => {
+    return client.images.generate(body).then(({ data }) => {
         return { images: data };
     }).catch((err) => {
         if (err instanceof OpenAI.APIError) {

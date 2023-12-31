@@ -30,10 +30,11 @@ export const Settings = () => {
   }, [searchQuery, settingsDispatch]);
 
   const doSearch = (query: string) =>
-    settingsDispatch({ field: 'searchQuery', value: query });
+    settingsDispatch({type: 'change', field: 'searchQuery', value: query });
 
   const handleSelect = (settingId: string) => {
     settingsDispatch({
+      type: 'change',
       field: 'selectedSettingId',
       value: settingId,
     });

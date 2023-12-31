@@ -1,21 +1,27 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "Next.js",
-    "extends": "./base.json",
-    "compilerOptions": {
-      "plugins": [{ "name": "next" }],
-      "allowJs": true,
-      "declaration": false,
-      "declarationMap": false,
-      "incremental": true,
-      "jsx": "preserve",
-      "lib": ["dom", "dom.iterable", "esnext"],
-      "module": "esnext",
-      "noEmit": true,
-      "resolveJsonModule": true,
-      "strict": false,
-      "target": "es2017"
-    },
-    "include": ["src", "next-env.d.ts"],
-    "exclude": ["node_modules"]
-  }
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Next.js",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "allowJs": true,
+    "declaration": false,
+    "declarationMap": false,
+    "incremental": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "strict": false,
+    "target": "es2017",
+    "paths": {
+      "@/*": ["./*"],
+      "@ui/*": ["../../packages/ui/*"],
+      "@ui/components/*": ["../../packages/ui/components/ui/*"],
+      "@ui/components/ui/*": ["../../packages/ui/components/ui/*"]
+    }
+  },
+  "include": ["src", "next-env.d.ts"],
+  "exclude": ["node_modules"]
+}

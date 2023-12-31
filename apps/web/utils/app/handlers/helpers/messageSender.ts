@@ -1,4 +1,4 @@
-import toast from 'react-hot-toast';
+import { toast } from '@ui/components/ui/use-toast';
 
 import { Conversation, Message } from '@/types/chat';
 import { SavedSetting } from '@/types/settings';
@@ -39,7 +39,7 @@ export async function messageSender(
     if (!response.ok) {
       dispatch({ field: 'loading', value: false });
       dispatch({ field: 'messageIsStreaming', value: false });
-      toast.error(response.statusText);
+      toast({ variant: "destructive", description: response.statusText });
       return { data: null, controller: null };
     }
     const data = response.body;
@@ -69,7 +69,7 @@ export async function messageSender(
       }
     }
 
-    toast.error(response.statusText);
+    toast({ variant: "destructive", description: response.statusText });
 
     dispatch({ field: 'loading', value: false });
     return { data: null, controller: null };

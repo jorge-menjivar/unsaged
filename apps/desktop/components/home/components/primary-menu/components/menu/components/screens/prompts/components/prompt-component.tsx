@@ -42,7 +42,7 @@ export const SystemPromptComponent = ({ systemPrompt }: Props) => {
 
     if (isDeleting) {
       deleteSystemPrompt(systemPrompt.id);
-      promptDispatch({ field: 'searchTerm', value: '' });
+      promptDispatch({ type: 'change', field: 'searchTerm', value: '' });
     }
 
     setIsDeleting(false);

@@ -17,7 +17,6 @@ export interface HomeInitialState {
   currentMessage: Message | undefined;
   database: Database | null;
   defaultModelId: string | undefined;
-  display: 'chat' | 'settings';
   fetchComplete: boolean;
   folders: FolderInterface[];
   lightMode: 'light' | 'dark';
@@ -48,7 +47,6 @@ export const initialState: HomeInitialState = {
   currentMessage: undefined,
   database: null,
   defaultModelId: DEFAULT_MODEL,
-  display: 'chat',
   fetchComplete: false,
   folders: [],
   lightMode: 'dark',

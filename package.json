@@ -4,7 +4,9 @@
     "preinstall": "npx only-allow pnpm",
     "ci": "turbo run build lint",
     "build": "turbo run build",
+    "build:tauri": "turbo run build:tauri --filter=desktop",
     "dev": "turbo run dev",
+    "dev:tauri": "turbo run dev:tauri --filter=desktop",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "local:pull": "turbo run local:pull",
@@ -17,11 +19,11 @@
   ],
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "eslint": "^8.55.0",
+    "eslint": "^8.56.0",
     "eslint-config-custom": "workspace:*",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
-    "turbo": "^1.11.1"
+    "turbo": "^1.11.2"
   },
   "packageManager": "pnpm@8.10.5",
   "name": "monorepo"

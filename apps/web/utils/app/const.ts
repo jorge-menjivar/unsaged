@@ -12,6 +12,13 @@ export const DEFAULT_TITLE = dockerEnvVarFix(process.env.NEXT_PUBLIC_TITLE) || "
 export const DEFAULT_DESCRIPTION = dockerEnvVarFix(process.env.NEXT_PUBLIC_DESCRIPTION) ||
   "Open source chat kit engineered for seamless interaction with AI models";
 
+export const ADVANCED_SETTINGS_OPEN = dockerEnvVarFix(process.env.NEXT_PUBLIC_ADVANCED_SETTINGS_OPEN) === 'false' ? false : true;
+export const SHOW_ADVANCED_SETTINGS = dockerEnvVarFix(process.env.NEXT_PUBLIC_SHOW_ADVANCED_SETTINGS) === 'false' ? false : true;
+export const ALLOW_LOCAL_API_SETTINGS = dockerEnvVarFix(process.env.NEXT_PUBLIC_ALLOW_LOCAL_API_SETTINGS) === 'false' ? false : true;
+
+export const AI_SERVICES_ENDPOINT_URL =
+  dockerEnvVarFix(process.env.AI_SERVICES_ENDPOINT_URL) || 'https://ai-services-web.vercel.app';
+
 export const DEFAULT_OPENAI_SYSTEM_PROMPT =
   dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_OPENAI_SYSTEM_PROMPT) ||
   "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.";
@@ -52,20 +59,20 @@ export const DEFAULT_ANTHROPIC_TOP_K = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_DEFAULT_ANTHROPIC_TOP_K,
 );
 
-export const DEFAULT_PALM_SYSTEM_PROMPT =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_PALM_SYSTEM_PROMPT) ||
+export const DEFAULT_GOOGLE_SYSTEM_PROMPT =
+  dockerEnvVarFix(process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_SYSTEM_PROMPT) ||
   "You are Bard, a large language model trained by Google. Follow the user's instructions carefully. Respond using markdown. Always specify the programming language you are using when making a markdown code block.";
 
-export const DEFAULT_PALM_TEMPERATURE = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_DEFAULT_PALM_TEMPERATURE,
+export const DEFAULT_GOOGLE_TEMPERATURE = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_TEMPERATURE,
 );
 
-export const DEFAULT_PALM_TOP_P = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_DEFAULT_PALM_TOP_P,
+export const DEFAULT_GOOGLE_TOP_P = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_P,
 );
 
-export const DEFAULT_PALM_TOP_K = dockerEnvVarFix(
-  process.env.NEXT_PUBLIC_DEFAULT_PALM_TOP_K,
+export const DEFAULT_GOOGLE_TOP_K = dockerEnvVarFix(
+  process.env.NEXT_PUBLIC_DEFAULT_GOOGLE_TOP_K,
 );
 
 export const DEFAULT_OLLAMA_SYSTEM_PROMPT =
@@ -92,22 +99,24 @@ export const DEFAULT_OLLAMA_SEED = dockerEnvVarFix(
   process.env.NEXT_PUBLIC_DEFAULT_OLLAMA_SEED,
 );
 
-export const AZURE_DEPLOYMENT_ID =
-  dockerEnvVarFix(process.env.NEXT_PUBLIC_AZURE_DEPLOYMENT_ID) || '';
+export const OPENAI_API_KEY = dockerEnvVarFix(process.env.OPENAI_API_KEY) || '';
+
+export const OPENAI_ORGANIZATION =
+  dockerEnvVarFix(process.env.OPENAI_ORGANIZATION) || '';
 
 export const OPENAI_API_URL =
-  dockerEnvVarFix(process.env.OPENAI_API_URL) || 'https://api.openai.com/v1';
-
-export const OPENAI_API_KEY = dockerEnvVarFix(process.env.OPENAI_API_KEY) || '';
+  dockerEnvVarFix(process.env.OPENAI_API_URL) || '';
 
 export const OPENAI_API_TYPE =
   dockerEnvVarFix(process.env.OPENAI_API_TYPE) || 'openai';
 
-export const OPENAI_API_VERSION =
-  dockerEnvVarFix(process.env.OPENAI_API_VERSION) || '2023-12-01-preview';
+export const AZURE_OPENAI_API_KEY = dockerEnvVarFix(process.env.AZURE_OPENAI_API_KEY) || '';
 
-export const OPENAI_ORGANIZATION =
-  dockerEnvVarFix(process.env.OPENAI_ORGANIZATION) || '';
+export const AZURE_OPENAI_API_URL =
+  dockerEnvVarFix(process.env.AZURE_OPENAI_API_URL) || '';
+
+export const AZURE_OPENAI_API_VERSION =
+  dockerEnvVarFix(process.env.AZURE_OPENAI_API_VERSION) || '2023-12-01-preview';
 
 export const ANTHROPIC_API_URL =
   dockerEnvVarFix(process.env.ANTHROPIC_API_URL) ||
@@ -119,11 +128,11 @@ export const ANTHROPIC_API_KEY =
 export const ANTHROPIC_API_VERSION =
   dockerEnvVarFix(process.env.ANTHROPIC_API_VERSION) || '2023-06-01';
 
-export const PALM_API_URL =
-  dockerEnvVarFix(process.env.PALM_API_URL) ||
+export const GOOGLE_API_URL =
+  dockerEnvVarFix(process.env.GOOGLE_API_URL) ||
   'https://generativelanguage.googleapis.com/v1beta2';
 
-export const PALM_API_KEY = dockerEnvVarFix(process.env.PALM_API_KEY) || '';
+export const GOOGLE_API_KEY = dockerEnvVarFix(process.env.GOOGLE_API_KEY) || '';
 
 export const OLLAMA_HOST = dockerEnvVarFix(process.env.OLLAMA_HOST) || '';
 

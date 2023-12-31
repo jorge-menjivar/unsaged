@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from '@ui/components/ui/toaster';
 
 import { DEFAULT_TITLE } from '@/utils/app/const';
 
@@ -78,6 +78,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
         (message) => message.conversationId === selectedConversation.id,
       );
       chatDispatch({
+        type: 'change',
         field: 'selectedConversationMessages',
         value: _conversationMessages,
       });

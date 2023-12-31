@@ -2,7 +2,7 @@ import { Dispatch, useCallback, useEffect, useState } from 'react';
 
 import { ActionType } from '@/hooks/useCreateReducer';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel } from '@/types/ai-models';
 import { User } from '@/types/auth';
 import { Conversation } from '@/types/chat';
 import { Database } from '@/types/database';
@@ -56,17 +56,20 @@ export const useConversations = (
 
           if (selectedConversation) {
             homeDispatch({
+              type: 'change',
               field: 'selectedConversation',
               value: selectedConversation,
             });
           } else if (cleanedConversations.length > 0) {
             homeDispatch({
+              type: 'change',
               field: 'selectedConversation',
               value: cleanedConversations[0],
             });
           }
 
           homeDispatch({
+            type: 'change',
             field: 'conversations',
             value: cleanedConversations,
           });
@@ -91,11 +94,7 @@ export const useConversations = (
   const autogenerateConversation = useCallback(async () => {
     if (!database || !user) return;
 
-    let model = models[0] || PossibleAiModels['gpt-3.5-turbo'];
-
-    if (DEFAULT_MODEL) {
-      model = PossibleAiModels[DEFAULT_MODEL];
-    }
+    let model = models.find(m => m.id == DEFAULT_MODEL) || models[0];
 
     const modelDefaults = models.length > 0 ? getModelDefaults(model) : {};
 
@@ -116,10 +115,11 @@ export const useConversations = (
       [],
     );
     homeDispatch({
+      type: 'change',
       field: 'selectedConversation',
       value: newConversation,
     });
-    homeDispatch({ field: 'conversations', value: updatedConversations });
+    homeDispatch({ type: 'change', field: 'conversations', value: updatedConversations });
 
     saveSelectedConversationId(user, newConversation.id);
   }, [database, homeDispatch, models, user]);

@@ -1,3 +1,5 @@
+import { ALLOW_LOCAL_API_SETTINGS } from "@/utils/app/const";
+
 export interface SettingChoice {
   name: string;
   value: string;
@@ -25,6 +27,7 @@ export interface HttpOnlyCookie {
 export interface SettingsSection {
   id: string;
   name: string;
+  enabled?: boolean;
   settings: Setting[];
 }
 
@@ -66,6 +69,7 @@ export const SystemSettings: SettingsSection[] = [
   {
     id: 'openai',
     name: 'OpenAI',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',
@@ -74,37 +78,33 @@ export const SystemSettings: SettingsSection[] = [
         type: 'string',
         storage: 'local',
       },
-      // {
-      //   id: 'gpt-3.5-turbo_default_system_prompt',
-      //   name: 'GPT-3.5 Default System Prompt',
-      //   description: 'The default system prompt to use for GPT-3.5.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'gpt-4_default_system_prompt',
-      //   name: 'GPT-4 Default System Prompt',
-      //   description: 'The default system prompt to use for GPT-4.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
+    ],
+  },
+  {
+    id: 'azure',
+    name: 'Azure',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
+    settings: [
+      {
+        id: 'api_key',
+        name: 'API Key',
+        description: 'The API key to use for Azure models.',
+        type: 'string',
+        storage: 'local',
+      },
+      {
+        id: 'api_url',
+        name: 'API Deployment Url',
+        description: 'The API deployment url to use for Azure models.',
+        type: 'string',
+        storage: 'local',
+      },
     ],
   },
   {
     id: 'anthropic',
     name: 'Anthropic',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',
@@ -113,125 +113,20 @@ export const SystemSettings: SettingsSection[] = [
         type: 'string',
         storage: 'local',
       },
-      // {
-      //   id: 'claude-v1_default_system_prompt',
-      //   name: 'Claude V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-v1-100k_default_system_prompt',
-      //   name: 'Claude V1 100k Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1_default_system_prompt',
-      //   name: 'Claude Instant V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude Instant V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1-100k_default_system_prompt',
-      //   name: 'Claude Instant V1 100k Default System Prompt',
-      //   description:
-      //     'The default system prompt to use for Claude Instant V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
     ],
   },
   {
     id: 'google',
     name: 'Google',
+    enabled: ALLOW_LOCAL_API_SETTINGS,
     settings: [
       {
         id: 'api_key',
         name: 'API Key',
-        description: 'The API key to use for PaLM 2 models.',
+        description: 'The API key to use for Google models.',
         type: 'string',
         storage: 'local',
       },
-      // {
-      //   id: 'claude-v1_default_system_prompt',
-      //   name: 'Claude V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-v1-100k_default_system_prompt',
-      //   name: 'Claude V1 100k Default System Prompt',
-      //   description: 'The default system prompt to use for Claude V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1_default_system_prompt',
-      //   name: 'Claude Instant V1 Default System Prompt',
-      //   description: 'The default system prompt to use for Claude Instant V1.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
-      // {
-      //   id: 'claude-instant-v1-100k_default_system_prompt',
-      //   name: 'Claude Instant V1 100k Default System Prompt',
-      //   description:
-      //     'The default system prompt to use for Claude Instant V1 100k.',
-      //   type: 'choice',
-      //   choices: [
-      //     {
-      //       name: 'Default',
-      //       value: 'default',
-      //     },
-      //   ],
-      //   storage: 'local',
-      // },
     ],
   },
 ];

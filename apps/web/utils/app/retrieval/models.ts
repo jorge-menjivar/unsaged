@@ -29,7 +29,7 @@ export const useModels = (
         'api_key',
       );
 
-      const palmApiKey = getSavedSettingValue(
+      const googleApiKey = getSavedSettingValue(
         savedSettings,
         'google',
         'api_key',
@@ -43,14 +43,14 @@ export const useModels = (
         body: JSON.stringify({
           openai_key: openAiApiKey,
           anthropic_key: anthropicApiKey,
-          palm_key: palmApiKey,
+          google_key: googleApiKey,
         }),
       });
 
       const models = await results.json();
 
-      homeDispatch({ field: 'models', value: models });
-      homeDispatch({ field: 'modelsLoaded', value: true });
+      homeDispatch({ type: 'change', field: 'models', value: models });
+      homeDispatch({ type: 'change', field: 'modelsLoaded', value: true });
     }
   }, [homeDispatch, models.length, savedSettings]);
 

@@ -17,7 +17,7 @@ export const useAuth = (
   const fetchUser = useCallback(async () => {
     if (!user) {
       const _user = await getUser();
-      homeDispatch({ field: 'user', value: _user });
+      homeDispatch({ type: 'change', field: 'user', value: _user });
     }
   }, [user, homeDispatch]);
 

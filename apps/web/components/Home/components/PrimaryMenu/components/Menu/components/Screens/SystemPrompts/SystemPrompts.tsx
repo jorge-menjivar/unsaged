@@ -68,7 +68,7 @@ const SystemPrompts = () => {
       systemPrompts,
     );
 
-    homeDispatch({ field: 'systemPrompts', value: updatedSystemPrompts });
+    homeDispatch({ type: 'change', field: 'systemPrompts', value: updatedSystemPrompts });
   };
 
   const handleUpdateSystemPrompt = (updatedSystemPrompt: SystemPrompt) => {
@@ -84,7 +84,7 @@ const SystemPrompts = () => {
       systemPrompts,
     );
 
-    homeDispatch({ field: 'systemPrompts', value: update.all });
+    homeDispatch({ type: 'change', field: 'systemPrompts', value: update.all });
   };
 
   const handleDeleteSystemPrompt = (systemPromptId: string) => {
@@ -108,7 +108,7 @@ const SystemPrompts = () => {
       //   // Resetting default system prompt to built-in
       //   setSavedSetting(user, sectionId, settingId, null);
       // }
-      homeDispatch({ field: 'systemPrompts', value: updatedSystemPrompts });
+      homeDispatch({ type: 'change', field: 'systemPrompts', value: updatedSystemPrompts });
     }
 
     const updatedConversations = [];
@@ -130,6 +130,7 @@ const SystemPrompts = () => {
         systemPrompt: null,
       };
       homeDispatch({
+        type: 'change',
         field: 'selectedConversation',
         value: updatedSelectedConversation,
       });
@@ -156,6 +157,7 @@ const SystemPrompts = () => {
   useEffect(() => {
     if (searchTerm) {
       promptDispatch({
+        type: 'change',
         field: 'filteredSystemPrompts',
         value: systemPrompts.filter((systemPrompt) => {
           const searchable =
@@ -169,6 +171,7 @@ const SystemPrompts = () => {
       });
     } else {
       promptDispatch({
+        type: 'change',
         field: 'filteredSystemPrompts',
         value: systemPrompts,
       });
@@ -188,7 +191,7 @@ const SystemPrompts = () => {
   };
 
   const doSearch = (term: string) =>
-    promptDispatch({ field: 'searchTerm', value: term });
+    promptDispatch({ type: 'change', field: 'searchTerm', value: term });
 
   const createFolder = () =>
     handleCreateFolder(t('newFolder'), 'system_prompt');

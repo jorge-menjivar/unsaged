@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { PossibleAiModels } from '@/types/ai-models';
 import { SystemPrompt } from '@/types/system-prompt';
 
 import HomeContext from '@/components/Home/home.context';
@@ -12,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/common/ui/select';
+} from '@ui/components/ui/select';
 
 export const SystemPromptSelect = () => {
   const {
@@ -40,11 +39,6 @@ export const SystemPromptSelect = () => {
 
   const getDefaultSystemPrompt = useCallback(() => {
     let model = selectedConversation!.model;
-
-    if (!model || model.vendor === undefined) {
-      selectedConversation!.model = PossibleAiModels['gpt-3.5-turbo'];
-      model = selectedConversation!.model;
-    }
 
     // const sectionId = model.vendor.toLocaleLowerCase();
     // const settingId = `${model.id}_default_system_prompt`;

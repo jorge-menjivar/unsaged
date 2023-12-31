@@ -5,8 +5,8 @@ import { useTranslation } from 'next-i18next';
 import { storageGetSavedSettingValue } from '@/utils/app/storage/local/settings';
 
 import { PrimaryLabel } from '@/components/common/ui/primary-label';
-import { Slider } from '@/components/common/ui/slider';
-import { Switch } from '@/components/common/ui/switch';
+import { Slider } from '@ui/components/ui/slider';
+import { Switch } from '@ui/components/ui/switch';
 
 import { useConversations } from '@/providers/conversations';
 import { useSettings } from '@/providers/settings';
@@ -38,7 +38,7 @@ export const MaxTokensSlider = () => {
     );
 
     return maxTokens || 4096;
-  }, [selectedConversation?.model?.id]);
+  }, [selectedConversation?.model?.id,savedSettings]);
 
   const [value, setValue] = useState<number[]>([
     selectedConversation?.params.max_tokens ?? modelTokenLimit,

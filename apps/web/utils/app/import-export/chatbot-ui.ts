@@ -1,12 +1,16 @@
-import { PossibleAiModels } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
 
-import { OPENAI_API_TYPE } from '../const';
 import { getModelDefaults } from '../settings/model-defaults';
+import HomeContext from '@/components/Home/home.context';
+import { useContext } from 'react';
 
 export function getConversationsFromChatbotUIFile(
   chatbotUIConversations: any[],
 ) {
+  const {
+    state: { models },
+  } = useContext(HomeContext);
+
   if (!Array.isArray(chatbotUIConversations)) {
     console.warn('history is not an array. Returning an empty array.');
     return [];
@@ -17,13 +21,10 @@ export function getConversationsFromChatbotUIFile(
   for (const chatbotUIConversation of chatbotUIConversations) {
     try {
       if (!chatbotUIConversation.model_id) {
-        chatbotUIConversation.model =
-          OPENAI_API_TYPE === 'azure'
-            ? PossibleAiModels['gpt-35-turbo']
-            : PossibleAiModels['gpt-3.5-turbo'];
+        chatbotUIConversation.model = models[0];
       }
 
-      const model = PossibleAiModels[chatbotUIConversation.model_id];
+      const model = models[chatbotUIConversation.model_id];
 
       const modelDefaults = getModelDefaults(model);
 

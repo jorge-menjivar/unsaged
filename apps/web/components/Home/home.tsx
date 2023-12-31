@@ -11,7 +11,7 @@ import {
   DEFAULT_MODEL,
   DEFAULT_OLLAMA_SYSTEM_PROMPT,
   DEFAULT_OPENAI_SYSTEM_PROMPT,
-  DEFAULT_PALM_SYSTEM_PROMPT,
+  DEFAULT_GOOGLE_SYSTEM_PROMPT,
 } from '@/utils/app/const';
 import { printEnvVariables } from '@/utils/app/debug/env-vars';
 import { useAuth } from '@/utils/app/retrieval/auth';
@@ -50,7 +50,7 @@ import {
 import { saveSelectedConversationId } from '@/utils/app/storage/selectedConversation';
 import { storageGetSystemPrompts } from '@/utils/app/storage/systemPrompts';
 
-import { AiModel, PossibleAiModels } from '@/types/ai-models';
+import { AiModel } from '@/types/ai-models';
 import { Conversation, Message } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface } from '@/types/folder';
@@ -81,7 +81,6 @@ const Home = () => {
     state: {
       builtInSystemPrompts,
       database,
-      display,
       lightMode,
       folders,
       conversations,
@@ -137,19 +136,15 @@ const Home = () => {
     const _selectedConversation = conversations.find(
       (c) => c.id === selectedConversation?.id,
     );
-    dispatch({ field: 'selectedConversation', value: _selectedConversation });
+    dispatch({ type: 'change', field: 'selectedConversation', value: _selectedConversation });
   }, [conversations, dispatch, selectedConversation?.id]);
 
   const handleSelectConversation = (conversation: Conversation) => {
     if (!database || !user) return;
     dispatch({
+      type: 'change',
       field: 'selectedConversation',
       value: conversation,
-    });
-
-    dispatch({
-      field: 'display',
-      value: 'chat',
     });
 
     saveSelectedConversationId(user, conversation.id);
@@ -171,14 +166,14 @@ const Home = () => {
       folders,
     );
 
-    dispatch({ field: 'folders', value: updatedFolders });
+    dispatch({ type: 'change', field: 'folders', value: updatedFolders });
   };
 
   const handleDeleteFolder = async (folderId: string) => {
     if (!database || !user) return;
 
     const updatedFolders = folders.filter((f) => f.id !== folderId);
-    dispatch({ field: 'folders', value: updatedFolders });
+    dispatch({ type: 'change', field: 'folders', value: updatedFolders });
 
     const updatedConversations: Conversation[] = conversations.map((c) => {
       if (c.folderId === folderId) {
@@ -191,7 +186,7 @@ const Home = () => {
       return c;
     });
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
 
     const updatedPrompts: Prompt[] = prompts.map((p) => {
       if (p.folderId === folderId) {
@@ -204,7 +199,7 @@ const Home = () => {
       return p;
     });
 
-    dispatch({ field: 'prompts', value: updatedPrompts });
+    dispatch({ type: 'change', field: 'prompts', value: updatedPrompts });
 
     await storageUpdateConversations(database, user, updatedConversations);
     await storageUpdatePrompts(database, user, updatedPrompts);
@@ -221,7 +216,7 @@ const Home = () => {
       folders,
     );
 
-    dispatch({ field: 'folders', value: updatedFolders });
+    dispatch({ type: 'change', field: 'folders', value: updatedFolders });
   };
 
   // CONVERSATION OPERATIONS  --------------------------------------------
@@ -261,10 +256,7 @@ const Home = () => {
     if (savedSettings && settings) {
       const lastConversation = conversations[conversations.length - 1];
 
-      let model = lastConversation?.model || models[0];
-      if (DEFAULT_MODEL) {
-        model = PossibleAiModels[DEFAULT_MODEL];
-      }
+      let model = lastConversation?.model || models.find(m => m.id == DEFAULT_MODEL) || models[0];
 
       const modelDefaults = getModelDefaults(model);
 
@@ -284,12 +276,12 @@ const Home = () => {
         newConversation,
         conversations,
       );
-      dispatch({ field: 'selectedConversation', value: newConversation });
-      dispatch({ field: 'conversations', value: updatedConversations });
+      dispatch({ type: 'change', field: 'selectedConversation', value: newConversation });
+      dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
 
       saveSelectedConversationId(user, newConversation.id);
 
-      dispatch({ field: 'loading', value: false });
+      dispatch({ type: 'change', field: 'loading', value: false });
     }
   };
 
@@ -297,6 +289,7 @@ const Home = () => {
     const vendors: AiModel['vendor'][] = [
       'Anthropic',
       'OpenAI',
+      'Azure',
       'Google',
       'Ollama',
     ];
@@ -325,11 +318,20 @@ const Home = () => {
           models: models.filter((m) => m.vendor === 'OpenAI').map((m) => m.id),
         };
         newSystemPrompts.push(systemPrompt);
+      } else if (vendor === 'Azure') {
+        systemPrompt = {
+          id: systemPromptId,
+          name: `${vendor} Built-In`,
+          content: DEFAULT_OPENAI_SYSTEM_PROMPT,
+          folderId: null,
+          models: models.filter((m) => m.vendor === 'Azure').map((m) => m.id),
+        };
+        newSystemPrompts.push(systemPrompt);
       } else if (vendor === 'Google') {
         systemPrompt = {
           id: systemPromptId,
           name: `${vendor} Built-In`,
-          content: DEFAULT_PALM_SYSTEM_PROMPT,
+          content: DEFAULT_GOOGLE_SYSTEM_PROMPT,
           folderId: null,
           models: models.filter((m) => m.vendor === 'Google').map((m) => m.id),
         };
@@ -347,7 +349,7 @@ const Home = () => {
       }
     }
 
-    dispatch({ field: 'builtInSystemPrompts', value: newSystemPrompts });
+    dispatch({ type: 'change', field: 'builtInSystemPrompts', value: newSystemPrompts });
   }, [dispatch, models]);
 
   useEffect(() => {
@@ -374,7 +376,7 @@ const Home = () => {
       conversations,
     );
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
   };
 
   const handleUpdateConversationParams = (
@@ -398,7 +400,7 @@ const Home = () => {
       conversations,
     );
 
-    dispatch({ field: 'conversations', value: updatedConversations });
+    dispatch({ type: 'change', field: 'conversations', value: updatedConversations });
   };
 
   // ON LOAD --------------------------------------------
@@ -407,34 +409,34 @@ const Home = () => {
     if (!database || !user) return;
 
     if (window.innerWidth < 992) {
-      dispatch({ field: 'showPrimaryMenu', value: false });
+      dispatch({ type: 'change', field: 'showPrimaryMenu', value: false });
     }
 
     if (window.innerWidth < 1200) {
-      dispatch({ field: 'showSecondaryMenu', value: false });
+      dispatch({ type: 'change', field: 'showSecondaryMenu', value: false });
     }
 
     const showPrimaryMenu = localGetShowPrimaryMenu(user);
     console.log('showPrimaryMenu', showPrimaryMenu);
     if (showPrimaryMenu !== null) {
-      dispatch({ field: 'showPrimaryMenu', value: showPrimaryMenu });
+      dispatch({ type: 'change', field: 'showPrimaryMenu', value: showPrimaryMenu });
     }
 
     const showSecondaryMenu = localGetShowSecondaryMenu(user);
     console.log('showSecondaryMenu', showSecondaryMenu);
     if (showSecondaryMenu !== null) {
-      dispatch({ field: 'showSecondaryMenu', value: showSecondaryMenu });
+      dispatch({ type: 'change', field: 'showSecondaryMenu', value: showSecondaryMenu });
     }
 
     storageGetFolders(database, user).then((folders) => {
       if (folders) {
-        dispatch({ field: 'folders', value: folders });
+        dispatch({ type: 'change', field: 'folders', value: folders });
       }
     });
 
     storageGetPrompts(database, user).then((prompts) => {
       if (prompts) {
-        dispatch({ field: 'prompts', value: prompts });
+        dispatch({ type: 'change', field: 'prompts', value: prompts });
       }
     });
   }, [user, database, dispatch]);
@@ -445,7 +447,7 @@ const Home = () => {
     if (!database || !user) return;
 
     const settings = getSettings();
-    dispatch({ field: 'settings', value: settings });
+    dispatch({ type: 'change', field: 'settings', value: settings });
 
     storageGetSystemPrompts(database, user).then((systemPrompts) => {
       const choices: SettingChoice[] = systemPrompts.map((sp) => {
@@ -459,8 +461,8 @@ const Home = () => {
         choices,
       );
 
-      dispatch({ field: 'settings', value: newSettings });
-      dispatch({ field: 'systemPrompts', value: systemPrompts });
+      dispatch({ type: 'change', field: 'settings', value: newSettings });
+      dispatch({ type: 'change', field: 'systemPrompts', value: systemPrompts });
     });
   }, [dispatch, database, user]);
 
@@ -471,11 +473,13 @@ const Home = () => {
       const newSavedSettings = getSavedSettings(user);
 
       dispatch({
+        type: 'change',
         field: 'savedSettings',
         value: newSavedSettings,
       });
 
       dispatch({
+        type: 'change',
         field: 'settingsLoaded',
         value: true,
       });
