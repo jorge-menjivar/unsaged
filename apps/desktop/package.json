@@ -60,7 +60,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@mozilla/readability": "^0.4.4",
+    "@mozilla/readability": "^0.5.0",
     "@tailwindcss/typography": "^0.5.10",
     "@tauri-apps/cli": "^1.5.6",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
