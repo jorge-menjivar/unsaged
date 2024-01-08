@@ -7,7 +7,7 @@
     "lint": "eslint *.ts*"
   },
   "dependencies": {
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.0",
     "tailwind-merge": "^2.0.0"
   },
   "devDependencies": {
