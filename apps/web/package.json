@@ -31,7 +31,7 @@
     "ai": "^2.2.30",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.3.0",
     "encoding": "^0.1.13",
     "eventsource-parser": "^1.1.1",
     "js-yaml": "^4.1.0",
