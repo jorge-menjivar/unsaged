@@ -30,8 +30,8 @@ importers:
   apps/desktop:
     dependencies:
       '@auth/supabase-adapter':
-        specifier: ^0.1.9
-        version: 0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7)
+        specifier: ^0.3.1
+        version: 0.3.1(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
@@ -293,8 +293,8 @@ importers:
   apps/web:
     dependencies:
       '@auth/supabase-adapter':
-        specifier: ^0.1.11
-        version: 0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7)
+        specifier: ^0.3.1
+        version: 0.3.1(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
@@ -735,8 +735,8 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
 
-  /@auth/core@0.18.5(nodemailer@6.9.7):
-    resolution: {integrity: sha512-Ql8YobXp57mbXqHNaaroIAgBopKaxWI+3Tlu1rGcXW5KPzXdfTqijZ4HOuZvWKqmhbMWQ9xS9r8uG4fMonZYwg==}
+  /@auth/core@0.25.1(nodemailer@6.9.7):
+    resolution: {integrity: sha512-Xt/0oV0ItS38BUeqc98LVYspoXSUifWS48BeEzWXkkdQgLcXEFnF008+CDLyZvnyv/zF4vahwJHeR/J5SK9RaA==}
     peerDependencies:
       nodemailer: ^6.8.0
     peerDependenciesMeta:
@@ -753,12 +753,12 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/supabase-adapter@0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7):
-    resolution: {integrity: sha512-glyFfslsaKVi6gRPAgWPg42I/NSf2D9eaE35zBkVMynZQnhQwWCfK17Hx1CyzBH8F5Q68Vl2IIvQnpzpPi6UGg==}
+  /@auth/supabase-adapter@0.3.1(@supabase/supabase-js@2.39.1)(nodemailer@6.9.7):
+    resolution: {integrity: sha512-gauILGXtXZcjj++bkebsbydrxaFqGqCu2JAQUWbC3Z09RjwEw1Eh/COUt6kVO2iR2rcn/dxmKmXwpOaXlKBpYQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.5
     dependencies:
-      '@auth/core': 0.18.5(nodemailer@6.9.7)
+      '@auth/core': 0.25.1(nodemailer@6.9.7)
       '@supabase/supabase-js': 2.39.1
     transitivePeerDependencies:
       - nodemailer
