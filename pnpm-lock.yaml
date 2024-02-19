@@ -30,8 +30,8 @@ importers:
   apps/desktop:
     dependencies:
       '@auth/supabase-adapter':
-        specifier: ^0.1.9
-        version: 0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.9)
+        specifier: ^0.5.0
+        version: 0.5.0(@supabase/supabase-js@2.39.1)(nodemailer@6.9.9)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
@@ -293,8 +293,8 @@ importers:
   apps/web:
     dependencies:
       '@auth/supabase-adapter':
-        specifier: ^0.1.11
-        version: 0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.9)
+        specifier: ^0.5.0
+        version: 0.5.0(@supabase/supabase-js@2.39.1)(nodemailer@6.9.9)
       '@dqbd/tiktoken':
         specifier: ^1.0.7
         version: 1.0.7
@@ -735,11 +735,17 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
 
-  /@auth/core@0.18.5(nodemailer@6.9.9):
-    resolution: {integrity: sha512-Ql8YobXp57mbXqHNaaroIAgBopKaxWI+3Tlu1rGcXW5KPzXdfTqijZ4HOuZvWKqmhbMWQ9xS9r8uG4fMonZYwg==}
+  /@auth/core@0.27.0(nodemailer@6.9.9):
+    resolution: {integrity: sha512-3bydnRJIM/Al6mkYmb53MsC+6G8ojw3lLPzwgVnX4dCo6N2lrib6Wq6r0vxZIhuHGjLObqqtUfpeaEj5aeTHFg==}
     peerDependencies:
+      '@simplewebauthn/browser': ^9.0.1
+      '@simplewebauthn/server': ^9.0.2
       nodemailer: ^6.8.0
     peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
+      '@simplewebauthn/server':
+        optional: true
       nodemailer:
         optional: true
     dependencies:
@@ -753,14 +759,16 @@ packages:
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/supabase-adapter@0.1.11(@supabase/supabase-js@2.39.1)(nodemailer@6.9.9):
-    resolution: {integrity: sha512-glyFfslsaKVi6gRPAgWPg42I/NSf2D9eaE35zBkVMynZQnhQwWCfK17Hx1CyzBH8F5Q68Vl2IIvQnpzpPi6UGg==}
+  /@auth/supabase-adapter@0.5.0(@supabase/supabase-js@2.39.1)(nodemailer@6.9.9):
+    resolution: {integrity: sha512-NVS535ndWrGmhbmCpM5dtN/pXX1rGLohc1q8ssJYruG8ImBsE1zRpW8QtzeNkTYdM7pdUpwurFMhLq1b6l+7jA==}
     peerDependencies:
       '@supabase/supabase-js': ^2.0.5
     dependencies:
-      '@auth/core': 0.18.5(nodemailer@6.9.9)
+      '@auth/core': 0.27.0(nodemailer@6.9.9)
       '@supabase/supabase-js': 2.39.1
     transitivePeerDependencies:
+      - '@simplewebauthn/browser'
+      - '@simplewebauthn/server'
       - nodemailer
     dev: false
 
