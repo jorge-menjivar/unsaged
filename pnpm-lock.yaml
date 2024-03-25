@@ -81,8 +81,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
+        specifier: ^3.6.0
+        version: 3.6.0
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
@@ -344,8 +344,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0
+        specifier: ^3.6.0
+        version: 3.6.0
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
@@ -7941,11 +7941,8 @@ packages:
       whatwg-url: 14.0.0
     dev: true
 
-  /date-fns@2.30.0:
-    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
-    engines: {node: '>=0.11'}
-    dependencies:
-      '@babel/runtime': 7.23.5
+  /date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
     dev: false
 
   /dayjs@1.11.10:
