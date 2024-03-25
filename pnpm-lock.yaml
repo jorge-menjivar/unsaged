@@ -141,8 +141,8 @@ importers:
         specifier: ^15.5.0
         version: 15.5.0(react@18.2.0)
       reflect-metadata:
-        specifier: ^0.1.13
-        version: 0.1.14
+        specifier: ^0.2.1
+        version: 0.2.1
       rehype-katex:
         specifier: ^7.0.0
         version: 7.0.0
@@ -404,8 +404,8 @@ importers:
         specifier: ^15.5.0
         version: 15.5.0(react@18.2.0)
       reflect-metadata:
-        specifier: ^0.1.14
-        version: 0.1.14
+        specifier: ^0.2.1
+        version: 0.2.1
       rehype-katex:
         specifier: ^7.0.0
         version: 7.0.0
@@ -14720,8 +14720,8 @@ packages:
       minimatch: 3.1.2
     dev: false
 
-  /reflect-metadata@0.1.14:
-    resolution: {integrity: sha512-ZhYeb6nRaXCfhnndflDK8qI6ZQ/YcWZCISRAWICW9XYqMUwjZM9Z0DveWX/ABN01oxSHwVxKQmxeYZSsm0jh5A==}
+  /reflect-metadata@0.2.1:
+    resolution: {integrity: sha512-i5lLI6iw9AU3Uu4szRNPPEkomnkjRTaVt9hy/bn5g/oSzekBSMeLZblcjP74AW0vBabqERLLIrz+gR8QYR54Tw==}
     dev: false
 
   /reflect.getprototypeof@1.0.4:
